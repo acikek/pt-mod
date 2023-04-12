@@ -1,0 +1,96 @@
+{
+  "minerals": {
+    "lepersonnite": {
+      "formula": "calcium ( gadolinium* , dysprosium* ) :2 ( uranium oxygen :2 ) :24 ( silicon oxygen ) :24"
+    },
+    "euxenite": {
+      "formula": "( ytterbium* , yttrium , calcium , erbium* , terbium* , lanthanum , cerium , uranium , thullium ) ( niobium , tantalum , titanium ) :2 oxygen :6"
+    }
+  },
+  "elements": {
+    "hydrogen": {
+      "source": {
+        "type": "gas",
+        "height_min": 280,
+        "height_max": 319
+      },
+      "elemental": {
+        "type": "array",
+        "light": 6
+      }
+    },
+    "boron": {
+      "source": {
+        "type": "mineral",
+        "formula": "calcium :2 boron* :6 oxygen :11 . 5 hydrogen :2 oxygen"
+      },
+      "elemental": {
+        "type": "metal",
+        "strength": 10.0
+      }
+    },
+    "chlorine": {
+      "source": {
+        "type": "mineral",
+        "formula": "sodium chlorine*"
+      },
+      "elemental": {
+        "type": "chamber",
+        "light": 3
+      }
+    },
+    "gallium": {
+      "source": {
+        "type": "mineral",
+        "formula": "copper gallium* sulfur :2"
+      },
+      "elemental": "chamber"
+    },
+    "antimony": {
+      "source": {
+        "type": "mineral",
+        "formula": "antimony* :2 sulfur :3",
+        "strength": 3.0
+      },
+      "elemental": {
+        "type": "metal",
+        "strength": 4.0
+      }
+    },
+    "platinum": {
+      "strength": 4.5,
+      "source": "ore",
+      "elemental": "metal"
+    },
+    "ytterbium": {
+      "source": {
+        "type": "centrifuge",
+        "mineral": "euxenite"
+      },
+      "elemental": {
+        "type": "metal",
+        "strength": 2.5
+      }
+    },
+    "erbium": {
+      "source": {
+        "type": "centrifuge",
+        "mineral": "euxenite"
+      },
+      "elemental": {
+        "type": "metal",
+        "strength": 6.5
+      }
+    },
+    "terbium": {
+      "source": {
+        "type": "centrifuge",
+        "mineral": "euxenite"
+      },
+      "elemental": {
+        "type": "metal",
+        "strength": 7.5
+      }
+    }
+  }
+}
