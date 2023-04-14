@@ -14,6 +14,11 @@ public class AtmosphericSource implements ElementSource {
     }
 
     @Override
+    public Type getType() {
+        return Type.ATMOSPHERE;
+    }
+
+    @Override
     public Block sourceBlock() {
         return null;
     }

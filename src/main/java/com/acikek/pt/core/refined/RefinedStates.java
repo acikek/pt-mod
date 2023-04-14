@@ -8,19 +8,19 @@ public class RefinedStates {
         return new RefinedStateBuilder();
     }
 
-    public static ElementRefinedState fromType(RefinedBlockType type, float strength) {
+    public static ElementRefinedState fromType(RefinedStateType type, float strength) {
         return builder().block(type, strength).build();
     }
 
     public static ElementRefinedState metal(float strength) {
-        return fromType(RefinedBlockType.METAL, strength);
+        return fromType(RefinedStateType.METAL, strength);
     }
 
     public static ElementRefinedState chamber() {
-        return fromType(RefinedBlockType.CHAMBER, 0.0f);
+        return fromType(RefinedStateType.CHAMBER, 0.0f);
     }
 
     public static ElementRefinedState basin() {
-        return fromType(RefinedBlockType.BASIN, 0.0f);
+        return fromType(RefinedStateType.BASIN, 0.0f);
     }
 }

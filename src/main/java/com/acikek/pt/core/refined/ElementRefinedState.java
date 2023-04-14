@@ -12,6 +12,8 @@ import java.util.List;
 
 public interface ElementRefinedState {
 
+    @NotNull RefinedStateType getType();
+
     @NotNull Item refinedItem();
 
     @NotNull Item miniRefinedItem();

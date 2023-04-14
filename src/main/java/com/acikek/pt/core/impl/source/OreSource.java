@@ -24,6 +24,11 @@ public class OreSource implements ElementSource {
     }
 
     @Override
+    public Type getType() {
+        return Type.ORE;
+    }
+
+    @Override
     public Block sourceBlock() {
         return ore;
     }

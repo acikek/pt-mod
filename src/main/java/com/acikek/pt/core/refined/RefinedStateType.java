@@ -6,7 +6,7 @@ import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Material;
 import net.minecraft.sound.BlockSoundGroup;
 
-public enum RefinedBlockType {
+public enum RefinedStateType {
 
     METAL(Material.METAL, BlockSoundGroup.METAL),
     CHAMBER(Material.GLASS, BlockSoundGroup.GLASS),
@@ -15,7 +15,7 @@ public enum RefinedBlockType {
     private final Material material;
     private final BlockSoundGroup sounds;
 
-    RefinedBlockType(Material material, BlockSoundGroup sounds) {
+    RefinedStateType(Material material, BlockSoundGroup sounds) {
         this.material = material;
         this.sounds = sounds;
     }

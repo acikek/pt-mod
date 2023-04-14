@@ -12,6 +12,14 @@ import java.util.List;
 
 public interface ElementSource {
 
+    enum Type {
+        ORE,
+        MINERAL,
+        ATMOSPHERE
+    }
+
+    Type getType();
+
     Block sourceBlock();
 
     default boolean hasSourceBlock() {

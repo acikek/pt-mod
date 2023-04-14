@@ -24,6 +24,11 @@ public class MineralSource implements ElementSource {
     }
 
     @Override
+    public Type getType() {
+        return Type.MINERAL;
+    }
+
+    @Override
     public Block sourceBlock() {
         return mineral;
     }

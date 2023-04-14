@@ -6,7 +6,7 @@ public interface ElementNaming {
 
     @NotNull String id();
 
-    @NotNull String name();
+    @NotNull String englishName();
 
     @NotNull String symbol();
 }

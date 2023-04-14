@@ -25,7 +25,7 @@ public class ElementNamingImpl implements ElementNaming {
     }
 
     @Override
-    public @NotNull String name() {
+    public @NotNull String englishName() {
         return name;
     }
 

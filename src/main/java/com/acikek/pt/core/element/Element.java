@@ -21,19 +21,23 @@ public interface Element extends NameHolder, SourceHolder, RefinedStateHolder {
     ElementIds<String> elementIds();
 
     default String getTextKey(String path) {
-        return "pt.element." + id() + "." + path;
+        return "element.pt." + id() + "." + path;
     }
 
-    default Text getText(String path) {
-        return Text.translatable(getTextKey(path));
+    default String getNameKey() {
+        return getTextKey("name");
     }
 
-    default Text getName() {
-        return getText("name");
+    default String getSymbolKey() {
+        return getTextKey("symbol");
     }
 
-    default Text getSymbol() {
-        return getText("symbol");
+    default Text getNameText() {
+        return Text.translatable(getNameKey());
+    }
+
+    default Text getSymbolText() {
+        return Text.translatable(getSymbolKey());
     }
 
     default void register(ElementRegistry registry) {

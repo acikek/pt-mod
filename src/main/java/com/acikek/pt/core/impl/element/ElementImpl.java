@@ -30,7 +30,7 @@ public class ElementImpl implements Element {
     }
 
     @Override
-    public @NotNull ElementNaming names() {
+    public @NotNull ElementNaming naming() {
         return names;
     }
 

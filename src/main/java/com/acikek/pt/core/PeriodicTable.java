@@ -14,13 +14,14 @@ public class PeriodicTable extends AbstractPeriodicTable {
     public static final Element HELIUM = Elements.gas("helium", 255, 300);
     public static final Element LITHIUM = Elements.full("lithium", ElementSources.mineral(), RefinedStates.metal(1.6f));
     public static final Element BERYLLIUM = Elements.full("beryllium", ElementSources.fullMineral(), RefinedStates.metal(6.5f));
-    public static final Element OXYGEN = Elements.gas(ElementNames.byId("oxygen", "H"), 0, 235);
+    public static final Element OXYGEN = Elements.gas(ElementNames.byId("oxygen", "O"), 0, 235);
     public static final Element ANTIMONY = Elements.full(ElementNames.byId("antimony", "Sb"), ElementSources.fullMineral(), RefinedStates.metal(4.0f));
+    public static final Element OSMIUM = Elements.full("osmium", ElementSources.ore(), RefinedStates.metal(7.0f));
 
     public static final PeriodicTable INSTANCE = new PeriodicTable();
 
     @Override
     protected List<Element> createElements() {
-        return List.of(HYDROGEN, HELIUM, LITHIUM, BERYLLIUM, OXYGEN, ANTIMONY);
+        return List.of(HYDROGEN, HELIUM, LITHIUM, BERYLLIUM, OXYGEN, ANTIMONY, OSMIUM);
     }
 }

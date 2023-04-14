@@ -4,9 +4,9 @@ import org.jetbrains.annotations.NotNull;
 
 public interface NameHolder {
 
-    @NotNull ElementNaming names();
+    @NotNull ElementNaming naming();
 
     default String id() {
-        return names().id();
+        return naming().id();
     }
 }

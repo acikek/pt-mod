@@ -1,17 +1,18 @@
 package com.acikek.pt.core.impl.refined;
 
+import com.acikek.pt.core.refined.RefinedStateType;
 import net.minecraft.block.Block;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.item.Item;
 
 import java.util.Objects;
 
-public class FluidRefinedState extends SolidRefinedState {
+public class FluidRefinedState extends BaseRefinedState {
 
     private final Fluid fluid;
 
     public FluidRefinedState(Item item, Item miniItem, Block block, Fluid fluid) {
-        super(item, miniItem, block);
+        super(item, miniItem, block, RefinedStateType.BASIN);
         Objects.requireNonNull(fluid);
         this.fluid = fluid;
     }
