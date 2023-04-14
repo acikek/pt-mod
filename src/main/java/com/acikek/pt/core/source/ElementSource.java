@@ -5,6 +5,7 @@ import com.acikek.pt.core.registry.ElementRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import org.apache.commons.lang3.Range;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -18,7 +19,7 @@ public interface ElementSource {
         ATMOSPHERE
     }
 
-    Type getType();
+    @NotNull Type getType();
 
     Block sourceBlock();
 

@@ -40,6 +40,52 @@ public interface Element extends NameHolder, SourceHolder, RefinedStateHolder {
         return Text.translatable(getSymbolKey());
     }
 
+    default String getSourceBlockName() {
+        return switch (source().getType()) {
+            case ORE -> naming().englishName() + " Ore";
+            case MINERAL -> naming().englishName() + " Source Block"; // TODO
+            default -> null;
+        };
+    }
+
+    default String getDeepslateSourceBlockName() {
+        return source().getType() == ElementSource.Type.ORE
+                ? "Deepslate " + naming().englishName() + " Ore"
+                : null;
+    }
+
+    default String getClusterSourceBlockName() {
+        return source().hasClusterSourceBlock()
+                ? naming().englishName() + " Cluster Source Block" // TODO
+                : null;
+    }
+
+    default String getRawSourceItemName() {
+        return switch (source().getType()) {
+            case ORE -> "Raw " + naming().englishName();
+            case MINERAL -> source().hasRawSourceItem() ? naming().englishName() + " Source Item" : null; // TODO
+            default -> null;
+        };
+    }
+
+    default String getRawSourceBlockName() {
+        return source().getType() == ElementSource.Type.ORE
+                ? "Block of Raw " + naming().englishName()
+                : null;
+    }
+
+    default String getRefinedItemName() {
+        return state().getType().formatItem(naming().englishName());
+    }
+
+    default String getMiniRefinedItemName() {
+        return state().getType().formatMiniItem(naming().englishName());
+    }
+
+    default String getRefinedBlockName() {
+        return state().getType().formatBlock(naming().englishName());
+    }
+
     default void register(ElementRegistry registry) {
         if (hasSource()) {
             source().register(registry, elementIds());

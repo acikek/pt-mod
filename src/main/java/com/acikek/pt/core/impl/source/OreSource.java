@@ -4,6 +4,7 @@ import com.acikek.pt.core.source.ElementSource;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import org.apache.commons.lang3.Range;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
 import java.util.stream.Stream;
@@ -24,7 +25,7 @@ public class OreSource implements ElementSource {
     }
 
     @Override
-    public Type getType() {
+    public @NotNull Type getType() {
         return Type.ORE;
     }
 

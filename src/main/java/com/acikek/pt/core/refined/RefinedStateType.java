@@ -8,16 +8,34 @@ import net.minecraft.sound.BlockSoundGroup;
 
 public enum RefinedStateType {
 
-    METAL(Material.METAL, BlockSoundGroup.METAL),
-    CHAMBER(Material.GLASS, BlockSoundGroup.GLASS),
-    BASIN(Material.METAL, ModSoundGroups.FLUID_BASIN);
+    METAL("Block of %s", "%s Ingot", "%s Nugget", Material.METAL, BlockSoundGroup.METAL),
+    CHAMBER("%s Chamber", "%s Tank", "%s Cell", Material.GLASS, BlockSoundGroup.GLASS),
+    BASIN("%s Basin", "Bottle of %s", "%s Vial", Material.METAL, ModSoundGroups.FLUID_BASIN);
 
+    private final String blockFormat;
+    private final String itemFormat;
+    private final String miniItemFormat;
     private final Material material;
     private final BlockSoundGroup sounds;
 
-    RefinedStateType(Material material, BlockSoundGroup sounds) {
+    RefinedStateType(String blockFormat, String itemFormat, String miniItemFormat, Material material, BlockSoundGroup sounds) {
+        this.blockFormat = blockFormat;
+        this.itemFormat = itemFormat;
+        this.miniItemFormat = miniItemFormat;
         this.material = material;
         this.sounds = sounds;
+    }
+
+    public String formatBlock(String name) {
+        return blockFormat.formatted(name);
+    }
+
+    public String formatItem(String name) {
+        return itemFormat.formatted(name);
+    }
+
+    public String formatMiniItem(String name) {
+        return miniItemFormat.formatted(name);
     }
 
     private float getStrength(float strength) {

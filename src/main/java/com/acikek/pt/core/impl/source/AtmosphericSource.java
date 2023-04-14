@@ -4,6 +4,7 @@ import com.acikek.pt.core.source.ElementSource;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import org.apache.commons.lang3.Range;
+import org.jetbrains.annotations.NotNull;
 
 public class AtmosphericSource implements ElementSource {
 
@@ -14,7 +15,7 @@ public class AtmosphericSource implements ElementSource {
     }
 
     @Override
-    public Type getType() {
+    public @NotNull Type getType() {
         return Type.ATMOSPHERE;
     }
 
