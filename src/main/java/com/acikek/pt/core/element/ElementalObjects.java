@@ -20,7 +20,7 @@ public class ElementalObjects {
             .sounds(BlockSoundGroup.DEEPSLATE)
             .strength(4.5f, 3.0f);
 
-    private static final AbstractBlock.Settings MINERAL_SETTINGS = FabricBlockSettings.of(Material.STONE)
+    public static final AbstractBlock.Settings MINERAL_SETTINGS = FabricBlockSettings.of(Material.STONE)
             .requiresTool()
             .sounds(BlockSoundGroup.TUFF)
             .strength(3.0f);

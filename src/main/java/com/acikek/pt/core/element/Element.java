@@ -86,6 +86,12 @@ public interface Element extends NameHolder, SourceHolder, RefinedStateHolder {
         return state().getType().formatBlock(naming().englishName());
     }
 
+    default Item getMineralResultItem() {
+        return source().hasRawSourceItem()
+            ? source().rawSourceItem()
+            : state().refinedItem();
+    }
+
     default void register(ElementRegistry registry) {
         if (hasSource()) {
             source().register(registry, elementIds());

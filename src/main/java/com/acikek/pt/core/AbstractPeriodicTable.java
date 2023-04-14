@@ -2,11 +2,13 @@ package com.acikek.pt.core;
 
 import com.acikek.pt.PT;
 import com.acikek.pt.core.element.Element;
+import com.acikek.pt.core.mineral.Mineral;
 import com.acikek.pt.core.registry.ElementRegistry;
 import com.google.common.collect.ImmutableMap;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
@@ -22,11 +24,18 @@ public abstract class AbstractPeriodicTable {
             builder.put(element.id(), element);
         }
         elements = builder.build();
+        for (Mineral mineral : createMinerals()) {
+            mineral.init();
+        }
         this.registry = registry;
     }
 
     protected AbstractPeriodicTable() {
         this(PT.REGISTRY);
+    }
+
+    protected List<Mineral> createMinerals() {
+        return Collections.emptyList();
     }
 
     protected abstract List<Element> createElements();
