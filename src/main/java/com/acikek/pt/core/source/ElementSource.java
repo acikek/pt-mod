@@ -4,11 +4,19 @@ import com.acikek.pt.PT;
 import com.acikek.pt.core.id.ElementIds;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
-import org.jetbrains.annotations.NotNull;
+import org.apache.commons.lang3.Range;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public interface ElementSource {
 
-    @NotNull Block sourceBlock();
+    Block sourceBlock();
+
+    default boolean hasSourceBlock() {
+        return sourceBlock() != null;
+    }
 
     Block deepslateSourceBlock();
 
@@ -34,8 +42,16 @@ public interface ElementSource {
         return rawSourceBlock() != null;
     }
 
+    Range<Integer> atmosphericRange();
+
+    default boolean hasAtmosphericSource() {
+        return atmosphericRange() != null;
+    }
+
     default void register(ElementIds<String> ids) {
-        PT.registerBlock(ids.getSourceBlockId(), sourceBlock());
+        if (hasSourceBlock()) {
+            PT.registerBlock(ids.getSourceBlockId(), sourceBlock());
+        }
         if (hasDeepslateSourceBlock()) {
             PT.registerBlock(ids.getDeepslateSourceBlockId(), deepslateSourceBlock());
         }
@@ -48,5 +64,28 @@ public interface ElementSource {
         if (hasRawSourceBlock()) {
             PT.registerBlock(ids.getRawSourceBlockId(), rawSourceBlock());
         }
+    }
+
+    default List<Block> getBlocks() {
+        List<Block> result = new ArrayList<>();
+        if (hasSourceBlock()) {
+            result.add(sourceBlock());
+        }
+        if (hasDeepslateSourceBlock()) {
+            result.add(deepslateSourceBlock());
+        }
+        if (hasClusterSourceBlock()) {
+            result.add(clusterSourceBlock());
+        }
+        if (hasRawSourceBlock()) {
+            result.add(rawSourceBlock());
+        }
+        return result;
+    }
+
+    default List<Item> getItems() {
+        return hasRawSourceItem()
+                ? Collections.singletonList(rawSourceItem())
+                : Collections.emptyList();
     }
 }

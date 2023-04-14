@@ -1,16 +1,18 @@
 package com.acikek.pt;
 
-import com.acikek.pt.core.element.Element;
-import com.acikek.pt.core.element.Elements;
-import com.acikek.pt.core.refined.RefinedStates;
-import com.acikek.pt.core.source.ElementSources;
+import com.acikek.pt.core.PeriodicTable;
 import com.acikek.pt.sound.ModSoundEvents;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
+import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
+import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.minecraft.block.Block;
+import net.minecraft.block.Blocks;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemGroup;
+import net.minecraft.item.Items;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;
@@ -22,6 +24,14 @@ public class PT implements ModInitializer {
     public static Identifier id(String path) {
         return new Identifier(ID, path);
     }
+
+    public static final ItemGroup ITEM_GROUP_BLOCKS = FabricItemGroup.builder(PT.id("blocks"))
+            .icon(() -> Blocks.DIRT.asItem().getDefaultStack())
+            .build();
+
+    public static final ItemGroup ITEM_GROUP_ITEMS = FabricItemGroup.builder(PT.id("items"))
+            .icon(Items.APPLE::getDefaultStack)
+            .build();
 
     public static <T> T register(Registry<? super T> registry, String path, T entry) {
         return Registry.register(registry, id(path), entry);
@@ -50,14 +60,8 @@ public class PT implements ModInitializer {
     @Override
     public void onInitialize() {
         ModSoundEvents.register();
-        Element oxygen = Elements.noSource("oxygen", RefinedStates.chamber());
-        Element antimony = Elements.full("antimony", ElementSources.mineralBuilder().addCluster().addRawMineral().build(), RefinedStates.metal(4.0f));
-        Element gallium = Elements.full("gallium", ElementSources.mineral(), RefinedStates.basin());
-        Element osmium = Elements.full("osmium", ElementSources.ore(), RefinedStates.metal(8.0f));
-
-        oxygen.register();
-        antimony.register();
-        gallium.register();
-        osmium.register();
+        PeriodicTable.register();
+        ItemGroupEvents.modifyEntriesEvent(ITEM_GROUP_BLOCKS).register(entries -> PeriodicTable.getBlocks().forEach(entries::add));
+        ItemGroupEvents.modifyEntriesEvent(ITEM_GROUP_ITEMS).register(entries -> PeriodicTable.getItems().forEach(entries::add));
     }
 }

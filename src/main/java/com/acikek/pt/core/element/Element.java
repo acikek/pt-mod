@@ -1,8 +1,18 @@
 package com.acikek.pt.core.element;
 
 import com.acikek.pt.core.id.ElementIds;
+import com.acikek.pt.core.refined.ElementRefinedState;
 import com.acikek.pt.core.refined.RefinedStateHolder;
+import com.acikek.pt.core.source.ElementSource;
 import com.acikek.pt.core.source.SourceHolder;
+import net.minecraft.block.Block;
+import net.minecraft.item.Item;
+import net.minecraft.text.Text;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.function.Function;
 
 public interface Element extends SourceHolder, RefinedStateHolder {
 
@@ -10,10 +20,41 @@ public interface Element extends SourceHolder, RefinedStateHolder {
 
     ElementIds<String> elementIds();
 
+    default String getTextKey(String path) {
+        return "pt.element." + id() + "." + path;
+    }
+
+    default Text getText(String path) {
+        return Text.translatable(getTextKey(path));
+    }
+
+    default Text getName() {
+        return getText("name");
+    }
+
+    default Text getSymbol() {
+        return getText("symbol");
+    }
+
     default void register() {
         if (hasSource()) {
             source().register(elementIds());
         }
         state().register(elementIds());
+    }
+
+    private <T> List<T> getValues(Function<ElementSource, List<T>> sourceList, Function<ElementRefinedState, List<T>> stateList) {
+        List<T> sourceBlocks = hasSource() ? sourceList.apply(source()) : Collections.emptyList();
+        List<T> result = new ArrayList<>(sourceBlocks);
+        result.addAll(stateList.apply(state()));
+        return result;
+    }
+
+    default List<Block> getBlocks() {
+        return getValues(ElementSource::getBlocks, ElementRefinedState::getBlocks);
+    }
+
+    default List<Item> getItems() {
+        return getValues(ElementSource::getItems, ElementRefinedState::getItems);
     }
 }

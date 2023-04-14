@@ -7,6 +7,9 @@ import net.minecraft.fluid.Fluid;
 import net.minecraft.item.Item;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Collections;
+import java.util.List;
+
 public interface ElementRefinedState {
 
     @NotNull Item refinedItem();
@@ -28,5 +31,13 @@ public interface ElementRefinedState {
         if (hasRefinedFluid()) {
             PT.registerFluid(ids.getFluidId(), refinedFluid());
         }
+    }
+
+    default List<Block> getBlocks() {
+        return Collections.singletonList(refinedBlock());
+    }
+
+    default List<Item> getItems() {
+        return List.of(refinedItem(), miniRefinedItem());
     }
 }

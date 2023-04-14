@@ -3,7 +3,7 @@ package com.acikek.pt.core.impl.source;
 import com.acikek.pt.core.source.ElementSource;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
-import org.jetbrains.annotations.NotNull;
+import org.apache.commons.lang3.Range;
 
 import java.util.Objects;
 import java.util.stream.Stream;
@@ -24,7 +24,7 @@ public class OreSource implements ElementSource {
     }
 
     @Override
-    public @NotNull Block sourceBlock() {
+    public Block sourceBlock() {
         return ore;
     }
 
@@ -46,5 +46,10 @@ public class OreSource implements ElementSource {
     @Override
     public Block rawSourceBlock() {
         return rawBlock;
+    }
+
+    @Override
+    public Range<Integer> atmosphericRange() {
+        return null;
     }
 }
