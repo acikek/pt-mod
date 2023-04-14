@@ -60,8 +60,8 @@ public class PT implements ModInitializer {
     @Override
     public void onInitialize() {
         ModSoundEvents.register();
-        PeriodicTable.register();
-        ItemGroupEvents.modifyEntriesEvent(ITEM_GROUP_BLOCKS).register(entries -> PeriodicTable.getBlocks().forEach(entries::add));
-        ItemGroupEvents.modifyEntriesEvent(ITEM_GROUP_ITEMS).register(entries -> PeriodicTable.getItems().forEach(entries::add));
+        PeriodicTable.INSTANCE.register();
+        ItemGroupEvents.modifyEntriesEvent(ITEM_GROUP_BLOCKS).register(entries -> PeriodicTable.INSTANCE.getBlocks().forEach(entries::add));
+        ItemGroupEvents.modifyEntriesEvent(ITEM_GROUP_ITEMS).register(entries -> PeriodicTable.INSTANCE.getItems().forEach(entries::add));
     }
 }
