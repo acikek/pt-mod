@@ -1,5 +1,6 @@
 package com.acikek.pt.core.element;
 
+import com.acikek.pt.core.lang.NameHolder;
 import com.acikek.pt.core.registry.ElementIds;
 import com.acikek.pt.core.refined.ElementRefinedState;
 import com.acikek.pt.core.refined.RefinedStateHolder;
@@ -15,9 +16,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.function.Function;
 
-public interface Element extends SourceHolder, RefinedStateHolder {
-
-    String id();
+public interface Element extends NameHolder, SourceHolder, RefinedStateHolder {
 
     ElementIds<String> elementIds();
 
