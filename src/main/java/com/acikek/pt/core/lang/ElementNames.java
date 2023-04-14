@@ -45,6 +45,6 @@ public class ElementNames {
         if (obj instanceof ElementNaming naming) {
             return naming;
         }
-        throw new IllegalStateException("object must be either a String id or an ElementNaming object");
+        throw new IllegalStateException("object must be either a String id or an ElementNaming instance");
     }
 }

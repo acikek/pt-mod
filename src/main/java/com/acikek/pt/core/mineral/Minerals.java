@@ -3,6 +3,7 @@ package com.acikek.pt.core.mineral;
 import com.acikek.pt.core.element.Element;
 import com.acikek.pt.core.element.ElementalObjects;
 import com.acikek.pt.core.impl.mineral.MineralResultImpls;
+import com.acikek.pt.core.lang.MineralNaming;
 
 import java.util.Arrays;
 import java.util.List;
@@ -26,7 +27,7 @@ public class Minerals {
         return random(Arrays.stream(pairs).toList());
     }
 
-    public static MineralBlock block(String name, Supplier<List<MineralResult>> supplier) {
-        return new MineralBlock(ElementalObjects.MINERAL_SETTINGS, name, supplier);
+    public static MineralBlock block(Object naming, Supplier<List<MineralResult>> supplier) {
+        return new MineralBlock(ElementalObjects.MINERAL_SETTINGS, MineralNaming.forObject(naming), supplier);
     }
 }

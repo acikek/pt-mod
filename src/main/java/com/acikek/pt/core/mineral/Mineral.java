@@ -1,5 +1,6 @@
 package com.acikek.pt.core.mineral;
 
+import com.acikek.pt.core.lang.MineralNaming;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
@@ -7,7 +8,7 @@ import java.util.List;
 
 public interface Mineral {
 
-    String englishName();
+    MineralNaming naming();
 
     void init();
 
