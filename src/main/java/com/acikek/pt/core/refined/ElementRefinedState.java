@@ -1,7 +1,7 @@
 package com.acikek.pt.core.refined;
 
-import com.acikek.pt.PT;
-import com.acikek.pt.core.id.ElementIds;
+import com.acikek.pt.core.registry.ElementIds;
+import com.acikek.pt.core.registry.ElementRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.item.Item;
@@ -24,12 +24,12 @@ public interface ElementRefinedState {
         return refinedFluid() != null;
     }
 
-    default void register(ElementIds<String> ids) {
-        PT.registerItem(ids.getItemId(), refinedItem());
-        PT.registerItem(ids.getMiniItemId(), miniRefinedItem());
-        PT.registerBlock(ids.getBlockId(), refinedBlock());
+    default void register(ElementRegistry registry, ElementIds<String> ids) {
+        registry.registerItem(ids.getItemId(), refinedItem());
+        registry.registerItem(ids.getMiniItemId(), miniRefinedItem());
+        registry.registerBlock(ids.getBlockId(), refinedBlock());
         if (hasRefinedFluid()) {
-            PT.registerFluid(ids.getFluidId(), refinedFluid());
+            registry.registerFluid(ids.getFluidId(), refinedFluid());
         }
     }
 

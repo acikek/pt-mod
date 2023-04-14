@@ -1,6 +1,8 @@
 package com.acikek.pt.core;
 
+import com.acikek.pt.PT;
 import com.acikek.pt.core.element.Element;
+import com.acikek.pt.core.registry.ElementRegistry;
 import com.google.common.collect.ImmutableMap;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
@@ -12,13 +14,19 @@ import java.util.function.Function;
 public abstract class AbstractPeriodicTable {
 
     private final Map<String, Element> elements;
+    private final ElementRegistry registry;
 
-    protected AbstractPeriodicTable() {
+    protected AbstractPeriodicTable(ElementRegistry registry) {
         ImmutableMap.Builder<String, Element> builder = ImmutableMap.builder();
         for (Element element : createElements()) {
             builder.put(element.id(), element);
         }
         elements = builder.build();
+        this.registry = registry;
+    }
+
+    protected AbstractPeriodicTable() {
+        this(PT.REGISTRY);
     }
 
     protected abstract List<Element> createElements();
@@ -47,7 +55,7 @@ public abstract class AbstractPeriodicTable {
 
     public void register() {
         for (Element element : getElements()) {
-            element.register();
+            element.register(registry);
         }
     }
 }

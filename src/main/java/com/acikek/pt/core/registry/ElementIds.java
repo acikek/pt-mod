@@ -1,6 +1,6 @@
-package com.acikek.pt.core.id;
+package com.acikek.pt.core.registry;
 
-import com.acikek.pt.core.impl.id.ElementIdImpls;
+import com.acikek.pt.core.impl.registry.ElementIdImpls;
 import net.minecraft.util.Identifier;
 
 public abstract class ElementIds<T> {

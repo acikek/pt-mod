@@ -1,7 +1,7 @@
 package com.acikek.pt.core.source;
 
-import com.acikek.pt.PT;
-import com.acikek.pt.core.id.ElementIds;
+import com.acikek.pt.core.registry.ElementIds;
+import com.acikek.pt.core.registry.ElementRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import org.apache.commons.lang3.Range;
@@ -48,21 +48,21 @@ public interface ElementSource {
         return atmosphericRange() != null;
     }
 
-    default void register(ElementIds<String> ids) {
+    default void register(ElementRegistry registry, ElementIds<String> ids) {
         if (hasSourceBlock()) {
-            PT.registerBlock(ids.getSourceBlockId(), sourceBlock());
+            registry.registerBlock(ids.getSourceBlockId(), sourceBlock());
         }
         if (hasDeepslateSourceBlock()) {
-            PT.registerBlock(ids.getDeepslateSourceBlockId(), deepslateSourceBlock());
+            registry.registerBlock(ids.getDeepslateSourceBlockId(), deepslateSourceBlock());
         }
         if (hasClusterSourceBlock()) {
-            PT.registerBlock(ids.getClusterSourceBlockId(), clusterSourceBlock());
+            registry.registerBlock(ids.getClusterSourceBlockId(), clusterSourceBlock());
         }
         if (hasRawSourceItem()) {
-            PT.registerItem(ids.getRawSourceItemId(), rawSourceItem());
+            registry.registerItem(ids.getRawSourceItemId(), rawSourceItem());
         }
         if (hasRawSourceBlock()) {
-            PT.registerBlock(ids.getRawSourceBlockId(), rawSourceBlock());
+            registry.registerBlock(ids.getRawSourceBlockId(), rawSourceBlock());
         }
     }
 

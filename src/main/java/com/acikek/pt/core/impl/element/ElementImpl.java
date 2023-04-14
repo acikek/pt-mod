@@ -1,7 +1,7 @@
 package com.acikek.pt.core.impl.element;
 
 import com.acikek.pt.core.element.Element;
-import com.acikek.pt.core.id.ElementIds;
+import com.acikek.pt.core.registry.ElementIds;
 import com.acikek.pt.core.refined.ElementRefinedState;
 import com.acikek.pt.core.source.ElementSource;
 import org.jetbrains.annotations.NotNull;

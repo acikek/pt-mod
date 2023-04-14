@@ -1,8 +1,9 @@
 package com.acikek.pt.core.element;
 
-import com.acikek.pt.core.id.ElementIds;
+import com.acikek.pt.core.registry.ElementIds;
 import com.acikek.pt.core.refined.ElementRefinedState;
 import com.acikek.pt.core.refined.RefinedStateHolder;
+import com.acikek.pt.core.registry.ElementRegistry;
 import com.acikek.pt.core.source.ElementSource;
 import com.acikek.pt.core.source.SourceHolder;
 import net.minecraft.block.Block;
@@ -36,11 +37,11 @@ public interface Element extends SourceHolder, RefinedStateHolder {
         return getText("symbol");
     }
 
-    default void register() {
+    default void register(ElementRegistry registry) {
         if (hasSource()) {
-            source().register(elementIds());
+            source().register(registry, elementIds());
         }
-        state().register(elementIds());
+        state().register(registry, elementIds());
     }
 
     private <T> List<T> getValues(Function<ElementSource, List<T>> sourceList, Function<ElementRefinedState, List<T>> stateList) {
