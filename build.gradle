@@ -49,6 +49,8 @@ sourceSets {
 }
 
 processResources {
+    duplicatesStrategy(DuplicatesStrategy.INCLUDE)
+
     inputs.property "version", project.version
     filteringCharset "UTF-8"
 

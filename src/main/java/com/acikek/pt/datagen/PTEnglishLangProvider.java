@@ -3,7 +3,6 @@ package com.acikek.pt.datagen;
 import com.acikek.pt.core.PeriodicTable;
 import com.acikek.pt.core.element.Element;
 import com.acikek.pt.core.refined.ElementRefinedState;
-import com.acikek.pt.core.source.ElementSource;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
 
@@ -26,11 +25,7 @@ public class PTEnglishLangProvider extends FabricLanguageProvider {
     public static void generateForElement(TranslationBuilder builder, Element element) {
         builder.add(element.getNameKey(), element.naming().englishName());
         builder.add(element.getSymbolKey(), element.naming().symbol());
-        if (element.hasSources()) {
-            for (ElementSource source : element.sources()) {
-                source.buildTranslations(builder, element);
-            }
-        }
+        element.forEachSource(source -> source.buildTranslations(builder, element));
         generateForState(builder, element, element.state());
     }
 

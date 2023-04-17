@@ -8,6 +8,7 @@ public class PTDatagen implements DataGeneratorEntrypoint {
     @Override
     public void onInitializeDataGenerator(FabricDataGenerator fabricDataGenerator) {
         var pack = fabricDataGenerator.createPack();
-        pack.addProvider((output, registriesFuture) -> new PTEnglishLangProvider(output));
+        pack.addProvider(PTModelProvider::new);
+        pack.addProvider(PTEnglishLangProvider::new);
     }
 }

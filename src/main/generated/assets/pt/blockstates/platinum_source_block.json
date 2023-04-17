@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "pt:block/platinum_source_block"
+    }
+  }
+}

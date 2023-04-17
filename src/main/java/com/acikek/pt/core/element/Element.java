@@ -15,6 +15,7 @@ import net.minecraft.world.World;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.function.Consumer;
 import java.util.function.Function;
 
 public interface Element extends NameHolder, SourceHolder, RefinedStateHolder {
@@ -51,6 +52,14 @@ public interface Element extends NameHolder, SourceHolder, RefinedStateHolder {
 
     default String getRefinedBlockName() {
         return state().getType().getBlockName(naming().englishName());
+    }
+
+    default void forEachSource(Consumer<ElementSource> fn) {
+        if (hasSources()) {
+            for (ElementSource source : sources()) {
+                fn.accept(source);
+            }
+        }
     }
 
     default Item getMineralResultItem(World world) {

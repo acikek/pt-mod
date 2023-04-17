@@ -35,13 +35,13 @@ public class RefinedStateBuilder {
         return this;
     }
 
-    public RefinedStateBuilder block(RefinedStateType type, float strength) {
+    public RefinedStateBuilder block(RefinedStateType type, Float strength) {
         this.type(type);
-        return block(new Block(type.getBlockSettings(strength)));
+        return block(type.createBlock(strength));
     }
 
     public RefinedStateBuilder block(RefinedStateType type) {
-        return block(type, 0.0f);
+        return block(type, null);
     }
 
     public RefinedStateBuilder addFluid(Fluid fluid) {

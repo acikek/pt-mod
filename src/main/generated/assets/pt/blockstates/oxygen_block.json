@@ -1,0 +1,21 @@
+{
+  "variants": {
+    "": [
+      {
+        "model": "pt:block/oxygen_block"
+      },
+      {
+        "model": "pt:block/oxygen_block",
+        "y": 90
+      },
+      {
+        "model": "pt:block/oxygen_block",
+        "y": 180
+      },
+      {
+        "model": "pt:block/oxygen_block",
+        "y": 270
+      }
+    ]
+  }
+}

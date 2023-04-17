@@ -8,8 +8,12 @@ public class RefinedStates {
         return new RefinedStateBuilder();
     }
 
-    public static ElementRefinedState fromType(RefinedStateType type, float strength) {
+    public static ElementRefinedState fromType(RefinedStateType type, Float strength) {
         return builder().block(type, strength).build();
+    }
+
+    public static ElementRefinedState fromType(RefinedStateType type) {
+        return fromType(type, null);
     }
 
     public static ElementRefinedState metal(float strength) {
@@ -17,10 +21,22 @@ public class RefinedStates {
     }
 
     public static ElementRefinedState chamber() {
-        return fromType(RefinedStateTypes.CHAMBER, 0.0f);
+        return fromType(RefinedStateTypes.CHAMBER);
     }
 
     public static ElementRefinedState basin() {
-        return fromType(RefinedStateTypes.BASIN, 0.0f);
+        return fromType(RefinedStateTypes.BASIN);
+    }
+
+    public static ElementRefinedState sack() {
+        return fromType(RefinedStateTypes.SACK);
+    }
+
+    public static ElementRefinedState bloom() {
+        return fromType(RefinedStateTypes.BLOOM);
+    }
+
+    public static ElementRefinedState trace() {
+        return fromType(RefinedStateTypes.TRACE);
     }
 }

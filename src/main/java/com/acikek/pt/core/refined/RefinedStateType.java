@@ -1,6 +1,8 @@
 package com.acikek.pt.core.refined;
 
-import net.minecraft.block.AbstractBlock;
+import net.minecraft.block.Block;
+import net.minecraft.data.client.BlockStateModelGenerator;
+import org.jetbrains.annotations.Nullable;
 
 public interface RefinedStateType {
 
@@ -10,5 +12,7 @@ public interface RefinedStateType {
 
     String getMiniItemName(String elementName);
 
-    AbstractBlock.Settings getBlockSettings(float strengthInput);
+    Block createBlock(@Nullable Float blockStrength);
+
+    void buildBlockModel(BlockStateModelGenerator generator, Block block);
 }

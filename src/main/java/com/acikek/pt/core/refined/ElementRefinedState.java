@@ -3,6 +3,7 @@ package com.acikek.pt.core.refined;
 import com.acikek.pt.core.registry.ElementIds;
 import com.acikek.pt.core.registry.ElementRegistry;
 import net.minecraft.block.Block;
+import net.minecraft.data.client.BlockStateModelGenerator;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.item.Item;
 import org.jetbrains.annotations.NotNull;
@@ -24,6 +25,10 @@ public interface ElementRefinedState {
 
     default boolean hasRefinedFluid() {
         return refinedFluid() != null;
+    }
+
+    default void buildBlockModel(BlockStateModelGenerator generator) {
+        getType().buildBlockModel(generator, refinedBlock());
     }
 
     default void register(ElementRegistry registry, ElementIds<String> ids) {

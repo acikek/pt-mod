@@ -81,6 +81,8 @@ public class MineralSource implements ElementSource {
 
     @Override
     public List<Item> getItems() {
-        return List.of(rawMineral);
+        return rawMineral != null
+                ? Collections.singletonList(rawMineral)
+                : Collections.emptyList();
     }
 }
