@@ -42,15 +42,15 @@ public interface Element extends NameHolder, SourceHolder, RefinedStateHolder {
     }
 
     default String getRefinedItemName() {
-        return state().getType().formatItem(naming().englishName());
+        return state().getType().getItemName(naming().englishName());
     }
 
     default String getMiniRefinedItemName() {
-        return state().getType().formatMiniItem(naming().englishName());
+        return state().getType().getMiniItemName(naming().englishName());
     }
 
     default String getRefinedBlockName() {
-        return state().getType().formatBlock(naming().englishName());
+        return state().getType().getBlockName(naming().englishName());
     }
 
     default Item getMineralResultItem(World world) {

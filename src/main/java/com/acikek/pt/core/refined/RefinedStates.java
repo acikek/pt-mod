@@ -13,14 +13,14 @@ public class RefinedStates {
     }
 
     public static ElementRefinedState metal(float strength) {
-        return fromType(RefinedStateType.METAL, strength);
+        return fromType(RefinedStateTypes.METAL, strength);
     }
 
     public static ElementRefinedState chamber() {
-        return fromType(RefinedStateType.CHAMBER, 0.0f);
+        return fromType(RefinedStateTypes.CHAMBER, 0.0f);
     }
 
     public static ElementRefinedState basin() {
-        return fromType(RefinedStateType.BASIN, 0.0f);
+        return fromType(RefinedStateTypes.BASIN, 0.0f);
     }
 }
