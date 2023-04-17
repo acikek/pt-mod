@@ -41,17 +41,18 @@ public class PeriodicTable extends AbstractPeriodicTable {
     public static final Element OXYGEN = Elements.gas(ElementNames.byId("oxygen", "O"), 0, 235);
     public static final Element SULFUR = Elements.full(ElementNames.byId("sulfur", "S"), ElementSources.fullMineral(GYPSUM), RefinedStates.metal(0.0f));
     public static final Element ANTIMONY = Elements.full(ElementNames.byId("antimony", "Sb"), ElementSources.fullMineral(STIBNITE), RefinedStates.metal(4.0f));
+    public static final Element PLATINUM = Elements.full(ElementNames.byId("platinum", "Pt"), ElementSources.ore(), RefinedStates.metal(4.5f));
     public static final Element OSMIUM = Elements.full("osmium", ElementSources.ore(), RefinedStates.metal(7.0f));
 
     public static final AbstractPeriodicTable INSTANCE = new PeriodicTable();
 
     @Override
     protected List<Mineral> createMinerals() {
-        return List.of(STIBNITE);
+        return List.of(LITHIOPHILITE, STIBNITE, CHRYSOBERYL, GYPSUM);
     }
 
     @Override
     protected List<Element> createElements() {
-        return List.of(HYDROGEN, HELIUM, LITHIUM, BERYLLIUM, OXYGEN, SULFUR, ANTIMONY, OSMIUM);
+        return List.of(HYDROGEN, HELIUM, LITHIUM, BERYLLIUM, OXYGEN, SULFUR, ANTIMONY, PLATINUM, OSMIUM);
     }
 }

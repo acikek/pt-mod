@@ -1,0 +1,3 @@
+[submodule "src/main/resources/resourcepacks/pt-art"]
+	path = src/main/resources/resourcepacks/pt-art
+	url = https://github.com/acikek/pt-art
