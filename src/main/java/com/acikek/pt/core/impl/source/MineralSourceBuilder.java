@@ -1,19 +1,20 @@
 package com.acikek.pt.core.impl.source;
 
 import com.acikek.pt.core.element.ElementalObjects;
+import com.acikek.pt.core.mineral.MineralBlock;
 import com.acikek.pt.core.source.ElementSource;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 
 public class MineralSourceBuilder {
 
-    private Block mineral;
+    private MineralBlock mineral;
     private Block cluster;
     private boolean hasCluster = false;
     private Item rawMineral;
     private boolean hasRawMineral = false;
 
-    public MineralSourceBuilder mineral(Block mineral) {
+    public MineralSourceBuilder mineral(MineralBlock mineral) {
         this.mineral = mineral;
         return this;
     }
@@ -40,7 +41,7 @@ public class MineralSourceBuilder {
 
     public ElementSource build() {
         return new MineralSource(
-                mineral != null ? mineral : ElementalObjects.createMineralBlock(),
+                mineral,
                 cluster != null ? cluster : hasCluster ? ElementalObjects.createClusterBlock() : null,
                 rawMineral != null ? rawMineral : hasRawMineral ? ElementalObjects.createItem() : null
         );

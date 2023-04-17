@@ -1,9 +1,9 @@
 package com.acikek.pt.core.element;
 
 import com.acikek.pt.core.lang.NameHolder;
-import com.acikek.pt.core.registry.ElementIds;
 import com.acikek.pt.core.refined.ElementRefinedState;
 import com.acikek.pt.core.refined.RefinedStateHolder;
+import com.acikek.pt.core.registry.ElementIds;
 import com.acikek.pt.core.registry.ElementRegistry;
 import com.acikek.pt.core.source.ElementSource;
 import com.acikek.pt.core.source.SourceHolder;
@@ -43,7 +43,7 @@ public interface Element extends NameHolder, SourceHolder, RefinedStateHolder {
     default String getSourceBlockName() {
         return switch (source().getType()) {
             case ORE -> naming().englishName() + " Ore";
-            case MINERAL -> naming().englishName() + " Source Block"; // TODO
+            case MINERAL -> source().getMineral().naming().englishName();
             default -> null;
         };
     }
@@ -56,14 +56,14 @@ public interface Element extends NameHolder, SourceHolder, RefinedStateHolder {
 
     default String getClusterSourceBlockName() {
         return source().hasClusterSourceBlock()
-                ? naming().englishName() + " Cluster Source Block" // TODO
+                ? source().getMineral().naming().englishName() + " Cluster"
                 : null;
     }
 
     default String getRawSourceItemName() {
         return switch (source().getType()) {
             case ORE -> "Raw " + naming().englishName();
-            case MINERAL -> source().hasRawSourceItem() ? naming().englishName() + " Source Item" : null; // TODO
+            case MINERAL -> source().hasRawSourceItem() ? source().getMineral().naming().rawFormName() : null;
             default -> null;
         };
     }

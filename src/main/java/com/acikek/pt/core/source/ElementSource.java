@@ -1,5 +1,6 @@
 package com.acikek.pt.core.source;
 
+import com.acikek.pt.core.mineral.Mineral;
 import com.acikek.pt.core.registry.ElementIds;
 import com.acikek.pt.core.registry.ElementRegistry;
 import net.minecraft.block.Block;
@@ -25,6 +26,10 @@ public interface ElementSource {
 
     default boolean hasSourceBlock() {
         return sourceBlock() != null;
+    }
+
+    default Mineral getMineral() {
+        return sourceBlock() instanceof Mineral mineral ? mineral : null;
     }
 
     Block deepslateSourceBlock();

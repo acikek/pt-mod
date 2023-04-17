@@ -1,5 +1,6 @@
 package com.acikek.pt.core.element;
 
+import com.acikek.pt.core.mineral.MineralBlock;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.block.AbstractBlock;
@@ -40,10 +41,6 @@ public class ElementalObjects {
 
     public static Block createDeepslateOreBlock() {
         return new Block(FabricBlockSettings.copyOf(DEEPSLATE_ORE_SETTINGS));
-    }
-
-    public static Block createMineralBlock() {
-        return new Block(FabricBlockSettings.copyOf(MINERAL_SETTINGS));
     }
 
     public static Block createClusterBlock() {
