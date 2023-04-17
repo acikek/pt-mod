@@ -22,7 +22,7 @@ public interface Mineral {
 
     default List<ItemStack> getResultStacks(World world) {
         return getResultElements(world).stream()
-                .map(MineralResult.Pair::toResultStack)
+                .map(pair -> pair.toResultStack(world))
                 .toList();
     }
 }

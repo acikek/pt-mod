@@ -7,8 +7,8 @@ import net.minecraft.world.World;
 public interface MineralResult {
 
     record Pair(Element element, int amount) {
-        public ItemStack toResultStack() {
-            return element.getMineralResultItem().getDefaultStack().copyWithCount(amount);
+        public ItemStack toResultStack(World world) {
+            return element.getMineralResultItem(world).getDefaultStack().copyWithCount(amount);
         }
     }
 

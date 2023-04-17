@@ -10,6 +10,7 @@ import com.acikek.pt.core.source.SourceHolder;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.text.Text;
+import net.minecraft.world.World;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -40,40 +41,6 @@ public interface Element extends NameHolder, SourceHolder, RefinedStateHolder {
         return Text.translatable(getSymbolKey());
     }
 
-    default String getSourceBlockName() {
-        return switch (source().getType()) {
-            case ORE -> naming().englishName() + " Ore";
-            case MINERAL -> source().getMineral().naming().englishName();
-            default -> null;
-        };
-    }
-
-    default String getDeepslateSourceBlockName() {
-        return source().getType() == ElementSource.Type.ORE
-                ? "Deepslate " + naming().englishName() + " Ore"
-                : null;
-    }
-
-    default String getClusterSourceBlockName() {
-        return source().hasClusterSourceBlock()
-                ? source().getMineral().naming().englishName() + " Cluster"
-                : null;
-    }
-
-    default String getRawSourceItemName() {
-        return switch (source().getType()) {
-            case ORE -> "Raw " + naming().englishName();
-            case MINERAL -> source().hasRawSourceItem() ? source().getMineral().naming().rawFormName() : null;
-            default -> null;
-        };
-    }
-
-    default String getRawSourceBlockName() {
-        return source().getType() == ElementSource.Type.ORE
-                ? "Block of Raw " + naming().englishName()
-                : null;
-    }
-
     default String getRefinedItemName() {
         return state().getType().formatItem(naming().englishName());
     }
@@ -86,21 +53,28 @@ public interface Element extends NameHolder, SourceHolder, RefinedStateHolder {
         return state().getType().formatBlock(naming().englishName());
     }
 
-    default Item getMineralResultItem() {
-        return source().hasRawSourceItem()
-            ? source().rawSourceItem()
-            : state().refinedItem();
+    default Item getMineralResultItem(World world) {
+        var sources = sources().stream()
+                .filter(ElementSource::hasMineralResult)
+                .toList();
+        return sources.isEmpty()
+                ? state().refinedItem()
+                : sources.get(world.random.nextInt(sources.size())).mineralResultItem();
     }
 
     default void register(ElementRegistry registry) {
-        if (hasSource()) {
-            source().register(registry, elementIds());
+        if (hasSources()) {
+            for (ElementSource source : sources()) {
+                source.register(registry, elementIds());
+            }
         }
         state().register(registry, elementIds());
     }
 
     private <T> List<T> getValues(Function<ElementSource, List<T>> sourceList, Function<ElementRefinedState, List<T>> stateList) {
-        List<T> sourceBlocks = hasSource() ? sourceList.apply(source()) : Collections.emptyList();
+        List<T> sourceBlocks = hasSources()
+                ? sources().stream().flatMap(source -> sourceList.apply(source).stream()).toList()
+                : Collections.emptyList();
         List<T> result = new ArrayList<>(sourceBlocks);
         result.addAll(stateList.apply(state()));
         return result;

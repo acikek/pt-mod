@@ -7,6 +7,7 @@ import com.acikek.pt.core.refined.ElementRefinedState;
 import com.acikek.pt.core.source.ElementSource;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.List;
 import java.util.Objects;
 import java.util.stream.Stream;
 
@@ -14,14 +15,14 @@ public class ElementImpl implements Element {
 
     private final ElementNaming names;
     private final ElementIds<String> ids;
-    private final ElementSource source;
+    private final List<ElementSource> sources;
     private final ElementRefinedState state;
 
-    public ElementImpl(ElementNaming names, ElementSource source, ElementRefinedState state) {
+    public ElementImpl(ElementNaming names, List<ElementSource> source, ElementRefinedState state) {
         Stream.of(names, state).forEach(Objects::requireNonNull);
         this.names = names;
         this.ids = ElementIds.get(id());
-        this.source = source;
+        this.sources = source;
         this.state = state;
     }
 
@@ -35,8 +36,8 @@ public class ElementImpl implements Element {
     }
 
     @Override
-    public ElementSource source() {
-        return source;
+    public List<ElementSource> sources() {
+        return sources;
     }
 
     @Override

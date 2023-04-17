@@ -15,8 +15,16 @@ public class Minerals {
         return new MineralResult.Pair(element, amount);
     }
 
+    public static MineralResult.Pair amount(Element element) {
+        return amount(element, 1);
+    }
+
     public static MineralResult single(Element element, int amount) {
         return new MineralResultImpls.Single(amount(element, amount));
+    }
+
+    public static MineralResult single(Element element) {
+        return single(element, 1);
     }
 
     public static MineralResult random(List<MineralResult.Pair> pairs) {

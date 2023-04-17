@@ -13,24 +13,6 @@ public class PTEnglishLangProvider extends FabricLanguageProvider {
         super(dataOutput);
     }
 
-    private static void generateForSource(TranslationBuilder builder, Element element, ElementSource source) {
-        if (source.hasSourceBlock()) {
-            builder.add(source.sourceBlock(), element.getSourceBlockName());
-        }
-        if (source.hasDeepslateSourceBlock()) {
-            builder.add(source.deepslateSourceBlock(), element.getDeepslateSourceBlockName());
-        }
-        if (source.hasClusterSourceBlock()) {
-            builder.add(source.clusterSourceBlock(), element.getClusterSourceBlockName());
-        }
-        if (source.hasRawSourceItem()) {
-            builder.add(source.rawSourceItem(), element.getRawSourceItemName());
-        }
-        if (source.hasRawSourceBlock()) {
-            builder.add(source.rawSourceBlock(), element.getRawSourceBlockName());
-        }
-    }
-
     private static void generateForState(TranslationBuilder builder, Element element, ElementRefinedState state) {
         // TODO test
         if (state.hasRefinedFluid()) {
@@ -44,8 +26,10 @@ public class PTEnglishLangProvider extends FabricLanguageProvider {
     public static void generateForElement(TranslationBuilder builder, Element element) {
         builder.add(element.getNameKey(), element.naming().englishName());
         builder.add(element.getSymbolKey(), element.naming().symbol());
-        if (element.hasSource()) {
-            generateForSource(builder, element, element.source());
+        if (element.hasSources()) {
+            for (ElementSource source : element.sources()) {
+                source.buildTranslations(builder, element);
+            }
         }
         generateForState(builder, element, element.state());
     }

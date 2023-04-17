@@ -14,17 +14,32 @@ import java.util.List;
 
 public class PeriodicTable extends AbstractPeriodicTable {
 
+    public static final MineralBlock LITHIOPHILITE = Minerals.block(
+            "Lithiophilite",
+            () -> List.of(Minerals.single(PeriodicTable.LITHIUM), /*Mn,*/ /*P,*/ Minerals.single(PeriodicTable.OXYGEN))
+    );
+
     public static final MineralBlock STIBNITE = Minerals.block(
             MineralNaming.full("Stibnite", "Shard"),
             () -> List.of(Minerals.single(PeriodicTable.ANTIMONY, 2), Minerals.single(PeriodicTable.SULFUR, 3))
     );
 
+    public static final MineralBlock CHRYSOBERYL = Minerals.block(
+            MineralNaming.full("Chrysoberyl", "Gemstone"),
+            () -> List.of(Minerals.single(PeriodicTable.BERYLLIUM), /*Al2,*/ Minerals.single(PeriodicTable.OXYGEN, 4))
+    );
+
+    public static final MineralBlock GYPSUM = Minerals.block(
+            MineralNaming.full("Gypsum", "Crystal"),
+            () -> List.of(/*Ca,*/ Minerals.single(PeriodicTable.SULFUR), Minerals.single(PeriodicTable.OXYGEN, 4))
+    );
+
     public static final Element HYDROGEN = Elements.gas(ElementNames.byId("hydrogen", "H"), 280, 319);
     public static final Element HELIUM = Elements.gas("helium", 255, 300);
-    public static final Element LITHIUM = Elements.full("lithium", ElementSources.mineral(null), RefinedStates.metal(1.6f));
-    public static final Element BERYLLIUM = Elements.full("beryllium", ElementSources.fullMineral(null), RefinedStates.metal(6.5f));
+    public static final Element LITHIUM = Elements.full("lithium", ElementSources.mineral(LITHIOPHILITE), RefinedStates.metal(1.6f));
+    public static final Element BERYLLIUM = Elements.full("beryllium", ElementSources.fullMineral(CHRYSOBERYL), RefinedStates.metal(6.5f));
     public static final Element OXYGEN = Elements.gas(ElementNames.byId("oxygen", "O"), 0, 235);
-    public static final Element SULFUR = Elements.full(ElementNames.byId("sulfur", "S"), ElementSources.mineral(null), RefinedStates.metal(0.0f));
+    public static final Element SULFUR = Elements.full(ElementNames.byId("sulfur", "S"), ElementSources.fullMineral(GYPSUM), RefinedStates.metal(0.0f));
     public static final Element ANTIMONY = Elements.full(ElementNames.byId("antimony", "Sb"), ElementSources.fullMineral(STIBNITE), RefinedStates.metal(4.0f));
     public static final Element OSMIUM = Elements.full("osmium", ElementSources.ore(), RefinedStates.metal(7.0f));
 

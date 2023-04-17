@@ -1,10 +1,12 @@
 package com.acikek.pt.core.source;
 
+import java.util.List;
+
 public interface SourceHolder {
 
-    ElementSource source();
+    List<ElementSource> sources();
 
-    default boolean hasSource() {
-        return source() != null;
+    default boolean hasSources() {
+        return sources() != null;
     }
 }

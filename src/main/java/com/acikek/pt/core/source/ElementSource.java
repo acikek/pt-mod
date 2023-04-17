@@ -1,105 +1,53 @@
 package com.acikek.pt.core.source;
 
+import com.acikek.pt.core.element.Element;
 import com.acikek.pt.core.mineral.Mineral;
 import com.acikek.pt.core.registry.ElementIds;
 import com.acikek.pt.core.registry.ElementRegistry;
+import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
-import org.apache.commons.lang3.Range;
+import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public interface ElementSource {
 
-    enum Type {
-        ORE,
-        MINERAL,
-        ATMOSPHERE
+    @NotNull Identifier getId();
+
+    default boolean isType(Identifier id) {
+        return getId().equals(id);
     }
 
-    @NotNull Type getType();
+    Mineral mineral();
 
-    Block sourceBlock();
-
-    default boolean hasSourceBlock() {
-        return sourceBlock() != null;
+    default boolean hasMineral() {
+        return mineral() != null;
     }
 
-    default Mineral getMineral() {
-        return sourceBlock() instanceof Mineral mineral ? mineral : null;
+    Item mineralResultItem();
+
+    default boolean hasMineralResult() {
+        return mineralResultItem() != null;
     }
 
-    Block deepslateSourceBlock();
+    void register(ElementRegistry registry, ElementIds<String> ids);
 
-    default boolean hasDeepslateSourceBlock() {
-        return deepslateSourceBlock() != null;
-    }
+    void buildTranslations(FabricLanguageProvider.TranslationBuilder builder, Element parent);
 
-    Block clusterSourceBlock();
+    List<Block> getBlocks();
 
-    default boolean hasClusterSourceBlock() {
-        return clusterSourceBlock() != null;
-    }
+    List<Item> getItems();
 
-    Item rawSourceItem();
-
-    default boolean hasRawSourceItem() {
-        return rawSourceItem() != null;
-    }
-
-    Block rawSourceBlock();
-
-    default boolean hasRawSourceBlock() {
-        return rawSourceBlock() != null;
-    }
-
-    Range<Integer> atmosphericRange();
-
-    default boolean hasAtmosphericSource() {
-        return atmosphericRange() != null;
-    }
-
-    default void register(ElementRegistry registry, ElementIds<String> ids) {
-        if (hasSourceBlock()) {
-            registry.registerBlock(ids.getSourceBlockId(), sourceBlock());
+    @SuppressWarnings("unchecked")
+    static List<ElementSource> forObject(Object obj) {
+        if (obj instanceof ElementSource source) {
+            return List.of(source);
         }
-        if (hasDeepslateSourceBlock()) {
-            registry.registerBlock(ids.getDeepslateSourceBlockId(), deepslateSourceBlock());
+        if (obj instanceof List<?> list) {
+            return (List<ElementSource>) list;
         }
-        if (hasClusterSourceBlock()) {
-            registry.registerBlock(ids.getClusterSourceBlockId(), clusterSourceBlock());
-        }
-        if (hasRawSourceItem()) {
-            registry.registerItem(ids.getRawSourceItemId(), rawSourceItem());
-        }
-        if (hasRawSourceBlock()) {
-            registry.registerBlock(ids.getRawSourceBlockId(), rawSourceBlock());
-        }
-    }
-
-    default List<Block> getBlocks() {
-        List<Block> result = new ArrayList<>();
-        if (hasSourceBlock()) {
-            result.add(sourceBlock());
-        }
-        if (hasDeepslateSourceBlock()) {
-            result.add(deepslateSourceBlock());
-        }
-        if (hasClusterSourceBlock()) {
-            result.add(clusterSourceBlock());
-        }
-        if (hasRawSourceBlock()) {
-            result.add(rawSourceBlock());
-        }
-        return result;
-    }
-
-    default List<Item> getItems() {
-        return hasRawSourceItem()
-                ? Collections.singletonList(rawSourceItem())
-                : Collections.emptyList();
+        throw new IllegalStateException("ElementSource list can only be derived from an actual list or a single instance");
     }
 }

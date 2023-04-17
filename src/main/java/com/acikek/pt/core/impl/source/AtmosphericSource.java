@@ -1,10 +1,20 @@
 package com.acikek.pt.core.impl.source;
 
+import com.acikek.pt.core.element.Element;
+import com.acikek.pt.core.mineral.Mineral;
+import com.acikek.pt.core.registry.ElementIds;
+import com.acikek.pt.core.registry.ElementRegistry;
 import com.acikek.pt.core.source.ElementSource;
+import com.acikek.pt.core.source.ElementSources;
+import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
+import net.minecraft.util.Identifier;
 import org.apache.commons.lang3.Range;
 import org.jetbrains.annotations.NotNull;
+
+import java.util.Collections;
+import java.util.List;
 
 public class AtmosphericSource implements ElementSource {
 
@@ -15,37 +25,37 @@ public class AtmosphericSource implements ElementSource {
     }
 
     @Override
-    public @NotNull Type getType() {
-        return Type.ATMOSPHERE;
+    public @NotNull Identifier getId() {
+        return ElementSources.ATMOSPHERIC;
     }
 
     @Override
-    public Block sourceBlock() {
+    public Mineral mineral() {
         return null;
     }
 
     @Override
-    public Block deepslateSourceBlock() {
+    public Item mineralResultItem() {
         return null;
     }
 
     @Override
-    public Block clusterSourceBlock() {
-        return null;
+    public void register(ElementRegistry registry, ElementIds<String> ids) {
+        // Empty
     }
 
     @Override
-    public Item rawSourceItem() {
-        return null;
+    public void buildTranslations(FabricLanguageProvider.TranslationBuilder builder, Element parent) {
+        // Empty
     }
 
     @Override
-    public Block rawSourceBlock() {
-        return null;
+    public List<Block> getBlocks() {
+        return Collections.emptyList();
     }
 
     @Override
-    public Range<Integer> atmosphericRange() {
-        return range;
+    public List<Item> getItems() {
+        return Collections.emptyList();
     }
 }
