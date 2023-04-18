@@ -18,9 +18,7 @@ public class PTApi {
 
     public static void forEachElement(Consumer<Element> fn) {
         for (AbstractPeriodicTable table : tables()) {
-            for (Element element : table.getElements()) {
-                fn.accept(element);
-            }
+            table.forEachElement(fn);
         }
     }
 }

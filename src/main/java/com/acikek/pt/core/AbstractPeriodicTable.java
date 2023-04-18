@@ -2,6 +2,7 @@ package com.acikek.pt.core;
 
 import com.acikek.pt.PT;
 import com.acikek.pt.core.element.Element;
+import com.acikek.pt.core.element.ElementHolder;
 import com.acikek.pt.core.mineral.Mineral;
 import com.acikek.pt.core.registry.ElementRegistry;
 import com.google.common.collect.ImmutableMap;
@@ -13,7 +14,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 
-public abstract class AbstractPeriodicTable {
+public abstract class AbstractPeriodicTable implements ElementHolder {
 
     private final Map<String, Element> elements;
     private final ElementRegistry registry;
@@ -44,12 +45,13 @@ public abstract class AbstractPeriodicTable {
         return elements;
     }
 
-    public List<Element> getElements() {
+    @Override
+    public List<Element> elements() {
         return elementMap().values().stream().toList();
     }
 
     private <T> List<T> getValues(Function<Element, List<T>> list) {
-        return getElements().stream()
+        return elements().stream()
                 .flatMap(element -> list.apply(element).stream())
                 .toList();
     }
@@ -63,8 +65,6 @@ public abstract class AbstractPeriodicTable {
     }
 
     public void register() {
-        for (Element element : getElements()) {
-            element.register(registry);
-        }
+        forEachElement(element -> element.register(registry));
     }
 }
