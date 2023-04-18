@@ -20,20 +20,20 @@ public class RefinedStates {
         return fromType(RefinedStateTypes.METAL, strength);
     }
 
-    public static ElementRefinedState chamber() {
-        return fromType(RefinedStateTypes.CHAMBER);
+    public static ElementRefinedState gas() {
+        return fromType(RefinedStateTypes.GAS);
     }
 
-    public static ElementRefinedState basin() {
-        return fromType(RefinedStateTypes.BASIN);
+    public static ElementRefinedState fluid() {
+        return fromType(RefinedStateTypes.FLUID);
     }
 
     public static ElementRefinedState sack() {
-        return fromType(RefinedStateTypes.SACK);
+        return fromType(RefinedStateTypes.POWDER);
     }
 
-    public static ElementRefinedState bloom() {
-        return fromType(RefinedStateTypes.BLOOM);
+    public static ElementRefinedState synthesized() {
+        return fromType(RefinedStateTypes.SYNTHESIZED);
     }
 
     public static ElementRefinedState trace() {

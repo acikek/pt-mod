@@ -20,6 +20,6 @@ public class Elements {
     }
 
     public static Element gas(Object naming, int atmosphericMin, int atmosphericMax) {
-        return full(naming, ElementSources.atmospheric(atmosphericMin, atmosphericMax), RefinedStates.chamber());
+        return full(naming, ElementSources.atmospheric(atmosphericMin, atmosphericMax), RefinedStates.gas());
     }
 }

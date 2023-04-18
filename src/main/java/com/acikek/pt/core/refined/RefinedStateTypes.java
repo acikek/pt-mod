@@ -2,10 +2,7 @@ package com.acikek.pt.core.refined;
 
 import com.acikek.pt.sound.ModSoundGroups;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
-import net.minecraft.block.AbstractBlock;
-import net.minecraft.block.Block;
-import net.minecraft.block.HorizontalFacingBlock;
-import net.minecraft.block.Material;
+import net.minecraft.block.*;
 import net.minecraft.data.client.BlockStateModelGenerator;
 import net.minecraft.data.client.TexturedModel;
 import net.minecraft.sound.BlockSoundGroup;
@@ -16,15 +13,14 @@ import java.util.Objects;
 public enum RefinedStateTypes implements RefinedStateType {
 
     METAL("Block of %s", "%s Ingot", "%s Nugget", null, Material.METAL, BlockSoundGroup.METAL),
-    CHAMBER("%s Chamber", "%s Tank", "%s Cell", 3.0f, Material.GLASS, BlockSoundGroup.GLASS),
-    BASIN("%s Basin", "Bottle of %s", "%s Vial", 5.0f, Material.METAL, ModSoundGroups.FLUID_BASIN),
-    SACK("%s Bundle", "%s Sack", "Bag of %s", 1.5f, Material.AGGREGATE, BlockSoundGroup.SAND),
-    BLOOM("%s Pile", "%s Bloom", "%s Pellet", 4.5f, Material.STONE, BlockSoundGroup.STONE), // TODO
+    GAS("%s Tank", "Compressed %s", "%s Cell", 3.0f, Material.GLASS, BlockSoundGroup.GLASS),
+    FLUID("%s Drum", "Bottle of %s", "%s Vial", 5.0f, Material.METAL, ModSoundGroups.FLUID_BASIN),
+    POWDER("Sack of %s", "Bag of %s", "%s Pouch", 1.5f, Material.AGGREGATE, BlockSoundGroup.SAND),
+    SYNTHESIZED("Pile of %s", "%s Bloom", "%s Pellet", 3.5f, Material.STONE, BlockSoundGroup.STONE), // TODO
+    BILLET("Pile of %s", "%s Billet", "%s Pellet", 6.0f, Material.METAL, BlockSoundGroup.METAL),
     TRACE("%s Sample", "%s Trace", "%s Array", 2.5f, Material.GLASS, BlockSoundGroup.GLASS);
 
-    private final String blockFormat;
-    private final String itemFormat;
-    private final String miniItemFormat;
+    private final String blockFormat, itemFormat, miniItemFormat;
     private final Float defaultStrength;
     private final Material material;
     private final BlockSoundGroup sounds;
@@ -63,7 +59,7 @@ public enum RefinedStateTypes implements RefinedStateType {
                 .requiresTool()
                 .sounds(sounds)
                 .strength(blockStrength);
-        return this == CHAMBER
+        return this == FLUID
                 ? new HorizontalFacingBlock(settings) {}
                 : new Block(settings);
     }
@@ -71,8 +67,8 @@ public enum RefinedStateTypes implements RefinedStateType {
     @Override
     public void buildBlockModel(BlockStateModelGenerator generator, Block block) {
         switch (this) {
-            case METAL, SACK, BLOOM, TRACE -> generator.registerSimpleCubeAll(block);
-            case CHAMBER -> generator.registerRotatable(block);
+            case METAL, POWDER, SYNTHESIZED, TRACE -> generator.registerSimpleCubeAll(block);
+            case GAS -> generator.registerNorthDefaultHorizontalRotated(block, TexturedModel.ORIENTABLE_WITH_BOTTOM);
         }
     }
 }
