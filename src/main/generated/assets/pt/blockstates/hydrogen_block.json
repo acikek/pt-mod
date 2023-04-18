@@ -1,21 +1,19 @@
 {
   "variants": {
-    "": [
-      {
-        "model": "pt:block/hydrogen_block"
-      },
-      {
-        "model": "pt:block/hydrogen_block",
-        "y": 90
-      },
-      {
-        "model": "pt:block/hydrogen_block",
-        "y": 180
-      },
-      {
-        "model": "pt:block/hydrogen_block",
-        "y": 270
-      }
-    ]
+    "facing=east": {
+      "model": "pt:block/hydrogen_block",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "pt:block/hydrogen_block"
+    },
+    "facing=south": {
+      "model": "pt:block/hydrogen_block",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "pt:block/hydrogen_block",
+      "y": 270
+    }
   }
 }

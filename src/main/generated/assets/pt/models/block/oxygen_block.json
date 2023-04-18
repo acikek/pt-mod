@@ -1,6 +1,9 @@
 {
-  "parent": "minecraft:block/cube_all",
+  "parent": "minecraft:block/orientable_with_bottom",
   "textures": {
-    "all": "pt:block/oxygen_block"
+    "bottom": "pt:block/oxygen_block_bottom",
+    "front": "pt:block/oxygen_block_front",
+    "side": "pt:block/oxygen_block_side",
+    "top": "pt:block/oxygen_block_top"
   }
 }

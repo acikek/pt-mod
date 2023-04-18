@@ -6,6 +6,7 @@ import net.minecraft.block.*;
 import net.minecraft.data.client.BlockStateModelGenerator;
 import net.minecraft.data.client.TexturedModel;
 import net.minecraft.sound.BlockSoundGroup;
+import net.minecraft.state.StateManager;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Objects;
@@ -59,8 +60,13 @@ public enum RefinedStateTypes implements RefinedStateType {
                 .requiresTool()
                 .sounds(sounds)
                 .strength(blockStrength);
-        return this == FLUID
-                ? new HorizontalFacingBlock(settings) {}
+        return this == GAS
+                ? new HorizontalFacingBlock(settings) {
+                    @Override
+                    protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
+                        builder.add(HorizontalFacingBlock.FACING);
+                    }
+                }
                 : new Block(settings);
     }
 

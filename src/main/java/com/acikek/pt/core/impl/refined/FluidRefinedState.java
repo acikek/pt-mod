@@ -12,7 +12,7 @@ public class FluidRefinedState extends BaseRefinedState {
     private final Fluid fluid;
 
     public FluidRefinedState(Item item, Item miniItem, Block block, Fluid fluid) {
-        super(item, miniItem, block, RefinedStateTypes.BASIN);
+        super(item, miniItem, block, RefinedStateTypes.FLUID);
         Objects.requireNonNull(fluid);
         this.fluid = fluid;
     }

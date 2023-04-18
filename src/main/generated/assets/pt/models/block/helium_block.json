@@ -1,6 +1,9 @@
-{
-  "parent": "minecraft:block/cube_all",
+  {
+  "parent": "minecraft:block/orientable_with_bottom",
   "textures": {
-    "all": "pt:block/helium_block"
+    "bottom": "pt:block/helium_block_bottom",
+    "front": "pt:block/helium_block_front",
+    "side": "pt:block/helium_block_side",
+    "top": "pt:block/helium_block_top"
   }
 }
