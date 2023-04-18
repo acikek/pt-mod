@@ -61,5 +61,8 @@
   "item.pt.platinum_source": "Raw Platinum",
   "item.pt.sulfur": "Bag of Sulfur",
   "item.pt.sulfur_mini": "Sulfur Pouch",
-  "item.pt.sulfur_source": "Gypsum Crystal"
+  "item.pt.sulfur_source": "Gypsum Crystal",
+  "itemGroup.pt.blocks": "PT (Blocks)",
+  "itemGroup.pt.items": "PT (Items)",
+  "resourcepack.pt.pt-art": "PT Art"
 }

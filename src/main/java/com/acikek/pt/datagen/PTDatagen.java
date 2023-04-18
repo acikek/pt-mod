@@ -10,6 +10,8 @@ import net.fabricmc.fabric.api.datagen.v1.provider.FabricModelProvider;
 import net.minecraft.data.client.BlockStateModelGenerator;
 import net.minecraft.data.client.ItemModelGenerator;
 
+import java.io.IOException;
+
 public class PTDatagen implements DataGeneratorEntrypoint {
 
     @Override
@@ -38,6 +40,15 @@ public class PTDatagen implements DataGeneratorEntrypoint {
                 PeriodicTable.INSTANCE.forEachElement(element ->
                         PTDatagenApi.buildEnglishTranslationsForElement(translationBuilder, element)
                 );
+                try {
+                    var existing = output.getModContainer().findPath("assets/pt/lang/en_us.existing.json");
+                    if (existing.isPresent()) {
+                        translationBuilder.add(existing.get());
+                    }
+                }
+                catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
             }
         });
     }

@@ -1,4 +1,4 @@
-// 1.19.4	2023-04-18T10:37:48.841222968	PT/Model Definitions
+// 1.19.4	2023-04-18T12:19:04.829573466	PT/Model Definitions
 6bc450adbdbf97f33e7cdcf0d51186f5e6fddb53 assets/pt/models/item/hydrogen_mini.json
 7450c0a0343acd0244980a05cf6ee7f962a1c661 assets/pt/models/item/lithium_mini.json
 a68cddc21a994d45589c4fa47bfd8f51a0259f16 assets/pt/blockstates/osmium_raw_block.json
@@ -16,8 +16,8 @@ a880da78ec9b8c2b41e1184c919d106e2c4cc62f assets/pt/models/block/osmium_source_bl
 1bcb469770d3a7f31d9e78c66f44f3a43ecc3b99 assets/pt/models/item/antimony_source_cluster.json
 7604c30ff072fc32126de1476deebb16023b2683 assets/pt/models/item/antimony_block.json
 d6e542fc0f7aa875f5f02852bc9e9f3480d787c3 assets/pt/models/item/sulfur_source_block.json
-05a07378786745eff5a3131b33758e79702e9b08 assets/pt/models/item/platinum_raw_block.json
 d400804ad4c9539359c3a05b0787ac5dae6785bc assets/pt/models/block/beryllium_block.json
+05a07378786745eff5a3131b33758e79702e9b08 assets/pt/models/item/platinum_raw_block.json
 aa57fa7a645af7e62e1be6774080aa92a8653c54 assets/pt/models/item/beryllium_source_block.json
 2a0e6a4abbff8ceae2fa9627dc1d98970b868fc8 assets/pt/blockstates/beryllium_block.json
 b81685d348f8d8c09601640be9ad7743941227b4 assets/pt/models/item/hydrogen_block.json
