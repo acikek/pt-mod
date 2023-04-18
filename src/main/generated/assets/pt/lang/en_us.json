@@ -18,7 +18,7 @@
   "block.pt.platinum_raw_block": "Block of Raw Platinum",
   "block.pt.platinum_source_block": "Platinum Ore",
   "block.pt.platinum_source_deepslate": "Deepslate Platinum Ore",
-  "block.pt.sulfur_block": "Block of Sulfur",
+  "block.pt.sulfur_block": "Sulfur Bundle",
   "block.pt.sulfur_source_block": "Gypsum",
   "block.pt.sulfur_source_cluster": "Gypsum Cluster",
   "element.pt.antimony.name": "Antimony",
@@ -59,7 +59,7 @@
   "item.pt.platinum": "Platinum Ingot",
   "item.pt.platinum_mini": "Platinum Nugget",
   "item.pt.platinum_source": "Raw Platinum",
-  "item.pt.sulfur": "Sulfur Ingot",
-  "item.pt.sulfur_mini": "Sulfur Nugget",
+  "item.pt.sulfur": "Sulfur Sack",
+  "item.pt.sulfur_mini": "Bag of Sulfur",
   "item.pt.sulfur_source": "Gypsum Crystal"
 }

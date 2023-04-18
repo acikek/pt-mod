@@ -18,6 +18,9 @@
     ],
     "fabric-datagen": [
       "com.acikek.pt.datagen.PTDatagen"
+    ],
+    "pt": [
+      "com.acikek.pt.PTBuiltin"
     ]
   },
   "mixins": [

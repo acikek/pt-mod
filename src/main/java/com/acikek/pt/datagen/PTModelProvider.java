@@ -1,5 +1,6 @@
 package com.acikek.pt.datagen;
 
+import com.acikek.pt.api.PTApi;
 import com.acikek.pt.core.PeriodicTable;
 import com.acikek.pt.core.element.Element;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
@@ -40,8 +41,6 @@ public class PTModelProvider extends FabricModelProvider {
 
     @Override
     public void generateItemModels(ItemModelGenerator itemModelGenerator) {
-        for (Element element : PeriodicTable.INSTANCE.getElements()) {
-            generateItemsForElement(itemModelGenerator, element);
-        }
+        PTApi.forEachElement(element -> generateItemsForElement(itemModelGenerator, element));
     }
 }

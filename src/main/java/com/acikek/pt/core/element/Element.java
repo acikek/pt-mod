@@ -22,6 +22,8 @@ public interface Element extends NameHolder, SourceHolder, RefinedStateHolder {
 
     ElementIds<String> elementIds();
 
+    void afterRegister();
+
     default String getTextKey(String path) {
         return "element.pt." + id() + "." + path;
     }
@@ -78,6 +80,7 @@ public interface Element extends NameHolder, SourceHolder, RefinedStateHolder {
             }
         }
         state().register(registry, elementIds());
+        afterRegister();
     }
 
     private <T> List<T> getValues(Function<ElementSource, List<T>> sourceList, Function<ElementRefinedState, List<T>> stateList) {

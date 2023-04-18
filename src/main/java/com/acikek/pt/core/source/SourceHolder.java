@@ -6,6 +6,8 @@ public interface SourceHolder {
 
     List<ElementSource> sources();
 
+    void addSource(ElementSource source);
+
     default boolean hasSources() {
         return sources() != null;
     }

@@ -1,6 +1,6 @@
 package com.acikek.pt.datagen;
 
-import com.acikek.pt.core.PeriodicTable;
+import com.acikek.pt.api.PTApi;
 import com.acikek.pt.core.element.Element;
 import com.acikek.pt.core.refined.ElementRefinedState;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
@@ -31,8 +31,6 @@ public class PTEnglishLangProvider extends FabricLanguageProvider {
 
     @Override
     public void generateTranslations(TranslationBuilder translationBuilder) {
-        for (Element element : PeriodicTable.INSTANCE.getElements()) {
-            generateForElement(translationBuilder, element);
-        }
+        PTApi.forEachElement(element -> generateForElement(translationBuilder, element));
     }
 }

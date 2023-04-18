@@ -7,6 +7,7 @@ import com.acikek.pt.core.refined.ElementRefinedState;
 import com.acikek.pt.core.source.ElementSource;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Stream;
@@ -18,11 +19,13 @@ public class ElementImpl implements Element {
     private final List<ElementSource> sources;
     private final ElementRefinedState state;
 
-    public ElementImpl(ElementNaming names, List<ElementSource> source, ElementRefinedState state) {
+    private boolean registered = false;
+
+    public ElementImpl(ElementNaming names, List<ElementSource> sources, ElementRefinedState state) {
         Stream.of(names, state).forEach(Objects::requireNonNull);
         this.names = names;
         this.ids = ElementIds.get(id());
-        this.sources = source;
+        this.sources = new ArrayList<>(sources);
         this.state = state;
     }
 
@@ -37,7 +40,20 @@ public class ElementImpl implements Element {
 
     @Override
     public List<ElementSource> sources() {
-        return sources;
+        return sources.stream().toList();
+    }
+
+    @Override
+    public void afterRegister() {
+        registered = true;
+    }
+
+    @Override
+    public void addSource(ElementSource source) {
+        if (registered) {
+            throw new IllegalStateException("element already registered");
+        }
+        sources.add(source);
     }
 
     @Override
