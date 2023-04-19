@@ -1,13 +1,14 @@
-package com.acikek.pt.core.mineral;
+package com.acikek.pt.core.element;
 
-import com.acikek.pt.core.element.Element;
 import net.minecraft.item.ItemStack;
+import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
+import net.minecraft.util.Formatting;
 import net.minecraft.world.World;
 
 import java.util.List;
 
-public interface MineralResult {
+public interface ElementSignature {
 
     record Entry(Element element, int amount) {
 
@@ -26,9 +27,20 @@ public interface MineralResult {
 
     List<Entry> get(World world);
 
-    Text displayText();
+    Text getDisplayText();
 
-    default int sort(MineralResult other) {
+    default int sort(ElementSignature other) {
         return 0;
+    }
+
+    static Text createTooltip(List<ElementSignature> signatures) {
+        var sorted = signatures.stream()
+                .sorted(ElementSignature::sort)
+                .toList();
+        MutableText result = Text.empty();
+        for (ElementSignature entry : sorted) {
+            result.append(entry.getDisplayText());
+        }
+        return result;
     }
 }

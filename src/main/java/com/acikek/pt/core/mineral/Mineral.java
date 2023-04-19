@@ -1,5 +1,6 @@
 package com.acikek.pt.core.mineral;
 
+import com.acikek.pt.core.element.ElementSignature;
 import com.acikek.pt.core.lang.MineralNaming;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
@@ -12,9 +13,9 @@ public interface Mineral {
 
     void init();
 
-    List<MineralResult> results();
+    List<ElementSignature> results();
 
-    default List<MineralResult.Entry> getResultElements(World world) {
+    default List<ElementSignature.Entry> getResultElements(World world) {
         return results().stream()
                 .flatMap(result -> result.get(world).stream())
                 .toList();

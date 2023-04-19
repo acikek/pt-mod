@@ -17,34 +17,34 @@ public class PeriodicTable extends AbstractPeriodicTable {
     public static final MineralBlock TEST = Minerals.block(
             "Test Mineral",
             () -> List.of(
-                    Minerals.single(PeriodicTable.BERYLLIUM, 3),
-                    Minerals.wrap(5,
-                            Minerals.amount(PeriodicTable.SULFUR, 2),
-                            Minerals.amount(PeriodicTable.OXYGEN)
+                    Elements.single(PeriodicTable.BERYLLIUM, 3),
+                    Elements.wrap(5,
+                            Elements.amount(PeriodicTable.SULFUR, 2),
+                            Elements.amount(PeriodicTable.OXYGEN)
                     ),
-                    Minerals.random(7, PeriodicTable.ANTIMONY, PeriodicTable.OSMIUM, PeriodicTable.PLATINUM),
-                    Minerals.hydrate(4)
+                    Elements.random(7, PeriodicTable.ANTIMONY, PeriodicTable.OSMIUM, PeriodicTable.PLATINUM),
+                    Elements.hydrate(4)
             )
     );
 
     public static final MineralBlock LITHIOPHILITE = Minerals.block(
             "Lithiophilite",
-            () -> List.of(Minerals.single(PeriodicTable.LITHIUM), /*Mn,*/ /*P,*/ Minerals.single(PeriodicTable.OXYGEN))
+            () -> List.of(Elements.single(PeriodicTable.LITHIUM), /*Mn,*/ /*P,*/ Elements.single(PeriodicTable.OXYGEN))
     );
 
     public static final MineralBlock STIBNITE = Minerals.block(
             MineralNaming.full("Stibnite", "Shard"),
-            () -> List.of(Minerals.single(PeriodicTable.ANTIMONY, 2), Minerals.single(PeriodicTable.SULFUR, 3))
+            () -> List.of(Elements.single(PeriodicTable.ANTIMONY, 2), Elements.single(PeriodicTable.SULFUR, 3))
     );
 
     /*public static final MineralBlock CHRYSOBERYL = Minerals.block(
             MineralNaming.full("Chrysoberyl", "Gemstone"),
-            () -> List.of(Minerals.single(PeriodicTable.BERYLLIUM), /*Al2, Minerals.single(PeriodicTable.OXYGEN, 4))
+            () -> List.of(Elements.single(PeriodicTable.BERYLLIUM), /*Al2, Elements.single(PeriodicTable.OXYGEN, 4))
     );*/
 
     public static final MineralBlock GYPSUM = Minerals.block(
             MineralNaming.full("Gypsum", "Crystal"),
-            () -> List.of(/*Ca,*/ Minerals.single(PeriodicTable.SULFUR), Minerals.single(PeriodicTable.OXYGEN, 4))
+            () -> List.of(/*Ca,*/ Elements.single(PeriodicTable.SULFUR), Elements.single(PeriodicTable.OXYGEN, 4))
     );
 
     public static final Element HYDROGEN = Elements.gas(ElementNames.byId("hydrogen", "H"), 280, 319);

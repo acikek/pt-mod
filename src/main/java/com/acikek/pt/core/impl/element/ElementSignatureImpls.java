@@ -1,9 +1,9 @@
-package com.acikek.pt.core.impl.mineral;
+package com.acikek.pt.core.impl.element;
 
 import com.acikek.pt.api.PTApi;
 import com.acikek.pt.core.PeriodicTable;
 import com.acikek.pt.core.element.Element;
-import com.acikek.pt.core.mineral.MineralResult;
+import com.acikek.pt.core.element.ElementSignature;
 import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
 import net.minecraft.world.World;
@@ -11,9 +11,9 @@ import net.minecraft.world.World;
 import java.util.Collections;
 import java.util.List;
 
-public class MineralResultImpls {
+public class ElementSignatureImpls {
 
-    public record Single(Entry entry) implements MineralResult {
+    public record Single(Entry entry) implements ElementSignature {
 
         @Override
         public List<Entry> get(World world) {
@@ -21,12 +21,12 @@ public class MineralResultImpls {
         }
 
         @Override
-        public Text displayText() {
+        public Text getDisplayText() {
             return entry.getQuantifiedText();
         }
     }
 
-    public record Random(List<Element> elements, int amount) implements MineralResult {
+    public record Random(List<Element> elements, int amount) implements ElementSignature {
 
         @Override
         public List<Entry> get(World world) {
@@ -36,7 +36,7 @@ public class MineralResultImpls {
         }
 
         @Override
-        public Text displayText() {
+        public Text getDisplayText() {
             MutableText result = Text.literal("(");
             for (int i = 0; i < elements.size(); i++) {
                 result.append(elements.get(i).getSymbolText());
@@ -48,7 +48,7 @@ public class MineralResultImpls {
         }
     }
 
-    public record Wrapped(List<Entry> entries, int multiplier) implements MineralResult {
+    public record Wrapped(List<Entry> entries, int multiplier) implements ElementSignature {
 
         @Override
         public List<Entry> get(World world) {
@@ -58,7 +58,7 @@ public class MineralResultImpls {
         }
 
         @Override
-        public Text displayText() {
+        public Text getDisplayText() {
             MutableText result = Text.literal("(");
             for (Entry entry : entries) {
                 result.append(entry.getQuantifiedText());
@@ -67,7 +67,7 @@ public class MineralResultImpls {
         }
     }
 
-    public record Hydration(int amount) implements MineralResult {
+    public record Hydration(int amount) implements ElementSignature {
 
         private Entry hydrogen() {
             return new Entry(PeriodicTable.HYDROGEN, amount * 2);
@@ -83,7 +83,7 @@ public class MineralResultImpls {
         }
 
         @Override
-        public Text displayText() {
+        public Text getDisplayText() {
             String amtStr = amount > 1
                     ? String.valueOf(amount)
                     : "";
@@ -93,7 +93,7 @@ public class MineralResultImpls {
         }
 
         @Override
-        public int sort(MineralResult other) {
+        public int sort(ElementSignature other) {
             return 1;
         }
     }

@@ -1,10 +1,10 @@
 package com.acikek.pt.core.mineral;
 
+import com.acikek.pt.core.element.ElementSignature;
 import com.acikek.pt.core.lang.MineralNaming;
 import net.minecraft.block.Block;
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.item.ItemStack;
-import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 import net.minecraft.world.BlockView;
@@ -16,25 +16,14 @@ import java.util.function.Supplier;
 public class MineralBlock extends Block implements Mineral {
 
     private final MineralNaming naming;
-    private Supplier<List<MineralResult>> resultSupplier;
-    private List<MineralResult> results;
+    private Supplier<List<ElementSignature>> resultSupplier;
+    private List<ElementSignature> results;
     private Text tooltip;
 
-    public MineralBlock(Settings settings, MineralNaming naming, Supplier<List<MineralResult>> resultSupplier) {
+    public MineralBlock(Settings settings, MineralNaming naming, Supplier<List<ElementSignature>> resultSupplier) {
         super(settings);
         this.naming = naming;
         this.resultSupplier = resultSupplier;
-    }
-
-    private Text createTooltip() {
-        var sorted = results.stream()
-                .sorted(MineralResult::sort)
-                .toList();
-        MutableText result = Text.empty();
-        for (MineralResult entry : sorted) {
-            result.append(entry.displayText());
-        }
-        return result.formatted(Formatting.GRAY);
     }
 
     @Override
@@ -46,11 +35,11 @@ public class MineralBlock extends Block implements Mineral {
     public void init() {
         results = resultSupplier.get();
         resultSupplier = null;
-        tooltip = createTooltip();
+        tooltip = ElementSignature.createTooltip(results).copy().formatted(Formatting.GRAY);
     }
 
     @Override
-    public List<MineralResult> results() {
+    public List<ElementSignature> results() {
         return results;
     }
 
