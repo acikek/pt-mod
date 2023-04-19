@@ -14,15 +14,15 @@ public interface Mineral {
 
     List<MineralResult> results();
 
-    default List<MineralResult.Pair> getResultElements(World world) {
+    default List<MineralResult.Entry> getResultElements(World world) {
         return results().stream()
-                .map(result -> result.get(world))
+                .flatMap(result -> result.get(world).stream())
                 .toList();
     }
 
     default List<ItemStack> getResultStacks(World world) {
         return getResultElements(world).stream()
-                .map(pair -> pair.toResultStack(world))
+                .map(entry -> entry.getResultStack(world))
                 .toList();
     }
 }

@@ -11,11 +11,11 @@ import java.util.function.Supplier;
 
 public class Minerals {
 
-    public static MineralResult.Pair amount(Element element, int amount) {
-        return new MineralResult.Pair(element, amount);
+    public static MineralResult.Entry amount(Element element, int amount) {
+        return new MineralResult.Entry(element, amount);
     }
 
-    public static MineralResult.Pair amount(Element element) {
+    public static MineralResult.Entry amount(Element element) {
         return amount(element, 1);
     }
 
@@ -27,12 +27,28 @@ public class Minerals {
         return single(element, 1);
     }
 
-    public static MineralResult random(List<MineralResult.Pair> pairs) {
-        return new MineralResultImpls.Random(pairs);
+    public static MineralResult random(List<Element> elements, int amount) {
+        return new MineralResultImpls.Random(elements, amount);
     }
 
-    public static MineralResult random(MineralResult.Pair... pairs) {
-        return random(Arrays.stream(pairs).toList());
+    public static MineralResult random(int amount, Element... elements) {
+        return random(Arrays.stream(elements).toList(), amount);
+    }
+
+    public static MineralResult wrap(List<MineralResult.Entry> entries, int multiplier) {
+        return new MineralResultImpls.Wrapped(entries, multiplier);
+    }
+
+    public static MineralResult wrap(int multiplier, MineralResult.Entry... entries) {
+        return wrap(Arrays.stream(entries).toList(), multiplier);
+    }
+
+    public static MineralResult hydrate(int amount) {
+        return new MineralResultImpls.Hydration(amount);
+    }
+
+    public static MineralResult hydrate() {
+        return hydrate(1);
     }
 
     public static MineralBlock block(Object naming, Supplier<List<MineralResult>> supplier) {

@@ -1,5 +1,6 @@
 package com.acikek.pt.core.element;
 
+import com.acikek.pt.api.PTApi;
 import com.acikek.pt.core.lang.NameHolder;
 import com.acikek.pt.core.refined.ElementRefinedState;
 import com.acikek.pt.core.refined.RefinedStateHolder;
@@ -42,6 +43,12 @@ public interface Element extends NameHolder, SourceHolder, RefinedStateHolder {
 
     default Text getSymbolText() {
         return Text.translatable(getSymbolKey());
+    }
+
+    default Text getQuantifiedText(int amount) {
+        return amount <= 1
+                ? getSymbolText()
+                : getSymbolText().copy().append(PTApi.subscript(amount));
     }
 
     default String getRefinedItemName() {

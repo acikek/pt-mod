@@ -49,7 +49,7 @@ sourceSets {
 }
 
 processResources {
-    duplicatesStrategy(DuplicatesStrategy.INCLUDE)
+    duplicatesStrategy(DuplicatesStrategy.INHERIT)
 
     inputs.property "version", project.version
     filteringCharset "UTF-8"
