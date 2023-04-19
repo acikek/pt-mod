@@ -1,6 +1,7 @@
 package com.acikek.pt.datagen;
 
 import com.acikek.pt.api.datagen.PTDatagenApi;
+import com.acikek.pt.block.ModBlocks;
 import com.acikek.pt.core.PeriodicTable;
 import net.fabricmc.fabric.api.datagen.v1.DataGeneratorEntrypoint;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
@@ -9,6 +10,8 @@ import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricModelProvider;
 import net.minecraft.data.client.BlockStateModelGenerator;
 import net.minecraft.data.client.ItemModelGenerator;
+import net.minecraft.data.client.ModelIds;
+import net.minecraft.data.client.TexturedModel;
 
 import java.io.IOException;
 
@@ -21,6 +24,7 @@ public class PTDatagen implements DataGeneratorEntrypoint {
         pack.addProvider((FabricDataOutput output) -> new FabricModelProvider(output) {
             @Override
             public void generateBlockStateModels(BlockStateModelGenerator blockStateModelGenerator) {
+                blockStateModelGenerator.registerSingleton(ModBlocks.EMPTY_SACK, TexturedModel.CUBE_BOTTOM_TOP);
                 PeriodicTable.INSTANCE.forEachElement(element ->
                         PTDatagenApi.generateBlocksModelsForElement(blockStateModelGenerator, element)
                 );

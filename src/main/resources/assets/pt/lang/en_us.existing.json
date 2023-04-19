@@ -1,5 +1,6 @@
 {
   "itemGroup.pt.blocks": "PT (Blocks)",
   "itemGroup.pt.items": "PT (Items)",
-  "resourcepack.pt.pt-art": "PT Art"
+  "resourcepack.pt.pt-art": "PT Art",
+  "block.pt.empty_sack": "Empty Sack"
 }

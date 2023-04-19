@@ -1,6 +1,7 @@
 package com.acikek.pt;
 
 import com.acikek.pt.api.impl.PTLoading;
+import com.acikek.pt.block.ModBlocks;
 import com.acikek.pt.core.PeriodicTable;
 import com.acikek.pt.core.registry.ElementRegistry;
 import com.acikek.pt.sound.ModSoundEvents;
@@ -36,7 +37,10 @@ public class PT implements ModInitializer {
     @Override
     public void onInitialize() {
         PTLoading.load();
+
         ModSoundEvents.register();
+        ModBlocks.register();
+
         registerArtPack();
 
         ItemGroupEvents.modifyEntriesEvent(ITEM_GROUP_BLOCKS).register(entries -> PeriodicTable.INSTANCE.getBlocks().forEach(entries::add));

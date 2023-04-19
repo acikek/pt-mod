@@ -50,16 +50,24 @@ public enum RefinedStateTypes implements RefinedStateType {
         return miniItemFormat.formatted(elementName);
     }
 
-    @Override
-    public Block createBlock(@Nullable Float strength) {
+    private AbstractBlock.Settings getSettings(@Nullable Float strength) {
         Float blockStrength = strength != null
                 ? strength
                 : defaultStrength;
         Objects.requireNonNull(blockStrength);
-        AbstractBlock.Settings settings = FabricBlockSettings.of(material)
+        return FabricBlockSettings.of(material)
                 .requiresTool()
                 .sounds(sounds)
                 .strength(blockStrength);
+    }
+
+    public AbstractBlock.Settings getBaseSettings() {
+        return getSettings(null);
+    }
+
+    @Override
+    public Block createBlock(@Nullable Float strength) {
+        AbstractBlock.Settings settings = getSettings(strength);
         return this == GAS
                 ? new HorizontalFacingBlock(settings) {
                     @Override
