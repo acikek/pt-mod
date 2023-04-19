@@ -1,15 +1,20 @@
 package com.acikek.pt.api.impl.datagen;
 
+import com.acikek.pt.PT;
+import com.acikek.pt.block.ModBlocks;
 import com.acikek.pt.core.element.Element;
 import com.acikek.pt.core.refined.ElementRefinedState;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
 import net.minecraft.block.Block;
-import net.minecraft.data.client.BlockStateModelGenerator;
-import net.minecraft.data.client.ItemModelGenerator;
-import net.minecraft.data.client.Models;
+import net.minecraft.data.client.*;
 import net.minecraft.item.Item;
+import net.minecraft.util.Identifier;
+
+import java.util.Optional;
 
 public class PTDatagenImpl {
+
+    //public static final Model POWDER_BLOCK_MODEL = new Model(Optional.of(PT.id("powder_block")))
 
     private static void buildTranslationsForState(FabricLanguageProvider.TranslationBuilder builder, Element element, ElementRefinedState state) {
         // TODO test
@@ -41,5 +46,15 @@ public class PTDatagenImpl {
         for (Item item : element.getItems()) {
             itemModelGenerator.register(item, Models.GENERATED);
         }
+    }
+
+    public static TextureMap getPowderTextureMap(Block powderBlock) {
+        Identifier top = TextureMap.getSubId(powderBlock, "_top");
+        return new TextureMap()
+                .put(TextureKey.SIDE, TextureMap.getSubId(powderBlock, "_side"))
+                .put(TextureKey.FRONT, TextureMap.getSubId(powderBlock, "_front"))
+                .put(TextureKey.TOP, top)
+                .put(TextureKey.PARTICLE, top)
+                .put(TextureKey.BOTTOM, TextureMap.getSubId(ModBlocks.EMPTY_SACK, "_bottom"));
     }
 }

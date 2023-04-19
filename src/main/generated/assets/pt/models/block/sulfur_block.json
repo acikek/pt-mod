@@ -1,6 +1,9 @@
 {
-  "parent": "minecraft:block/cube_all",
+  "parent": "minecraft:block/orientable_with_bottom",
   "textures": {
-    "all": "pt:block/sulfur_block"
+    "bottom": "pt:block/empty_sack_bottom",
+    "front": "pt:block/sulfur_block_front",
+    "side": "pt:block/sulfur_block_side",
+    "top": "pt:block/sulfur_block_top"
   }
 }

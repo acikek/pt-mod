@@ -1,12 +1,15 @@
 package com.acikek.pt.core.refined;
 
+import com.acikek.pt.api.datagen.PTDatagenApi;
+import com.acikek.pt.block.ModBlocks;
 import com.acikek.pt.sound.ModSoundGroups;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.block.*;
-import net.minecraft.data.client.BlockStateModelGenerator;
-import net.minecraft.data.client.TexturedModel;
+import net.minecraft.data.client.*;
+import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.state.StateManager;
+import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Objects;
@@ -65,14 +68,21 @@ public enum RefinedStateTypes implements RefinedStateType {
         return getSettings(null);
     }
 
+    // TODO make this look nicer
     @Override
     public Block createBlock(@Nullable Float strength) {
         AbstractBlock.Settings settings = getSettings(strength);
-        return this == GAS
+        return this == GAS || this == POWDER
                 ? new HorizontalFacingBlock(settings) {
                     @Override
                     protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
-                        builder.add(HorizontalFacingBlock.FACING);
+                        builder.add(FACING);
+                    }
+
+                    @Nullable
+                    @Override
+                    public BlockState getPlacementState(ItemPlacementContext ctx) {
+                        return getDefaultState().with(FACING, ctx.getHorizontalPlayerFacing().getOpposite());
                     }
                 }
                 : new Block(settings);
@@ -81,8 +91,9 @@ public enum RefinedStateTypes implements RefinedStateType {
     @Override
     public void buildBlockModel(BlockStateModelGenerator generator, Block block) {
         switch (this) {
-            case METAL, POWDER, SYNTHESIZED, TRACE -> generator.registerSimpleCubeAll(block);
+            case METAL, SYNTHESIZED, TRACE -> generator.registerSimpleCubeAll(block);
             case GAS -> generator.registerNorthDefaultHorizontalRotated(block, TexturedModel.ORIENTABLE_WITH_BOTTOM);
+            case POWDER -> generator.registerNorthDefaultHorizontalRotated(block, PTDatagenApi.POWDER_MODEL_FACTORY);
         }
     }
 }
