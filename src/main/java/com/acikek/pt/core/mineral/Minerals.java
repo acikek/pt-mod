@@ -1,6 +1,6 @@
 package com.acikek.pt.core.mineral;
 
-import com.acikek.pt.core.element.ElementSignature;
+import com.acikek.pt.core.signature.ElementSignature;
 import com.acikek.pt.core.element.ElementalObjects;
 import com.acikek.pt.core.lang.MineralNaming;
 

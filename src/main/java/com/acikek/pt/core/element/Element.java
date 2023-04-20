@@ -10,7 +10,9 @@ import com.acikek.pt.core.source.ElementSource;
 import com.acikek.pt.core.source.SourceHolder;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
+import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
+import net.minecraft.util.Formatting;
 import net.minecraft.world.World;
 
 import java.util.ArrayList;
@@ -45,10 +47,21 @@ public interface Element extends NameHolder, SourceHolder, RefinedStateHolder {
         return Text.translatable(getSymbolKey());
     }
 
+    default Text getQuantifiedText(int amount, boolean bold) {
+        MutableText result = Text.empty();
+        MutableText text = getSymbolText().copy();
+        if (bold) {
+            text.formatted(Formatting.BOLD);
+        }
+        result.append(text);
+        if (amount > 1) {
+            result.append(PTApi.subscript(amount));
+        }
+        return result;
+    }
+
     default Text getQuantifiedText(int amount) {
-        return amount <= 1
-                ? getSymbolText()
-                : getSymbolText().copy().append(PTApi.subscript(amount));
+        return getQuantifiedText(amount, false);
     }
 
     default String getRefinedItemName() {

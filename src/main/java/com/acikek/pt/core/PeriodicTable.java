@@ -17,24 +17,24 @@ public class PeriodicTable extends AbstractPeriodicTable {
     public static final MineralBlock TEST = Minerals.block(
             "Test Mineral",
             () -> List.of(
-                    Elements.single(PeriodicTable.BERYLLIUM, 3),
+                    Elements.amount(PeriodicTable.BERYLLIUM, 3).primary().unit(),
                     Elements.wrap(5,
                             Elements.amount(PeriodicTable.SULFUR, 2),
-                            Elements.amount(PeriodicTable.OXYGEN)
+                            Elements.single(PeriodicTable.OXYGEN).primary()
                     ),
-                    Elements.random(7, PeriodicTable.ANTIMONY, PeriodicTable.OSMIUM, PeriodicTable.PLATINUM),
+                    Elements.random(7, Elements.single(PeriodicTable.ANTIMONY).primary(), PeriodicTable.OSMIUM, PeriodicTable.PLATINUM),
                     Elements.hydrate(4)
             )
     );
 
     public static final MineralBlock LITHIOPHILITE = Minerals.block(
             "Lithiophilite",
-            () -> List.of(Elements.single(PeriodicTable.LITHIUM), /*Mn,*/ /*P,*/ Elements.single(PeriodicTable.OXYGEN))
+            () -> List.of(Elements.unit(PeriodicTable.LITHIUM), /*Mn,*/ /*P,*/ Elements.unit(PeriodicTable.OXYGEN))
     );
 
     public static final MineralBlock STIBNITE = Minerals.block(
             MineralNaming.full("Stibnite", "Shard"),
-            () -> List.of(Elements.single(PeriodicTable.ANTIMONY, 2), Elements.single(PeriodicTable.SULFUR, 3))
+            () -> List.of(Elements.unit(PeriodicTable.ANTIMONY, 2), Elements.unit(PeriodicTable.SULFUR, 3))
     );
 
     /*public static final MineralBlock CHRYSOBERYL = Minerals.block(
@@ -44,7 +44,7 @@ public class PeriodicTable extends AbstractPeriodicTable {
 
     public static final MineralBlock GYPSUM = Minerals.block(
             MineralNaming.full("Gypsum", "Crystal"),
-            () -> List.of(/*Ca,*/ Elements.single(PeriodicTable.SULFUR), Elements.single(PeriodicTable.OXYGEN, 4))
+            () -> List.of(/*Ca,*/ Elements.unit(PeriodicTable.SULFUR), Elements.unit(PeriodicTable.OXYGEN, 4))
     );
 
     public static final Element HYDROGEN = Elements.gas(ElementNames.byId("hydrogen", "H"), 280, 319);

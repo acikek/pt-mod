@@ -1,6 +1,6 @@
 package com.acikek.pt.core.mineral;
 
-import com.acikek.pt.core.element.ElementSignature;
+import com.acikek.pt.core.signature.ElementSignature;
 import com.acikek.pt.core.lang.MineralNaming;
 import net.minecraft.block.Block;
 import net.minecraft.client.item.TooltipContext;
