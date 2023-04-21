@@ -63,6 +63,11 @@ public class MineralBlock extends Block implements Mineral {
     }
 
     @Override
+    public Item mineralResultItem() {
+        return rawMineral;
+    }
+
+    @Override
     public void init() {
         results = resultSupplier.get();
         resultSupplier = null;
@@ -158,5 +163,10 @@ public class MineralBlock extends Block implements Mineral {
         return rawMineral != null
                 ? Collections.singletonList(rawMineral)
                 : Collections.emptyList();
+    }
+
+    @Override
+    public String toString() {
+        return id();
     }
 }

@@ -60,4 +60,9 @@ public class ElementImpl implements Element {
     public @NotNull ElementRefinedState state() {
         return state;
     }
+
+    @Override
+    public String toString() {
+        return id();
+    }
 }

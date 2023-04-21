@@ -4,7 +4,6 @@ import com.acikek.pt.api.datagen.DatagenDelegator;
 import com.acikek.pt.core.element.Element;
 import com.acikek.pt.core.registry.ElementIds;
 import com.acikek.pt.core.registry.PTRegistry;
-import net.minecraft.item.Item;
 import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.NotNull;
 
@@ -18,16 +17,24 @@ public interface ElementSource extends DatagenDelegator, MaterialHolder {
         return getId().equals(id);
     }
 
-    Item mineralResultItem();
-
     default boolean hasMineralResult() {
         return mineralResultItem() != null;
     }
 
     void register(PTRegistry registry, ElementIds<String> ids);
 
+    default boolean isExclusive() {
+        return false;
+    }
+
+    default boolean isAlreadyAdded(Element element) {
+        return false;
+    }
+
     default void onAdd(Element parent) {
-        // Empty
+        if (isExclusive() && isAlreadyAdded(parent)) {
+            throw new IllegalStateException("exclusive source '" + this + "' is already attached; cannot be added to element '" + parent + "'");
+        }
     }
 
     @SuppressWarnings("unchecked")

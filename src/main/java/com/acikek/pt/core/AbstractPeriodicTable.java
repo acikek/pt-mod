@@ -16,6 +16,7 @@ import java.util.function.Function;
 
 public abstract class AbstractPeriodicTable implements ElementHolder {
 
+    private final Map<String, Mineral> minerals;
     private final Map<String, Element> elements;
     private final PTRegistry registry;
 
@@ -27,6 +28,9 @@ public abstract class AbstractPeriodicTable implements ElementHolder {
         elements = builder.build();
         for (Mineral mineral : createMinerals()) {
             mineral.init();
+        }
+        for (Element element : elements()) {
+            element.forEachSource(source -> source.onAdd(element));
         }
         this.registry = registry;
     }
