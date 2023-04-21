@@ -3,7 +3,7 @@ package com.acikek.pt;
 import com.acikek.pt.api.impl.PTLoading;
 import com.acikek.pt.block.ModBlocks;
 import com.acikek.pt.core.PeriodicTable;
-import com.acikek.pt.core.registry.ElementRegistry;
+import com.acikek.pt.core.registry.PTRegistry;
 import com.acikek.pt.sound.ModSoundEvents;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
@@ -20,7 +20,7 @@ import net.minecraft.util.Identifier;
 public class PT implements ModInitializer {
 
     public static final String ID = "pt";
-    public static final ElementRegistry REGISTRY = new ElementRegistry(ID);
+    public static final PTRegistry REGISTRY = new PTRegistry(ID);
 
     public static Identifier id(String path) {
         return new Identifier(ID, path);

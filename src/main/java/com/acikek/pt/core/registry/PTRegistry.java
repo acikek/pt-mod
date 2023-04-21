@@ -9,7 +9,7 @@ import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;
 
-public record ElementRegistry(String key) {
+public record PTRegistry(String key) {
 
     private <T> T register(Registry<? super T> registry, String path, T entry) {
         Identifier id = new Identifier(key, path);

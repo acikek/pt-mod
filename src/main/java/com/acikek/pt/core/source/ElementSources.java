@@ -4,7 +4,7 @@ import com.acikek.pt.PT;
 import com.acikek.pt.core.impl.source.AtmosphericSource;
 import com.acikek.pt.core.impl.source.MineralSourceBuilder;
 import com.acikek.pt.core.impl.source.OreSourceBuilder;
-import com.acikek.pt.core.mineral.MineralBlock;
+import com.acikek.pt.core.impl.mineral.MineralBlock;
 import net.minecraft.util.Identifier;
 import org.apache.commons.lang3.Range;
 

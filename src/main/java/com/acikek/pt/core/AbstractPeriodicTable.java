@@ -4,7 +4,7 @@ import com.acikek.pt.PT;
 import com.acikek.pt.core.element.Element;
 import com.acikek.pt.core.element.ElementHolder;
 import com.acikek.pt.core.mineral.Mineral;
-import com.acikek.pt.core.registry.ElementRegistry;
+import com.acikek.pt.core.registry.PTRegistry;
 import com.google.common.collect.ImmutableMap;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
@@ -17,9 +17,9 @@ import java.util.function.Function;
 public abstract class AbstractPeriodicTable implements ElementHolder {
 
     private final Map<String, Element> elements;
-    private final ElementRegistry registry;
+    private final PTRegistry registry;
 
-    protected AbstractPeriodicTable(ElementRegistry registry) {
+    protected AbstractPeriodicTable(PTRegistry registry) {
         ImmutableMap.Builder<String, Element> builder = ImmutableMap.builder();
         for (Element element : createElements()) {
             builder.put(element.id(), element);

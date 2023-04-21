@@ -55,12 +55,12 @@ public class PTDatagenImpl {
     }
 
     public static void buildBlockTagsForElement(Function<TagKey<Block>, FabricTagProvider<Block>.FabricTagBuilder> provider, Element element) {
-        ElementRefinedState state = element.state();
+        /*ElementRefinedState state = element.state();
         TagKey<Block> mineable = state.getType().blockMineableTag();
         if (mineable != null) {
             provider.apply(mineable).add(state.refinedBlock());
         }
-        element.forEachSource(source -> source.buildAdditionalBlockTags(provider, element));
+        element.forEachSource(source -> source.buildAdditionalBlockTags(provider, element));*/
     }
 
     public static TextureMap getPowderTextureMap(Block powderBlock) {

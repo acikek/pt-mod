@@ -3,7 +3,7 @@ package com.acikek.pt.core.impl.source;
 import com.acikek.pt.core.element.Element;
 import com.acikek.pt.core.mineral.Mineral;
 import com.acikek.pt.core.registry.ElementIds;
-import com.acikek.pt.core.registry.ElementRegistry;
+import com.acikek.pt.core.registry.PTRegistry;
 import com.acikek.pt.core.source.ElementSource;
 import com.acikek.pt.core.source.ElementSources;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
@@ -39,17 +39,12 @@ public class OreSource implements ElementSource {
     }
 
     @Override
-    public Mineral mineral() {
-        return null;
-    }
-
-    @Override
     public Item mineralResultItem() {
         return rawItem;
     }
 
     @Override
-    public void register(ElementRegistry registry, ElementIds<String> ids) {
+    public void register(PTRegistry registry, ElementIds<String> ids) {
         registry.registerBlock(ids.getSourceBlockId(), ore);
         registry.registerBlock(ids.getDeepslateSourceBlockId(), deepslateOre);
         registry.registerItem(ids.getRawSourceItemId(), rawItem);

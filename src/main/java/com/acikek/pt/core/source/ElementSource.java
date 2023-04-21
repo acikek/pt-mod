@@ -1,34 +1,22 @@
 package com.acikek.pt.core.source;
 
+import com.acikek.pt.api.datagen.DatagenDelegator;
 import com.acikek.pt.core.element.Element;
-import com.acikek.pt.core.mineral.Mineral;
 import com.acikek.pt.core.registry.ElementIds;
-import com.acikek.pt.core.registry.ElementRegistry;
-import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
-import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
+import com.acikek.pt.core.registry.PTRegistry;
 import net.minecraft.block.Block;
-import net.minecraft.data.server.loottable.BlockLootTableGenerator;
-import net.minecraft.data.server.tag.TagProvider;
 import net.minecraft.item.Item;
-import net.minecraft.registry.tag.TagKey;
 import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
-import java.util.function.Function;
 
-public interface ElementSource {
+public interface ElementSource extends DatagenDelegator, MaterialHolder {
 
     @NotNull Identifier getId();
 
     default boolean isType(Identifier id) {
         return getId().equals(id);
-    }
-
-    Mineral mineral();
-
-    default boolean hasMineral() {
-        return mineral() != null;
     }
 
     Item mineralResultItem();
@@ -37,23 +25,11 @@ public interface ElementSource {
         return mineralResultItem() != null;
     }
 
-    void register(ElementRegistry registry, ElementIds<String> ids);
+    void register(PTRegistry registry, ElementIds<String> ids);
 
-    default void buildTranslations(FabricLanguageProvider.TranslationBuilder builder, Element parent) {
+    default void onAdd(Element parent) {
         // Empty
     }
-
-    default void buildLootTables(BlockLootTableGenerator generator, Element parent) {
-        // Empty
-    }
-
-    default void buildAdditionalBlockTags(Function<TagKey<Block>, FabricTagProvider<Block>.FabricTagBuilder> provider, Element parent) {
-        // Empty
-    }
-
-    List<Block> getBlocks();
-
-    List<Item> getItems();
 
     @SuppressWarnings("unchecked")
     static List<ElementSource> forObject(Object obj) {

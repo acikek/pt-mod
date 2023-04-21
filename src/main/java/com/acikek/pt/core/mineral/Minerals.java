@@ -1,7 +1,7 @@
 package com.acikek.pt.core.mineral;
 
+import com.acikek.pt.core.impl.mineral.MineralBlock;
 import com.acikek.pt.core.signature.ElementSignature;
-import com.acikek.pt.core.element.ElementalObjects;
 import com.acikek.pt.core.lang.MineralNaming;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.block.AbstractBlock;

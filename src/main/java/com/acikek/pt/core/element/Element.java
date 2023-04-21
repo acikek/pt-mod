@@ -5,7 +5,7 @@ import com.acikek.pt.core.lang.NameHolder;
 import com.acikek.pt.core.refined.ElementRefinedState;
 import com.acikek.pt.core.refined.RefinedStateHolder;
 import com.acikek.pt.core.registry.ElementIds;
-import com.acikek.pt.core.registry.ElementRegistry;
+import com.acikek.pt.core.registry.PTRegistry;
 import com.acikek.pt.core.source.ElementSource;
 import com.acikek.pt.core.source.SourceHolder;
 import net.minecraft.block.Block;
@@ -93,7 +93,7 @@ public interface Element extends NameHolder, SourceHolder, RefinedStateHolder {
                 : sources.get(world.random.nextInt(sources.size())).mineralResultItem();
     }
 
-    default void register(ElementRegistry registry) {
+    default void register(PTRegistry registry) {
         if (hasSources()) {
             for (ElementSource source : sources()) {
                 source.register(registry, elementIds());

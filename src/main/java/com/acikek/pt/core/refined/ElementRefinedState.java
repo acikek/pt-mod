@@ -1,7 +1,7 @@
 package com.acikek.pt.core.refined;
 
 import com.acikek.pt.core.registry.ElementIds;
-import com.acikek.pt.core.registry.ElementRegistry;
+import com.acikek.pt.core.registry.PTRegistry;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
 import net.minecraft.block.Block;
 import net.minecraft.data.client.BlockStateModelGenerator;
@@ -38,7 +38,7 @@ public interface ElementRefinedState {
         getType().buildBlockTags(provider, block);
     }
 
-    default void register(ElementRegistry registry, ElementIds<String> ids) {
+    default void register(PTRegistry registry, ElementIds<String> ids) {
         registry.registerItem(ids.getItemId(), refinedItem());
         registry.registerItem(ids.getMiniItemId(), miniRefinedItem());
         registry.registerBlock(ids.getBlockId(), refinedBlock());
