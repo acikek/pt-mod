@@ -24,7 +24,7 @@ public class ElementImpl implements Element {
     public ElementImpl(ElementNaming names, List<ElementSource> sources, ElementRefinedState state) {
         Stream.of(names, state).forEach(Objects::requireNonNull);
         this.names = names;
-        this.ids = ElementIds.get(id());
+        this.ids = ElementIds.create(id());
         this.sources = new ArrayList<>(sources);
         this.state = state;
     }

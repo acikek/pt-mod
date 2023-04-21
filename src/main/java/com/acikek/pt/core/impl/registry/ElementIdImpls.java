@@ -24,7 +24,7 @@ public class ElementIdImpls {
 
         @Override
         public ElementIds<Identifier> useIdentifier() {
-            return ElementIds.get(PT.id(value));
+            return ElementIds.create(PT.id(value));
         }
     }
 
@@ -41,7 +41,7 @@ public class ElementIdImpls {
 
         @Override
         public ElementIds<String> useString() {
-            return ElementIds.get(value.getPath());
+            return ElementIds.create(value.getPath());
         }
 
         @Override

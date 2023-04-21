@@ -4,7 +4,6 @@ import com.acikek.pt.api.datagen.DatagenDelegator;
 import com.acikek.pt.core.element.Element;
 import com.acikek.pt.core.registry.ElementIds;
 import com.acikek.pt.core.registry.PTRegistry;
-import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.NotNull;

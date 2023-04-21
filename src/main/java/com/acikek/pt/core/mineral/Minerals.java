@@ -19,6 +19,6 @@ public class Minerals {
             .strength(3.0f);
 
     public static MineralBlock block(Object naming, Supplier<List<ElementSignature>> supplier) {
-        return new MineralBlock(MINERAL_SETTINGS, MineralNaming.forObject(naming), supplier);
+        return null; //new MineralBlock(MINERAL_SETTINGS, MineralNaming.forObject(naming), supplier);
     }
 }

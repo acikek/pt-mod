@@ -1,6 +1,7 @@
 package com.acikek.pt.core.element;
 
 import com.acikek.pt.api.PTApi;
+import com.acikek.pt.core.lang.ElementNaming;
 import com.acikek.pt.core.lang.NameHolder;
 import com.acikek.pt.core.refined.ElementRefinedState;
 import com.acikek.pt.core.refined.RefinedStateHolder;
@@ -21,7 +22,7 @@ import java.util.List;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
-public interface Element extends NameHolder, SourceHolder, RefinedStateHolder {
+public interface Element extends NameHolder<ElementNaming>, SourceHolder, RefinedStateHolder {
 
     ElementIds<String> elementIds();
 

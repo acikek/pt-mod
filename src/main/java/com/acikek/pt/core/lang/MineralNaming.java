@@ -35,4 +35,8 @@ public record MineralNaming(String id, String englishName, String rawFormName) i
         }
         throw new IllegalStateException("object must be either a String name or a MineralNaming instance");
     }
+
+    public String getRawFormPath() {
+        return id + "_" + CompoundNames.getIdFromName(rawFormName);
+    }
 }

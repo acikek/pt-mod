@@ -9,9 +9,10 @@ public abstract class ElementIds<T> {
     private static final String BLOCK_SUFFIX = "_block";
     private static final String SOURCE_BLOCK_SUFFIX = "_source_block";
     private static final String DEEPSLATE_SOURCE_BLOCK_SUFFIX = "_source_deepslate";
-    private static final String CLUSTER_SOURCE_BLOCK_SUFFIX = "_source_cluster";
     private static final String RAW_SOURCE_ITEM_SUFFIX = "_source";
     private static final String RAW_SOURCE_BLOCK_SUFFIX = "_raw_block";
+
+    private static final String MINERAL_CLUSTER_SUFFIX = "_cluster";
 
     protected T value;
 
@@ -19,11 +20,11 @@ public abstract class ElementIds<T> {
         this.value = value;
     }
 
-    public static ElementIds<String> get(String id) {
+    public static ElementIds<String> create(String id) {
         return new ElementIdImpls.StringBacked(id);
     }
 
-    public static ElementIds<Identifier> get(Identifier id) {
+    public static ElementIds<Identifier> create(Identifier id) {
         return new ElementIdImpls.IdentifierBacked(id);
     }
 
@@ -57,15 +58,15 @@ public abstract class ElementIds<T> {
         return addSuffix(DEEPSLATE_SOURCE_BLOCK_SUFFIX);
     }
 
-    public T getClusterSourceBlockId() {
-        return addSuffix(CLUSTER_SOURCE_BLOCK_SUFFIX);
-    }
-
     public T getRawSourceItemId() {
         return addSuffix(RAW_SOURCE_ITEM_SUFFIX);
     }
 
     public T getRawSourceBlockId() {
         return addSuffix(RAW_SOURCE_BLOCK_SUFFIX);
+    }
+
+    public T getMineralClusterId() {
+        return addSuffix(MINERAL_CLUSTER_SUFFIX);
     }
 }

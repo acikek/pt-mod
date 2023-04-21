@@ -2,9 +2,9 @@ package com.acikek.pt.core.lang;
 
 import org.jetbrains.annotations.NotNull;
 
-public interface NameHolder {
+public interface NameHolder<T extends CompoundNaming> {
 
-    @NotNull ElementNaming naming();
+    @NotNull T naming();
 
     default String id() {
         return naming().id();
