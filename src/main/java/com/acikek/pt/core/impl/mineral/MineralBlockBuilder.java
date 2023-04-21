@@ -1,12 +1,8 @@
 package com.acikek.pt.core.impl.mineral;
 
 import com.acikek.pt.core.element.ElementalObjects;
-import com.acikek.pt.core.impl.source.MineralSource;
-import com.acikek.pt.core.lang.MineralNaming;
-import com.acikek.pt.core.mineral.Mineral;
-import com.acikek.pt.core.mineral.Minerals;
+import com.acikek.pt.core.lang.MineralDisplay;
 import com.acikek.pt.core.signature.ElementSignature;
-import com.acikek.pt.core.source.ElementSource;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
@@ -31,7 +27,7 @@ public class MineralBlockBuilder {
     private boolean hasCluster = false;
     private Item rawMineral;
     private boolean hasRawMineral = false;
-    private MineralNaming naming;
+    private MineralDisplay naming;
     private Supplier<List<ElementSignature>> signature;
 
     public MineralBlockBuilder settings(AbstractBlock.Settings settings) {
@@ -39,13 +35,13 @@ public class MineralBlockBuilder {
         return this;
     }
 
-    public MineralBlockBuilder naming(MineralNaming naming) {
+    public MineralBlockBuilder naming(MineralDisplay naming) {
         this.naming = naming;
         return this;
     }
 
     public MineralBlockBuilder naming(Object naming) {
-        return this.naming(MineralNaming.forObject(naming));
+        return this.naming(MineralDisplay.forObject(naming));
     }
 
     public MineralBlockBuilder signature(Supplier<List<ElementSignature>> signature) {

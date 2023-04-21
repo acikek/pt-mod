@@ -1,12 +1,14 @@
 package com.acikek.pt.core.element;
 
 import com.acikek.pt.api.PTApi;
-import com.acikek.pt.core.lang.ElementNaming;
-import com.acikek.pt.core.lang.NameHolder;
+import com.acikek.pt.core.lang.ElementDisplay;
+import com.acikek.pt.core.lang.DisplayHolder;
 import com.acikek.pt.core.refined.ElementRefinedState;
 import com.acikek.pt.core.refined.RefinedStateHolder;
 import com.acikek.pt.core.registry.ElementIds;
 import com.acikek.pt.core.registry.PTRegistry;
+import com.acikek.pt.core.signature.ElementSignature;
+import com.acikek.pt.core.signature.SignatureHolder;
 import com.acikek.pt.core.source.ElementSource;
 import com.acikek.pt.core.source.SourceHolder;
 import net.minecraft.block.Block;
@@ -22,11 +24,16 @@ import java.util.List;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
-public interface Element extends NameHolder<ElementNaming>, SourceHolder, RefinedStateHolder {
+public interface Element extends DisplayHolder<ElementDisplay>, SourceHolder, RefinedStateHolder, SignatureHolder {
 
     ElementIds<String> elementIds();
 
     void afterRegister();
+
+    @Override
+    default List<ElementSignature> signature() {
+        return Collections.singletonList(Elements.unit(this, display().signatureAmount()));
+    }
 
     default String getTextKey(String path) {
         return "element.pt." + id() + "." + path;
@@ -66,15 +73,15 @@ public interface Element extends NameHolder<ElementNaming>, SourceHolder, Refine
     }
 
     default String getRefinedItemName() {
-        return state().getType().getItemName(naming().englishName());
+        return state().getType().getItemName(display().englishName());
     }
 
     default String getMiniRefinedItemName() {
-        return state().getType().getMiniItemName(naming().englishName());
+        return state().getType().getMiniItemName(display().englishName());
     }
 
     default String getRefinedBlockName() {
-        return state().getType().getBlockName(naming().englishName());
+        return state().getType().getBlockName(display().englishName());
     }
 
     default void forEachSource(Consumer<ElementSource> fn) {

@@ -1,10 +1,11 @@
 package com.acikek.pt.core.impl.element;
 
 import com.acikek.pt.core.element.Element;
-import com.acikek.pt.core.lang.ElementNaming;
-import com.acikek.pt.core.registry.ElementIds;
+import com.acikek.pt.core.lang.ElementDisplay;
 import com.acikek.pt.core.refined.ElementRefinedState;
+import com.acikek.pt.core.registry.ElementIds;
 import com.acikek.pt.core.source.ElementSource;
+import net.minecraft.text.Text;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
@@ -14,14 +15,14 @@ import java.util.stream.Stream;
 
 public class ElementImpl implements Element {
 
-    private final ElementNaming names;
+    private final ElementDisplay names;
     private final ElementIds<String> ids;
     private final List<ElementSource> sources;
     private final ElementRefinedState state;
 
     private boolean registered = false;
 
-    public ElementImpl(ElementNaming names, List<ElementSource> sources, ElementRefinedState state) {
+    public ElementImpl(ElementDisplay names, List<ElementSource> sources, ElementRefinedState state) {
         Stream.of(names, state).forEach(Objects::requireNonNull);
         this.names = names;
         this.ids = ElementIds.create(id());
@@ -34,7 +35,7 @@ public class ElementImpl implements Element {
     }
 
     @Override
-    public @NotNull ElementNaming naming() {
+    public @NotNull ElementDisplay display() {
         return names;
     }
 
@@ -46,6 +47,8 @@ public class ElementImpl implements Element {
     @Override
     public void afterRegister() {
         registered = true;
+        state().injectSignature(this);
+        forEachSource(source -> source.injectSignature(this));
     }
 
     @Override

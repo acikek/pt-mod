@@ -4,6 +4,10 @@ import com.acikek.pt.api.impl.PTApiImpl;
 import com.acikek.pt.api.impl.PTLoading;
 import com.acikek.pt.core.AbstractPeriodicTable;
 import com.acikek.pt.core.element.Element;
+import com.acikek.pt.core.signature.ElementSignature;
+import com.acikek.pt.core.signature.SignatureInjector;
+import net.minecraft.item.ItemConvertible;
+import net.minecraft.text.Text;
 
 import java.util.List;
 import java.util.function.Consumer;
@@ -35,5 +39,13 @@ public class PTApi {
         for (AbstractPeriodicTable table : tables()) {
             table.forEachElement(fn);
         }
+    }
+
+    public static void injectSignature(ItemConvertible item, List<ElementSignature> signature) {
+        ((SignatureInjector) item.asItem()).setSignature(signature);
+    }
+
+    public static void injectSignature(ItemConvertible item, Text tooltip) {
+        ((SignatureInjector) item.asItem()).setSignatureTooltip(tooltip);
     }
 }

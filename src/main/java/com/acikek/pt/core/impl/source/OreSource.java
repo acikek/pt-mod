@@ -52,7 +52,7 @@ public class OreSource implements ElementSource {
 
     @Override
     public void buildTranslations(FabricLanguageProvider.TranslationBuilder builder, Element parent) {
-        String name = parent.naming().englishName();
+        String name = parent.display().englishName();
         builder.add(ore, name + " Ore");
         builder.add(deepslateOre, "Deepslate " + name + " Ore");
         builder.add(rawItem, "Raw " + name);

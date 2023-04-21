@@ -2,8 +2,8 @@ package com.acikek.pt.core;
 
 import com.acikek.pt.core.element.Element;
 import com.acikek.pt.core.element.Elements;
-import com.acikek.pt.core.lang.ElementNaming;
-import com.acikek.pt.core.lang.MineralNaming;
+import com.acikek.pt.core.lang.ElementDisplay;
+import com.acikek.pt.core.lang.MineralDisplay;
 import com.acikek.pt.core.mineral.Mineral;
 import com.acikek.pt.core.impl.mineral.MineralBlock;
 import com.acikek.pt.core.mineral.Minerals;
@@ -33,7 +33,7 @@ public class PeriodicTable extends AbstractPeriodicTable {
     );
 
     public static final MineralBlock STIBNITE = Minerals.fullBlock(
-            MineralNaming.byName("Stibnite", "Shard"),
+            MineralDisplay.byName("Stibnite", "Shard"),
             () -> List.of(Elements.amount(PeriodicTable.ANTIMONY, 2).primary().unit(), Elements.unit(PeriodicTable.SULFUR, 3))
     );
 
@@ -43,18 +43,18 @@ public class PeriodicTable extends AbstractPeriodicTable {
     );*/
 
     public static final MineralBlock GYPSUM = Minerals.fullBlock(
-            MineralNaming.byName("Gypsum", "Crystal"),
+            MineralDisplay.byName("Gypsum", "Crystal"),
             () -> List.of(/*Ca,*/ Elements.single(PeriodicTable.SULFUR).primary().unit(), Elements.unit(PeriodicTable.OXYGEN, 4))
     );
 
-    public static final Element HYDROGEN = Elements.gas(ElementNaming.byId("hydrogen", "H"), 280, 319);
+    public static final Element HYDROGEN = Elements.gas(ElementDisplay.byId("hydrogen", "H", 2), 280, 319);
     public static final Element HELIUM = Elements.gas("helium", 255, 300);
     public static final Element LITHIUM = Elements.full("lithium", ElementSources.mineral(LITHIOPHILITE), RefinedStates.metal(1.6f));
     public static final Element BERYLLIUM = Elements.full("beryllium", ElementSources.mineral(TEST), RefinedStates.metal(6.5f));
-    public static final Element OXYGEN = Elements.gas(ElementNaming.byId("oxygen", "O"), 0, 235);
-    public static final Element SULFUR = Elements.full(ElementNaming.byId("sulfur", "S"), ElementSources.mineral(GYPSUM), RefinedStates.sack());
-    public static final Element ANTIMONY = Elements.full(ElementNaming.byId("antimony", "Sb"), ElementSources.mineral(STIBNITE), RefinedStates.metal(4.0f));
-    public static final Element PLATINUM = Elements.full(ElementNaming.byId("platinum", "Pt"), ElementSources.ore(), RefinedStates.metal(4.5f));
+    public static final Element OXYGEN = Elements.gas(ElementDisplay.byId("oxygen", "O"), 0, 235);
+    public static final Element SULFUR = Elements.full(ElementDisplay.byId("sulfur", "S"), ElementSources.mineral(GYPSUM), RefinedStates.sack());
+    public static final Element ANTIMONY = Elements.full(ElementDisplay.byId("antimony", "Sb"), ElementSources.mineral(STIBNITE), RefinedStates.metal(4.0f));
+    public static final Element PLATINUM = Elements.full(ElementDisplay.byId("platinum", "Pt"), ElementSources.ore(), RefinedStates.metal(4.5f));
     public static final Element OSMIUM = Elements.full("osmium", ElementSources.ore(), RefinedStates.metal(7.0f));
 
     public static final AbstractPeriodicTable INSTANCE = new PeriodicTable();

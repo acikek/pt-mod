@@ -71,6 +71,11 @@ public class MineralSource implements ElementSource {
     }
 
     @Override
+    public void injectSignature(Element element) {
+        mineral.injectSignature(element);
+    }
+
+    @Override
     public void buildTranslations(FabricLanguageProvider.TranslationBuilder builder, Element parent) {
         mineral.buildTranslations(builder, parent);
     }
@@ -97,6 +102,6 @@ public class MineralSource implements ElementSource {
 
     @Override
     public String toString() {
-        return "MineralSource(" + mineral + ")";
+        return "MineralSource{" + mineral + "}";
     }
 }

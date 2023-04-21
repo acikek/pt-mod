@@ -21,7 +21,7 @@ public class PTDatagenImpl {
     private static void buildTranslationsForState(FabricLanguageProvider.TranslationBuilder builder, Element element, ElementRefinedState state) {
         // TODO test
         if (state.hasRefinedFluid()) {
-            builder.add(state.refinedFluid().getDefaultState().getBlockState().getBlock(), element.naming().englishName());
+            builder.add(state.refinedFluid().getDefaultState().getBlockState().getBlock(), element.display().englishName());
         }
         builder.add(state.refinedBlock(), element.getRefinedBlockName());
         builder.add(state.refinedItem(), element.getRefinedItemName());
@@ -29,8 +29,8 @@ public class PTDatagenImpl {
     }
 
     public static void buildTranslationsForElement(FabricLanguageProvider.TranslationBuilder builder, Element element) {
-        builder.add(element.getNameKey(), element.naming().englishName());
-        builder.add(element.getSymbolKey(), element.naming().symbol());
+        builder.add(element.getNameKey(), element.display().englishName());
+        builder.add(element.getSymbolKey(), element.display().symbol());
         element.forEachSource(source -> source.buildTranslations(builder, element));
         buildTranslationsForState(builder, element, element.state());
     }

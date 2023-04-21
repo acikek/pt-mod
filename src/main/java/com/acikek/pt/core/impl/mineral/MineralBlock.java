@@ -1,7 +1,8 @@
 package com.acikek.pt.core.impl.mineral;
 
+import com.acikek.pt.api.PTApi;
 import com.acikek.pt.core.element.Element;
-import com.acikek.pt.core.lang.MineralNaming;
+import com.acikek.pt.core.lang.MineralDisplay;
 import com.acikek.pt.core.mineral.Mineral;
 import com.acikek.pt.core.registry.PTRegistry;
 import com.acikek.pt.core.signature.ElementSignature;
@@ -38,7 +39,7 @@ import java.util.function.Supplier;
 
 public class MineralBlock extends Block implements Mineral {
 
-    private final MineralNaming naming;
+    private final MineralDisplay naming;
     private final Block cluster;
     public final Item rawMineral;
 
@@ -46,7 +47,7 @@ public class MineralBlock extends Block implements Mineral {
     private List<ElementSignature> results;
     private Text tooltip;
 
-    public MineralBlock(Settings settings, Block cluster, Item rawMineral, MineralNaming naming, Supplier<List<ElementSignature>> resultSupplier) {
+    public MineralBlock(Settings settings, Block cluster, Item rawMineral, MineralDisplay naming, Supplier<List<ElementSignature>> resultSupplier) {
         super(settings);
         if (cluster != null && rawMineral == null) {
             throw new IllegalStateException("mineral clusters must have accompanying raw forms");
@@ -61,7 +62,7 @@ public class MineralBlock extends Block implements Mineral {
     }
 
     @Override
-    public @NotNull MineralNaming naming() {
+    public @NotNull MineralDisplay display() {
         return naming;
     }
 
@@ -78,6 +79,16 @@ public class MineralBlock extends Block implements Mineral {
     }
 
     @Override
+    public void injectSignature(Element element) {
+        if (cluster != null) {
+            PTApi.injectSignature(cluster, tooltip);
+        }
+        if (rawMineral != null) {
+            PTApi.injectSignature(rawMineral, tooltip);
+        }
+    }
+
+    @Override
     public void register(PTRegistry registry) {
         registry.registerBlock(naming.id(), this);
         if (cluster != null) {
@@ -90,13 +101,13 @@ public class MineralBlock extends Block implements Mineral {
 
     @Override
     public void buildTranslations(FabricLanguageProvider.TranslationBuilder builder, Element parent) {
-        String name = naming().englishName();
+        String name = display().englishName();
         builder.add(this, name);
         if (cluster != null) {
             builder.add(cluster, name + " Cluster");
         }
         if (rawMineral != null) {
-            builder.add(rawMineral, name + " " + naming().rawFormName());
+            builder.add(rawMineral, name + " " + display().rawFormName());
         }
     }
 
@@ -166,10 +177,5 @@ public class MineralBlock extends Block implements Mineral {
         return rawMineral != null
                 ? Collections.singletonList(rawMineral)
                 : Collections.emptyList();
-    }
-
-    @Override
-    public String toString() {
-        return id();
     }
 }

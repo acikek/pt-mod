@@ -1,7 +1,10 @@
 package com.acikek.pt.core.refined;
 
+import com.acikek.pt.api.PTApi;
+import com.acikek.pt.core.element.Element;
 import com.acikek.pt.core.registry.ElementIds;
 import com.acikek.pt.core.registry.PTRegistry;
+import com.acikek.pt.core.source.MaterialHolder;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
 import net.minecraft.block.Block;
 import net.minecraft.data.client.BlockStateModelGenerator;
@@ -14,7 +17,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.function.Function;
 
-public interface ElementRefinedState {
+public interface ElementRefinedState extends MaterialHolder {
 
     @NotNull RefinedStateType getType();
 
@@ -47,10 +50,12 @@ public interface ElementRefinedState {
         }
     }
 
+    @Override
     default List<Block> getBlocks() {
         return Collections.singletonList(refinedBlock());
     }
 
+    @Override
     default List<Item> getItems() {
         return List.of(refinedItem(), miniRefinedItem());
     }

@@ -2,7 +2,7 @@ package com.acikek.pt.core.element;
 
 import com.acikek.pt.core.impl.element.ElementImpl;
 import com.acikek.pt.core.impl.signature.ElementSignatureImpls;
-import com.acikek.pt.core.lang.ElementNaming;
+import com.acikek.pt.core.lang.ElementDisplay;
 import com.acikek.pt.core.refined.ElementRefinedState;
 import com.acikek.pt.core.refined.RefinedStates;
 import com.acikek.pt.core.signature.ElementSignature;
@@ -17,7 +17,7 @@ import java.util.List;
 public class Elements {
 
     public static Element full(Object naming, Object sources, ElementRefinedState state) {
-        return new ElementImpl(ElementNaming.forObject(naming), ElementSource.forObject(sources), state);
+        return new ElementImpl(ElementDisplay.forObject(naming), ElementSource.forObject(sources), state);
     }
 
     public static Element noSource(Object naming, ElementRefinedState state) {
