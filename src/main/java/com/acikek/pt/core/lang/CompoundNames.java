@@ -5,11 +5,11 @@ import org.apache.commons.lang3.StringUtils;
 public class CompoundNames {
 
     public static String getNameFromId(String id) {
-        return StringUtils.capitalize(id);
+        return StringUtils.capitalize(id.replace("_", " "));
     }
 
     public static String getIdFromName(String name) {
-        return name.toLowerCase();
+        return name.toLowerCase().replace(" ", "_");
     }
 
     public static String getSymbolFromName(String name) {

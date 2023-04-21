@@ -51,6 +51,9 @@ public class MineralBlock extends Block implements Mineral {
         if (cluster != null && rawMineral == null) {
             throw new IllegalStateException("mineral clusters must have accompanying raw forms");
         }
+        if (naming.rawFormName() == null && rawMineral != null) {
+            throw new IllegalStateException("raw mineral must have a unique species name");
+        }
         this.cluster = cluster;
         this.rawMineral = rawMineral;
         this.naming = naming;

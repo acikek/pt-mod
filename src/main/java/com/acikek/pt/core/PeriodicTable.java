@@ -14,7 +14,7 @@ import java.util.List;
 
 public class PeriodicTable extends AbstractPeriodicTable {
 
-    public static final MineralBlock TEST = Minerals.fullBlock(
+    public static final MineralBlock TEST = Minerals.block(
             "Test Mineral",
             () -> List.of(
                     Elements.amount(PeriodicTable.BERYLLIUM, 3).primary().unit(),
@@ -29,12 +29,12 @@ public class PeriodicTable extends AbstractPeriodicTable {
 
     public static final MineralBlock LITHIOPHILITE = Minerals.block(
             "Lithiophilite",
-            () -> List.of(Elements.unit(PeriodicTable.LITHIUM), /*Mn,*/ /*P,*/ Elements.unit(PeriodicTable.OXYGEN))
+            () -> List.of(Elements.single(PeriodicTable.LITHIUM).primary().unit(), /*Mn,*/ /*P,*/ Elements.unit(PeriodicTable.OXYGEN))
     );
 
     public static final MineralBlock STIBNITE = Minerals.fullBlock(
             MineralNaming.byName("Stibnite", "Shard"),
-            () -> List.of(Elements.unit(PeriodicTable.ANTIMONY, 2), Elements.unit(PeriodicTable.SULFUR, 3))
+            () -> List.of(Elements.amount(PeriodicTable.ANTIMONY, 2).primary().unit(), Elements.unit(PeriodicTable.SULFUR, 3))
     );
 
     /*public static final MineralBlock CHRYSOBERYL = Minerals.block(
@@ -44,7 +44,7 @@ public class PeriodicTable extends AbstractPeriodicTable {
 
     public static final MineralBlock GYPSUM = Minerals.fullBlock(
             MineralNaming.byName("Gypsum", "Crystal"),
-            () -> List.of(/*Ca,*/ Elements.unit(PeriodicTable.SULFUR), Elements.unit(PeriodicTable.OXYGEN, 4))
+            () -> List.of(/*Ca,*/ Elements.single(PeriodicTable.SULFUR).primary().unit(), Elements.unit(PeriodicTable.OXYGEN, 4))
     );
 
     public static final Element HYDROGEN = Elements.gas(ElementNaming.byId("hydrogen", "H"), 280, 319);

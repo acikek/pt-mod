@@ -7,8 +7,12 @@ import com.acikek.pt.core.registry.PTRegistry;
 import com.acikek.pt.core.signature.ElementSignatureEntry;
 import com.acikek.pt.core.source.ElementSource;
 import com.acikek.pt.core.source.ElementSources;
+import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
+import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
 import net.minecraft.block.Block;
+import net.minecraft.data.server.loottable.BlockLootTableGenerator;
 import net.minecraft.item.Item;
+import net.minecraft.registry.tag.TagKey;
 import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.NotNull;
 
@@ -16,6 +20,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.function.Function;
 
 public class MineralSource implements ElementSource {
 
@@ -57,12 +62,27 @@ public class MineralSource implements ElementSource {
                 return;
             }
         }
-        throw new IllegalStateException("element '" + parent + "' is not a primary component of source ");
+        throw new IllegalStateException("element '" + parent + "' is not a primary component of source '" + this + "'");
     }
 
     @Override
     public void register(PTRegistry registry, ElementIds<String> ids) {
         // TODO worldgen goes here
+    }
+
+    @Override
+    public void buildTranslations(FabricLanguageProvider.TranslationBuilder builder, Element parent) {
+        mineral.buildTranslations(builder, parent);
+    }
+
+    @Override
+    public void buildLootTables(BlockLootTableGenerator generator, Element parent) {
+        mineral.buildLootTables(generator, parent);
+    }
+
+    @Override
+    public void buildAdditionalBlockTags(Function<TagKey<Block>, FabricTagProvider<Block>.FabricTagBuilder> provider, Element parent) {
+        mineral.buildAdditionalBlockTags(provider, parent);
     }
 
     @Override
@@ -77,6 +97,6 @@ public class MineralSource implements ElementSource {
 
     @Override
     public String toString() {
-        return "MineralSource(mineral = " + mineral + ")";
+        return "MineralSource(" + mineral + ")";
     }
 }

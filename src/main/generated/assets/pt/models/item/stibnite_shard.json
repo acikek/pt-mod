@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "pt:item/sulfur_source"
+    "layer0": "pt:item/stibnite_shard"
   }
 }

@@ -24,7 +24,7 @@
                   }
                 }
               ],
-              "name": "pt:sulfur_source_cluster"
+              "name": "pt:stibnite_cluster"
             },
             {
               "type": "minecraft:alternatives",
@@ -51,7 +51,7 @@
                       "function": "minecraft:apply_bonus"
                     }
                   ],
-                  "name": "pt:sulfur_source"
+                  "name": "pt:stibnite_shard"
                 },
                 {
                   "type": "minecraft:item",

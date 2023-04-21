@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:block/cube_all",
   "textures": {
-    "all": "pt:block/lithium_source_block"
+    "all": "pt:block/stibnite_cluster"
   }
 }

@@ -24,7 +24,7 @@
                   }
                 }
               ],
-              "name": "pt:beryllium_source_cluster"
+              "name": "pt:gypsum_cluster"
             },
             {
               "type": "minecraft:alternatives",
@@ -51,7 +51,7 @@
                       "function": "minecraft:apply_bonus"
                     }
                   ],
-                  "name": "pt:beryllium_source"
+                  "name": "pt:gypsum_crystal"
                 },
                 {
                   "type": "minecraft:item",

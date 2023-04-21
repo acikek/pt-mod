@@ -2,7 +2,6 @@ package com.acikek.pt.core;
 
 import com.acikek.pt.PT;
 import com.acikek.pt.core.element.Element;
-import com.acikek.pt.core.element.ElementHolder;
 import com.acikek.pt.core.mineral.Mineral;
 import com.acikek.pt.core.registry.PTRegistry;
 import com.google.common.collect.ImmutableMap;
@@ -14,21 +13,24 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 
-public abstract class AbstractPeriodicTable implements ElementHolder {
+public abstract class AbstractPeriodicTable implements CompoundHolder {
 
     private final Map<String, Mineral> minerals;
     private final Map<String, Element> elements;
     private final PTRegistry registry;
 
     protected AbstractPeriodicTable(PTRegistry registry) {
-        ImmutableMap.Builder<String, Element> builder = ImmutableMap.builder();
+        ImmutableMap.Builder<String, Element> elementBuilder = ImmutableMap.builder();
         for (Element element : createElements()) {
-            builder.put(element.id(), element);
+            elementBuilder.put(element.id(), element);
         }
-        elements = builder.build();
+        elements = elementBuilder.build();
+        ImmutableMap.Builder<String, Mineral> mineralBuilder = ImmutableMap.builder();
         for (Mineral mineral : createMinerals()) {
             mineral.init();
+            mineralBuilder.put(mineral.id(), mineral);
         }
+        minerals = mineralBuilder.build();
         for (Element element : elements()) {
             element.forEachSource(source -> source.onAdd(element));
         }
@@ -44,6 +46,15 @@ public abstract class AbstractPeriodicTable implements ElementHolder {
     }
 
     protected abstract List<Element> createElements();
+
+    public Map<String, Mineral> mineralMap() {
+        return minerals;
+    }
+
+    @Override
+    public List<Mineral> minerals() {
+        return mineralMap().values().stream().toList();
+    }
 
     public Map<String, Element> elementMap() {
         return elements;
@@ -69,6 +80,7 @@ public abstract class AbstractPeriodicTable implements ElementHolder {
     }
 
     public void register() {
+        forEachMineral(mineral -> mineral.register(registry));
         forEachElement(element -> element.register(registry));
     }
 }

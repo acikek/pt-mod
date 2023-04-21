@@ -11,7 +11,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "pt:lithium_source_block"
+          "name": "pt:test_mineral"
         }
       ],
       "rolls": 1.0
