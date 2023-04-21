@@ -8,6 +8,7 @@ import com.acikek.pt.core.source.ElementSource;
 import com.acikek.pt.core.source.ElementSources;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
 import net.minecraft.block.Block;
+import net.minecraft.data.server.loottable.BlockLootTableGenerator;
 import net.minecraft.item.Item;
 import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.NotNull;
@@ -62,6 +63,11 @@ public class OreSource implements ElementSource {
         builder.add(deepslateOre, "Deepslate " + name + " Ore");
         builder.add(rawItem, "Raw " + name);
         builder.add(rawBlock, "Block of Raw " + name);
+    }
+
+    @Override
+    public void buildLootTables(BlockLootTableGenerator generator, Element parent) {
+
     }
 
     @Override

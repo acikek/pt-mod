@@ -8,14 +8,30 @@ import com.acikek.pt.core.registry.ElementRegistry;
 import com.acikek.pt.core.source.ElementSource;
 import com.acikek.pt.core.source.ElementSources;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
+import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
 import net.minecraft.block.Block;
+import net.minecraft.data.server.loottable.BlockLootTableGenerator;
+import net.minecraft.enchantment.Enchantments;
 import net.minecraft.item.Item;
+import net.minecraft.item.Items;
+import net.minecraft.loot.condition.MatchToolLootCondition;
+import net.minecraft.loot.entry.ItemEntry;
+import net.minecraft.loot.entry.LeafEntry;
+import net.minecraft.loot.function.ApplyBonusLootFunction;
+import net.minecraft.loot.function.SetCountLootFunction;
+import net.minecraft.loot.provider.number.ConstantLootNumberProvider;
+import net.minecraft.loot.provider.number.UniformLootNumberProvider;
+import net.minecraft.predicate.item.ItemPredicate;
+import net.minecraft.registry.tag.BlockTags;
+import net.minecraft.registry.tag.ItemTags;
+import net.minecraft.registry.tag.TagKey;
 import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
+import java.util.function.Function;
 
 public class MineralSource implements ElementSource {
 
@@ -70,6 +86,48 @@ public class MineralSource implements ElementSource {
         if (rawMineral != null) {
             builder.add(rawMineral, name + " " + mineral.naming().rawFormName());
         }
+    }
+
+    private void buildMineral(BlockLootTableGenerator generator) {
+        generator.addDrop(mineral,
+                BlockLootTableGenerator.dropsWithSilkTouch(mineral,
+                generator.applyExplosionDecay(mineral,
+                        ((LeafEntry.Builder<?>) ItemEntry.builder(rawMineral)
+                                .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0f, 3.0f))))
+                                .apply(ApplyBonusLootFunction.uniformBonusCount(Enchantments.FORTUNE))
+                ))
+        );
+    }
+
+    private void buildCluster(BlockLootTableGenerator generator) {
+        generator.addDrop(cluster,
+                BlockLootTableGenerator.dropsWithSilkTouch(cluster,
+                ((LeafEntry.Builder<?>) ItemEntry.builder(rawMineral)
+                        .apply(SetCountLootFunction.builder(ConstantLootNumberProvider.create(2.0f))))
+                        .apply(ApplyBonusLootFunction.oreDrops(Enchantments.FORTUNE))
+                        .conditionally(MatchToolLootCondition.builder(ItemPredicate.Builder.create().tag(ItemTags.CLUSTER_MAX_HARVESTABLES)))
+                        .alternatively(generator.applyExplosionDecay(cluster,
+                                ItemEntry.builder(Items.AMETHYST_SHARD)
+                                        .apply(SetCountLootFunction.builder(ConstantLootNumberProvider.create(1.0f))))
+                        ))
+        );
+    }
+
+    @Override
+    public void buildLootTables(BlockLootTableGenerator generator, Element parent) {
+        if (rawMineral == null) {
+            generator.addDrop(mineral);
+            return;
+        }
+        buildMineral(generator);
+        if (cluster != null) {
+            buildCluster(generator);
+        }
+    }
+
+    @Override
+    public void buildAdditionalBlockTags(Function<TagKey<Block>, FabricTagProvider<Block>.FabricTagBuilder> provider, Element parent) {
+        provider.apply(BlockTags.NEEDS_IRON_TOOL).add(mineral);
     }
 
     @Override

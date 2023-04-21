@@ -1,16 +1,18 @@
 package com.acikek.pt.api.impl.datagen;
 
-import com.acikek.pt.PT;
 import com.acikek.pt.block.ModBlocks;
 import com.acikek.pt.core.element.Element;
 import com.acikek.pt.core.refined.ElementRefinedState;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
+import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
 import net.minecraft.block.Block;
 import net.minecraft.data.client.*;
+import net.minecraft.data.server.loottable.BlockLootTableGenerator;
 import net.minecraft.item.Item;
+import net.minecraft.registry.tag.TagKey;
 import net.minecraft.util.Identifier;
 
-import java.util.Optional;
+import java.util.function.Function;
 
 public class PTDatagenImpl {
 
@@ -33,7 +35,7 @@ public class PTDatagenImpl {
         buildTranslationsForState(builder, element, element.state());
     }
 
-    public static void generateBlocksModelsForElement(BlockStateModelGenerator generator, Element element) {
+    public static void buildBlocksModelsForElement(BlockStateModelGenerator generator, Element element) {
         element.state().buildBlockModel(generator);
         element.forEachSource(source -> {
             for (Block block : source.getBlocks()) {
@@ -42,10 +44,23 @@ public class PTDatagenImpl {
         });
     }
 
-    public static void generateItemModelsForElement(ItemModelGenerator itemModelGenerator, Element element) {
+    public static void buildItemModelsForElement(ItemModelGenerator itemModelGenerator, Element element) {
         for (Item item : element.getItems()) {
             itemModelGenerator.register(item, Models.GENERATED);
         }
+    }
+
+    public static void buildLootTablesForElement(BlockLootTableGenerator generator, Element element) {
+        element.forEachSource(source -> source.buildLootTables(generator, element));
+    }
+
+    public static void buildBlockTagsForElement(Function<TagKey<Block>, FabricTagProvider<Block>.FabricTagBuilder> provider, Element element) {
+        ElementRefinedState state = element.state();
+        TagKey<Block> mineable = state.getType().blockMineableTag();
+        if (mineable != null) {
+            provider.apply(mineable).add(state.refinedBlock());
+        }
+        element.forEachSource(source -> source.buildAdditionalBlockTags(provider, element));
     }
 
     public static TextureMap getPowderTextureMap(Block powderBlock) {

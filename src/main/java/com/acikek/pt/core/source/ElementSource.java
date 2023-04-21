@@ -5,12 +5,17 @@ import com.acikek.pt.core.mineral.Mineral;
 import com.acikek.pt.core.registry.ElementIds;
 import com.acikek.pt.core.registry.ElementRegistry;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
+import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
 import net.minecraft.block.Block;
+import net.minecraft.data.server.loottable.BlockLootTableGenerator;
+import net.minecraft.data.server.tag.TagProvider;
 import net.minecraft.item.Item;
+import net.minecraft.registry.tag.TagKey;
 import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
+import java.util.function.Function;
 
 public interface ElementSource {
 
@@ -34,7 +39,17 @@ public interface ElementSource {
 
     void register(ElementRegistry registry, ElementIds<String> ids);
 
-    void buildTranslations(FabricLanguageProvider.TranslationBuilder builder, Element parent);
+    default void buildTranslations(FabricLanguageProvider.TranslationBuilder builder, Element parent) {
+        // Empty
+    }
+
+    default void buildLootTables(BlockLootTableGenerator generator, Element parent) {
+        // Empty
+    }
+
+    default void buildAdditionalBlockTags(Function<TagKey<Block>, FabricTagProvider<Block>.FabricTagBuilder> provider, Element parent) {
+        // Empty
+    }
 
     List<Block> getBlocks();
 

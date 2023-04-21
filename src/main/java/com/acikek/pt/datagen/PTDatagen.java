@@ -6,11 +6,11 @@ import com.acikek.pt.core.PeriodicTable;
 import net.fabricmc.fabric.api.datagen.v1.DataGeneratorEntrypoint;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
+import net.fabricmc.fabric.api.datagen.v1.provider.FabricBlockLootTableProvider;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricModelProvider;
 import net.minecraft.data.client.BlockStateModelGenerator;
 import net.minecraft.data.client.ItemModelGenerator;
-import net.minecraft.data.client.ModelIds;
 import net.minecraft.data.client.TexturedModel;
 
 import java.io.IOException;
@@ -26,14 +26,14 @@ public class PTDatagen implements DataGeneratorEntrypoint {
             public void generateBlockStateModels(BlockStateModelGenerator blockStateModelGenerator) {
                 blockStateModelGenerator.registerSingleton(ModBlocks.EMPTY_SACK, TexturedModel.CUBE_BOTTOM_TOP);
                 PeriodicTable.INSTANCE.forEachElement(element ->
-                        PTDatagenApi.generateBlocksModelsForElement(blockStateModelGenerator, element)
+                        PTDatagenApi.buildBlocksModelsForElement(blockStateModelGenerator, element)
                 );
             }
 
             @Override
             public void generateItemModels(ItemModelGenerator itemModelGenerator) {
                 PeriodicTable.INSTANCE.forEachElement(element ->
-                        PTDatagenApi.generateItemModelsForElement(itemModelGenerator, element)
+                        PTDatagenApi.buildItemModelsForElement(itemModelGenerator, element)
                 );
             }
         });
@@ -53,6 +53,15 @@ public class PTDatagen implements DataGeneratorEntrypoint {
                 catch (IOException e) {
                     throw new RuntimeException(e);
                 }
+            }
+        });
+
+        pack.addProvider((FabricDataOutput output) -> new FabricBlockLootTableProvider(output) {
+            @Override
+            public void generate() {
+                PeriodicTable.INSTANCE.forEachElement(element ->
+                        PTDatagenApi.buildLootTablesForElement(this, element)
+                );
             }
         });
     }

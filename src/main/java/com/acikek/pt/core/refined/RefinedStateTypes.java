@@ -2,17 +2,22 @@ package com.acikek.pt.core.refined;
 
 import com.acikek.pt.api.datagen.PTDatagenApi;
 import com.acikek.pt.block.ModBlocks;
+import com.acikek.pt.core.element.Element;
 import com.acikek.pt.sound.ModSoundGroups;
+import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.block.*;
 import net.minecraft.data.client.*;
 import net.minecraft.item.ItemPlacementContext;
+import net.minecraft.registry.tag.BlockTags;
+import net.minecraft.registry.tag.TagKey;
 import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.state.StateManager;
 import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Objects;
+import java.util.function.Function;
 
 public enum RefinedStateTypes implements RefinedStateType {
 
@@ -58,10 +63,13 @@ public enum RefinedStateTypes implements RefinedStateType {
                 ? strength
                 : defaultStrength;
         Objects.requireNonNull(blockStrength);
-        return FabricBlockSettings.of(material)
-                .requiresTool()
+        var settings = FabricBlockSettings.of(material)
                 .sounds(sounds)
                 .strength(blockStrength);
+        if (this != POWDER) {
+            settings.requiresTool();
+        }
+        return settings;
     }
 
     public AbstractBlock.Settings getBaseSettings() {
@@ -94,6 +102,13 @@ public enum RefinedStateTypes implements RefinedStateType {
             case METAL, SYNTHESIZED, TRACE -> generator.registerSimpleCubeAll(block);
             case GAS -> generator.registerNorthDefaultHorizontalRotated(block, TexturedModel.ORIENTABLE_WITH_BOTTOM);
             case POWDER -> generator.registerNorthDefaultHorizontalRotated(block, PTDatagenApi.POWDER_MODEL_FACTORY);
+        }
+    }
+
+    @Override
+    public void buildBlockTags(Function<TagKey<Block>, FabricTagProvider<Block>.FabricTagBuilder> provider, Block block) {
+        if (this != POWDER) {
+            provider.apply(BlockTags.PICKAXE_MINEABLE).add(block);
         }
     }
 }

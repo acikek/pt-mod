@@ -1,0 +1,8 @@
+// 1.19.4	2023-04-20T10:18:59.990930276	PT/Block Loot Tables
+4347129827f46007ba7cfe349c638183914ad97c data/pt/loot_tables/blocks/beryllium_source_block.json
+e1bf0eb0cc7a485f9bcdf3c6c37c87997402d3d3 data/pt/loot_tables/blocks/sulfur_source_cluster.json
+1ba7a143990a5657277de1436d7d213db11f4328 data/pt/loot_tables/blocks/lithium_source_block.json
+e2ed9790edab334d18ccc5eedf8ae9d489e2b62a data/pt/loot_tables/blocks/beryllium_source_cluster.json
+197b4003dc81abbdfb83d74d1638636b80ade2ca data/pt/loot_tables/blocks/antimony_source_cluster.json
+63d01fc4d7a1f3db6d797ad4a4243de2cfd41f92 data/pt/loot_tables/blocks/sulfur_source_block.json
+b46628d5e780a5b33e5e865f4484c385f4b9e9e3 data/pt/loot_tables/blocks/antimony_source_block.json
