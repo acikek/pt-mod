@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Stream;
 
-public class OreSource implements ElementSource {
+public class OreSource extends UndergroundSource {
 
     public Block ore;
     public Block deepslateOre;

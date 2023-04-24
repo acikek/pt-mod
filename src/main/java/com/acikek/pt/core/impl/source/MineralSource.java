@@ -5,7 +5,6 @@ import com.acikek.pt.core.mineral.Mineral;
 import com.acikek.pt.core.registry.ElementIds;
 import com.acikek.pt.core.registry.PTRegistry;
 import com.acikek.pt.core.signature.ElementSignatureEntry;
-import com.acikek.pt.core.source.ElementSource;
 import com.acikek.pt.core.source.ElementSources;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
@@ -22,7 +21,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.function.Function;
 
-public class MineralSource implements ElementSource {
+public class MineralSource extends UndergroundSource {
 
     private static final Map<Mineral, Element> ATTACHMENTS = new HashMap<>();
 
@@ -55,7 +54,6 @@ public class MineralSource implements ElementSource {
 
     @Override
     public void onAdd(Element parent) {
-        ElementSource.super.onAdd(parent);
         for (ElementSignatureEntry entry : mineral.getAllResultEntries()) {
             if (entry.element() == parent && entry.isPrimary()) {
                 ATTACHMENTS.put(mineral, parent);
@@ -86,8 +84,8 @@ public class MineralSource implements ElementSource {
     }
 
     @Override
-    public void buildAdditionalBlockTags(Function<TagKey<Block>, FabricTagProvider<Block>.FabricTagBuilder> provider, Element parent) {
-        mineral.buildAdditionalBlockTags(provider, parent);
+    public void buildBlockTags(Function<TagKey<Block>, FabricTagProvider<Block>.FabricTagBuilder> provider, Element parent) {
+        mineral.buildBlockTags(provider, parent);
     }
 
     @Override

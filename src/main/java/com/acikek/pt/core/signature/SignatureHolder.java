@@ -10,11 +10,11 @@ public interface SignatureHolder {
 
     List<ElementSignature> signature();
 
-    default Text stylize(MutableText tooltip) {
+    default Text stylizeSignature(MutableText tooltip) {
         return tooltip.formatted(Formatting.GRAY);
     }
 
     default Text createTooltip() {
-        return stylize(ElementSignature.createTooltip(signature()).copy());
+        return stylizeSignature(ElementSignature.createTooltip(signature()).copy());
     }
 }

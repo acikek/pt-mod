@@ -42,8 +42,8 @@ public class MineralBlock extends Block implements Mineral {
     private final MineralDisplay naming;
     private final Block cluster;
     public final Item rawMineral;
-
     private Supplier<List<ElementSignature>> resultSupplier;
+
     private List<ElementSignature> results;
     private Text tooltip;
 
@@ -149,8 +149,10 @@ public class MineralBlock extends Block implements Mineral {
     }
 
     @Override
-    public void buildAdditionalBlockTags(Function<TagKey<Block>, FabricTagProvider<Block>.FabricTagBuilder> provider, Element parent) {
+    public void buildBlockTags(Function<TagKey<Block>, FabricTagProvider<Block>.FabricTagBuilder> provider, Element parent) {
+        provider.apply(BlockTags.PICKAXE_MINEABLE).add(this);
         provider.apply(BlockTags.NEEDS_IRON_TOOL).add(this);
+        provider.apply(getConventionalBlockTag("s")).add(this);
     }
 
     @Override

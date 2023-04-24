@@ -9,7 +9,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
-public interface ElementSource extends DatagenDelegator, MaterialHolder {
+public interface ElementSource extends DatagenDelegator {
 
     @NotNull Identifier getId();
 

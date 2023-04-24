@@ -12,7 +12,9 @@ import com.acikek.pt.core.signature.SignatureHolder;
 import com.acikek.pt.core.source.ElementSource;
 import com.acikek.pt.core.source.SourceHolder;
 import net.minecraft.block.Block;
+import net.minecraft.fluid.Fluid;
 import net.minecraft.item.Item;
+import net.minecraft.registry.tag.TagKey;
 import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
@@ -82,6 +84,22 @@ public interface Element extends DisplayHolder<ElementDisplay>, SourceHolder, Re
 
     default String getRefinedBlockName() {
         return state().getType().getBlockName(display().englishName());
+    }
+
+    default TagKey<Block> getRefinedBlockTag() {
+        return getConventionalBlockTag("_blocks");
+    }
+
+    default TagKey<Item> getRefinedItemTag() {
+        return getConventionalItemTag("_refined");
+    }
+
+    default TagKey<Item> getMiniRefinedItemTag() {
+        return getConventionalItemTag("_mini");
+    }
+
+    default TagKey<Fluid> getRefinedFluidTag() {
+        return getConventionalFluidTag("");
     }
 
     default void forEachSource(Consumer<ElementSource> fn) {

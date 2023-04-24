@@ -9,9 +9,12 @@ import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricBlockLootTableProvider;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricModelProvider;
+import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
+import net.minecraft.block.Block;
 import net.minecraft.data.client.BlockStateModelGenerator;
 import net.minecraft.data.client.ItemModelGenerator;
 import net.minecraft.data.client.TexturedModel;
+import net.minecraft.registry.RegistryWrapper;
 
 import java.io.IOException;
 
@@ -24,26 +27,20 @@ public class PTDatagen implements DataGeneratorEntrypoint {
         pack.addProvider((FabricDataOutput output) -> new FabricModelProvider(output) {
             @Override
             public void generateBlockStateModels(BlockStateModelGenerator blockStateModelGenerator) {
+                PTDatagenApi.buildBlockModels(blockStateModelGenerator, PeriodicTable.INSTANCE);
                 blockStateModelGenerator.registerSingleton(ModBlocks.EMPTY_SACK, TexturedModel.CUBE_BOTTOM_TOP);
-                PeriodicTable.INSTANCE.forEachElement(element ->
-                        PTDatagenApi.buildBlocksModelsForElement(blockStateModelGenerator, element)
-                );
             }
 
             @Override
             public void generateItemModels(ItemModelGenerator itemModelGenerator) {
-                PeriodicTable.INSTANCE.forEachElement(element ->
-                        PTDatagenApi.buildItemModelsForElement(itemModelGenerator, element)
-                );
+                PTDatagenApi.buildItemModels(itemModelGenerator, PeriodicTable.INSTANCE);
             }
         });
 
         pack.addProvider((FabricDataOutput output) -> new FabricLanguageProvider(output) {
             @Override
             public void generateTranslations(TranslationBuilder translationBuilder) {
-                PeriodicTable.INSTANCE.forEachElement(element ->
-                        PTDatagenApi.buildEnglishTranslationsForElement(translationBuilder, element)
-                );
+                PTDatagenApi.buildEnglishTranslations(translationBuilder, PeriodicTable.INSTANCE);
                 try {
                     var existing = output.getModContainer().findPath("assets/pt/lang/en_us.existing.json");
                     if (existing.isPresent()) {
@@ -59,9 +56,21 @@ public class PTDatagen implements DataGeneratorEntrypoint {
         pack.addProvider((FabricDataOutput output) -> new FabricBlockLootTableProvider(output) {
             @Override
             public void generate() {
-                PeriodicTable.INSTANCE.forEachElement(element ->
-                        PTDatagenApi.buildLootTablesForElement(this, element)
-                );
+                PTDatagenApi.buildLootTables(this, PeriodicTable.INSTANCE);
+            }
+        });
+
+        pack.addProvider((output, lookup) -> new FabricTagProvider.BlockTagProvider(output, lookup) {
+            @Override
+            protected void configure(RegistryWrapper.WrapperLookup arg) {
+                PTDatagenApi.buildBlockTags(this::getOrCreateTagBuilder, PeriodicTable.INSTANCE);
+            }
+        });
+
+        pack.addProvider((output, lookup) -> new FabricTagProvider.ItemTagProvider(output, lookup) {
+            @Override
+            protected void configure(RegistryWrapper.WrapperLookup arg) {
+                PTDatagenApi.buildItemTags(this::getOrCreateTagBuilder, PeriodicTable.INSTANCE);
             }
         });
     }

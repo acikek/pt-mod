@@ -8,6 +8,7 @@ import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
 import net.minecraft.block.Block;
 import net.minecraft.data.client.*;
 import net.minecraft.data.server.loottable.BlockLootTableGenerator;
+import net.minecraft.fluid.Fluid;
 import net.minecraft.item.Item;
 import net.minecraft.registry.tag.TagKey;
 import net.minecraft.util.Identifier;
@@ -36,12 +37,8 @@ public class PTDatagenImpl {
     }
 
     public static void buildBlocksModelsForElement(BlockStateModelGenerator generator, Element element) {
-        element.state().buildBlockModel(generator);
-        element.forEachSource(source -> {
-            for (Block block : source.getBlocks()) {
-                generator.registerSimpleCubeAll(block);
-            }
-        });
+        element.state().buildBlockModels(generator, element);
+        element.forEachSource(source -> source.buildBlockModels(generator, element));
     }
 
     public static void buildItemModelsForElement(ItemModelGenerator itemModelGenerator, Element element) {
@@ -55,12 +52,16 @@ public class PTDatagenImpl {
     }
 
     public static void buildBlockTagsForElement(Function<TagKey<Block>, FabricTagProvider<Block>.FabricTagBuilder> provider, Element element) {
-        /*ElementRefinedState state = element.state();
-        TagKey<Block> mineable = state.getType().blockMineableTag();
-        if (mineable != null) {
-            provider.apply(mineable).add(state.refinedBlock());
-        }
-        element.forEachSource(source -> source.buildAdditionalBlockTags(provider, element));*/
+        element.state().buildBlockTags(provider, element);
+        element.forEachSource(source -> source.buildBlockTags(provider, element));
+    }
+
+    public static void buildItemTagsForElement(Function<TagKey<Item>, FabricTagProvider<Item>.FabricTagBuilder> provider, Element element) {
+        element.state().buildItemTags(provider, element);
+    }
+
+    public static void buildFluidTagsForElement(Function<TagKey<Fluid>, FabricTagProvider<Fluid>.FabricTagBuilder> provider, Element element) {
+        element.state().buildFluidTags(provider, element);
     }
 
     public static TextureMap getPowderTextureMap(Block powderBlock) {

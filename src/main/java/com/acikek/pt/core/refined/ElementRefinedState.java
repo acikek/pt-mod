@@ -1,6 +1,5 @@
 package com.acikek.pt.core.refined;
 
-import com.acikek.pt.api.PTApi;
 import com.acikek.pt.core.element.Element;
 import com.acikek.pt.core.registry.ElementIds;
 import com.acikek.pt.core.registry.PTRegistry;
@@ -33,12 +32,25 @@ public interface ElementRefinedState extends MaterialHolder {
         return refinedFluid() != null;
     }
 
-    default void buildBlockModel(BlockStateModelGenerator generator) {
-        getType().buildBlockModel(generator, refinedBlock());
+    default void buildBlockModels(BlockStateModelGenerator generator, Element parent) {
+        getType().buildRefinedBlockModel(generator, parent, refinedBlock());
     }
 
-    default void buildBlockTags(Function<TagKey<Block>, FabricTagProvider<Block>.FabricTagBuilder> provider, Block block) {
-        getType().buildBlockTags(provider, block);
+    default void buildBlockTags(Function<TagKey<Block>, FabricTagProvider<Block>.FabricTagBuilder> provider, Element parent) {
+        getType().buildRefinedBlockTags(provider, parent, refinedBlock());
+        provider.apply(parent.getRefinedBlockTag()).add(refinedBlock());
+    }
+
+    default void buildItemTags(Function<TagKey<Item>, FabricTagProvider<Item>.FabricTagBuilder> provider, Element parent) {
+        getType().buildItemTags(provider, parent, this);
+        provider.apply(parent.getRefinedItemTag()).add(refinedItem());
+        provider.apply(parent.getMiniRefinedItemTag()).add(miniRefinedItem());
+    }
+
+    default void buildFluidTags(Function<TagKey<Fluid>, FabricTagProvider<Fluid>.FabricTagBuilder> provider, Element parent) {
+        if (hasRefinedFluid()) {
+            provider.apply(parent.getRefinedFluidTag()).add(refinedFluid());
+        }
     }
 
     default void register(PTRegistry registry, ElementIds<String> ids) {

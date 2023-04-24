@@ -1,21 +1,21 @@
 package com.acikek.pt.core.refined;
 
 import com.acikek.pt.api.datagen.PTDatagenApi;
-import com.acikek.pt.block.ModBlocks;
 import com.acikek.pt.core.element.Element;
 import com.acikek.pt.sound.ModSoundGroups;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.block.*;
 import net.minecraft.data.client.*;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.registry.tag.BlockTags;
 import net.minecraft.registry.tag.TagKey;
 import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.state.StateManager;
-import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.List;
 import java.util.Objects;
 import java.util.function.Function;
 
@@ -97,7 +97,7 @@ public enum RefinedStateTypes implements RefinedStateType {
     }
 
     @Override
-    public void buildBlockModel(BlockStateModelGenerator generator, Block block) {
+    public void buildRefinedBlockModel(BlockStateModelGenerator generator, Element parent, Block block) {
         switch (this) {
             case METAL, SYNTHESIZED, TRACE -> generator.registerSimpleCubeAll(block);
             case GAS -> generator.registerNorthDefaultHorizontalRotated(block, TexturedModel.ORIENTABLE_WITH_BOTTOM);
@@ -106,9 +106,25 @@ public enum RefinedStateTypes implements RefinedStateType {
     }
 
     @Override
-    public void buildBlockTags(Function<TagKey<Block>, FabricTagProvider<Block>.FabricTagBuilder> provider, Block block) {
+    public void buildRefinedBlockTags(Function<TagKey<Block>, FabricTagProvider<Block>.FabricTagBuilder> provider, Element parent, Block block) {
         if (this != POWDER) {
             provider.apply(BlockTags.PICKAXE_MINEABLE).add(block);
+            provider.apply(this == TRACE ? BlockTags.NEEDS_STONE_TOOL : BlockTags.NEEDS_IRON_TOOL).add(block);
         }
+    }
+
+    @Override
+    public void buildItemTags(Function<TagKey<Item>, FabricTagProvider<Item>.FabricTagBuilder> provider, Element parent, ElementRefinedState state) {
+        if (this == POWDER) {
+            for (String suffix : List.of("_dusts", "s")) {
+                provider.apply(parent.getConventionalItemTag(suffix)).add(state.refinedItem());
+            }
+            for (String suffix : List.of("_small_dusts", "_tiny_dusts")) {
+                provider.apply(parent.getConventionalItemTag(suffix)).add(state.miniRefinedItem());
+            }
+            return;
+        }
+        provider.apply(parent.getConventionalItemTag("_ingots")).add(state.refinedItem());
+        provider.apply(parent.getConventionalItemTag("_nuggets")).add(state.miniRefinedItem());
     }
 }
