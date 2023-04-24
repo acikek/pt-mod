@@ -2,10 +2,10 @@ package com.acikek.pt.api;
 
 import com.acikek.pt.api.impl.PTApiImpl;
 import com.acikek.pt.api.impl.PTLoading;
-import com.acikek.pt.core.AbstractPeriodicTable;
-import com.acikek.pt.core.element.Element;
-import com.acikek.pt.core.signature.ElementSignature;
-import com.acikek.pt.core.signature.SignatureInjector;
+import com.acikek.pt.core.api.AbstractPeriodicTable;
+import com.acikek.pt.core.api.element.Element;
+import com.acikek.pt.core.api.signature.ElementSignature;
+import com.acikek.pt.core.api.signature.SignatureInjector;
 import net.minecraft.item.ItemConvertible;
 import net.minecraft.text.Text;
 

@@ -1,7 +1,7 @@
 package com.acikek.pt.mixin.impl;
 
-import com.acikek.pt.core.signature.ElementSignature;
-import com.acikek.pt.core.signature.SignatureInjector;
+import com.acikek.pt.core.api.signature.ElementSignature;
+import com.acikek.pt.core.api.signature.SignatureInjector;
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;

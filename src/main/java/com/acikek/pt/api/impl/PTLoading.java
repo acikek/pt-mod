@@ -1,7 +1,7 @@
 package com.acikek.pt.api.impl;
 
 import com.acikek.pt.api.plugin.PTPlugin;
-import com.acikek.pt.core.AbstractPeriodicTable;
+import com.acikek.pt.core.api.AbstractPeriodicTable;
 import com.google.common.base.Suppliers;
 import com.google.common.collect.ImmutableList;
 import net.fabricmc.loader.api.FabricLoader;

@@ -2,8 +2,8 @@ package com.acikek.pt;
 
 import com.acikek.pt.api.impl.PTLoading;
 import com.acikek.pt.block.ModBlocks;
-import com.acikek.pt.core.PeriodicTable;
-import com.acikek.pt.core.registry.PTRegistry;
+import com.acikek.pt.core.api.PeriodicTable;
+import com.acikek.pt.core.api.registry.PTRegistry;
 import com.acikek.pt.sound.ModSoundEvents;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;

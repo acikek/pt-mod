@@ -1,7 +1,7 @@
 package com.acikek.pt.block;
 
 import com.acikek.pt.PT;
-import com.acikek.pt.core.refined.RefinedStateTypes;
+import com.acikek.pt.core.api.refined.RefinedStateTypes;
 import net.minecraft.block.Block;
 import net.minecraft.sound.BlockSoundGroup;
 

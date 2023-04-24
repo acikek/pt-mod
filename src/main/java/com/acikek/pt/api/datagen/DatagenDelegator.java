@@ -1,7 +1,7 @@
 package com.acikek.pt.api.datagen;
 
-import com.acikek.pt.core.element.Element;
-import com.acikek.pt.core.source.MaterialHolder;
+import com.acikek.pt.core.api.element.Element;
+import com.acikek.pt.core.api.source.MaterialHolder;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
 import net.minecraft.block.Block;

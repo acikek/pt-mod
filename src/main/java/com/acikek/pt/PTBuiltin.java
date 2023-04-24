@@ -1,8 +1,8 @@
 package com.acikek.pt;
 
 import com.acikek.pt.api.plugin.PTPlugin;
-import com.acikek.pt.core.AbstractPeriodicTable;
-import com.acikek.pt.core.PeriodicTable;
+import com.acikek.pt.core.api.AbstractPeriodicTable;
+import com.acikek.pt.core.api.PeriodicTable;
 
 import java.util.Collection;
 import java.util.List;

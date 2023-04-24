@@ -1,10 +1,9 @@
 package com.acikek.pt.core.impl.source;
 
-import com.acikek.pt.core.element.Element;
-import com.acikek.pt.core.registry.ElementIds;
-import com.acikek.pt.core.registry.PTRegistry;
-import com.acikek.pt.core.source.ElementSource;
-import com.acikek.pt.core.source.ElementSources;
+import com.acikek.pt.core.api.element.Element;
+import com.acikek.pt.core.api.registry.ElementIds;
+import com.acikek.pt.core.api.registry.PTRegistry;
+import com.acikek.pt.core.api.source.ElementSources;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
 import net.minecraft.block.Block;
 import net.minecraft.data.server.loottable.BlockLootTableGenerator;

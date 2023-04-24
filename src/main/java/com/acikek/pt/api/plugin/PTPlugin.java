@@ -1,6 +1,6 @@
 package com.acikek.pt.api.plugin;
 
-import com.acikek.pt.core.AbstractPeriodicTable;
+import com.acikek.pt.core.api.AbstractPeriodicTable;
 
 import java.util.Collection;
 import java.util.Collections;

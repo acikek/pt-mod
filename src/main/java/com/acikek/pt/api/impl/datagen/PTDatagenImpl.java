@@ -1,8 +1,8 @@
 package com.acikek.pt.api.impl.datagen;
 
 import com.acikek.pt.block.ModBlocks;
-import com.acikek.pt.core.element.Element;
-import com.acikek.pt.core.refined.ElementRefinedState;
+import com.acikek.pt.core.api.element.Element;
+import com.acikek.pt.core.api.refined.ElementRefinedState;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
 import net.minecraft.block.Block;

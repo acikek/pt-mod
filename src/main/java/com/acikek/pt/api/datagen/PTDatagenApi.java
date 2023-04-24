@@ -1,8 +1,8 @@
 package com.acikek.pt.api.datagen;
 
 import com.acikek.pt.api.impl.datagen.PTDatagenImpl;
-import com.acikek.pt.core.AbstractPeriodicTable;
-import com.acikek.pt.core.element.Element;
+import com.acikek.pt.core.api.AbstractPeriodicTable;
+import com.acikek.pt.core.api.element.Element;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
 import net.minecraft.block.Block;

@@ -1,7 +1,7 @@
 package com.acikek.pt.core.impl.registry;
 
 import com.acikek.pt.PT;
-import com.acikek.pt.core.registry.ElementIds;
+import com.acikek.pt.core.api.registry.ElementIds;
 import net.minecraft.util.Identifier;
 
 public class ElementIdImpls {

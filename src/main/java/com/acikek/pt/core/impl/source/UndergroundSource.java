@@ -1,8 +1,8 @@
 package com.acikek.pt.core.impl.source;
 
-import com.acikek.pt.core.registry.ElementIds;
-import com.acikek.pt.core.registry.PTRegistry;
-import com.acikek.pt.core.source.ElementSource;
+import com.acikek.pt.core.api.registry.ElementIds;
+import com.acikek.pt.core.api.registry.PTRegistry;
+import com.acikek.pt.core.api.source.ElementSource;
 
 public abstract class UndergroundSource implements ElementSource {
 

@@ -1,9 +1,9 @@
 package com.acikek.pt.core.impl.signature;
 
 import com.acikek.pt.api.PTApi;
-import com.acikek.pt.core.PeriodicTable;
-import com.acikek.pt.core.signature.ElementSignature;
-import com.acikek.pt.core.signature.ElementSignatureEntry;
+import com.acikek.pt.core.api.PeriodicTable;
+import com.acikek.pt.core.api.signature.ElementSignature;
+import com.acikek.pt.core.api.signature.ElementSignatureEntry;
 import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
 import net.minecraft.world.World;

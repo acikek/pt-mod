@@ -1,7 +1,7 @@
 package com.acikek.pt.core.impl.source;
 
-import com.acikek.pt.core.element.ElementalObjects;
-import com.acikek.pt.core.source.ElementSource;
+import com.acikek.pt.core.api.element.ElementalObjects;
+import com.acikek.pt.core.api.source.ElementSource;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 

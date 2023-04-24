@@ -1,6 +1,6 @@
 package com.acikek.pt.core.impl.refined;
 
-import com.acikek.pt.core.refined.RefinedStateTypes;
+import com.acikek.pt.core.api.refined.RefinedStateTypes;
 import net.minecraft.block.Block;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.item.Item;

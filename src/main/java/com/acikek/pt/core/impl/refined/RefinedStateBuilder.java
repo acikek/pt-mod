@@ -1,8 +1,8 @@
 package com.acikek.pt.core.impl.refined;
 
-import com.acikek.pt.core.element.ElementalObjects;
-import com.acikek.pt.core.refined.ElementRefinedState;
-import com.acikek.pt.core.refined.RefinedStateType;
+import com.acikek.pt.core.api.element.ElementalObjects;
+import com.acikek.pt.core.api.refined.ElementRefinedState;
+import com.acikek.pt.core.api.refined.RefinedStateType;
 import net.minecraft.block.Block;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.item.Item;
