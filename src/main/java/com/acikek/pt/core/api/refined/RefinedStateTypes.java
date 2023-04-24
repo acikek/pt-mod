@@ -116,15 +116,15 @@ public enum RefinedStateTypes implements RefinedStateType {
     @Override
     public void buildItemTags(Function<TagKey<Item>, FabricTagProvider<Item>.FabricTagBuilder> provider, Element parent, ElementRefinedState state) {
         if (this == POWDER) {
-            for (String suffix : List.of("_dusts", "s")) {
+            for (String suffix : List.of("%s_dusts", "%ss")) {
                 provider.apply(parent.getConventionalItemTag(suffix)).add(state.refinedItem());
             }
-            for (String suffix : List.of("_small_dusts", "_tiny_dusts")) {
+            for (String suffix : List.of("%s_small_dusts", "%s_tiny_dusts")) {
                 provider.apply(parent.getConventionalItemTag(suffix)).add(state.miniRefinedItem());
             }
             return;
         }
-        provider.apply(parent.getConventionalItemTag("_ingots")).add(state.refinedItem());
-        provider.apply(parent.getConventionalItemTag("_nuggets")).add(state.miniRefinedItem());
+        provider.apply(parent.getConventionalItemTag("%s_ingots")).add(state.refinedItem());
+        provider.apply(parent.getConventionalItemTag("%s_nuggets")).add(state.miniRefinedItem());
     }
 }

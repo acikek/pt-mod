@@ -1,8 +1,8 @@
 package com.acikek.pt.api.impl.datagen;
 
+import com.acikek.pt.api.datagen.DatagenDelegator;
 import com.acikek.pt.block.ModBlocks;
 import com.acikek.pt.core.api.element.Element;
-import com.acikek.pt.core.api.refined.ElementRefinedState;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
 import net.minecraft.block.Block;
@@ -12,56 +12,45 @@ import net.minecraft.fluid.Fluid;
 import net.minecraft.item.Item;
 import net.minecraft.registry.tag.TagKey;
 import net.minecraft.util.Identifier;
+import org.apache.logging.log4j.util.TriConsumer;
 
 import java.util.function.Function;
 
 public class PTDatagenImpl {
 
-    //public static final Model POWDER_BLOCK_MODEL = new Model(Optional.of(PT.id("powder_block")))
-
-    private static void buildTranslationsForState(FabricLanguageProvider.TranslationBuilder builder, Element element, ElementRefinedState state) {
-        // TODO test
-        if (state.hasRefinedFluid()) {
-            builder.add(state.refinedFluid().getDefaultState().getBlockState().getBlock(), element.display().englishName());
-        }
-        builder.add(state.refinedBlock(), element.getRefinedBlockName());
-        builder.add(state.refinedItem(), element.getRefinedItemName());
-        builder.add(state.miniRefinedItem(), element.getMiniRefinedItemName());
+    public static <T> void delegate(TriConsumer<DatagenDelegator, T, Element> fn, T context, Element element) {
+        fn.accept(element.state(), context, element);
+        element.forEachSource(source -> fn.accept(source, context, element));
     }
 
     public static void buildTranslationsForElement(FabricLanguageProvider.TranslationBuilder builder, Element element) {
         builder.add(element.getNameKey(), element.display().englishName());
         builder.add(element.getSymbolKey(), element.display().symbol());
-        element.forEachSource(source -> source.buildTranslations(builder, element));
-        buildTranslationsForState(builder, element, element.state());
+        delegate(DatagenDelegator::buildTranslations, builder, element);
     }
 
     public static void buildBlocksModelsForElement(BlockStateModelGenerator generator, Element element) {
-        element.state().buildBlockModels(generator, element);
-        element.forEachSource(source -> source.buildBlockModels(generator, element));
+        delegate(DatagenDelegator::buildBlockModels, generator, element);
     }
 
     public static void buildItemModelsForElement(ItemModelGenerator itemModelGenerator, Element element) {
-        for (Item item : element.getItems()) {
-            itemModelGenerator.register(item, Models.GENERATED);
-        }
+        delegate(DatagenDelegator::buildItemModels, itemModelGenerator, element);
     }
 
     public static void buildLootTablesForElement(BlockLootTableGenerator generator, Element element) {
-        element.forEachSource(source -> source.buildLootTables(generator, element));
+        delegate(DatagenDelegator::buildLootTables, generator, element);
     }
 
     public static void buildBlockTagsForElement(Function<TagKey<Block>, FabricTagProvider<Block>.FabricTagBuilder> provider, Element element) {
-        element.state().buildBlockTags(provider, element);
-        element.forEachSource(source -> source.buildBlockTags(provider, element));
+        delegate(DatagenDelegator::buildBlockTags, provider, element);
     }
 
     public static void buildItemTagsForElement(Function<TagKey<Item>, FabricTagProvider<Item>.FabricTagBuilder> provider, Element element) {
-        element.state().buildItemTags(provider, element);
+        delegate(DatagenDelegator::buildItemTags, provider, element);
     }
 
     public static void buildFluidTagsForElement(Function<TagKey<Fluid>, FabricTagProvider<Fluid>.FabricTagBuilder> provider, Element element) {
-        element.state().buildFluidTags(provider, element);
+        delegate(DatagenDelegator::buildFluidTags, provider, element);
     }
 
     public static TextureMap getPowderTextureMap(Block powderBlock) {

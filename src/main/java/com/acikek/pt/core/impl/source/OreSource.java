@@ -5,15 +5,19 @@ import com.acikek.pt.core.api.registry.ElementIds;
 import com.acikek.pt.core.api.registry.PTRegistry;
 import com.acikek.pt.core.api.source.ElementSources;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
+import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
 import net.minecraft.block.Block;
 import net.minecraft.data.server.loottable.BlockLootTableGenerator;
 import net.minecraft.item.Item;
+import net.minecraft.registry.Registries;
+import net.minecraft.registry.tag.TagKey;
 import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
+import java.util.function.Function;
 import java.util.stream.Stream;
 
 public class OreSource extends UndergroundSource {
@@ -61,6 +65,17 @@ public class OreSource extends UndergroundSource {
     @Override
     public void buildLootTables(BlockLootTableGenerator generator, Element parent) {
 
+    }
+
+    @Override
+    public void buildBlockTags(Function<TagKey<Block>, FabricTagProvider<Block>.FabricTagBuilder> provider, Element parent) {
+        provider.apply(parent.getConventionalBlockTag("%s_ores")).add(ore, deepslateOre);
+        provider.apply(parent.getConventionalBlockTag("raw_%s_blocks")).add(rawBlock);
+    }
+
+    @Override
+    public void buildItemTags(Function<TagKey<Item>, FabricTagProvider<Item>.FabricTagBuilder> provider, Element parent) {
+        provider.apply(parent.getConventionalItemTag("raw_%s_ores")).add(rawItem);
     }
 
     @Override

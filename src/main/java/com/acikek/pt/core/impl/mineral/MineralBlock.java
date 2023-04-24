@@ -152,7 +152,7 @@ public class MineralBlock extends Block implements Mineral {
     public void buildBlockTags(Function<TagKey<Block>, FabricTagProvider<Block>.FabricTagBuilder> provider, Element parent) {
         provider.apply(BlockTags.PICKAXE_MINEABLE).add(this);
         provider.apply(BlockTags.NEEDS_IRON_TOOL).add(this);
-        provider.apply(getConventionalBlockTag("s")).add(this);
+        provider.apply(getConventionalBlockTag("%ss")).add(this);
     }
 
     @Override

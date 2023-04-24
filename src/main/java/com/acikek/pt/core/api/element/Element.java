@@ -87,19 +87,19 @@ public interface Element extends DisplayHolder<ElementDisplay>, SourceHolder, Re
     }
 
     default TagKey<Block> getRefinedBlockTag() {
-        return getConventionalBlockTag("_blocks");
+        return getConventionalBlockTag("%s_blocks");
     }
 
     default TagKey<Item> getRefinedItemTag() {
-        return getConventionalItemTag("");
+        return getConventionalItemTag("%s");
     }
 
     default TagKey<Item> getMiniRefinedItemTag() {
-        return getConventionalItemTag("_mini");
+        return getConventionalItemTag("%s_mini");
     }
 
     default TagKey<Fluid> getRefinedFluidTag() {
-        return getConventionalFluidTag("");
+        return getConventionalFluidTag("%s");
     }
 
     default void forEachSource(Consumer<ElementSource> fn) {
