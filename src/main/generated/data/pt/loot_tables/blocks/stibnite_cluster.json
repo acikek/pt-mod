@@ -51,7 +51,7 @@
                       "function": "minecraft:apply_bonus"
                     }
                   ],
-                  "name": "pt:stibnite_crystal"
+                  "name": "pt:stibnite_shard"
                 },
                 {
                   "type": "minecraft:item",

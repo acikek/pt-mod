@@ -10,6 +10,7 @@ import com.acikek.pt.core.api.registry.PTRegistry;
 import com.acikek.pt.core.api.signature.ElementSignature;
 import com.acikek.pt.core.api.signature.SignatureHolder;
 import com.acikek.pt.core.api.source.ElementSource;
+import com.acikek.pt.core.api.source.MaterialHolder;
 import com.acikek.pt.core.api.source.SourceHolder;
 import net.minecraft.block.Block;
 import net.minecraft.fluid.Fluid;
@@ -26,7 +27,7 @@ import java.util.List;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
-public interface Element extends DisplayHolder<ElementDisplay>, SourceHolder, RefinedStateHolder, SignatureHolder {
+public interface Element extends DisplayHolder<ElementDisplay>, SourceHolder, RefinedStateHolder, SignatureHolder, MaterialHolder {
 
     ElementIds<String> elementIds();
 
@@ -138,10 +139,12 @@ public interface Element extends DisplayHolder<ElementDisplay>, SourceHolder, Re
         return result;
     }
 
+    @Override
     default List<Block> getBlocks() {
         return getValues(ElementSource::getBlocks, ElementRefinedState::getBlocks);
     }
 
+    @Override
     default List<Item> getItems() {
         return getValues(ElementSource::getItems, ElementRefinedState::getItems);
     }

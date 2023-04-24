@@ -2,6 +2,7 @@ package com.acikek.pt.core.api.source;
 
 import com.acikek.pt.api.datagen.DatagenDelegator;
 import com.acikek.pt.core.api.element.Element;
+import com.acikek.pt.core.api.mineral.MineralResultHolder;
 import com.acikek.pt.core.api.registry.ElementIds;
 import com.acikek.pt.core.api.registry.PTRegistry;
 import net.minecraft.util.Identifier;
@@ -9,7 +10,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
-public interface ElementSource extends DatagenDelegator {
+public interface ElementSource extends DatagenDelegator, MineralResultHolder {
 
     @NotNull Identifier getId();
 

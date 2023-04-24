@@ -89,6 +89,11 @@ public class MineralSource extends UndergroundSource {
     }
 
     @Override
+    public void buildItemTags(Function<TagKey<Item>, FabricTagProvider<Item>.FabricTagBuilder> provider, Element parent) {
+        mineral.buildItemTags(provider, parent);
+    }
+
+    @Override
     public List<Block> getBlocks() {
         return mineral.getBlocks();
     }

@@ -153,6 +153,18 @@ public class MineralBlock extends Block implements Mineral {
         provider.apply(BlockTags.PICKAXE_MINEABLE).add(this);
         provider.apply(BlockTags.NEEDS_IRON_TOOL).add(this);
         provider.apply(getConventionalBlockTag("%ss")).add(this);
+        if (cluster != null) {
+            provider.apply(getConventionalBlockTag("%s_clusters")).add(cluster);
+        }
+    }
+
+    @Override
+    public void buildItemTags(Function<TagKey<Item>, FabricTagProvider<Item>.FabricTagBuilder> provider, Element parent) {
+        if (rawMineral != null) {
+            for (String formatter : List.of("raw_%ss", "%s_crystals")) {
+                provider.apply(getConventionalItemTag(formatter)).add(rawMineral);
+            }
+        }
     }
 
     @Override

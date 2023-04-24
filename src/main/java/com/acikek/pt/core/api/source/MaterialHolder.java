@@ -9,8 +9,6 @@ import java.util.List;
 
 public interface MaterialHolder {
 
-    Item mineralResultItem();
-
     List<Block> getBlocks();
 
     List<Item> getItems();

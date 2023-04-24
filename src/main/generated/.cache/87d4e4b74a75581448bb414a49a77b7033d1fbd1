@@ -1,4 +1,4 @@
-// 1.19.4	2023-04-24T13:45:35.601612081	PT/Tags for minecraft:item
+// 1.19.4	2023-04-24T14:11:18.830901408	PT/Tags for minecraft:item
 fe22c011c657ca3a87f2514140526ad780d258e0 data/c/tags/items/raw_platinum_ores.json
 c842cffd0908e9705c4063a8172f93c8e66a886b data/c/tags/items/helium_ingots.json
 cb1d97a4724ead36025689299a7f1a0f864dfe8f data/c/tags/items/beryllium_nuggets.json
@@ -9,6 +9,7 @@ b22cb367ca4103e2badb655c73cb9fba29410b56 data/c/tags/items/platinum_mini.json
 b3d21e19d623962a0cc6d801c28a851e3b06f008 data/c/tags/items/oxygen_nuggets.json
 0c3ded2f3c26ae337931085aa863935a3d0037a2 data/c/tags/items/platinum_ingots.json
 c842cffd0908e9705c4063a8172f93c8e66a886b data/c/tags/items/helium.json
+47fd288c31796d74812213c8d282b40e31b1c378 data/c/tags/items/stibnite_crystals.json
 8ef24a18b319b0ed100c01eb86b7e9bb6494feab data/c/tags/items/lithium_mini.json
 5c9d555ef5d6a555cc95e351cd9a93f190fee052 data/c/tags/items/antimony_ingots.json
 0c3ded2f3c26ae337931085aa863935a3d0037a2 data/c/tags/items/platinum.json
@@ -32,10 +33,13 @@ f8dc3cb0fe7550879eab8bd9f07103c21fedc159 data/c/tags/items/sulfur_mini.json
 19dc4dd8fa90708c13e3a07f0331403d8ca97e19 data/c/tags/items/osmium.json
 bf9a3e8fff9ff405f4c111fc23229d53f8a50d37 data/c/tags/items/hydrogen_ingots.json
 bf9a3e8fff9ff405f4c111fc23229d53f8a50d37 data/c/tags/items/hydrogen.json
+61828b5d71b3965f83047f46fe0a23d535298b09 data/c/tags/items/gypsum_crystals.json
 a20e0f73e3089b1300e175213da56189f1d84971 data/c/tags/items/raw_osmium_ores.json
 09d6db487eae645a2d3cf1ce7aa72bb7e2e12e9b data/c/tags/items/hydrogen_mini.json
 5c9d555ef5d6a555cc95e351cd9a93f190fee052 data/c/tags/items/antimony.json
 1a3f63a312844e401e6103a9d6162bdeb57cb400 data/c/tags/items/oxygen.json
+47fd288c31796d74812213c8d282b40e31b1c378 data/c/tags/items/raw_stibnites.json
 a100e401479dbae9ff53151fcd6dc831108d648e data/c/tags/items/antimony_mini.json
 1a3f63a312844e401e6103a9d6162bdeb57cb400 data/c/tags/items/oxygen_ingots.json
 672c143ac72b0c212cd31238b52eca96a5298756 data/c/tags/items/beryllium_ingots.json
+61828b5d71b3965f83047f46fe0a23d535298b09 data/c/tags/items/raw_gypsums.json

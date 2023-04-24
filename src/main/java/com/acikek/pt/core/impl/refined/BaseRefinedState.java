@@ -49,9 +49,4 @@ public class BaseRefinedState implements ElementRefinedState {
     public Fluid refinedFluid() {
         return null;
     }
-
-    @Override
-    public Item mineralResultItem() {
-        return refinedItem();
-    }
 }

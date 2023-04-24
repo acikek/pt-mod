@@ -37,6 +37,6 @@ public record MineralDisplay(String id, String englishName, String rawFormName) 
     }
 
     public String getRawFormId() {
-        return id + "_crystal";
+        return id + "_" + CompoundNames.getIdFromName(rawFormName);
     }
 }

@@ -11,7 +11,7 @@ import net.minecraft.world.World;
 
 import java.util.List;
 
-public interface Mineral extends DisplayHolder<MineralDisplay>, DatagenDelegator, SignatureHolder {
+public interface Mineral extends DisplayHolder<MineralDisplay>, DatagenDelegator, SignatureHolder, MineralResultHolder {
 
     void init();
 

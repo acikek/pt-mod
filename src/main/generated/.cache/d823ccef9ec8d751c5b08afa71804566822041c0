@@ -1,4 +1,4 @@
-// 1.19.4	2023-04-24T13:45:35.603255187	PT/Model Definitions
+// 1.19.4	2023-04-24T14:11:18.833462859	PT/Model Definitions
 6bc450adbdbf97f33e7cdcf0d51186f5e6fddb53 assets/pt/models/item/hydrogen_mini.json
 7450c0a0343acd0244980a05cf6ee7f962a1c661 assets/pt/models/item/lithium_mini.json
 a68cddc21a994d45589c4fa47bfd8f51a0259f16 assets/pt/blockstates/osmium_raw_block.json
@@ -27,11 +27,12 @@ fbccf713bd1644a45bc7652155e74e91a30d05d3 assets/pt/blockstates/osmium_source_dee
 4198690f158f940c0ef31094bb85a1f9efe1f970 assets/pt/models/item/hydrogen.json
 d7cca9bb514a106ca895335f28eab6d6f0b49fd1 assets/pt/models/item/helium_block.json
 9827d0c68eee39a57a9000d1be1103c745c577ee assets/pt/models/item/test_mineral.json
+9c1bc08aacc908822baf918ec85556df4afd1ee4 assets/pt/models/item/stibnite_shard.json
 56be84abdbf993bf1d1efd40cfdac3aa4613a348 assets/pt/blockstates/test_mineral.json
 0d1ad4500c2ad7538cd9214d33a7e1453823eb41 assets/pt/models/item/platinum.json
 9cef743f7e68db94c81f598c6b090746e0a935e8 assets/pt/models/item/platinum_source_block.json
-b2b441a660f82c3638075cec90c42bdb01b73597 assets/pt/blockstates/stibnite_cluster.json
 50bf793edf503ab87256cb6c244486085abdbd5c assets/pt/blockstates/platinum_source_deepslate.json
+b2b441a660f82c3638075cec90c42bdb01b73597 assets/pt/blockstates/stibnite_cluster.json
 adc62f33eb2a9bd7a38831ba85a5d0d75e4dd066 assets/pt/blockstates/platinum_block.json
 a588f9fa377a52d2fe94cc5b794fe1393e138281 assets/pt/models/block/empty_sack.json
 e549d027d51e86adfd49a60056c5a18110af8594 assets/pt/blockstates/empty_sack.json
@@ -56,8 +57,8 @@ fc48f4dba203924fdaab0b07caf4de8e58c0052a assets/pt/blockstates/antimony_block.js
 dfffa045455f280367a5a720edab5fd196815955 assets/pt/models/block/gypsum.json
 c4d054e69b2bf026979abf21ce5a9462509920b1 assets/pt/models/item/lithium.json
 d9badce4e6f3dfea07c9ac7bf20b7d36fd28c214 assets/pt/models/item/sulfur_mini.json
-a1fc769352969bddf7f9899fcef39a406d796c17 assets/pt/blockstates/helium_block.json
 3df256c31f2dbfe80061ec8962c39458155a8729 assets/pt/blockstates/gypsum_cluster.json
+a1fc769352969bddf7f9899fcef39a406d796c17 assets/pt/blockstates/helium_block.json
 9572d97368886fdaa699f9fafae0dec399b4ce94 assets/pt/models/item/helium_mini.json
 49e84461698f82a05da815244cead4946a684cec assets/pt/blockstates/osmium_block.json
 26231ac15efbf8af19f02154beb605aab392e001 assets/pt/models/item/beryllium_block.json
@@ -85,5 +86,4 @@ e36847a0f42b4e59284d16de0b9b218946fd4b65 assets/pt/models/item/oxygen_mini.json
 73390b6e499388a9f6dff65ca62133937510b2fc assets/pt/models/block/osmium_raw_block.json
 fa98bb5e7ee482d134cab3c127a952ee582c968a assets/pt/models/block/lithium_block.json
 8f8fa606427c1ede695c9d02b823a428e5e87760 assets/pt/blockstates/lithiophilite.json
-0667527b73c6b76f021bc0aa5adbd7f3089e7abb assets/pt/models/item/stibnite_crystal.json
 71af38512f15faad310b85290eb77e38c8c99cfa assets/pt/models/block/sulfur_block.json
