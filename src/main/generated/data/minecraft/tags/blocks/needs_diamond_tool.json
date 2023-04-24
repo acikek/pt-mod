@@ -1,0 +1,7 @@
+{
+  "replace": false,
+  "values": [
+    "pt:osmium_source_block",
+    "pt:osmium_source_deepslate"
+  ]
+}

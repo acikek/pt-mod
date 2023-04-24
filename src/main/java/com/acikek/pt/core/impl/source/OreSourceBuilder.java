@@ -11,6 +11,7 @@ public class OreSourceBuilder {
     private Block deepslateOre;
     private Item rawItem;
     private Block rawBlock;
+    private int miningLevel = -1;
 
     public OreSourceBuilder ore(Block ore) {
         this.ore = ore;
@@ -32,12 +33,18 @@ public class OreSourceBuilder {
         return this;
     }
 
+    public OreSourceBuilder miningLevel(int miningLevel) {
+        this.miningLevel = miningLevel;
+        return this;
+    }
+
     public ElementSource build() {
         return new OreSource(
                 ore != null ? ore : ElementalObjects.createOreBlock(),
                 deepslateOre != null ? deepslateOre : ElementalObjects.createDeepslateOreBlock(),
                 rawItem != null ? rawItem : ElementalObjects.createItem(),
-                rawBlock != null ? rawBlock : ElementalObjects.createRawSourceBlock()
+                rawBlock != null ? rawBlock : ElementalObjects.createRawSourceBlock(),
+                miningLevel != -1 ? miningLevel : 1
         );
     }
 }

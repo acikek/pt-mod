@@ -12,6 +12,8 @@
     "pt:antimony_block",
     "pt:stibnite",
     "pt:platinum_block",
+    "pt:platinum_source_block",
+    "pt:platinum_source_deepslate",
     "pt:osmium_block"
   ]
 }

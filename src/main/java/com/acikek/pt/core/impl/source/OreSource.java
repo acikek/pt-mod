@@ -6,10 +6,11 @@ import com.acikek.pt.core.api.registry.PTRegistry;
 import com.acikek.pt.core.api.source.ElementSources;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
+import net.fabricmc.fabric.api.mininglevel.v1.MiningLevelManager;
 import net.minecraft.block.Block;
 import net.minecraft.data.server.loottable.BlockLootTableGenerator;
 import net.minecraft.item.Item;
-import net.minecraft.registry.Registries;
+import net.minecraft.registry.tag.BlockTags;
 import net.minecraft.registry.tag.TagKey;
 import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.NotNull;
@@ -22,17 +23,19 @@ import java.util.stream.Stream;
 
 public class OreSource extends UndergroundSource {
 
-    public Block ore;
-    public Block deepslateOre;
-    public Item rawItem;
-    public Block rawBlock;
+    private final Block ore;
+    private final Block deepslateOre;
+    private final Item rawItem;
+    private final Block rawBlock;
+    private final int miningLevel;
 
-    public OreSource(Block ore, Block deepslateOre, Item rawItem, Block rawBlock) {
+    public OreSource(Block ore, Block deepslateOre, Item rawItem, Block rawBlock, int miningLevel) {
         Stream.of(ore, deepslateOre, rawItem, rawBlock).forEach(Objects::requireNonNull);
         this.ore = ore;
         this.deepslateOre = deepslateOre;
         this.rawItem = rawItem;
         this.rawBlock = rawBlock;
+        this.miningLevel = miningLevel;
     }
 
     @Override
@@ -70,7 +73,10 @@ public class OreSource extends UndergroundSource {
     @Override
     public void buildBlockTags(Function<TagKey<Block>, FabricTagProvider<Block>.FabricTagBuilder> provider, Element parent) {
         provider.apply(parent.getConventionalBlockTag("%s_ores")).add(ore, deepslateOre);
+        provider.apply(MiningLevelManager.getBlockTag(miningLevel)).add(ore, deepslateOre);
         provider.apply(parent.getConventionalBlockTag("raw_%s_blocks")).add(rawBlock);
+        provider.apply(BlockTags.NEEDS_STONE_TOOL).add(rawBlock);
+        provider.apply(BlockTags.PICKAXE_MINEABLE).add(ore, deepslateOre, rawBlock);
     }
 
     @Override

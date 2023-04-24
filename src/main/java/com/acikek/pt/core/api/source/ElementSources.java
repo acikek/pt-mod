@@ -18,25 +18,13 @@ public class ElementSources {
         return new OreSourceBuilder();
     }
 
-    public static ElementSource ore() {
-        return oreBuilder().build();
+    public static ElementSource ore(int miningLevel) {
+        return oreBuilder().miningLevel(miningLevel).build();
     }
-
-    /*public static MineralSourceBuilder mineralBuilder() {
-        return new MineralSourceBuilder();
-    }*/
 
     public static ElementSource mineral(Mineral mineral) {
         return new MineralSource(mineral);
     }
-
-    /*public static ElementSource fullMineral(MineralBlock mineralBlock) {
-        return mineralBuilder().mineral(mineralBlock).addCluster().addRawMineral().build();
-    }
-
-    public static ElementSource mineralWithRawForm(MineralBlock mineralBlock) {
-        return mineralBuilder().mineral(mineralBlock).addRawMineral().build();
-    }*/
 
     public static ElementSource atmospheric(Range<Integer> range) {
         return new AtmosphericSource(range);

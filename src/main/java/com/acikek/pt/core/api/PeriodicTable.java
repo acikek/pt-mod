@@ -54,8 +54,8 @@ public class PeriodicTable extends AbstractPeriodicTable {
     public static final Element OXYGEN = Elements.gas(ElementDisplay.byId("oxygen", "O"), 0, 235);
     public static final Element SULFUR = Elements.full(ElementDisplay.byId("sulfur", "S"), ElementSources.mineral(GYPSUM), RefinedStates.sack());
     public static final Element ANTIMONY = Elements.full(ElementDisplay.byId("antimony", "Sb"), ElementSources.mineral(STIBNITE), RefinedStates.metal(4.0f));
-    public static final Element PLATINUM = Elements.full(ElementDisplay.byId("platinum", "Pt"), ElementSources.ore(), RefinedStates.metal(4.5f));
-    public static final Element OSMIUM = Elements.full("osmium", ElementSources.ore(), RefinedStates.metal(7.0f));
+    public static final Element PLATINUM = Elements.full(ElementDisplay.byId("platinum", "Pt"), ElementSources.ore(2), RefinedStates.metal(4.5f));
+    public static final Element OSMIUM = Elements.full("osmium", ElementSources.ore(3), RefinedStates.metal(7.0f));
 
     public static final AbstractPeriodicTable INSTANCE = new PeriodicTable();
 

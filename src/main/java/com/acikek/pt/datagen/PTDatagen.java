@@ -72,5 +72,12 @@ public class PTDatagen implements DataGeneratorEntrypoint {
                 PTDatagenApi.buildItemTags(this::getOrCreateTagBuilder, PeriodicTable.INSTANCE);
             }
         });
+
+        pack.addProvider((output, lookup) -> new FabricTagProvider.FluidTagProvider(output, lookup) {
+            @Override
+            protected void configure(RegistryWrapper.WrapperLookup arg) {
+                PTDatagenApi.buildFluidTags(this::getOrCreateTagBuilder, PeriodicTable.INSTANCE);
+            }
+        });
     }
 }
