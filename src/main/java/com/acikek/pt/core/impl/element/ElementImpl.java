@@ -1,11 +1,10 @@
 package com.acikek.pt.core.impl.element;
 
 import com.acikek.pt.core.element.Element;
-import com.acikek.pt.core.lang.ElementDisplay;
+import com.acikek.pt.core.display.ElementDisplay;
 import com.acikek.pt.core.refined.ElementRefinedState;
 import com.acikek.pt.core.registry.ElementIds;
 import com.acikek.pt.core.source.ElementSource;
-import net.minecraft.text.Text;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;

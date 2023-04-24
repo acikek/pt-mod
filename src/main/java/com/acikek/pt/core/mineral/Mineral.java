@@ -1,8 +1,8 @@
 package com.acikek.pt.core.mineral;
 
 import com.acikek.pt.api.datagen.DatagenDelegator;
-import com.acikek.pt.core.lang.DisplayHolder;
-import com.acikek.pt.core.lang.MineralDisplay;
+import com.acikek.pt.core.display.DisplayHolder;
+import com.acikek.pt.core.display.MineralDisplay;
 import com.acikek.pt.core.registry.PTRegistry;
 import com.acikek.pt.core.signature.ElementSignatureEntry;
 import com.acikek.pt.core.signature.SignatureHolder;

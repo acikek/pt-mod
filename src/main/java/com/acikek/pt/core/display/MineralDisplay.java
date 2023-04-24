@@ -1,4 +1,4 @@
-package com.acikek.pt.core.lang;
+package com.acikek.pt.core.display;
 
 import java.util.Objects;
 import java.util.stream.Stream;
@@ -36,7 +36,7 @@ public record MineralDisplay(String id, String englishName, String rawFormName) 
         throw new IllegalStateException("object must be either a String name or a MineralNaming instance");
     }
 
-    public String getRawFormPath() {
-        return id + "_" + CompoundNames.getIdFromName(rawFormName);
+    public String getRawFormId() {
+        return id + "_crystal";
     }
 }

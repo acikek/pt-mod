@@ -2,7 +2,7 @@ package com.acikek.pt.core.impl.mineral;
 
 import com.acikek.pt.api.PTApi;
 import com.acikek.pt.core.element.Element;
-import com.acikek.pt.core.lang.MineralDisplay;
+import com.acikek.pt.core.display.MineralDisplay;
 import com.acikek.pt.core.mineral.Mineral;
 import com.acikek.pt.core.registry.PTRegistry;
 import com.acikek.pt.core.signature.ElementSignature;
@@ -95,7 +95,7 @@ public class MineralBlock extends Block implements Mineral {
             registry.registerBlock(naming.id() + "_cluster", cluster);
         }
         if (rawMineral != null) {
-            registry.registerItem(naming.getRawFormPath(), rawMineral);
+            registry.registerItem(naming.getRawFormId(), rawMineral);
         }
     }
 

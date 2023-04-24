@@ -1,8 +1,8 @@
 package com.acikek.pt.core.element;
 
 import com.acikek.pt.api.PTApi;
-import com.acikek.pt.core.lang.ElementDisplay;
-import com.acikek.pt.core.lang.DisplayHolder;
+import com.acikek.pt.core.display.ElementDisplay;
+import com.acikek.pt.core.display.DisplayHolder;
 import com.acikek.pt.core.refined.ElementRefinedState;
 import com.acikek.pt.core.refined.RefinedStateHolder;
 import com.acikek.pt.core.registry.ElementIds;
@@ -91,7 +91,7 @@ public interface Element extends DisplayHolder<ElementDisplay>, SourceHolder, Re
     }
 
     default TagKey<Item> getRefinedItemTag() {
-        return getConventionalItemTag("_refined");
+        return getConventionalItemTag("");
     }
 
     default TagKey<Item> getMiniRefinedItemTag() {

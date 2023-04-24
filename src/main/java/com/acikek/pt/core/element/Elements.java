@@ -2,7 +2,7 @@ package com.acikek.pt.core.element;
 
 import com.acikek.pt.core.impl.element.ElementImpl;
 import com.acikek.pt.core.impl.signature.ElementSignatureImpls;
-import com.acikek.pt.core.lang.ElementDisplay;
+import com.acikek.pt.core.display.ElementDisplay;
 import com.acikek.pt.core.refined.ElementRefinedState;
 import com.acikek.pt.core.refined.RefinedStates;
 import com.acikek.pt.core.signature.ElementSignature;

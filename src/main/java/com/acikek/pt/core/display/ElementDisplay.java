@@ -1,4 +1,4 @@
-package com.acikek.pt.core.lang;
+package com.acikek.pt.core.display;
 
 import java.util.Objects;
 import java.util.stream.Stream;

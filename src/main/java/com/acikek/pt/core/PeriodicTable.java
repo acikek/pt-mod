@@ -2,8 +2,8 @@ package com.acikek.pt.core;
 
 import com.acikek.pt.core.element.Element;
 import com.acikek.pt.core.element.Elements;
-import com.acikek.pt.core.lang.ElementDisplay;
-import com.acikek.pt.core.lang.MineralDisplay;
+import com.acikek.pt.core.display.ElementDisplay;
+import com.acikek.pt.core.display.MineralDisplay;
 import com.acikek.pt.core.mineral.Mineral;
 import com.acikek.pt.core.impl.mineral.MineralBlock;
 import com.acikek.pt.core.mineral.Minerals;
