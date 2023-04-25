@@ -1,8 +1,8 @@
 package com.acikek.pt.core.impl.mineral;
 
 import com.acikek.pt.api.PTApi;
-import com.acikek.pt.core.api.element.Element;
 import com.acikek.pt.core.api.display.MineralDisplay;
+import com.acikek.pt.core.api.element.Element;
 import com.acikek.pt.core.api.mineral.Mineral;
 import com.acikek.pt.core.api.registry.PTRegistry;
 import com.acikek.pt.core.api.signature.ElementSignature;
@@ -14,7 +14,6 @@ import net.minecraft.data.server.loottable.BlockLootTableGenerator;
 import net.minecraft.enchantment.Enchantments;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
 import net.minecraft.loot.condition.MatchToolLootCondition;
 import net.minecraft.loot.entry.ItemEntry;
 import net.minecraft.loot.entry.LeafEntry;
@@ -130,7 +129,7 @@ public class MineralBlock extends Block implements Mineral {
                                 .apply(ApplyBonusLootFunction.oreDrops(Enchantments.FORTUNE))
                                 .conditionally(MatchToolLootCondition.builder(ItemPredicate.Builder.create().tag(ItemTags.CLUSTER_MAX_HARVESTABLES)))
                                 .alternatively(generator.applyExplosionDecay(cluster,
-                                        ItemEntry.builder(Items.AMETHYST_SHARD)
+                                        ItemEntry.builder(rawMineral)
                                                 .apply(SetCountLootFunction.builder(ConstantLootNumberProvider.create(1.0f))))
                                 ))
         );

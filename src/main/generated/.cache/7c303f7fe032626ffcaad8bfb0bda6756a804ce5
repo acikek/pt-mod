@@ -1,7 +1,13 @@
-// 1.19.4	2023-04-24T14:24:12.615479176	PT/Block Loot Tables
-a518133c9840ee7f87ce65fe2e9f9957763b9417 data/pt/loot_tables/blocks/lithiophilite.json
-58c31b18439a147f03e28970a74bb21ba13e58f1 data/pt/loot_tables/blocks/stibnite_cluster.json
+// 1.19.4	2023-04-25T14:51:16.948113222	PT/Block Loot Tables
+7c1bd2cc48c5a5f54504d00312fa3a4ab6e71494 data/pt/loot_tables/blocks/platinum_raw_block.json
+20d17fb0f62d0fda559fa9cafdb72b3839919c5b data/pt/loot_tables/blocks/stibnite_cluster.json
 c7ed1f96225a96ca28d42c69db73488cee77387e data/pt/loot_tables/blocks/gypsum.json
+89f5c412f0a5dfda26bdcc2ff53d7f7147a03875 data/pt/loot_tables/blocks/osmium_source_deepslate.json
 67585ef059915c2efd02c87e2e639b785f7fb270 data/pt/loot_tables/blocks/test_mineral.json
+780c847872de17512b9b11d3f151c06d17d34468 data/pt/loot_tables/blocks/platinum_source_deepslate.json
+bc89fc301a7918ebffd62a106818851c57a6067d data/pt/loot_tables/blocks/platinum_source_block.json
+1ac1fcff6806010030fb216a9f4257b30ca504f8 data/pt/loot_tables/blocks/osmium_source_block.json
+71cbaff8c788f3d872d476b7c772076dfc73483e data/pt/loot_tables/blocks/osmium_raw_block.json
+a518133c9840ee7f87ce65fe2e9f9957763b9417 data/pt/loot_tables/blocks/lithiophilite.json
 0c82bead4ef9cb86888f2a78dffe218215f94c23 data/pt/loot_tables/blocks/stibnite.json
-49761ddd0b8ed95feeb42d6f26f732c290c4f91a data/pt/loot_tables/blocks/gypsum_cluster.json
+5d0200d31e0489525eee5ccb835380903af22b32 data/pt/loot_tables/blocks/gypsum_cluster.json

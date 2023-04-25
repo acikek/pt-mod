@@ -1,4 +1,4 @@
-// 1.19.4	2023-04-24T14:24:12.617199559	PT/Tags for minecraft:block
+// 1.19.4	2023-04-25T14:51:16.950497287	PT/Tags for minecraft:block
 fbcfc4eeee3adbc4d24ef92bc5fef6a70c5bbad8 data/c/tags/blocks/platinum_ores.json
 b6843293b4ab2177aa21b9333f5722091cceaf9e data/minecraft/tags/blocks/mineable/pickaxe.json
 294c3773aa4dd3e5f001e641a3ee8efd3411983b data/c/tags/blocks/osmium_blocks.json
@@ -19,6 +19,6 @@ a297aacd44e4558fa38101a699f6b1561c087224 data/c/tags/blocks/oxygen_blocks.json
 46aacdf6ae78c070e942b47ca1f0dd16be07ecb7 data/minecraft/tags/blocks/needs_diamond_tool.json
 9032803686bdc56a6a22302178c592f76fd8eb68 data/c/tags/blocks/helium_blocks.json
 16d04897894d67c14c50c4fea2e23b799da5385b data/c/tags/blocks/platinum_blocks.json
-e4d1de75ce0605732e7f6d71d6f43b2fe79905bf data/minecraft/tags/blocks/needs_iron_tool.json
 b32d41b298a96840000104bdf6a429ed5893c173 data/c/tags/blocks/test_minerals.json
+e4d1de75ce0605732e7f6d71d6f43b2fe79905bf data/minecraft/tags/blocks/needs_iron_tool.json
 9bfb576a6944864f30531b610efd05646a6802e6 data/c/tags/blocks/sulfur_blocks.json

@@ -67,7 +67,10 @@ public class OreSource extends UndergroundSource {
 
     @Override
     public void buildLootTables(BlockLootTableGenerator generator, Element parent) {
-
+        for (Block block : List.of(ore, deepslateOre)) {
+            generator.addDrop(block, b -> generator.oreDrops(b, rawItem));
+        }
+        generator.addDrop(rawBlock);
     }
 
     @Override

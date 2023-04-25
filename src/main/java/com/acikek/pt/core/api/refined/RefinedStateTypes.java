@@ -24,7 +24,7 @@ public enum RefinedStateTypes implements RefinedStateType {
     METAL("Block of %s", "%s Ingot", "%s Nugget", null, Material.METAL, BlockSoundGroup.METAL),
     GAS("%s Tank", "Compressed %s", "%s Cell", 3.0f, Material.GLASS, BlockSoundGroup.GLASS),
     FLUID("%s Drum", "Bottle of %s", "%s Vial", 5.0f, Material.METAL, ModSoundGroups.FLUID_BASIN),
-    POWDER("Sack of %s", "Bag of %s", "%s Pouch", 1.5f, Material.AGGREGATE, BlockSoundGroup.SAND),
+    POWDER("Sack of %s", "Bag of %s", "%s Pouch", 0.75f, Material.AGGREGATE, BlockSoundGroup.SAND),
     SYNTHESIZED("Pile of %s", "%s Bloom", "%s Pellet", 3.5f, Material.STONE, BlockSoundGroup.STONE), // TODO
     BILLET("Pile of %s", "%s Billet", "%s Pellet", 6.0f, Material.METAL, BlockSoundGroup.METAL),
     TRACE("%s Sample", "%s Trace", "%s Array", 2.5f, Material.GLASS, BlockSoundGroup.GLASS);
