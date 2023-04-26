@@ -12,31 +12,46 @@ import java.util.List;
 
 public interface ElementSource extends DatagenDelegator, MineralResultHolder {
 
+    /**
+     * @return an identifier specifying the type of this source.
+     * For example, ore sources return {@link ElementSources#ORE}.
+     */
     @NotNull Identifier getId();
 
+    /**
+     * @return whether this source is an instance of the specified type.
+     * @see ElementSources
+     */
     default boolean isType(Identifier id) {
         return getId().equals(id);
     }
 
-    default boolean hasMineralResult() {
-        return mineralResultItem() != null;
-    }
-
-    void register(PTRegistry registry, ElementIds<String> ids);
-
+    /**
+     * @return whether this source can only be added to a single element.
+     */
     default boolean isExclusive() {
         return false;
     }
 
-    default boolean isAlreadyAdded(Element element) {
+    /**
+     * @return whether this source has already been added to an element.
+     * Can be {@code false} if this information is not relevant.
+     */
+    default boolean isAdded(Element element) {
         return false;
     }
 
+    /**
+     * Called after this source has been added to an element but before registry.
+     * @throws IllegalStateException if {@link ElementSource#isExclusive()} and {@link ElementSource#isAdded(Element)} are both {@code true}.
+     */
     default void onAdd(Element parent) {
-        if (isExclusive() && isAlreadyAdded(parent)) {
+        if (isExclusive() && isAdded(parent)) {
             throw new IllegalStateException("exclusive source '" + this + "' is already attached; cannot be added to element '" + parent + "'");
         }
     }
+
+    void register(PTRegistry registry, ElementIds<String> ids, List<T> requests);
 
     @SuppressWarnings("unchecked")
     static List<ElementSource> forObject(Object obj) {
