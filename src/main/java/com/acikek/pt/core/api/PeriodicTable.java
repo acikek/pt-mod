@@ -1,11 +1,10 @@
 package com.acikek.pt.core.api;
 
-import com.acikek.pt.core.api.element.Element;
-import com.acikek.pt.core.api.element.Elements;
 import com.acikek.pt.core.api.display.ElementDisplay;
 import com.acikek.pt.core.api.display.MineralDisplay;
+import com.acikek.pt.core.api.element.Element;
+import com.acikek.pt.core.api.element.Elements;
 import com.acikek.pt.core.api.mineral.Mineral;
-import com.acikek.pt.core.impl.mineral.MineralBlock;
 import com.acikek.pt.core.api.mineral.Minerals;
 import com.acikek.pt.core.api.refined.RefinedStates;
 import com.acikek.pt.core.api.source.ElementSources;
@@ -14,7 +13,7 @@ import java.util.List;
 
 public class PeriodicTable extends AbstractPeriodicTable {
 
-    public static final MineralBlock TEST = Minerals.block(
+    public static final Mineral TEST = Minerals.block(
             "Test Mineral",
             () -> List.of(
                     Elements.amount(PeriodicTable.BERYLLIUM, 3).primary().unit(),
@@ -27,12 +26,12 @@ public class PeriodicTable extends AbstractPeriodicTable {
             )
     );
 
-    public static final MineralBlock LITHIOPHILITE = Minerals.block(
+    public static final Mineral LITHIOPHILITE = Minerals.block(
             "Lithiophilite",
             () -> List.of(Elements.single(PeriodicTable.LITHIUM).primary().unit(), /*Mn,*/ /*P,*/ Elements.unit(PeriodicTable.OXYGEN))
     );
 
-    public static final MineralBlock STIBNITE = Minerals.fullBlock(
+    public static final Mineral STIBNITE = Minerals.fullBlock(
             MineralDisplay.byName("Stibnite", "Shard"),
             () -> List.of(Elements.amount(PeriodicTable.ANTIMONY, 2).primary().unit(), Elements.unit(PeriodicTable.SULFUR, 3))
     );
@@ -42,7 +41,7 @@ public class PeriodicTable extends AbstractPeriodicTable {
             () -> List.of(Elements.single(PeriodicTable.BERYLLIUM), /*Al2, Elements.single(PeriodicTable.OXYGEN, 4))
     );*/
 
-    public static final MineralBlock GYPSUM = Minerals.fullBlock(
+    public static final Mineral GYPSUM = Minerals.fullBlock(
             MineralDisplay.byName("Gypsum", "Crystal"),
             () -> List.of(/*Ca,*/ Elements.single(PeriodicTable.SULFUR).primary().unit(), Elements.unit(PeriodicTable.OXYGEN, 4))
     );

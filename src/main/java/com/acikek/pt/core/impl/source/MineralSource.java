@@ -48,7 +48,7 @@ public class MineralSource extends UndergroundSource {
     }
 
     @Override
-    public boolean isAlreadyAdded(Element element) {
+    public boolean isAdded(Element element) {
         return ATTACHMENTS.get(mineral) == element;
     }
 

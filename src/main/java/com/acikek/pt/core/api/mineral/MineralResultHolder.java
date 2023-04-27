@@ -7,7 +7,7 @@ public interface MineralResultHolder {
 
     @Nullable Item mineralResultItem();
 
-    default boolean hasMineralResultItem() {
+    default boolean hasMineralResult() {
         return mineralResultItem() != null;
     }
 }

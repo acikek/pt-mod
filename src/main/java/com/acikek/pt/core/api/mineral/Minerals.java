@@ -13,19 +13,19 @@ public class Minerals {
         return new MineralBlockBuilder();
     }
 
-    private static MineralBlock build(MineralBlockBuilder builder, Object naming, Supplier<List<ElementSignature>> supplier) {
+    private static Mineral build(MineralBlockBuilder builder, Object naming, Supplier<List<ElementSignature>> supplier) {
         return builder.naming(naming).signature(supplier).build();
     }
 
-    public static MineralBlock block(Object naming, Supplier<List<ElementSignature>> supplier) {
+    public static Mineral block(Object naming, Supplier<List<ElementSignature>> supplier) {
         return build(builder(), naming, supplier);
     }
 
-    public static MineralBlock fullBlock(Object naming, Supplier<List<ElementSignature>> supplier) {
+    public static Mineral fullBlock(Object naming, Supplier<List<ElementSignature>> supplier) {
         return build(builder().addRawMineral().addCluster(), naming, supplier);
     }
 
-    public static MineralBlock blockWithRawForm(Object naming, Supplier<List<ElementSignature>> supplier) {
+    public static Mineral blockWithRawForm(Object naming, Supplier<List<ElementSignature>> supplier) {
         return build(builder().addRawMineral(), naming, supplier);
     }
 }
