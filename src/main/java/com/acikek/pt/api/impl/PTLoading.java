@@ -1,6 +1,8 @@
 package com.acikek.pt.api.impl;
 
+import com.acikek.pt.api.impl.request.RequestEventImpl;
 import com.acikek.pt.api.plugin.PTPlugin;
+import com.acikek.pt.api.request.RequestEvent;
 import com.acikek.pt.core.api.AbstractPeriodicTable;
 import com.google.common.base.Suppliers;
 import com.google.common.collect.ImmutableList;
@@ -30,8 +32,12 @@ public class PTLoading {
         for (PTPlugin loader : plugins) {
             loader.beforeRegister();
         }
+        RequestEvent event = new RequestEventImpl();
+        for (PTPlugin loader : plugins) {
+            loader.requestFeatures(event);
+        }
         for (AbstractPeriodicTable table : tables) {
-            table.register();
+            table.register(event);
         }
     }
 }

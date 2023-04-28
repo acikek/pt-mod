@@ -1,8 +1,9 @@
 package com.acikek.pt.core.api.element;
 
 import com.acikek.pt.api.PTApi;
-import com.acikek.pt.core.api.display.ElementDisplay;
+import com.acikek.pt.api.request.FeatureRequests;
 import com.acikek.pt.core.api.display.DisplayHolder;
+import com.acikek.pt.core.api.display.ElementDisplay;
 import com.acikek.pt.core.api.refined.ElementRefinedState;
 import com.acikek.pt.core.api.refined.RefinedStateHolder;
 import com.acikek.pt.core.api.registry.ElementIds;
@@ -120,13 +121,13 @@ public interface Element extends DisplayHolder<ElementDisplay>, SourceHolder, Re
                 : sources.get(world.random.nextInt(sources.size())).mineralResultItem();
     }
 
-    default void register(PTRegistry registry) {
+    default void register(PTRegistry registry, FeatureRequests.Content requests, FeatureRequests.Sources sourceRequests) {
         if (hasSources()) {
             for (ElementSource source : sources()) {
-                source.register(registry, elementIds());
+                source.register(registry, elementIds(), sourceRequests.getContent(source.getId()));
             }
         }
-        state().register(registry, elementIds());
+        state().register(registry, elementIds(), requests);
         afterRegister();
     }
 

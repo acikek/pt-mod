@@ -11,9 +11,12 @@ import net.minecraft.util.Identifier;
 
 public record PTRegistry(String key) {
 
+    public Identifier id(String path) {
+        return new Identifier(key, path);
+    }
+
     private <T> T register(Registry<? super T> registry, String path, T entry) {
-        Identifier id = new Identifier(key, path);
-        return Registry.register(registry, id, entry);
+        return Registry.register(registry, id(path), entry);
     }
 
     public Item registerItem(String path, Item item) {

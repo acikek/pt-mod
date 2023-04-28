@@ -5,30 +5,32 @@ import com.acikek.pt.core.api.source.ElementSource;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 
+import java.util.function.Supplier;
+
 public class OreSourceBuilder {
 
-    private Block ore;
-    private Block deepslateOre;
-    private Item rawItem;
-    private Block rawBlock;
+    private Supplier<Block> ore;
+    private Supplier<Block> deepslateOre;
+    private Supplier<Item> rawItem;
+    private Supplier<Block> rawBlock;
     private int miningLevel = -1;
 
-    public OreSourceBuilder ore(Block ore) {
+    public OreSourceBuilder ore(Supplier<Block> ore) {
         this.ore = ore;
         return this;
     }
 
-    public OreSourceBuilder deepslateOre(Block deepslateOre) {
+    public OreSourceBuilder deepslateOre(Supplier<Block> deepslateOre) {
         this.deepslateOre = deepslateOre;
         return this;
     }
 
-    public OreSourceBuilder rawItem(Item rawItem) {
+    public OreSourceBuilder rawItem(Supplier<Item> rawItem) {
         this.rawItem = rawItem;
         return this;
     }
 
-    public OreSourceBuilder rawBlock(Block rawBlock) {
+    public OreSourceBuilder rawBlock(Supplier<Block> rawBlock) {
         this.rawBlock = rawBlock;
         return this;
     }
@@ -40,10 +42,10 @@ public class OreSourceBuilder {
 
     public ElementSource build() {
         return new OreSource(
-                ore != null ? ore : ElementalObjects.createOreBlock(),
-                deepslateOre != null ? deepslateOre : ElementalObjects.createDeepslateOreBlock(),
-                rawItem != null ? rawItem : ElementalObjects.createItem(),
-                rawBlock != null ? rawBlock : ElementalObjects.createRawSourceBlock(),
+                ore != null ? ore : ElementalObjects::createOreBlock,
+                deepslateOre != null ? deepslateOre : ElementalObjects::createDeepslateOreBlock,
+                rawItem != null ? rawItem : ElementalObjects::createItem,
+                rawBlock != null ? rawBlock : ElementalObjects::createRawSourceBlock,
                 miningLevel != -1 ? miningLevel : 1
         );
     }

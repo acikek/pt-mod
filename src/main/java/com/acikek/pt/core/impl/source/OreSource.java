@@ -1,9 +1,12 @@
 package com.acikek.pt.core.impl.source;
 
+import com.acikek.pt.api.request.FeatureRequests;
 import com.acikek.pt.core.api.element.Element;
 import com.acikek.pt.core.api.registry.ElementIds;
 import com.acikek.pt.core.api.registry.PTRegistry;
+import com.acikek.pt.core.api.registry.PhasedContent;
 import com.acikek.pt.core.api.source.ElementSources;
+import com.acikek.pt.api.request.RequestTypes;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
 import net.fabricmc.fabric.api.mininglevel.v1.MiningLevelManager;
@@ -17,24 +20,24 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.Objects;
 import java.util.function.Function;
-import java.util.stream.Stream;
+import java.util.function.Supplier;
 
 public class OreSource extends UndergroundSource {
 
-    private final Block ore;
-    private final Block deepslateOre;
-    private final Item rawItem;
-    private final Block rawBlock;
+    private final PhasedContent<Block> ore;
+    private final PhasedContent<Block> deepslateOre;
+    private final PhasedContent<Item> rawItem;
+    private final PhasedContent<Block> rawBlock;
     private final int miningLevel;
 
-    public OreSource(Block ore, Block deepslateOre, Item rawItem, Block rawBlock, int miningLevel) {
-        Stream.of(ore, deepslateOre, rawItem, rawBlock).forEach(Objects::requireNonNull);
-        this.ore = ore;
-        this.deepslateOre = deepslateOre;
-        this.rawItem = rawItem;
-        this.rawBlock = rawBlock;
+    private boolean created = false;
+
+    public OreSource(Supplier<Block> ore, Supplier<Block> deepslateOre, Supplier<Item> rawItem, Supplier<Block> rawBlock, int miningLevel) {
+        this.ore = PhasedContent.of(ore);
+        this.deepslateOre = PhasedContent.of(deepslateOre);
+        this.rawItem = PhasedContent.of(rawItem);
+        this.rawBlock = PhasedContent.of(rawBlock);
         this.miningLevel = miningLevel;
     }
 
@@ -45,55 +48,63 @@ public class OreSource extends UndergroundSource {
 
     @Override
     public Item mineralResultItem() {
-        return rawItem;
+        return rawItem.get();
     }
 
     @Override
-    public void register(PTRegistry registry, ElementIds<String> ids) {
-        registry.registerBlock(ids.getSourceBlockId(), ore);
-        registry.registerBlock(ids.getDeepslateSourceBlockId(), deepslateOre);
-        registry.registerItem(ids.getRawSourceItemId(), rawItem);
-        registry.registerBlock(ids.getRawSourceBlockId(), rawBlock);
+    public void register(PTRegistry registry, ElementIds<String> ids, FeatureRequests.Content features) {
+        if (!features.contains(RequestTypes.CONTENT)) {
+            return;
+        }
+        registry.registerBlock(ids.getSourceBlockId(), ore.create());
+        registry.registerBlock(ids.getDeepslateSourceBlockId(), deepslateOre.create());
+        registry.registerItem(ids.getRawSourceItemId(), rawItem.create());
+        registry.registerBlock(ids.getRawSourceBlockId(), rawBlock.create());
+        created = true;
     }
 
     @Override
     public void buildTranslations(FabricLanguageProvider.TranslationBuilder builder, Element parent) {
         String name = parent.display().englishName();
-        builder.add(ore, name + " Ore");
-        builder.add(deepslateOre, "Deepslate " + name + " Ore");
-        builder.add(rawItem, "Raw " + name);
-        builder.add(rawBlock, "Block of Raw " + name);
+        builder.add(ore.require(), name + " Ore");
+        builder.add(deepslateOre.require(), "Deepslate " + name + " Ore");
+        builder.add(rawItem.require(), "Raw " + name);
+        builder.add(rawBlock.require(), "Block of Raw " + name);
     }
 
     @Override
     public void buildLootTables(BlockLootTableGenerator generator, Element parent) {
-        for (Block block : List.of(ore, deepslateOre)) {
-            generator.addDrop(block, b -> generator.oreDrops(b, rawItem));
+        for (Block block : List.of(ore.require(), deepslateOre.require())) {
+            generator.addDrop(block, b -> generator.oreDrops(b, rawItem.require()));
         }
-        generator.addDrop(rawBlock);
+        generator.addDrop(rawBlock.require());
     }
 
     @Override
     public void buildBlockTags(Function<TagKey<Block>, FabricTagProvider<Block>.FabricTagBuilder> provider, Element parent) {
-        provider.apply(parent.getConventionalBlockTag("%s_ores")).add(ore, deepslateOre);
-        provider.apply(MiningLevelManager.getBlockTag(miningLevel)).add(ore, deepslateOre);
-        provider.apply(parent.getConventionalBlockTag("raw_%s_blocks")).add(rawBlock);
-        provider.apply(BlockTags.NEEDS_STONE_TOOL).add(rawBlock);
-        provider.apply(BlockTags.PICKAXE_MINEABLE).add(ore, deepslateOre, rawBlock);
+        provider.apply(parent.getConventionalBlockTag("%s_ores")).add(ore.require(), deepslateOre.require());
+        provider.apply(MiningLevelManager.getBlockTag(miningLevel)).add(ore.require(), deepslateOre.require());
+        provider.apply(parent.getConventionalBlockTag("raw_%s_blocks")).add(rawBlock.require());
+        provider.apply(BlockTags.NEEDS_STONE_TOOL).add(rawBlock.require());
+        provider.apply(BlockTags.PICKAXE_MINEABLE).add(ore.require(), deepslateOre.require(), rawBlock.require());
     }
 
     @Override
     public void buildItemTags(Function<TagKey<Item>, FabricTagProvider<Item>.FabricTagBuilder> provider, Element parent) {
-        provider.apply(parent.getConventionalItemTag("raw_%s_ores")).add(rawItem);
+        provider.apply(parent.getConventionalItemTag("raw_%s_ores")).add(rawItem.require());
     }
 
     @Override
     public List<Block> getBlocks() {
-        return List.of(ore, deepslateOre, rawBlock);
+        return created
+                ? List.of(ore.require(), deepslateOre.require(), rawBlock.require())
+                : Collections.emptyList();
     }
 
     @Override
     public List<Item> getItems() {
-        return Collections.singletonList(rawItem);
+        return created
+                ? Collections.singletonList(rawItem.require())
+                : Collections.emptyList();
     }
 }

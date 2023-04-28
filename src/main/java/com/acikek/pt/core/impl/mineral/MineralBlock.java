@@ -1,6 +1,7 @@
 package com.acikek.pt.core.impl.mineral;
 
 import com.acikek.pt.api.PTApi;
+import com.acikek.pt.api.request.FeatureRequests;
 import com.acikek.pt.core.api.display.MineralDisplay;
 import com.acikek.pt.core.api.element.Element;
 import com.acikek.pt.core.api.mineral.Mineral;
@@ -88,7 +89,7 @@ public class MineralBlock extends Block implements Mineral {
     }
 
     @Override
-    public void register(PTRegistry registry) {
+    public void register(PTRegistry registry, FeatureRequests.Content features) {
         registry.registerBlock(naming.id(), this);
         if (cluster != null) {
             registry.registerBlock(naming.id() + "_cluster", cluster);

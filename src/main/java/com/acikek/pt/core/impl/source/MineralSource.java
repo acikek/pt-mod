@@ -1,5 +1,6 @@
 package com.acikek.pt.core.impl.source;
 
+import com.acikek.pt.api.request.FeatureRequests;
 import com.acikek.pt.core.api.element.Element;
 import com.acikek.pt.core.api.mineral.Mineral;
 import com.acikek.pt.core.api.registry.ElementIds;
@@ -64,7 +65,7 @@ public class MineralSource extends UndergroundSource {
     }
 
     @Override
-    public void register(PTRegistry registry, ElementIds<String> ids) {
+    public void register(PTRegistry registry, ElementIds<String> ids, FeatureRequests.Content features) {
         // TODO worldgen goes here
     }
 

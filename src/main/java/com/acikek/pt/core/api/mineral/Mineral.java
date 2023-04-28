@@ -1,12 +1,14 @@
 package com.acikek.pt.core.api.mineral;
 
 import com.acikek.pt.api.datagen.DatagenDelegator;
+import com.acikek.pt.api.request.FeatureRequests;
 import com.acikek.pt.core.api.display.DisplayHolder;
 import com.acikek.pt.core.api.display.MineralDisplay;
 import com.acikek.pt.core.api.registry.PTRegistry;
 import com.acikek.pt.core.api.signature.ElementSignatureEntry;
 import com.acikek.pt.core.api.signature.SignatureHolder;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.Identifier;
 import net.minecraft.world.World;
 
 import java.util.List;
@@ -15,7 +17,7 @@ public interface Mineral extends DisplayHolder<MineralDisplay>, DatagenDelegator
 
     void init();
 
-    void register(PTRegistry registry);
+    void register(PTRegistry registry, FeatureRequests.Content requests);
 
     default List<ElementSignatureEntry> getAllResultEntries() {
         return signature().stream()

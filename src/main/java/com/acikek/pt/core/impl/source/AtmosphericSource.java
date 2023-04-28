@@ -1,5 +1,6 @@
 package com.acikek.pt.core.impl.source;
 
+import com.acikek.pt.api.request.FeatureRequests;
 import com.acikek.pt.core.api.element.Element;
 import com.acikek.pt.core.api.registry.ElementIds;
 import com.acikek.pt.core.api.registry.PTRegistry;
@@ -35,7 +36,7 @@ public class AtmosphericSource implements ElementSource {
     }
 
     @Override
-    public void register(PTRegistry registry, ElementIds<String> ids) {
+    public void register(PTRegistry registry, ElementIds<String> ids, FeatureRequests.Content requests) {
         // Empty
     }
 

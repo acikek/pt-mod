@@ -1,6 +1,7 @@
 package com.acikek.pt.core.api.source;
 
 import com.acikek.pt.api.datagen.DatagenDelegator;
+import com.acikek.pt.api.request.FeatureRequests;
 import com.acikek.pt.core.api.element.Element;
 import com.acikek.pt.core.api.mineral.MineralResultHolder;
 import com.acikek.pt.core.api.registry.ElementIds;
@@ -51,7 +52,7 @@ public interface ElementSource extends DatagenDelegator, MineralResultHolder {
         }
     }
 
-    void register(PTRegistry registry, ElementIds<String> ids, List<T> requests);
+    void register(PTRegistry registry, ElementIds<String> ids, FeatureRequests.Content features);
 
     @SuppressWarnings("unchecked")
     static List<ElementSource> forObject(Object obj) {

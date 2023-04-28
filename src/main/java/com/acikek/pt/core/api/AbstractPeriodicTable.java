@@ -1,6 +1,7 @@
 package com.acikek.pt.core.api;
 
 import com.acikek.pt.PT;
+import com.acikek.pt.api.request.RequestEvent;
 import com.acikek.pt.core.api.element.Element;
 import com.acikek.pt.core.api.mineral.Mineral;
 import com.acikek.pt.core.api.registry.PTRegistry;
@@ -79,8 +80,8 @@ public abstract class AbstractPeriodicTable implements CompoundHolder {
         return getValues(Element::getItems);
     }
 
-    public void register() {
-        forEachMineral(mineral -> mineral.register(registry));
-        forEachElement(element -> element.register(registry));
+    public void register(RequestEvent event) {
+        forEachMineral(mineral -> mineral.register(registry, event.getRequestsForMineral(mineral)));
+        forEachElement(element -> element.register(registry, event.getRequestsForElement(element), event.getSourceRequestsForElement(element)));
     }
 }
