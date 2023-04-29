@@ -8,10 +8,8 @@ import com.acikek.pt.core.api.registry.ElementIds;
 import com.acikek.pt.core.api.source.ElementSource;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class ElementImpl implements Element {
 
@@ -23,7 +21,9 @@ public class ElementImpl implements Element {
 
     public ElementImpl(ElementDisplay names, Map<ElementRefinedState, List<ElementSource>> sourceStateMap) {
         Objects.requireNonNull(names);
-        this.sourceStateMap = sourceStateMap;
+        Map<ElementRefinedState, List<ElementSource>> mutableMap = sourceStateMap.entrySet().stream()
+                        .collect(Collectors.toMap(Map.Entry::getKey, entry -> new ArrayList<>(entry.getValue())));
+        this.sourceStateMap = new HashMap<>(mutableMap);
         getAllContent().forEach(Objects::requireNonNull);
         this.names = names;
         this.ids = ElementIds.create(id());

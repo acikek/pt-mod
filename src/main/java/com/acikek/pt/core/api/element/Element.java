@@ -13,6 +13,7 @@ import com.acikek.pt.core.api.registry.ElementIds;
 import com.acikek.pt.core.api.registry.PTRegistry;
 import com.acikek.pt.core.api.signature.ElementSignature;
 import com.acikek.pt.core.api.signature.SignatureHolder;
+import com.acikek.pt.core.api.signature.Signatures;
 import com.acikek.pt.core.api.source.ElementSource;
 import com.acikek.pt.core.api.source.MaterialHolder;
 import net.minecraft.block.Block;
@@ -35,7 +36,7 @@ public interface Element extends DisplayHolder<ElementDisplay>, SourceStateMappe
 
     @Override
     default List<ElementSignature> signature() {
-        return Collections.singletonList(Elements.unit(this, display().signatureAmount()));
+        return Collections.singletonList(Signatures.unit(this, display().signatureAmount()));
     }
 
     default String getTextKey(String path) {

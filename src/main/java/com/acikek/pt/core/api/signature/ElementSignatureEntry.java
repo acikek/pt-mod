@@ -1,7 +1,6 @@
 package com.acikek.pt.core.api.signature;
 
 import com.acikek.pt.core.api.element.Element;
-import com.acikek.pt.core.api.element.Elements;
 import com.acikek.pt.core.impl.signature.ElementSignatureImpls;
 import net.minecraft.item.ItemStack;
 import net.minecraft.text.Text;
@@ -62,7 +61,7 @@ public class ElementSignatureEntry {
             return entry;
         }
         if (obj instanceof Element element) {
-            return Elements.single(element);
+            return Signatures.single(element);
         }
         throw new IllegalStateException("object must be an ElementSignatureEntry or a single Element instance");
     }

@@ -19,8 +19,7 @@ import java.util.function.Function;
 public class PTDatagenImpl {
 
     public static <T> void delegate(TriConsumer<DatagenDelegator, T, Element> fn, T context, Element element) {
-        fn.accept(element.state(), context, element);
-        element.forEachSource(source -> fn.accept(source, context, element));
+        element.forEachContent(content -> fn.accept(content, context, element));
     }
 
     public static void buildTranslationsForElement(FabricLanguageProvider.TranslationBuilder builder, Element element) {

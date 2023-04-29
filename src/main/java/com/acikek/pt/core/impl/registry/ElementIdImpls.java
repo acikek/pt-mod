@@ -13,7 +13,7 @@ public class ElementIdImpls {
         }
 
         @Override
-        protected String get(String suffix) {
+        public String get(String suffix) {
             return value + suffix;
         }
 
@@ -35,7 +35,7 @@ public class ElementIdImpls {
         }
 
         @Override
-        protected Identifier get(String suffix) {
+        public Identifier get(String suffix) {
             return value.withSuffixedPath(suffix);
         }
 

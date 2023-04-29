@@ -1,6 +1,7 @@
 package com.acikek.pt.core.impl.source;
 
 import com.acikek.pt.api.request.FeatureRequests;
+import com.acikek.pt.core.api.content.ContentContext;
 import com.acikek.pt.core.api.element.Element;
 import com.acikek.pt.core.api.mineral.Mineral;
 import com.acikek.pt.core.api.registry.ElementIds;
@@ -17,15 +18,12 @@ import net.minecraft.registry.tag.TagKey;
 import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 import java.util.function.Function;
 
 public class MineralSource extends UndergroundSource {
 
-    private static final Map<Mineral, Element> ATTACHMENTS = new HashMap<>();
+    private static final List<Mineral> ADDED = new ArrayList<>();
 
     private final Mineral mineral;
 
@@ -50,24 +48,24 @@ public class MineralSource extends UndergroundSource {
     }
 
     @Override
-    public boolean isAdded(Element element) {
-        return ATTACHMENTS.get(mineral) == element;
+    public boolean isAdded(ContentContext.Source context) {
+        return ADDED.contains(mineral);
     }
 
     @Override
-    public void onAdd(Element parent) {
+    public void onAdd(ContentContext.Source context) {
         for (ElementSignatureEntry entry : mineral.getAllResultEntries()) {
-            if (entry.element() == parent && entry.isPrimary()) {
-                ATTACHMENTS.put(mineral, parent);
+            if (entry.element() == context.parent() && entry.isPrimary()) {
+                ADDED.add(mineral);
                 return;
             }
         }
-        throw new IllegalStateException("element '" + parent + "' is not a primary component of source '" + this + "'");
+        throw new IllegalStateException("element '" + context.parent() + "' is not a primary component of source '" + this + "'");
     }
 
     @Override
-    public void register(PTRegistry registry, ElementIds<String> ids, FeatureRequests.Content features) {
-        // TODO worldgen goes here
+    public void register(PTRegistry registry, ElementIds<String> ids, ContentContext.Source context, FeatureRequests.Content features) {
+        // TODO
     }
 
     @Override
