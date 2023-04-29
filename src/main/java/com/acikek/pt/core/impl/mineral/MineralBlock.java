@@ -7,6 +7,7 @@ import com.acikek.pt.core.api.element.Element;
 import com.acikek.pt.core.api.mineral.Mineral;
 import com.acikek.pt.core.api.registry.PTRegistry;
 import com.acikek.pt.core.api.signature.ElementSignature;
+import com.acikek.pt.core.api.signature.SignatureHolder;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
 import net.minecraft.block.Block;
@@ -79,7 +80,7 @@ public class MineralBlock extends Block implements Mineral {
     }
 
     @Override
-    public void injectSignature(Element element) {
+    public void injectSignature(SignatureHolder holder) {
         if (cluster != null) {
             PTApi.injectSignature(cluster, tooltip);
         }

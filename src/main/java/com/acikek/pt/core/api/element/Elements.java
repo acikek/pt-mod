@@ -1,22 +1,26 @@
 package com.acikek.pt.core.api.element;
 
+import com.acikek.pt.core.api.refined.ElementRefinedState;
 import com.acikek.pt.core.impl.element.ElementImpl;
 import com.acikek.pt.core.impl.signature.ElementSignatureImpls;
 import com.acikek.pt.core.api.display.ElementDisplay;
-import com.acikek.pt.core.api.refined.ElementRefinedState;
 import com.acikek.pt.core.api.refined.RefinedStates;
 import com.acikek.pt.core.api.signature.ElementSignature;
 import com.acikek.pt.core.api.signature.ElementSignatureEntry;
 import com.acikek.pt.core.api.source.ElementSource;
 import com.acikek.pt.core.api.source.ElementSources;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 public class Elements {
 
-    public static Element full(Object naming, Object sources, ElementRefinedState state) {
+    public static Map<ElementRefinedState, List<ElementSource>> states()
+
+    public static Map<ElementRefinedState, List<ElementSource>> states(ElementRefinedState state, List<ElementSource> sources) {
+        return new HashMap<>()
+    }
+
+    public static Element full(Object naming, Map<ElementRefinedState, List<ElementSource>>) {
         return new ElementImpl(ElementDisplay.forObject(naming), ElementSource.forObject(sources), state);
     }
 
@@ -26,45 +30,5 @@ public class Elements {
 
     public static Element gas(Object naming, int atmosphericMin, int atmosphericMax) {
         return full(naming, ElementSources.atmospheric(atmosphericMin, atmosphericMax), RefinedStates.gas());
-    }
-
-    public static ElementSignatureEntry amount(Element element, int amount) {
-        return new ElementSignatureEntry(element, amount);
-    }
-
-    public static ElementSignatureEntry single(Element element) {
-        return amount(element, 1);
-    }
-
-    public static ElementSignature unit(Element element, int amount) {
-        return new ElementSignatureImpls.Unit(amount(element, amount));
-    }
-
-    public static ElementSignature unit(Element element) {
-        return unit(element, 1);
-    }
-
-    public static ElementSignature random(List<ElementSignatureEntry> singleEntries, int amount) {
-        return new ElementSignatureImpls.Random(singleEntries, amount);
-    }
-
-    public static ElementSignature random(int amount, Object... singleEntries) {
-        return random(Arrays.stream(singleEntries).map(ElementSignatureEntry::forObject).toList(), amount);
-    }
-
-    public static ElementSignature wrap(List<ElementSignatureEntry> entries, int multiplier) {
-        return new ElementSignatureImpls.Wrapped(entries, multiplier);
-    }
-
-    public static ElementSignature wrap(int multiplier, ElementSignatureEntry... entries) {
-        return wrap(Arrays.stream(entries).toList(), multiplier);
-    }
-
-    public static ElementSignature hydrate(int amount) {
-        return new ElementSignatureImpls.Hydration(amount);
-    }
-
-    public static ElementSignature hydrate() {
-        return hydrate(1);
     }
 }

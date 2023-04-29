@@ -26,7 +26,7 @@ public class AtmosphericSource implements ElementSource {
     }
 
     @Override
-    public @NotNull Identifier getId() {
+    public @NotNull Identifier getTypeId() {
         return ElementSources.ATMOSPHERIC;
     }
 

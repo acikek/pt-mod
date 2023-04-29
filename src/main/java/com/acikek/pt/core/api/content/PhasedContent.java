@@ -1,4 +1,4 @@
-package com.acikek.pt.core.api.registry;
+package com.acikek.pt.core.api.content;
 
 import com.acikek.pt.core.api.source.ElementSource;
 import org.jetbrains.annotations.NotNull;
@@ -14,7 +14,7 @@ import java.util.function.Supplier;
  * </p>
  *
  * <p>
- *     This is useful for {@link ElementSource} implementations, wherein due to the request system, content may not be
+ *     This is useful for {@link ContentBase} implementations, wherein due to the request system, content may not be
  *     registered; however, all created content must be registered, so this content must not be created either.
  * </p>
  *

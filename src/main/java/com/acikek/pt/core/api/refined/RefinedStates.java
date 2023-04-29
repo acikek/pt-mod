@@ -1,18 +1,23 @@
 package com.acikek.pt.core.api.refined;
 
+import com.acikek.pt.PT;
 import com.acikek.pt.core.impl.refined.RefinedStateBuilder;
+import net.minecraft.util.Identifier;
 
 public class RefinedStates {
+
+    public static final Identifier BASE = PT.id("base");
+    public static final Identifier FLUID = PT.id("fluid");
 
     public static RefinedStateBuilder builder() {
         return new RefinedStateBuilder();
     }
 
-    public static ElementRefinedState fromType(RefinedStateType type, Float strength) {
+    public static ElementRefinedState fromType(RefinedStateTypes type, Float strength) {
         return builder().block(type, strength).build();
     }
 
-    public static ElementRefinedState fromType(RefinedStateType type) {
+    public static ElementRefinedState fromType(RefinedStateTypes type) {
         return fromType(type, null);
     }
 

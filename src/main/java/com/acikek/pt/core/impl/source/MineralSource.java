@@ -6,6 +6,7 @@ import com.acikek.pt.core.api.mineral.Mineral;
 import com.acikek.pt.core.api.registry.ElementIds;
 import com.acikek.pt.core.api.registry.PTRegistry;
 import com.acikek.pt.core.api.signature.ElementSignatureEntry;
+import com.acikek.pt.core.api.signature.SignatureHolder;
 import com.acikek.pt.core.api.source.ElementSources;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
@@ -34,7 +35,7 @@ public class MineralSource extends UndergroundSource {
     }
 
     @Override
-    public @NotNull Identifier getId() {
+    public @NotNull Identifier getTypeId() {
         return ElementSources.MINERAL;
     }
 
@@ -70,8 +71,8 @@ public class MineralSource extends UndergroundSource {
     }
 
     @Override
-    public void injectSignature(Element element) {
-        mineral.injectSignature(element);
+    public void injectSignature(SignatureHolder holder) {
+        mineral.injectSignature(holder);
     }
 
     @Override

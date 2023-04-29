@@ -1,10 +1,11 @@
 package com.acikek.pt.core.impl.source;
 
 import com.acikek.pt.api.request.FeatureRequests;
+import com.acikek.pt.core.api.content.ContentContext;
 import com.acikek.pt.core.api.element.Element;
 import com.acikek.pt.core.api.registry.ElementIds;
 import com.acikek.pt.core.api.registry.PTRegistry;
-import com.acikek.pt.core.api.registry.PhasedContent;
+import com.acikek.pt.core.api.content.PhasedContent;
 import com.acikek.pt.core.api.source.ElementSources;
 import com.acikek.pt.api.request.RequestTypes;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
@@ -42,7 +43,7 @@ public class OreSource extends UndergroundSource {
     }
 
     @Override
-    public @NotNull Identifier getId() {
+    public @NotNull Identifier getTypeId() {
         return ElementSources.ORE;
     }
 
@@ -52,7 +53,7 @@ public class OreSource extends UndergroundSource {
     }
 
     @Override
-    public void register(PTRegistry registry, ElementIds<String> ids, FeatureRequests.Content features) {
+    public void register(PTRegistry registry, ElementIds<String> ids, ContentContext.Source context, FeatureRequests.Content features) {
         if (!features.contains(RequestTypes.CONTENT)) {
             return;
         }

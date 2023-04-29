@@ -8,7 +8,6 @@ import com.acikek.pt.core.api.registry.PTRegistry;
 import com.acikek.pt.core.api.signature.ElementSignatureEntry;
 import com.acikek.pt.core.api.signature.SignatureHolder;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.Identifier;
 import net.minecraft.world.World;
 
 import java.util.List;

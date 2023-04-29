@@ -28,7 +28,7 @@ public abstract class ElementIds<T> {
         return new ElementIdImpls.IdentifierBacked(id);
     }
 
-    protected abstract T addSuffix(String suffix);
+    public abstract T get(String suffix);
 
     public abstract ElementIds<String> useString();
 
@@ -39,11 +39,11 @@ public abstract class ElementIds<T> {
     }
 
     public T getMiniItemId() {
-        return addSuffix(MINI_ITEM_SUFFIX);
+        return get(MINI_ITEM_SUFFIX);
     }
 
     public T getBlockId() {
-        return addSuffix(BLOCK_SUFFIX);
+        return get(BLOCK_SUFFIX);
     }
 
     public T getFluidId() {
@@ -51,22 +51,22 @@ public abstract class ElementIds<T> {
     }
 
     public T getSourceBlockId() {
-        return addSuffix(SOURCE_BLOCK_SUFFIX);
+        return get(SOURCE_BLOCK_SUFFIX);
     }
 
     public T getDeepslateSourceBlockId() {
-        return addSuffix(DEEPSLATE_SOURCE_BLOCK_SUFFIX);
+        return get(DEEPSLATE_SOURCE_BLOCK_SUFFIX);
     }
 
     public T getRawSourceItemId() {
-        return addSuffix(RAW_SOURCE_ITEM_SUFFIX);
+        return get(RAW_SOURCE_ITEM_SUFFIX);
     }
 
     public T getRawSourceBlockId() {
-        return addSuffix(RAW_SOURCE_BLOCK_SUFFIX);
+        return get(RAW_SOURCE_BLOCK_SUFFIX);
     }
 
     public T getMineralClusterId() {
-        return addSuffix(MINERAL_CLUSTER_SUFFIX);
+        return get(MINERAL_CLUSTER_SUFFIX);
     }
 }

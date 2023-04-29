@@ -2,33 +2,32 @@ package com.acikek.pt.core.api.element;
 
 import com.acikek.pt.api.PTApi;
 import com.acikek.pt.api.request.FeatureRequests;
+import com.acikek.pt.core.api.content.ContentBase;
+import com.acikek.pt.core.api.content.ContentContext;
+import com.acikek.pt.core.api.content.SourceStateMapper;
 import com.acikek.pt.core.api.display.DisplayHolder;
 import com.acikek.pt.core.api.display.ElementDisplay;
+import com.acikek.pt.core.api.mineral.MineralResultHolder;
 import com.acikek.pt.core.api.refined.ElementRefinedState;
-import com.acikek.pt.core.api.refined.RefinedStateHolder;
 import com.acikek.pt.core.api.registry.ElementIds;
 import com.acikek.pt.core.api.registry.PTRegistry;
 import com.acikek.pt.core.api.signature.ElementSignature;
 import com.acikek.pt.core.api.signature.SignatureHolder;
 import com.acikek.pt.core.api.source.ElementSource;
 import com.acikek.pt.core.api.source.MaterialHolder;
-import com.acikek.pt.core.api.source.SourceHolder;
 import net.minecraft.block.Block;
-import net.minecraft.fluid.Fluid;
 import net.minecraft.item.Item;
-import net.minecraft.registry.tag.TagKey;
 import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 import net.minecraft.world.World;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.function.Consumer;
+import java.util.Map;
 import java.util.function.Function;
 
-public interface Element extends DisplayHolder<ElementDisplay>, SourceHolder, RefinedStateHolder, SignatureHolder, MaterialHolder {
+public interface Element extends DisplayHolder<ElementDisplay>, SourceStateMapper, SignatureHolder, MaterialHolder {
 
     ElementIds<String> elementIds();
 
@@ -76,77 +75,37 @@ public interface Element extends DisplayHolder<ElementDisplay>, SourceHolder, Re
         return getQuantifiedText(amount, false);
     }
 
-    default String getRefinedItemName() {
-        return state().getType().getItemName(display().englishName());
-    }
-
-    default String getMiniRefinedItemName() {
-        return state().getType().getMiniItemName(display().englishName());
-    }
-
-    default String getRefinedBlockName() {
-        return state().getType().getBlockName(display().englishName());
-    }
-
-    default TagKey<Block> getRefinedBlockTag() {
-        return getConventionalBlockTag("%s_blocks");
-    }
-
-    default TagKey<Item> getRefinedItemTag() {
-        return getConventionalItemTag("%s");
-    }
-
-    default TagKey<Item> getMiniRefinedItemTag() {
-        return getConventionalItemTag("%s_mini");
-    }
-
-    default TagKey<Fluid> getRefinedFluidTag() {
-        return getConventionalFluidTag("%s");
-    }
-
-    default void forEachSource(Consumer<ElementSource> fn) {
-        if (hasSources()) {
-            for (ElementSource source : sources()) {
-                fn.accept(source);
-            }
-        }
-    }
-
     default Item getMineralResultItem(World world) {
-        var sources = sources().stream()
-                .filter(ElementSource::hasMineralResult)
-                .toList();
-        return sources.isEmpty()
-                ? state().refinedItem()
-                : sources.get(world.random.nextInt(sources.size())).mineralResultItem();
+        var source = MineralResultHolder.filterAndGet(getSources(), world);
+        return source != null
+                ? source.mineralResultItem()
+                : MineralResultHolder.filterAndGet(getRefinedStates(), world).mineralResultItem(); // empty case covered by exception
     }
 
     default void register(PTRegistry registry, FeatureRequests.Content requests, FeatureRequests.Sources sourceRequests) {
-        if (hasSources()) {
-            for (ElementSource source : sources()) {
-                source.register(registry, elementIds(), sourceRequests.getContent(source.getId()));
+        for (Map.Entry<ElementRefinedState, List<ElementSource>> entry : sourceStateMap().entrySet()) {
+            entry.getKey().register(registry, elementIds(), new ContentContext.State(this), requests);
+            for (ElementSource source : entry.getValue()) {
+                var context = new ContentContext.Source(this, entry.getKey());
+                source.register(registry, elementIds(), context, sourceRequests.getContent(source.getTypeId()));
             }
         }
-        state().register(registry, elementIds(), requests);
         afterRegister();
     }
 
-    private <T> List<T> getValues(Function<ElementSource, List<T>> sourceList, Function<ElementRefinedState, List<T>> stateList) {
-        List<T> sourceBlocks = hasSources()
-                ? sources().stream().flatMap(source -> sourceList.apply(source).stream()).toList()
-                : Collections.emptyList();
-        List<T> result = new ArrayList<>(sourceBlocks);
-        result.addAll(stateList.apply(state()));
-        return result;
+    private <T> List<T> getValues(Function<ContentBase<?>, List<T>> mapper) {
+        return getAllContent().stream()
+                .flatMap(content -> mapper.apply(content).stream())
+                .toList();
     }
 
     @Override
     default List<Block> getBlocks() {
-        return getValues(ElementSource::getBlocks, ElementRefinedState::getBlocks);
+        return getValues(ContentBase::getBlocks);
     }
 
     @Override
     default List<Item> getItems() {
-        return getValues(ElementSource::getItems, ElementRefinedState::getItems);
+        return getValues(ContentBase::getItems);
     }
 }

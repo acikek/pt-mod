@@ -1,7 +1,8 @@
 package com.acikek.pt.core.impl.element;
 
-import com.acikek.pt.core.api.element.Element;
+import com.acikek.pt.core.api.content.ContentContext;
 import com.acikek.pt.core.api.display.ElementDisplay;
+import com.acikek.pt.core.api.element.Element;
 import com.acikek.pt.core.api.refined.ElementRefinedState;
 import com.acikek.pt.core.api.registry.ElementIds;
 import com.acikek.pt.core.api.source.ElementSource;
@@ -9,24 +10,23 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
-import java.util.stream.Stream;
 
 public class ElementImpl implements Element {
 
     private final ElementDisplay names;
     private final ElementIds<String> ids;
-    private final List<ElementSource> sources;
-    private final ElementRefinedState state;
+    private final Map<ElementRefinedState, List<ElementSource>> sourceStateMap;
 
     private boolean registered = false;
 
-    public ElementImpl(ElementDisplay names, List<ElementSource> sources, ElementRefinedState state) {
-        Stream.of(names, state).forEach(Objects::requireNonNull);
+    public ElementImpl(ElementDisplay names, Map<ElementRefinedState, List<ElementSource>> sourceStateMap) {
+        Objects.requireNonNull(names);
+        this.sourceStateMap = sourceStateMap;
+        getAllContent().forEach(Objects::requireNonNull);
         this.names = names;
         this.ids = ElementIds.create(id());
-        this.sources = new ArrayList<>(sources);
-        this.state = state;
     }
 
     public ElementIds<String> elementIds() {
@@ -39,28 +39,24 @@ public class ElementImpl implements Element {
     }
 
     @Override
-    public List<ElementSource> sources() {
-        return sources.stream().toList();
-    }
-
-    @Override
     public void afterRegister() {
         registered = true;
-        state().injectSignature(this);
-        forEachSource(source -> source.injectSignature(this));
+        forEachContent(content -> content.injectSignature(this));
     }
 
     @Override
-    public void addSource(ElementSource source) {
+    public @NotNull Map<ElementRefinedState, List<ElementSource>> sourceStateMap() {
+        return sourceStateMap;
+    }
+
+    @Override
+    public void addSource(ElementSource source, ElementRefinedState toState) {
         if (registered) {
             throw new IllegalStateException("element already registered");
         }
-        sources.add(source);
-    }
-
-    @Override
-    public @NotNull ElementRefinedState state() {
-        return state;
+        var list = sourceStateMap.computeIfAbsent(toState, k -> new ArrayList<>());
+        source.onAdd(new ContentContext.Source(this, toState));
+        list.add(source);
     }
 
     @Override

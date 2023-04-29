@@ -1,52 +1,124 @@
 package com.acikek.pt.core.impl.refined;
 
+import com.acikek.pt.api.request.FeatureRequests;
+import com.acikek.pt.api.request.RequestTypes;
+import com.acikek.pt.core.api.content.ContentContext;
+import com.acikek.pt.core.api.content.PhasedContent;
+import com.acikek.pt.core.api.element.Element;
 import com.acikek.pt.core.api.refined.ElementRefinedState;
-import com.acikek.pt.core.api.refined.RefinedStateType;
+import com.acikek.pt.core.api.refined.RefinedStateTypes;
+import com.acikek.pt.core.api.refined.RefinedStates;
+import com.acikek.pt.core.api.registry.ElementIds;
+import com.acikek.pt.core.api.registry.PTRegistry;
+import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
+import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
 import net.minecraft.block.Block;
-import net.minecraft.fluid.Fluid;
+import net.minecraft.data.client.BlockStateModelGenerator;
 import net.minecraft.item.Item;
+import net.minecraft.registry.tag.TagKey;
+import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.Objects;
+import java.util.function.Function;
+import java.util.function.Supplier;
 import java.util.stream.Stream;
 
 public class BaseRefinedState implements ElementRefinedState {
 
-    private final Item item;
-    private final Item miniItem;
-    private final Block block;
-    private final RefinedStateType type;
+    private final Identifier id;
+    private final PhasedContent<Item> item;
+    private final PhasedContent<Item> miniItem;
+    private final PhasedContent<Block> block;
+    protected final RefinedStateTypes type;
 
-    public BaseRefinedState(Item item, Item miniItem, Block block, RefinedStateType type) {
-        Stream.of(item, miniItem, block, type).forEach(Objects::requireNonNull);
-        this.item = item;
-        this.miniItem = miniItem;
-        this.block = block;
+    public BaseRefinedState(Identifier id, Supplier<Item> item, Supplier<Item> miniItem, Supplier<Block> block, RefinedStateTypes type) {
+        Stream.of(id, item, miniItem, block).forEach(Objects::requireNonNull);
+        this.id = id;
+        this.item = PhasedContent.of(item);
+        this.miniItem = PhasedContent.of(miniItem);
+        this.block = PhasedContent.of(block);
         this.type = type;
     }
 
+    @NotNull
     @Override
-    public @NotNull RefinedStateType getType() {
-        return type;
+    public Identifier getId() {
+        return id;
     }
 
     @Override
-    public @NotNull Item refinedItem() {
-        return item;
+    public @NotNull Identifier getTypeId() {
+        return RefinedStates.BASE;
     }
 
     @Override
-    public @NotNull Item miniRefinedItem() {
-        return miniItem;
+    public void buildTranslations(FabricLanguageProvider.TranslationBuilder builder, Element parent) {
+        String name = parent.display().englishName();
+        builder.add(block.require(), type.getBlockName(name));
+        builder.add(item.require(), type.getItemName(name));
+        builder.add(miniItem.require(), type.getMiniItemName(name));
     }
 
     @Override
-    public @NotNull Block refinedBlock() {
-        return block;
+    public void buildBlockModels(BlockStateModelGenerator generator, Element parent) {
+        type.buildRefinedBlockModel(generator, block.require());
     }
 
     @Override
-    public Fluid refinedFluid() {
-        return null;
+    public void buildBlockTags(Function<TagKey<Block>, FabricTagProvider<Block>.FabricTagBuilder> provider, Element parent) {
+        type.buildRefinedBlockTags(provider, block.require());
+        provider.apply(parent.getConventionalBlockTag("%s_blocks")).add(block.require());
+    }
+
+    @Override
+    public void buildItemTags(Function<TagKey<Item>, FabricTagProvider<Item>.FabricTagBuilder> provider, Element parent) {
+        if (type == RefinedStateTypes.POWDER) {
+            for (String format : List.of("%s_dusts", "%ss")) {
+                provider.apply(parent.getConventionalItemTag(format)).add(item.require());
+            }
+            for (String format : List.of("%s_small_dusts", "%s_tiny_dusts")) {
+                provider.apply(parent.getConventionalItemTag(format)).add(miniItem.require());
+            }
+            return;
+        }
+        for (String format : List.of("%s_ingots", "%s")) {
+            provider.apply(parent.getConventionalItemTag(format)).add(item.require());
+        }
+        for (String format : List.of("%s_nuggets", "%s_mini")) {
+            provider.apply(parent.getConventionalItemTag(format)).add(miniItem.require());
+        }
+    }
+
+    @Override
+    public void register(PTRegistry registry, ElementIds<String> ids, ContentContext.State context, FeatureRequests.Content features) {
+        if (!features.contains(RequestTypes.CONTENT)) {
+            return;
+        }
+        registry.registerItem(ids.getItemId(), item.create());
+        registry.registerItem(ids.getMiniItemId(), miniItem.create());
+        registry.registerBlock(ids.getBlockId(), block.create());
+    }
+
+    @Override
+    public @Nullable Item mineralResultItem() {
+        return item.get();
+    }
+
+    @Override
+    public List<Block> getBlocks() {
+        return block.isCreated()
+                ? Collections.singletonList(block.require())
+                : Collections.emptyList();
+    }
+
+    @Override
+    public List<Item> getItems() {
+        return item.isCreated()
+                ? List.of(item.require(), miniItem.require())
+                : Collections.emptyList();
     }
 }
