@@ -10,8 +10,10 @@ import com.acikek.pt.core.api.refined.RefinedStateType;
 import com.acikek.pt.core.api.refined.RefinedStates;
 import com.acikek.pt.core.api.registry.ElementIds;
 import com.acikek.pt.core.api.registry.PTRegistry;
+import net.fabricmc.fabric.api.datagen.v1.provider.FabricBlockLootTableProvider;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
+import net.fabricmc.fabric.api.resource.conditions.v1.DefaultResourceConditions;
 import net.minecraft.block.Block;
 import net.minecraft.data.client.BlockStateModelGenerator;
 import net.minecraft.item.Item;
@@ -74,6 +76,12 @@ public class BaseRefinedState implements ElementRefinedState {
         var id = Registries.BLOCK.getId(block.require());
         type.buildRefinedBlockTags(provider, id);
         provider.apply(parent.getConventionalBlockTag("%s_blocks")).addOptional(id);
+    }
+
+    @Override
+    public void buildLootTables(FabricBlockLootTableProvider provider, Element parent) {
+        var generator = provider.withConditions(DefaultResourceConditions.itemsRegistered(block.require()));
+        generator.addDrop(block.require());
     }
 
     @Override

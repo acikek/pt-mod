@@ -1,0 +1,28 @@
+{
+  "fabric:load_conditions": [
+    {
+      "condition": "fabric:registry_contains",
+      "values": [
+        "pt:oxygen_block"
+      ]
+    }
+  ],
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "bonus_rolls": 0.0,
+      "conditions": [
+        {
+          "condition": "minecraft:survives_explosion"
+        }
+      ],
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "pt:oxygen_block"
+        }
+      ],
+      "rolls": 1.0
+    }
+  ]
+}
