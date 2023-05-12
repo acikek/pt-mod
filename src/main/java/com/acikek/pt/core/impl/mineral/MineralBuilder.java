@@ -15,66 +15,66 @@ import java.util.Objects;
 import java.util.function.Supplier;
 import java.util.stream.Stream;
 
-public class MineralBlockBuilder {
+public class MineralBuilder {
 
     public static final AbstractBlock.Settings MINERAL_SETTINGS = FabricBlockSettings.of(Material.STONE)
             .requiresTool()
             .sounds(BlockSoundGroup.TUFF)
             .strength(3.0f);
 
-    private AbstractBlock.Settings settings;
-    private Block cluster;
+    private Supplier<Block> block;
+    private Supplier<Block> cluster;
     private boolean hasCluster = false;
-    private Item rawMineral;
+    private Supplier<Item> rawMineral;
     private boolean hasRawMineral = false;
     private MineralDisplay naming;
     private Supplier<List<ElementSignature>> signature;
 
-    public MineralBlockBuilder settings(AbstractBlock.Settings settings) {
-        this.settings = settings;
+    public MineralBuilder block(Supplier<Block> block) {
+        this.block = block;
         return this;
     }
 
-    public MineralBlockBuilder naming(MineralDisplay naming) {
+    public MineralBuilder naming(MineralDisplay naming) {
         this.naming = naming;
         return this;
     }
 
-    public MineralBlockBuilder naming(Object naming) {
+    public MineralBuilder naming(Object naming) {
         return this.naming(MineralDisplay.forObject(naming));
     }
 
-    public MineralBlockBuilder signature(Supplier<List<ElementSignature>> signature) {
+    public MineralBuilder signature(Supplier<List<ElementSignature>> signature) {
         this.signature = signature;
         return this;
     }
 
-    public MineralBlockBuilder addCluster(Block cluster) {
+    public MineralBuilder addCluster(Supplier<Block> cluster) {
         this.cluster = cluster;
         return this;
     }
 
-    public MineralBlockBuilder addCluster() {
+    public MineralBuilder addCluster() {
         hasCluster = true;
         return this;
     }
 
-    public MineralBlockBuilder addRawMineral(Item rawMineral) {
+    public MineralBuilder addRawMineral(Supplier<Item> rawMineral) {
         this.rawMineral = rawMineral;
         return this;
     }
 
-    public MineralBlockBuilder addRawMineral() {
+    public MineralBuilder addRawMineral() {
         hasRawMineral = true;
         return this;
     }
 
-    public MineralBlock build() {
+    public MineralImpl build() {
         Stream.of(naming, signature).forEach(Objects::requireNonNull);
-        return new MineralBlock(
-                settings != null ? settings : MINERAL_SETTINGS,
-                cluster != null ? cluster : hasCluster ? ElementalObjects.createClusterBlock() : null,
-                rawMineral != null ? rawMineral : hasRawMineral ? ElementalObjects.createItem() : null,
+        return new MineralImpl(
+                block != null ? block : () -> new Block(MINERAL_SETTINGS),
+                cluster != null ? cluster : hasCluster ? ElementalObjects::createClusterBlock : null,
+                rawMineral != null ? rawMineral : hasRawMineral ? ElementalObjects::createItem : null,
                 naming, signature
         );
     }

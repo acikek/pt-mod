@@ -2,6 +2,8 @@ package com.acikek.pt.core.impl.mineral;
 
 import com.acikek.pt.api.PTApi;
 import com.acikek.pt.api.request.FeatureRequests;
+import com.acikek.pt.api.request.RequestTypes;
+import com.acikek.pt.core.api.content.PhasedContent;
 import com.acikek.pt.core.api.display.MineralDisplay;
 import com.acikek.pt.core.api.element.Element;
 import com.acikek.pt.core.api.mineral.Mineral;
@@ -11,11 +13,9 @@ import com.acikek.pt.core.api.signature.SignatureHolder;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
 import net.minecraft.block.Block;
-import net.minecraft.client.item.TooltipContext;
 import net.minecraft.data.server.loottable.BlockLootTableGenerator;
 import net.minecraft.enchantment.Enchantments;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
 import net.minecraft.loot.condition.MatchToolLootCondition;
 import net.minecraft.loot.entry.ItemEntry;
 import net.minecraft.loot.entry.LeafEntry;
@@ -29,35 +29,34 @@ import net.minecraft.registry.tag.ItemTags;
 import net.minecraft.registry.tag.TagKey;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
-import net.minecraft.world.BlockView;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.Collections;
 import java.util.List;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
-public class MineralBlock extends Block implements Mineral {
+public class MineralImpl implements Mineral {
 
     private final MineralDisplay naming;
-    private final Block cluster;
-    public final Item rawMineral;
+    private final PhasedContent<Block> block;
+    private final PhasedContent<Block> cluster;
+    public final PhasedContent<Item> rawMineral;
     private Supplier<List<ElementSignature>> resultSupplier;
 
     private List<ElementSignature> results;
     private Text tooltip;
 
-    public MineralBlock(Settings settings, Block cluster, Item rawMineral, MineralDisplay naming, Supplier<List<ElementSignature>> resultSupplier) {
-        super(settings);
+    public MineralImpl(Supplier<Block> block, Supplier<Block> cluster, Supplier<Item> rawMineral, MineralDisplay naming, Supplier<List<ElementSignature>> resultSupplier) {
+        this.block = PhasedContent.of(block);
         if (cluster != null && rawMineral == null) {
             throw new IllegalStateException("mineral clusters must have accompanying raw forms");
         }
         if (naming.rawFormName() == null && rawMineral != null) {
             throw new IllegalStateException("raw mineral must have a unique species name");
         }
-        this.cluster = cluster;
-        this.rawMineral = rawMineral;
+        this.cluster = cluster != null ? PhasedContent.of(cluster) : null;
+        this.rawMineral = rawMineral != null ? PhasedContent.of(rawMineral) : null;
         this.naming = naming;
         this.resultSupplier = resultSupplier;
     }
@@ -69,7 +68,7 @@ public class MineralBlock extends Block implements Mineral {
 
     @Override
     public Item mineralResultItem() {
-        return rawMineral;
+        return rawMineral.get();
     }
 
     @Override
@@ -81,42 +80,48 @@ public class MineralBlock extends Block implements Mineral {
 
     @Override
     public void injectSignature(SignatureHolder holder) {
-        if (cluster != null) {
-            PTApi.injectSignature(cluster, tooltip);
+        if (block.isCreated()) {
+            PTApi.injectSignature(block.require(), tooltip);
         }
-        if (rawMineral != null) {
-            PTApi.injectSignature(rawMineral, tooltip);
+        if (cluster != null && cluster.isCreated()) {
+            PTApi.injectSignature(cluster.require(), tooltip);
+        }
+        if (rawMineral != null && rawMineral.isCreated()) {
+            PTApi.injectSignature(rawMineral.require(), tooltip);
         }
     }
 
     @Override
     public void register(PTRegistry registry, FeatureRequests.Single features) {
-        registry.registerBlock(naming.id(), this);
+        if (!features.contains(RequestTypes.CONTENT)) {
+            return;
+        }
+        registry.registerBlock(naming.id(), block.require());
         if (cluster != null) {
-            registry.registerBlock(naming.id() + "_cluster", cluster);
+            registry.registerBlock(naming.id() + "_cluster", cluster.require());
         }
         if (rawMineral != null) {
-            registry.registerItem(naming.getRawFormId(), rawMineral);
+            registry.registerItem(naming.getRawFormId(), rawMineral.require());
         }
     }
 
     @Override
     public void buildTranslations(FabricLanguageProvider.TranslationBuilder builder, Element parent) {
         String name = display().englishName();
-        builder.add(this, name);
+        builder.add(block.require(), name);
         if (cluster != null) {
-            builder.add(cluster, name + " Cluster");
+            builder.add(cluster.require(), name + " Cluster");
         }
         if (rawMineral != null) {
-            builder.add(rawMineral, name + " " + display().rawFormName());
+            builder.add(rawMineral.require(), name + " " + display().rawFormName());
         }
     }
 
     private void buildMineral(BlockLootTableGenerator generator) {
-        generator.addDrop(this,
-                BlockLootTableGenerator.dropsWithSilkTouch(this,
-                        generator.applyExplosionDecay(this,
-                                ((LeafEntry.Builder<?>) ItemEntry.builder(rawMineral)
+        generator.addDrop(block.require(),
+                BlockLootTableGenerator.dropsWithSilkTouch(block.require(),
+                        generator.applyExplosionDecay(block.require(),
+                                ((LeafEntry.Builder<?>) ItemEntry.builder(rawMineral.require())
                                         .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0f, 3.0f))))
                                         .apply(ApplyBonusLootFunction.uniformBonusCount(Enchantments.FORTUNE))
                         ))
@@ -124,14 +129,14 @@ public class MineralBlock extends Block implements Mineral {
     }
 
     private void buildCluster(BlockLootTableGenerator generator) {
-        generator.addDrop(cluster,
-                BlockLootTableGenerator.dropsWithSilkTouch(cluster,
-                        ((LeafEntry.Builder<?>) ItemEntry.builder(rawMineral)
+        generator.addDrop(cluster.require(),
+                BlockLootTableGenerator.dropsWithSilkTouch(cluster.require(),
+                        ((LeafEntry.Builder<?>) ItemEntry.builder(rawMineral.require())
                                 .apply(SetCountLootFunction.builder(ConstantLootNumberProvider.create(2.0f))))
                                 .apply(ApplyBonusLootFunction.oreDrops(Enchantments.FORTUNE))
                                 .conditionally(MatchToolLootCondition.builder(ItemPredicate.Builder.create().tag(ItemTags.CLUSTER_MAX_HARVESTABLES)))
-                                .alternatively(generator.applyExplosionDecay(cluster,
-                                        ItemEntry.builder(rawMineral)
+                                .alternatively(generator.applyExplosionDecay(cluster.require(),
+                                        ItemEntry.builder(rawMineral.require())
                                                 .apply(SetCountLootFunction.builder(ConstantLootNumberProvider.create(1.0f))))
                                 ))
         );
@@ -140,7 +145,7 @@ public class MineralBlock extends Block implements Mineral {
     @Override
     public void buildLootTables(BlockLootTableGenerator generator, Element parent) {
         if (rawMineral == null) {
-            generator.addDrop(this);
+            generator.addDrop(block.require());
             return;
         }
         buildMineral(generator);
@@ -151,11 +156,11 @@ public class MineralBlock extends Block implements Mineral {
 
     @Override
     public void buildBlockTags(Function<TagKey<Block>, FabricTagProvider<Block>.FabricTagBuilder> provider, Element parent) {
-        provider.apply(BlockTags.PICKAXE_MINEABLE).add(this);
-        provider.apply(BlockTags.NEEDS_IRON_TOOL).add(this);
-        provider.apply(getConventionalBlockTag("%ss")).add(this);
+        provider.apply(BlockTags.PICKAXE_MINEABLE).add(block.require());
+        provider.apply(BlockTags.NEEDS_IRON_TOOL).add(block.require());
+        provider.apply(getConventionalBlockTag("%ss")).add(block.require());
         if (cluster != null) {
-            provider.apply(getConventionalBlockTag("%s_clusters")).add(cluster);
+            provider.apply(getConventionalBlockTag("%s_clusters")).add(cluster.require());
         }
     }
 
@@ -163,7 +168,7 @@ public class MineralBlock extends Block implements Mineral {
     public void buildItemTags(Function<TagKey<Item>, FabricTagProvider<Item>.FabricTagBuilder> provider, Element parent) {
         if (rawMineral != null) {
             for (String formatter : List.of("raw_%ss", "%s_crystals")) {
-                provider.apply(getConventionalItemTag(formatter)).add(rawMineral);
+                provider.apply(getConventionalItemTag(formatter)).add(rawMineral.require());
             }
         }
     }
@@ -174,23 +179,22 @@ public class MineralBlock extends Block implements Mineral {
     }
 
     @Override
-    public void appendTooltip(ItemStack stack, @Nullable BlockView world, List<Text> tooltip, TooltipContext options) {
-        if (this.tooltip != null && options.isAdvanced()) {
-            tooltip.add(this.tooltip);
-        }
-    }
-
-    @Override
     public List<Block> getBlocks() {
+        if (!block.isCreated()) {
+            return Collections.emptyList();
+        }
         return cluster != null
-                ? List.of(this, cluster)
-                : Collections.singletonList(this);
+                ? List.of(block.require(), cluster.require())
+                : Collections.singletonList(block.require());
     }
 
     @Override
     public List<Item> getItems() {
+        if (!block.isCreated()) {
+            return Collections.emptyList();
+        }
         return rawMineral != null
-                ? Collections.singletonList(rawMineral)
+                ? Collections.singletonList(rawMineral.require())
                 : Collections.emptyList();
     }
 }
