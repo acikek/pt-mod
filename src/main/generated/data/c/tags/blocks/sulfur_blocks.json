@@ -1,6 +1,9 @@
 {
   "replace": false,
   "values": [
-    "pt:sulfur_block"
+    {
+      "id": "pt:sulfur_block",
+      "required": false
+    }
   ]
 }

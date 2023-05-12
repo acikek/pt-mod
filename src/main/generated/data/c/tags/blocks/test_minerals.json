@@ -1,6 +1,9 @@
 {
   "replace": false,
   "values": [
-    "pt:test_mineral"
+    {
+      "id": "pt:test_mineral",
+      "required": false
+    }
   ]
 }

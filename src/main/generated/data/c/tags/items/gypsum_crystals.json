@@ -1,6 +1,9 @@
 {
   "replace": false,
   "values": [
-    "pt:gypsum_crystal"
+    {
+      "id": "pt:gypsum_crystal",
+      "required": false
+    }
   ]
 }

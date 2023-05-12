@@ -20,8 +20,9 @@ public class PTBuiltin implements PTPlugin {
 
     @Override
     public void requestFeatures(RequestEvent event) {
-        event.minerals().submit(PeriodicTable.STIBNITE, RequestTypes.CONTENT);
+        event.all();
+        /*event.minerals().submit(PeriodicTable.STIBNITE, RequestTypes.CONTENT);
         event.states().submit(PeriodicTable.ANTIMONY, RefinedStates.BASE, RequestTypes.CONTENT);
-        event.sources().submit(PeriodicTable.ANTIMONY, ElementSources.MINERAL, RequestTypes.CONTENT);
+        event.sources().submit(PeriodicTable.ANTIMONY, ElementSources.MINERAL, RequestTypes.CONTENT);*/
     }
 }

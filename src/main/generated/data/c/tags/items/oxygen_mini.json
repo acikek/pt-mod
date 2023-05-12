@@ -1,6 +1,9 @@
 {
   "replace": false,
   "values": [
-    "pt:oxygen_mini"
+    {
+      "id": "pt:oxygen_mini",
+      "required": false
+    }
   ]
 }

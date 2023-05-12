@@ -1,19 +1,61 @@
 {
   "replace": false,
   "values": [
-    "pt:hydrogen_block",
-    "pt:helium_block",
-    "pt:lithium_block",
-    "pt:lithiophilite",
-    "pt:beryllium_block",
-    "pt:test_mineral",
-    "pt:oxygen_block",
-    "pt:gypsum",
-    "pt:antimony_block",
-    "pt:stibnite",
-    "pt:platinum_block",
-    "pt:platinum_source_block",
-    "pt:platinum_source_deepslate",
-    "pt:osmium_block"
+    {
+      "id": "pt:hydrogen_block",
+      "required": false
+    },
+    {
+      "id": "pt:helium_block",
+      "required": false
+    },
+    {
+      "id": "pt:lithium_block",
+      "required": false
+    },
+    {
+      "id": "pt:lithiophilite",
+      "required": false
+    },
+    {
+      "id": "pt:beryllium_block",
+      "required": false
+    },
+    {
+      "id": "pt:test_mineral",
+      "required": false
+    },
+    {
+      "id": "pt:oxygen_block",
+      "required": false
+    },
+    {
+      "id": "pt:gypsum",
+      "required": false
+    },
+    {
+      "id": "pt:antimony_block",
+      "required": false
+    },
+    {
+      "id": "pt:stibnite",
+      "required": false
+    },
+    {
+      "id": "pt:platinum_block",
+      "required": false
+    },
+    {
+      "id": "pt:platinum_source_block",
+      "required": false
+    },
+    {
+      "id": "pt:platinum_source_deepslate",
+      "required": false
+    },
+    {
+      "id": "pt:osmium_block",
+      "required": false
+    }
   ]
 }

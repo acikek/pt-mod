@@ -14,6 +14,7 @@ import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
 import net.minecraft.block.Block;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.item.Item;
+import net.minecraft.registry.Registries;
 import net.minecraft.registry.tag.TagKey;
 import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.NotNull;
@@ -45,7 +46,7 @@ public class FluidRefinedState extends BaseRefinedState {
 
     @Override
     public void buildFluidTags(Function<TagKey<Fluid>, FabricTagProvider<Fluid>.FabricTagBuilder> provider, Element parent) {
-        provider.apply(parent.getConventionalFluidTag("%s")).add(fluid.require());
+        provider.apply(parent.getConventionalFluidTag("%s")).addOptional(Registries.FLUID.getId(fluid.require()));
     }
 
     @Override

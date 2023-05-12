@@ -12,6 +12,7 @@ import net.minecraft.registry.tag.BlockTags;
 import net.minecraft.registry.tag.TagKey;
 import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.state.StateManager;
+import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Objects;
@@ -98,10 +99,10 @@ public enum RefinedStateType {
         }
     }
 
-    public void buildRefinedBlockTags(Function<TagKey<Block>, FabricTagProvider<Block>.FabricTagBuilder> provider, Block block) {
+    public void buildRefinedBlockTags(Function<TagKey<Block>, FabricTagProvider<Block>.FabricTagBuilder> provider, Identifier id) {
         if (this != POWDER) {
-            provider.apply(BlockTags.PICKAXE_MINEABLE).add(block);
-            provider.apply(this == TRACE ? BlockTags.NEEDS_STONE_TOOL : BlockTags.NEEDS_IRON_TOOL).add(block);
+            provider.apply(BlockTags.PICKAXE_MINEABLE).addOptional(id);
+            provider.apply(this == TRACE ? BlockTags.NEEDS_STONE_TOOL : BlockTags.NEEDS_IRON_TOOL).addOptional(id);
         }
     }
 }

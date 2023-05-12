@@ -24,6 +24,7 @@ import net.minecraft.loot.function.SetCountLootFunction;
 import net.minecraft.loot.provider.number.ConstantLootNumberProvider;
 import net.minecraft.loot.provider.number.UniformLootNumberProvider;
 import net.minecraft.predicate.item.ItemPredicate;
+import net.minecraft.registry.Registries;
 import net.minecraft.registry.tag.BlockTags;
 import net.minecraft.registry.tag.ItemTags;
 import net.minecraft.registry.tag.TagKey;
@@ -96,12 +97,12 @@ public class MineralImpl implements Mineral {
         if (!features.contains(RequestTypes.CONTENT)) {
             return;
         }
-        registry.registerBlock(naming.id(), block.require());
+        registry.registerBlock(naming.id(), block.create());
         if (cluster != null) {
-            registry.registerBlock(naming.id() + "_cluster", cluster.require());
+            registry.registerBlock(naming.id() + "_cluster", cluster.create());
         }
         if (rawMineral != null) {
-            registry.registerItem(naming.getRawFormId(), rawMineral.require());
+            registry.registerItem(naming.getRawFormId(), rawMineral.create());
         }
     }
 
@@ -156,11 +157,12 @@ public class MineralImpl implements Mineral {
 
     @Override
     public void buildBlockTags(Function<TagKey<Block>, FabricTagProvider<Block>.FabricTagBuilder> provider, Element parent) {
-        provider.apply(BlockTags.PICKAXE_MINEABLE).add(block.require());
-        provider.apply(BlockTags.NEEDS_IRON_TOOL).add(block.require());
-        provider.apply(getConventionalBlockTag("%ss")).add(block.require());
+        var id = Registries.BLOCK.getId(block.require());
+        provider.apply(BlockTags.PICKAXE_MINEABLE).addOptional(id);
+        provider.apply(BlockTags.NEEDS_IRON_TOOL).addOptional(id);
+        provider.apply(getConventionalBlockTag("%ss")).addOptional(id);
         if (cluster != null) {
-            provider.apply(getConventionalBlockTag("%s_clusters")).add(cluster.require());
+            provider.apply(getConventionalBlockTag("%s_clusters")).addOptional(Registries.BLOCK.getId(cluster.require()));
         }
     }
 
@@ -168,7 +170,7 @@ public class MineralImpl implements Mineral {
     public void buildItemTags(Function<TagKey<Item>, FabricTagProvider<Item>.FabricTagBuilder> provider, Element parent) {
         if (rawMineral != null) {
             for (String formatter : List.of("raw_%ss", "%s_crystals")) {
-                provider.apply(getConventionalItemTag(formatter)).add(rawMineral.require());
+                provider.apply(getConventionalItemTag(formatter)).addOptional(Registries.ITEM.getId(rawMineral.require()));
             }
         }
     }

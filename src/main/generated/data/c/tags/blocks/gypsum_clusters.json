@@ -1,6 +1,9 @@
 {
   "replace": false,
   "values": [
-    "pt:gypsum_cluster"
+    {
+      "id": "pt:gypsum_cluster",
+      "required": false
+    }
   ]
 }

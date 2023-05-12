@@ -15,6 +15,7 @@ import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
 import net.minecraft.block.Block;
 import net.minecraft.data.client.BlockStateModelGenerator;
 import net.minecraft.item.Item;
+import net.minecraft.registry.Registries;
 import net.minecraft.registry.tag.TagKey;
 import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.NotNull;
@@ -70,26 +71,19 @@ public class BaseRefinedState implements ElementRefinedState {
 
     @Override
     public void buildBlockTags(Function<TagKey<Block>, FabricTagProvider<Block>.FabricTagBuilder> provider, Element parent) {
-        type.buildRefinedBlockTags(provider, block.require());
-        provider.apply(parent.getConventionalBlockTag("%s_blocks")).add(block.require());
+        var id = Registries.BLOCK.getId(block.require());
+        type.buildRefinedBlockTags(provider, id);
+        provider.apply(parent.getConventionalBlockTag("%s_blocks")).addOptional(id);
     }
 
     @Override
     public void buildItemTags(Function<TagKey<Item>, FabricTagProvider<Item>.FabricTagBuilder> provider, Element parent) {
-        if (type == RefinedStateType.POWDER) {
-            for (String format : List.of("%s_dusts", "%ss")) {
-                provider.apply(parent.getConventionalItemTag(format)).add(item.require());
-            }
-            for (String format : List.of("%s_small_dusts", "%s_tiny_dusts")) {
-                provider.apply(parent.getConventionalItemTag(format)).add(miniItem.require());
-            }
-            return;
+        boolean powder = type == RefinedStateType.POWDER;
+        for (String format : (powder ? List.of("%s_dusts", "%ss") : List.of("%s_ingots", "%s"))) {
+            provider.apply(parent.getConventionalItemTag(format)).addOptional(Registries.ITEM.getId(item.require()));
         }
-        for (String format : List.of("%s_ingots", "%s")) {
-            provider.apply(parent.getConventionalItemTag(format)).add(item.require());
-        }
-        for (String format : List.of("%s_nuggets", "%s_mini")) {
-            provider.apply(parent.getConventionalItemTag(format)).add(miniItem.require());
+        for (String format : (powder ? List.of("%s_small_dusts", "%s_tiny_dusts") : List.of("%s_nuggets", "%s_mini"))) {
+            provider.apply(parent.getConventionalItemTag(format)).addOptional(Registries.ITEM.getId(miniItem.require()));
         }
     }
 

@@ -14,6 +14,7 @@ import net.fabricmc.fabric.api.mininglevel.v1.MiningLevelManager;
 import net.minecraft.block.Block;
 import net.minecraft.data.server.loottable.BlockLootTableGenerator;
 import net.minecraft.item.Item;
+import net.minecraft.registry.Registries;
 import net.minecraft.registry.tag.BlockTags;
 import net.minecraft.registry.tag.TagKey;
 import net.minecraft.util.Identifier;
@@ -83,16 +84,20 @@ public class OreSource extends UndergroundSource {
 
     @Override
     public void buildBlockTags(Function<TagKey<Block>, FabricTagProvider<Block>.FabricTagBuilder> provider, Element parent) {
-        provider.apply(parent.getConventionalBlockTag("%s_ores")).add(ore.require(), deepslateOre.require());
-        provider.apply(MiningLevelManager.getBlockTag(miningLevel)).add(ore.require(), deepslateOre.require());
-        provider.apply(parent.getConventionalBlockTag("raw_%s_blocks")).add(rawBlock.require());
-        provider.apply(BlockTags.NEEDS_STONE_TOOL).add(rawBlock.require());
-        provider.apply(BlockTags.PICKAXE_MINEABLE).add(ore.require(), deepslateOre.require(), rawBlock.require());
+        var ore = Registries.BLOCK.getId(this.ore.require());
+        var deepslate = Registries.BLOCK.getId(deepslateOre.require());
+        var raw = Registries.BLOCK.getId(rawBlock.require());
+        provider.apply(parent.getConventionalBlockTag("%s_ores")).addOptional(ore).addOptional(deepslate);
+        provider.apply(MiningLevelManager.getBlockTag(miningLevel)).addOptional(ore).addOptional(deepslate);
+        provider.apply(parent.getConventionalBlockTag("raw_%s_blocks")).addOptional(raw);
+        provider.apply(BlockTags.NEEDS_STONE_TOOL).addOptional(raw);
+        provider.apply(BlockTags.PICKAXE_MINEABLE).addOptional(ore).addOptional(deepslate).addOptional(raw);
     }
 
     @Override
     public void buildItemTags(Function<TagKey<Item>, FabricTagProvider<Item>.FabricTagBuilder> provider, Element parent) {
-        provider.apply(parent.getConventionalItemTag("raw_%s_ores")).add(rawItem.require());
+        provider.apply(parent.getConventionalItemTag("raw_%s_ores"))
+                .addOptional(Registries.ITEM.getId(rawItem.require()));
     }
 
     @Override

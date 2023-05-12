@@ -1,6 +1,9 @@
 {
   "replace": false,
   "values": [
-    "pt:lithium"
+    {
+      "id": "pt:lithium",
+      "required": false
+    }
   ]
 }

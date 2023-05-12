@@ -1,6 +1,9 @@
 {
   "replace": false,
   "values": [
-    "pt:helium"
+    {
+      "id": "pt:helium",
+      "required": false
+    }
   ]
 }

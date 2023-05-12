@@ -1,6 +1,9 @@
 {
   "replace": false,
   "values": [
-    "pt:lithiophilite"
+    {
+      "id": "pt:lithiophilite",
+      "required": false
+    }
   ]
 }

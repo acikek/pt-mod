@@ -1,6 +1,9 @@
 {
   "replace": false,
   "values": [
-    "pt:platinum_raw_block"
+    {
+      "id": "pt:platinum_raw_block",
+      "required": false
+    }
   ]
 }

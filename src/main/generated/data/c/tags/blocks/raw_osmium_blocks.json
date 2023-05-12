@@ -1,6 +1,9 @@
 {
   "replace": false,
   "values": [
-    "pt:osmium_raw_block"
+    {
+      "id": "pt:osmium_raw_block",
+      "required": false
+    }
   ]
 }

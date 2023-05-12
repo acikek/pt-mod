@@ -1,6 +1,9 @@
 {
   "replace": false,
   "values": [
-    "pt:helium_mini"
+    {
+      "id": "pt:helium_mini",
+      "required": false
+    }
   ]
 }

@@ -1,6 +1,9 @@
 {
   "replace": false,
   "values": [
-    "pt:sulfur_mini"
+    {
+      "id": "pt:sulfur_mini",
+      "required": false
+    }
   ]
 }
