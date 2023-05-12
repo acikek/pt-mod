@@ -3,7 +3,9 @@ package com.acikek.pt.api.datagen;
 import com.acikek.pt.api.impl.datagen.PTDatagenImpl;
 import com.acikek.pt.core.api.AbstractPeriodicTable;
 import com.acikek.pt.core.api.element.Element;
+import net.fabricmc.fabric.api.datagen.v1.provider.FabricBlockLootTableProvider;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
+import net.fabricmc.fabric.api.datagen.v1.provider.FabricLootTableProvider;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
 import net.minecraft.block.Block;
 import net.minecraft.data.client.BlockStateModelGenerator;
@@ -48,12 +50,12 @@ public class PTDatagenApi {
         table.forEachElement(element -> buildItemModelsForElement(generator, element));
     }
 
-    public static void buildLootTablesForElement(BlockLootTableGenerator generator, Element element) {
-        PTDatagenImpl.buildLootTablesForElement(generator, element);
+    public static void buildLootTablesForElement(FabricBlockLootTableProvider provider, Element element) {
+        PTDatagenImpl.buildLootTablesForElement(provider, element);
     }
 
-    public static void buildLootTables(BlockLootTableGenerator generator, AbstractPeriodicTable table) {
-        table.forEachElement(element -> buildLootTablesForElement(generator, element));
+    public static void buildLootTables(FabricBlockLootTableProvider provider, AbstractPeriodicTable table) {
+        table.forEachElement(element -> buildLootTablesForElement(provider, element));
     }
 
     public static void buildBlockTagsForElement(Function<TagKey<Block>, FabricTagProvider<Block>.FabricTagBuilder> provider, Element element) {

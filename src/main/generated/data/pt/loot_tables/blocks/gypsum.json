@@ -1,4 +1,12 @@
 {
+  "fabric:load_conditions": [
+    {
+      "condition": "fabric:registry_contains",
+      "values": [
+        "pt:gypsum"
+      ]
+    }
+  ],
   "type": "minecraft:block",
   "pools": [
     {

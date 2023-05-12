@@ -9,16 +9,18 @@ import com.acikek.pt.core.api.registry.PTRegistry;
 import com.acikek.pt.core.api.signature.ElementSignatureEntry;
 import com.acikek.pt.core.api.signature.SignatureHolder;
 import com.acikek.pt.core.api.source.ElementSources;
+import net.fabricmc.fabric.api.datagen.v1.provider.FabricBlockLootTableProvider;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
 import net.minecraft.block.Block;
-import net.minecraft.data.server.loottable.BlockLootTableGenerator;
 import net.minecraft.item.Item;
 import net.minecraft.registry.tag.TagKey;
 import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 import java.util.function.Function;
 
 public class MineralSource extends UndergroundSource {
@@ -79,8 +81,8 @@ public class MineralSource extends UndergroundSource {
     }
 
     @Override
-    public void buildLootTables(BlockLootTableGenerator generator, Element parent) {
-        mineral.buildLootTables(generator, parent);
+    public void buildLootTables(FabricBlockLootTableProvider provider, Element parent) {
+        mineral.buildLootTables(provider, parent);
     }
 
     @Override

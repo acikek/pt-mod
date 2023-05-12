@@ -2,7 +2,9 @@ package com.acikek.pt.api.datagen;
 
 import com.acikek.pt.core.api.element.Element;
 import com.acikek.pt.core.api.source.MaterialHolder;
+import net.fabricmc.fabric.api.datagen.v1.provider.FabricBlockLootTableProvider;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
+import net.fabricmc.fabric.api.datagen.v1.provider.FabricLootTableProvider;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
 import net.minecraft.block.Block;
 import net.minecraft.data.client.BlockStateModelGenerator;
@@ -33,7 +35,7 @@ public interface DatagenDelegator extends MaterialHolder {
         }
     }
 
-    default void buildLootTables(BlockLootTableGenerator generator, Element parent) {
+    default void buildLootTables(FabricBlockLootTableProvider provider, Element parent) {
         // Empty
     }
 

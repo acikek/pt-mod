@@ -10,8 +10,10 @@ import com.acikek.pt.core.api.mineral.Mineral;
 import com.acikek.pt.core.api.registry.PTRegistry;
 import com.acikek.pt.core.api.signature.ElementSignature;
 import com.acikek.pt.core.api.signature.SignatureHolder;
+import net.fabricmc.fabric.api.datagen.v1.provider.FabricBlockLootTableProvider;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
+import net.fabricmc.fabric.api.resource.conditions.v1.DefaultResourceConditions;
 import net.minecraft.block.Block;
 import net.minecraft.data.server.loottable.BlockLootTableGenerator;
 import net.minecraft.enchantment.Enchantments;
@@ -144,7 +146,8 @@ public class MineralImpl implements Mineral {
     }
 
     @Override
-    public void buildLootTables(BlockLootTableGenerator generator, Element parent) {
+    public void buildLootTables(FabricBlockLootTableProvider provider, Element parent) {
+        var generator = provider.withConditions(DefaultResourceConditions.itemsRegistered(block.require()));
         if (rawMineral == null) {
             generator.addDrop(block.require());
             return;

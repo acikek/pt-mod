@@ -1,4 +1,4 @@
-// 1.19.4	2023-05-12T10:21:41.7264489	PT/Tags for minecraft:block
+// 1.19.4	2023-05-12T11:04:06.269646414	PT/Tags for minecraft:block
 51756bdf26f11af7318fbbd7b453ef6f85c8248a data/c/tags/blocks/platinum_ores.json
 dc778485c4e81bff1db8ab6dc4c5250354884e59 data/minecraft/tags/blocks/mineable/pickaxe.json
 d547276cc0ac182c296dfdd45d10505f442ff3f6 data/c/tags/blocks/osmium_blocks.json
@@ -9,10 +9,10 @@ d547276cc0ac182c296dfdd45d10505f442ff3f6 data/c/tags/blocks/osmium_blocks.json
 950131c032ecaf3865032ddcbc691d1e90374b60 data/c/tags/blocks/gypsums.json
 e18075960510cbdb722d7ed373d0a124f191af83 data/c/tags/blocks/osmium_ores.json
 236787ea44670fdb4d0ebcb9f0351fdd6fffa18e data/minecraft/tags/blocks/needs_stone_tool.json
-bf19f920079bc26910a22e80f4ff5de6d3da5472 data/c/tags/blocks/lithiophilites.json
 d5dd637240d4f7bd60aac8a003153c431b7a5b28 data/c/tags/blocks/lithium_blocks.json
-e1919af64048df8d8f85c98c71a645ff951c60a1 data/c/tags/blocks/stibnite_clusters.json
+bf19f920079bc26910a22e80f4ff5de6d3da5472 data/c/tags/blocks/lithiophilites.json
 ac3323f8eaa5ffd0453973fc9aa19f802b1116f1 data/c/tags/blocks/hydrogen_blocks.json
+e1919af64048df8d8f85c98c71a645ff951c60a1 data/c/tags/blocks/stibnite_clusters.json
 32338eb919e8d1e8f88f635215dab194203a830b data/c/tags/blocks/gypsum_clusters.json
 bb9239cd4a4fa4a386e546811ef2fb43ad3d45d7 data/c/tags/blocks/stibnites.json
 e6f93b7faf330101d3374fccf8c9d6492d6858f4 data/c/tags/blocks/oxygen_blocks.json

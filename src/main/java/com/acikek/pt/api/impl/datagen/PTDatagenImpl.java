@@ -3,11 +3,14 @@ package com.acikek.pt.api.impl.datagen;
 import com.acikek.pt.api.datagen.DatagenDelegator;
 import com.acikek.pt.block.ModBlocks;
 import com.acikek.pt.core.api.element.Element;
+import net.fabricmc.fabric.api.datagen.v1.provider.FabricBlockLootTableProvider;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
 import net.minecraft.block.Block;
-import net.minecraft.data.client.*;
-import net.minecraft.data.server.loottable.BlockLootTableGenerator;
+import net.minecraft.data.client.BlockStateModelGenerator;
+import net.minecraft.data.client.ItemModelGenerator;
+import net.minecraft.data.client.TextureKey;
+import net.minecraft.data.client.TextureMap;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.item.Item;
 import net.minecraft.registry.tag.TagKey;
@@ -36,8 +39,8 @@ public class PTDatagenImpl {
         delegate(DatagenDelegator::buildItemModels, itemModelGenerator, element);
     }
 
-    public static void buildLootTablesForElement(BlockLootTableGenerator generator, Element element) {
-        delegate(DatagenDelegator::buildLootTables, generator, element);
+    public static void buildLootTablesForElement(FabricBlockLootTableProvider provider, Element element) {
+        delegate(DatagenDelegator::buildLootTables, provider, element);
     }
 
     public static void buildBlockTagsForElement(Function<TagKey<Block>, FabricTagProvider<Block>.FabricTagBuilder> provider, Element element) {

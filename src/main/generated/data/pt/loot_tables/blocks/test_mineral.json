@@ -1,4 +1,12 @@
 {
+  "fabric:load_conditions": [
+    {
+      "condition": "fabric:registry_contains",
+      "values": [
+        "pt:test_mineral"
+      ]
+    }
+  ],
   "type": "minecraft:block",
   "pools": [
     {

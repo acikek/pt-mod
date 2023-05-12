@@ -7,6 +7,7 @@ import com.acikek.pt.core.api.registry.ElementIds;
 import com.acikek.pt.core.api.registry.PTRegistry;
 import com.acikek.pt.core.api.source.ElementSource;
 import com.acikek.pt.core.api.source.ElementSources;
+import net.fabricmc.fabric.api.datagen.v1.provider.FabricBlockLootTableProvider;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
 import net.minecraft.block.Block;
 import net.minecraft.data.server.loottable.BlockLootTableGenerator;
@@ -47,7 +48,7 @@ public class AtmosphericSource implements ElementSource {
     }
 
     @Override
-    public void buildLootTables(BlockLootTableGenerator generator, Element parent) {
+    public void buildLootTables(FabricBlockLootTableProvider provider, Element parent) {
         // Empty
     }
 

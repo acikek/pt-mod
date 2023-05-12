@@ -8,9 +8,11 @@ import com.acikek.pt.core.api.registry.PTRegistry;
 import com.acikek.pt.core.api.content.PhasedContent;
 import com.acikek.pt.core.api.source.ElementSources;
 import com.acikek.pt.api.request.RequestTypes;
+import net.fabricmc.fabric.api.datagen.v1.provider.FabricBlockLootTableProvider;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
 import net.fabricmc.fabric.api.mininglevel.v1.MiningLevelManager;
+import net.fabricmc.fabric.api.resource.conditions.v1.DefaultResourceConditions;
 import net.minecraft.block.Block;
 import net.minecraft.data.server.loottable.BlockLootTableGenerator;
 import net.minecraft.item.Item;
@@ -75,7 +77,8 @@ public class OreSource extends UndergroundSource {
     }
 
     @Override
-    public void buildLootTables(BlockLootTableGenerator generator, Element parent) {
+    public void buildLootTables(FabricBlockLootTableProvider provider, Element parent) {
+        var generator = provider.withConditions(DefaultResourceConditions.itemsRegistered(ore.require()));
         for (Block block : List.of(ore.require(), deepslateOre.require())) {
             generator.addDrop(block, b -> generator.oreDrops(b, rawItem.require()));
         }
