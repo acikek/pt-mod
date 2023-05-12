@@ -1,8 +1,7 @@
-package com.acikek.pt.api.impl.request;
+package com.acikek.pt.api.impl.request.event;
 
-import com.acikek.pt.api.request.ContentRequestEvent;
+import com.acikek.pt.api.request.event.ContentRequestEvent;
 import com.acikek.pt.api.request.FeatureRequests;
-import com.acikek.pt.core.api.AbstractPeriodicTable;
 import com.acikek.pt.core.api.element.Element;
 import net.minecraft.util.Identifier;
 

@@ -10,11 +10,16 @@ import com.acikek.pt.core.api.mineral.Mineral;
 import com.acikek.pt.core.api.registry.PTRegistry;
 import com.acikek.pt.core.api.signature.ElementSignature;
 import com.acikek.pt.core.api.signature.SignatureHolder;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
+import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricBlockLootTableProvider;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
 import net.fabricmc.fabric.api.resource.conditions.v1.DefaultResourceConditions;
 import net.minecraft.block.Block;
+import net.minecraft.client.render.RenderLayer;
+import net.minecraft.data.client.BlockStateModelGenerator;
 import net.minecraft.data.server.loottable.BlockLootTableGenerator;
 import net.minecraft.enchantment.Enchantments;
 import net.minecraft.item.Item;
@@ -109,6 +114,22 @@ public class MineralImpl implements Mineral {
     }
 
     @Override
+    @Environment(EnvType.CLIENT)
+    public void initClient() {
+        if (cluster != null && cluster.isCreated()) {
+            BlockRenderLayerMap.INSTANCE.putBlock(cluster.require(), RenderLayer.getCutout());
+        }
+    }
+
+    @Override
+    public void buildBlockModels(BlockStateModelGenerator generator, Element parent) {
+        generator.registerSimpleCubeAll(block.require());
+        if (cluster != null) {
+            generator.registerAmethyst(cluster.require());
+        }
+    }
+
+    @Override
     public void buildTranslations(FabricLanguageProvider.TranslationBuilder builder, Element parent) {
         String name = display().englishName();
         builder.add(block.require(), name);
@@ -160,12 +181,14 @@ public class MineralImpl implements Mineral {
 
     @Override
     public void buildBlockTags(Function<TagKey<Block>, FabricTagProvider<Block>.FabricTagBuilder> provider, Element parent) {
-        var id = Registries.BLOCK.getId(block.require());
-        provider.apply(BlockTags.PICKAXE_MINEABLE).addOptional(id);
-        provider.apply(BlockTags.NEEDS_IRON_TOOL).addOptional(id);
-        provider.apply(getConventionalBlockTag("%ss")).addOptional(id);
+        var mineral = Registries.BLOCK.getId(block.require());
+        provider.apply(BlockTags.PICKAXE_MINEABLE).addOptional(mineral);
+        provider.apply(BlockTags.NEEDS_IRON_TOOL).addOptional(mineral);
+        provider.apply(getConventionalBlockTag("%ss")).addOptional(mineral);
         if (cluster != null) {
-            provider.apply(getConventionalBlockTag("%s_clusters")).addOptional(Registries.BLOCK.getId(cluster.require()));
+            var cluster = Registries.BLOCK.getId(this.cluster.require());
+            provider.apply(BlockTags.PICKAXE_MINEABLE).addOptional(cluster);
+            provider.apply(getConventionalBlockTag("%s_clusters")).addOptional(cluster);
         }
     }
 

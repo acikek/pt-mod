@@ -1,4 +1,4 @@
-// 1.19.4	2023-05-12T11:04:06.270549271	PT/Model Definitions
+// 1.19.4	2023-05-12T11:58:59.13995449	PT/Model Definitions
 6bc450adbdbf97f33e7cdcf0d51186f5e6fddb53 assets/pt/models/item/hydrogen_mini.json
 7450c0a0343acd0244980a05cf6ee7f962a1c661 assets/pt/models/item/lithium_mini.json
 a68cddc21a994d45589c4fa47bfd8f51a0259f16 assets/pt/blockstates/osmium_raw_block.json
@@ -14,9 +14,8 @@ eaec4d8493a1f24fe02bf7348a67895508e59f3e assets/pt/blockstates/osmium_source_blo
 a880da78ec9b8c2b41e1184c919d106e2c4cc62f assets/pt/models/block/osmium_source_block.json
 7604c30ff072fc32126de1476deebb16023b2683 assets/pt/models/item/antimony_block.json
 bcf0c025411aecfd56e9c24e31c54da8bfe0a934 assets/pt/models/block/lithiophilite.json
-84c2ddae812a424c233d2797a771d9037fc9d780 assets/pt/models/item/gypsum_cluster.json
-d400804ad4c9539359c3a05b0787ac5dae6785bc assets/pt/models/block/beryllium_block.json
 05a07378786745eff5a3131b33758e79702e9b08 assets/pt/models/item/platinum_raw_block.json
+d400804ad4c9539359c3a05b0787ac5dae6785bc assets/pt/models/block/beryllium_block.json
 2a0e6a4abbff8ceae2fa9627dc1d98970b868fc8 assets/pt/blockstates/beryllium_block.json
 b81685d348f8d8c09601640be9ad7743941227b4 assets/pt/models/item/hydrogen_block.json
 6d28983d564ec3ca513f49cc5edc95b6bf8cc429 assets/pt/models/item/lithium_block.json
@@ -32,7 +31,7 @@ d7cca9bb514a106ca895335f28eab6d6f0b49fd1 assets/pt/models/item/helium_block.json
 0d1ad4500c2ad7538cd9214d33a7e1453823eb41 assets/pt/models/item/platinum.json
 9cef743f7e68db94c81f598c6b090746e0a935e8 assets/pt/models/item/platinum_source_block.json
 50bf793edf503ab87256cb6c244486085abdbd5c assets/pt/blockstates/platinum_source_deepslate.json
-b2b441a660f82c3638075cec90c42bdb01b73597 assets/pt/blockstates/stibnite_cluster.json
+3319c396e58630686e3d2efd41f327960a2ee270 assets/pt/blockstates/stibnite_cluster.json
 adc62f33eb2a9bd7a38831ba85a5d0d75e4dd066 assets/pt/blockstates/platinum_block.json
 a588f9fa377a52d2fe94cc5b794fe1393e138281 assets/pt/models/block/empty_sack.json
 e549d027d51e86adfd49a60056c5a18110af8594 assets/pt/blockstates/empty_sack.json
@@ -57,8 +56,8 @@ fc48f4dba203924fdaab0b07caf4de8e58c0052a assets/pt/blockstates/antimony_block.js
 dfffa045455f280367a5a720edab5fd196815955 assets/pt/models/block/gypsum.json
 c4d054e69b2bf026979abf21ce5a9462509920b1 assets/pt/models/item/lithium.json
 d9badce4e6f3dfea07c9ac7bf20b7d36fd28c214 assets/pt/models/item/sulfur_mini.json
-3df256c31f2dbfe80061ec8962c39458155a8729 assets/pt/blockstates/gypsum_cluster.json
 a1fc769352969bddf7f9899fcef39a406d796c17 assets/pt/blockstates/helium_block.json
+e3ee8720b2a849eb5d04d64e7a7cceee38c89977 assets/pt/blockstates/gypsum_cluster.json
 9572d97368886fdaa699f9fafae0dec399b4ce94 assets/pt/models/item/helium_mini.json
 49e84461698f82a05da815244cead4946a684cec assets/pt/blockstates/osmium_block.json
 26231ac15efbf8af19f02154beb605aab392e001 assets/pt/models/item/beryllium_block.json
@@ -73,10 +72,9 @@ f963f84ba7ad39c90e4c39e98cd0dbf1897ec304 assets/pt/models/item/platinum_mini.jso
 11ea01d687ed8e089f985828ffac174311b8649a assets/pt/blockstates/gypsum.json
 12b537a34ed720e3c972de0c4c299aa7513a2412 assets/pt/models/item/stibnite.json
 3754a3f1aed9a0b7a23ac4ded94fd38050fa1f87 assets/pt/models/item/osmium.json
-74f6779c3ffa1781f119b15c996b21a4f048eeec assets/pt/models/block/gypsum_cluster.json
+14e1b15d36bb55e1cf47339d069993fedfbe207e assets/pt/models/block/gypsum_cluster.json
 a59028a6d959980486a536c471b6b19264c11038 assets/pt/models/block/platinum_raw_block.json
-0420a874531a895e5a677ac6400fd44ff7705744 assets/pt/models/item/stibnite_cluster.json
-13e1253377eed0609e989a73ccb91928b55dc868 assets/pt/models/block/stibnite_cluster.json
+13f897f08feedb1ca768d73efb5f4df2727db0d6 assets/pt/models/block/stibnite_cluster.json
 3a5f0aed67ab4af9d948a39a1427f88663367d82 assets/pt/models/item/platinum_block.json
 73fb40aa9225dfc48ed43c41164be52aa0826413 assets/pt/models/item/gypsum_crystal.json
 4f791fe2b72d3d1f5dbb4dabd59145c3d0f20cc0 assets/pt/models/block/platinum_source_block.json

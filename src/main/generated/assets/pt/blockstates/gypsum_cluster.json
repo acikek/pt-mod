@@ -1,7 +1,30 @@
 {
   "variants": {
-    "": {
+    "facing=down": {
+      "model": "pt:block/gypsum_cluster",
+      "x": 180
+    },
+    "facing=east": {
+      "model": "pt:block/gypsum_cluster",
+      "x": 90,
+      "y": 90
+    },
+    "facing=north": {
+      "model": "pt:block/gypsum_cluster",
+      "x": 90
+    },
+    "facing=south": {
+      "model": "pt:block/gypsum_cluster",
+      "x": 90,
+      "y": 180
+    },
+    "facing=up": {
       "model": "pt:block/gypsum_cluster"
+    },
+    "facing=west": {
+      "model": "pt:block/gypsum_cluster",
+      "x": 90,
+      "y": 270
     }
   }
 }

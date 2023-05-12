@@ -1,6 +1,6 @@
-// 1.19.4	2023-05-12T11:04:06.269646414	PT/Tags for minecraft:block
+// 1.19.4	2023-05-12T11:58:59.139222509	PT/Tags for minecraft:block
 51756bdf26f11af7318fbbd7b453ef6f85c8248a data/c/tags/blocks/platinum_ores.json
-dc778485c4e81bff1db8ab6dc4c5250354884e59 data/minecraft/tags/blocks/mineable/pickaxe.json
+118be48b741c504bc517c10d764ff9004a2fc80c data/minecraft/tags/blocks/mineable/pickaxe.json
 d547276cc0ac182c296dfdd45d10505f442ff3f6 data/c/tags/blocks/osmium_blocks.json
 9ca4cdd67bd1437721f0b6815cd8685574e298cf data/c/tags/blocks/beryllium_blocks.json
 87067efa85aa2d4d0d5ed2a809ae36a1c7b5c630 data/c/tags/blocks/raw_osmium_blocks.json

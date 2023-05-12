@@ -34,11 +34,19 @@
       "required": false
     },
     {
+      "id": "pt:gypsum_cluster",
+      "required": false
+    },
+    {
       "id": "pt:antimony_block",
       "required": false
     },
     {
       "id": "pt:stibnite",
+      "required": false
+    },
+    {
+      "id": "pt:stibnite_cluster",
       "required": false
     },
     {

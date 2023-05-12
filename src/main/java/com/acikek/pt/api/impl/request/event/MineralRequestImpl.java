@@ -1,8 +1,7 @@
-package com.acikek.pt.api.impl.request;
+package com.acikek.pt.api.impl.request.event;
 
 import com.acikek.pt.api.request.FeatureRequests;
-import com.acikek.pt.api.request.MineralRequestEvent;
-import com.acikek.pt.core.api.AbstractPeriodicTable;
+import com.acikek.pt.api.request.event.MineralRequestEvent;
 import com.acikek.pt.core.api.mineral.Mineral;
 import net.minecraft.util.Identifier;
 

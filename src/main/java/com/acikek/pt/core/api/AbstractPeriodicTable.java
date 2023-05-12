@@ -1,12 +1,14 @@
 package com.acikek.pt.core.api;
 
 import com.acikek.pt.PT;
-import com.acikek.pt.api.request.RequestEvent;
+import com.acikek.pt.api.request.event.RequestEvent;
 import com.acikek.pt.core.api.content.ContentContext;
 import com.acikek.pt.core.api.element.Element;
 import com.acikek.pt.core.api.mineral.Mineral;
 import com.acikek.pt.core.api.registry.PTRegistry;
 import com.google.common.collect.ImmutableMap;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 
@@ -85,5 +87,11 @@ public abstract class AbstractPeriodicTable implements CompoundHolder {
     public void register(RequestEvent event) {
         forEachMineral(mineral -> mineral.register(registry, event.minerals().getRequests(mineral)));
         forEachElement(element -> element.register(registry, event.states().getRequests(element), event.sources().getRequests(element)));
+    }
+
+    @Environment(EnvType.CLIENT)
+    public void initClient() {
+        forEachMineral(Mineral::initClient);
+        forEachElement(Element::initClient);
     }
 }

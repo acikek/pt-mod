@@ -1,12 +1,12 @@
 package com.acikek.pt.api.impl;
 
-import com.acikek.pt.api.impl.request.RequestEventImpl;
+import com.acikek.pt.api.impl.request.event.RequestEventImpl;
 import com.acikek.pt.api.plugin.PTPlugin;
-import com.acikek.pt.api.request.RequestEvent;
+import com.acikek.pt.api.request.event.RequestEvent;
 import com.acikek.pt.core.api.AbstractPeriodicTable;
-import com.acikek.pt.core.api.PeriodicTable;
 import com.google.common.base.Suppliers;
 import com.google.common.collect.ImmutableList;
+import net.fabricmc.api.EnvType;
 import net.fabricmc.loader.api.FabricLoader;
 
 import java.util.ArrayList;
@@ -40,6 +40,11 @@ public class PTLoading {
         System.out.println(event);
         for (AbstractPeriodicTable table : tables) {
             table.register(event);
+        }
+        if (FabricLoader.getInstance().getEnvironmentType() == EnvType.CLIENT) {
+            for (AbstractPeriodicTable table : tables) {
+                table.initClient();
+            }
         }
     }
 }

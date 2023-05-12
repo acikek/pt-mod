@@ -2,7 +2,7 @@ package com.acikek.pt.core.api.content;
 
 import com.acikek.pt.api.datagen.DatagenDelegator;
 import com.acikek.pt.api.request.FeatureRequests;
-import com.acikek.pt.api.request.RequestEvent;
+import com.acikek.pt.api.request.event.RequestEvent;
 import com.acikek.pt.core.api.AbstractPeriodicTable;
 import com.acikek.pt.core.api.element.Element;
 import com.acikek.pt.core.api.mineral.MineralResultHolder;
@@ -10,6 +10,8 @@ import com.acikek.pt.core.api.registry.ElementIds;
 import com.acikek.pt.core.api.registry.PTRegistry;
 import com.acikek.pt.core.api.source.ElementSource;
 import com.acikek.pt.core.api.source.ElementSources;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.NotNull;
 
@@ -62,13 +64,13 @@ public interface ContentBase<T extends ContentContext> extends DatagenDelegator,
      */
     void register(PTRegistry registry, ElementIds<String> ids, T context, FeatureRequests.Single features);
 
-    /*static List<ElementSource> forObject(Object obj) {
-        if (obj instanceof ElementSource source) {
-            return List.of(source);
-        }
-        if (obj instanceof List<?> list) {
-            return (List<ElementSource>) list;
-        }
-        throw new IllegalStateException("ElementSource list can only be derived from an actual list or a single instance");
-    }*/
+    /**
+     * Initializes content on the client <b>after</b>
+     * {@link ContentBase#register(PTRegistry, ElementIds, ContentContext, FeatureRequests.Single)} has been called
+     * on the common side.
+     */
+    @Environment(EnvType.CLIENT)
+    default void initClient(T context) {
+        // Empty
+    }
 }

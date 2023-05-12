@@ -23,7 +23,7 @@ public class ElementalObjects {
     private static final AbstractBlock.Settings CLUSTER_SETTINGS = FabricBlockSettings.of(Material.AMETHYST)
             .sounds(BlockSoundGroup.AMETHYST_CLUSTER)
             .nonOpaque()
-            .strength(2.0f);
+            .strength(1.5f);
 
     private static final AbstractBlock.Settings RAW_BLOCK_SETTINGS = FabricBlockSettings.of(Material.STONE)
             .requiresTool()

@@ -1,6 +1,6 @@
 package com.acikek.pt.api.plugin;
 
-import com.acikek.pt.api.request.RequestEvent;
+import com.acikek.pt.api.request.event.RequestEvent;
 import com.acikek.pt.core.api.AbstractPeriodicTable;
 
 import java.util.Collection;

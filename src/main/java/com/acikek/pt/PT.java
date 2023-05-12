@@ -44,10 +44,7 @@ public class PT implements ModInitializer {
         registerArtPack();
 
         ItemGroupEvents.modifyEntriesEvent(ITEM_GROUP_BLOCKS).register(entries -> {
-            PeriodicTable.INSTANCE.getBlocks().forEach(block -> {
-                System.out.println(block + " " + block.asItem().getDefaultStack().isEmpty());
-                entries.add(block);
-            });
+            PeriodicTable.INSTANCE.getBlocks().forEach(entries::add);
             entries.add(ModBlocks.EMPTY_SACK);
         });
         ItemGroupEvents.modifyEntriesEvent(ITEM_GROUP_ITEMS).register(entries -> PeriodicTable.INSTANCE.getItems().forEach(entries::add));

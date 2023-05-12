@@ -1,6 +1,6 @@
 {
-  "parent": "minecraft:block/cube_all",
+  "parent": "minecraft:block/cross",
   "textures": {
-    "all": "pt:block/gypsum_cluster"
+    "cross": "pt:block/gypsum_cluster"
   }
 }

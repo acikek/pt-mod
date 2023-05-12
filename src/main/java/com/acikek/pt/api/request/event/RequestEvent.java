@@ -1,4 +1,4 @@
-package com.acikek.pt.api.request;
+package com.acikek.pt.api.request.event;
 
 import com.acikek.pt.core.api.AbstractPeriodicTable;
 import com.acikek.pt.core.api.PeriodicTable;

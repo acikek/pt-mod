@@ -16,6 +16,8 @@ import com.acikek.pt.core.api.signature.SignatureHolder;
 import com.acikek.pt.core.api.signature.Signatures;
 import com.acikek.pt.core.api.source.ElementSource;
 import com.acikek.pt.core.api.source.MaterialHolder;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.text.MutableText;
@@ -25,7 +27,7 @@ import net.minecraft.world.World;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.Map;
+import java.util.function.BiConsumer;
 import java.util.function.Function;
 
 public interface Element extends DisplayHolder<ElementDisplay>, SourceStateMapper, SignatureHolder, MaterialHolder {
@@ -83,16 +85,26 @@ public interface Element extends DisplayHolder<ElementDisplay>, SourceStateMappe
                 : MineralResultHolder.filterAndGet(getRefinedStates(), world).mineralResultItem(); // empty case covered by exception
     }
 
-    default void register(PTRegistry registry, FeatureRequests.Content stateRequests, FeatureRequests.Content sourceRequests) {
-        for (Map.Entry<ElementRefinedState, List<ElementSource>> entry : sourceStateMap().entrySet()) {
-            var stateRequest = stateRequests.getContent(entry.getKey().getTypeId());
-            entry.getKey().register(registry, elementIds(), new ContentContext.State(this), stateRequest);
-            for (ElementSource source : entry.getValue()) {
-                var context = new ContentContext.Source(this, entry.getKey());
-                source.register(registry, elementIds(), context, sourceRequests.getContent(source.getTypeId()));
+    default void mapContent(BiConsumer<ElementRefinedState, ContentContext.State> stateFn, BiConsumer<ElementSource, ContentContext.Source> sourceFn) {
+        for (var entry : sourceStateMap().entrySet()) {
+            stateFn.accept(entry.getKey(), new ContentContext.State(this));
+            for (var source : entry.getValue()) {
+                sourceFn.accept(source, new ContentContext.Source(this, entry.getKey()));
             }
         }
+    }
+
+    default void register(PTRegistry registry, FeatureRequests.Content stateRequests, FeatureRequests.Content sourceRequests) {
+        mapContent(
+                (state, ctx) -> state.register(registry, elementIds(), ctx, stateRequests.getContent(state.getTypeId())),
+                (source, ctx) -> source.register(registry, elementIds(), ctx, sourceRequests.getContent(source.getTypeId()))
+        );
         afterRegister();
+    }
+
+    @Environment(EnvType.CLIENT)
+    default void initClient() {
+        mapContent(ContentBase::initClient, ContentBase::initClient);
     }
 
     private <T> List<T> getValues(Function<ContentBase<?>, List<T>> mapper) {
