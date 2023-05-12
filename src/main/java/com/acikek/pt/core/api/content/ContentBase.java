@@ -60,7 +60,7 @@ public interface ContentBase<T extends ContentContext> extends DatagenDelegator,
      * @param ids the ID util from the parent {@link Element}
      * @param features features requested from this content type by the {@link RequestEvent}
      */
-    void register(PTRegistry registry, ElementIds<String> ids, T context, FeatureRequests.Content features);
+    void register(PTRegistry registry, ElementIds<String> ids, T context, FeatureRequests.Single features);
 
     /*static List<ElementSource> forObject(Object obj) {
         if (obj instanceof ElementSource source) {

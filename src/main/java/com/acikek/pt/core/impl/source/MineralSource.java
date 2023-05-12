@@ -64,7 +64,7 @@ public class MineralSource extends UndergroundSource {
     }
 
     @Override
-    public void register(PTRegistry registry, ElementIds<String> ids, ContentContext.Source context, FeatureRequests.Content features) {
+    public void register(PTRegistry registry, ElementIds<String> ids, ContentContext.Source context, FeatureRequests.Single features) {
         // TODO
     }
 

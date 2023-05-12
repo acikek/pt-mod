@@ -6,14 +6,42 @@ import java.util.*;
 
 public class FeatureRequests<T> {
 
-    public static class Content extends FeatureRequests<List<Identifier>> {
+    public static class Single extends FeatureRequests<List<Identifier>> {
 
-        public Content(boolean all, List<Identifier> requests) {
+        public Single(boolean all, List<Identifier> requests) {
+            super(all, requests);
+        }
+
+        private static Single emptyWithAll(boolean all) {
+            return new Single(all, new ArrayList<>());
+        }
+
+        public static Single empty() {
+            return emptyWithAll(false);
+        }
+
+        public static Single useAll() {
+            return emptyWithAll(true);
+        }
+
+        public boolean contains(Identifier type) {
+            return all() || requests().contains(type);
+        }
+
+        @Override
+        public String toString() {
+            return "Single" + getString();
+        }
+    }
+
+    public static class Content extends FeatureRequests<Map<Identifier, Single>> {
+
+        public Content(boolean all, Map<Identifier, Single> requests) {
             super(all, requests);
         }
 
         private static Content emptyWithAll(boolean all) {
-            return new Content(all, new ArrayList<>());
+            return new Content(all, new HashMap<>());
         }
 
         public static Content empty() {
@@ -24,32 +52,14 @@ public class FeatureRequests<T> {
             return emptyWithAll(true);
         }
 
-        public boolean contains(Identifier type) {
-            return all() || requests().contains(type);
-        }
-    }
-
-    public static class Sources extends FeatureRequests<Map<Identifier, Content>> {
-
-        public Sources(boolean all, Map<Identifier, Content> requests) {
-            super(all, requests);
+        public Single getContent(Identifier sourceId) {
+            var content = requests().getOrDefault(sourceId, Single.empty());
+            return new Single(all() || content.all(), content.requests());
         }
 
-        private static Sources emptyWithAll(boolean all) {
-            return new Sources(all, new HashMap<>());
-        }
-
-        public static Sources empty() {
-            return emptyWithAll(false);
-        }
-
-        public static Sources useAll() {
-            return emptyWithAll(true);
-        }
-
-        public Content getContent(Identifier sourceId) {
-            var content = requests().getOrDefault(sourceId, Content.empty());
-            return new Content(all() || content.all(), content.requests());
+        @Override
+        public String toString() {
+            return "Content" + getString();
         }
     }
 
@@ -67,5 +77,9 @@ public class FeatureRequests<T> {
 
     public T requests() {
         return requests;
+    }
+
+    protected String getString() {
+        return "{" + (all ? "all" : "requests=" + requests.toString()) + "}";
     }
 }

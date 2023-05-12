@@ -6,7 +6,7 @@ import com.acikek.pt.core.api.content.ContentContext;
 import com.acikek.pt.core.api.content.PhasedContent;
 import com.acikek.pt.core.api.element.Element;
 import com.acikek.pt.core.api.refined.ElementRefinedState;
-import com.acikek.pt.core.api.refined.RefinedStateTypes;
+import com.acikek.pt.core.api.refined.RefinedStateType;
 import com.acikek.pt.core.api.refined.RefinedStates;
 import com.acikek.pt.core.api.registry.ElementIds;
 import com.acikek.pt.core.api.registry.PTRegistry;
@@ -33,9 +33,9 @@ public class BaseRefinedState implements ElementRefinedState {
     private final PhasedContent<Item> item;
     private final PhasedContent<Item> miniItem;
     private final PhasedContent<Block> block;
-    protected final RefinedStateTypes type;
+    protected final RefinedStateType type;
 
-    public BaseRefinedState(Identifier id, Supplier<Item> item, Supplier<Item> miniItem, Supplier<Block> block, RefinedStateTypes type) {
+    public BaseRefinedState(Identifier id, Supplier<Item> item, Supplier<Item> miniItem, Supplier<Block> block, RefinedStateType type) {
         Stream.of(id, item, miniItem, block).forEach(Objects::requireNonNull);
         this.id = id;
         this.item = PhasedContent.of(item);
@@ -76,7 +76,7 @@ public class BaseRefinedState implements ElementRefinedState {
 
     @Override
     public void buildItemTags(Function<TagKey<Item>, FabricTagProvider<Item>.FabricTagBuilder> provider, Element parent) {
-        if (type == RefinedStateTypes.POWDER) {
+        if (type == RefinedStateType.POWDER) {
             for (String format : List.of("%s_dusts", "%ss")) {
                 provider.apply(parent.getConventionalItemTag(format)).add(item.require());
             }
@@ -94,7 +94,7 @@ public class BaseRefinedState implements ElementRefinedState {
     }
 
     @Override
-    public void register(PTRegistry registry, ElementIds<String> ids, ContentContext.State context, FeatureRequests.Content features) {
+    public void register(PTRegistry registry, ElementIds<String> ids, ContentContext.State context, FeatureRequests.Single features) {
         if (!features.contains(RequestTypes.CONTENT)) {
             return;
         }

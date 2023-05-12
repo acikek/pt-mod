@@ -16,7 +16,7 @@ public interface Mineral extends DisplayHolder<MineralDisplay>, DatagenDelegator
 
     void init();
 
-    void register(PTRegistry registry, FeatureRequests.Content requests);
+    void register(PTRegistry registry, FeatureRequests.Single requests);
 
     default List<ElementSignatureEntry> getAllResultEntries() {
         return signature().stream()

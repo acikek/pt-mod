@@ -83,7 +83,7 @@ public abstract class AbstractPeriodicTable implements CompoundHolder {
     }
 
     public void register(RequestEvent event) {
-        forEachMineral(mineral -> mineral.register(registry, event.getRequestsForMineral(mineral)));
-        forEachElement(element -> element.register(registry, event.getRequestsForElement(element), event.getSourceRequestsForElement(element)));
+        forEachMineral(mineral -> mineral.register(registry, event.minerals().getRequests(mineral)));
+        forEachElement(element -> element.register(registry, event.states().getRequests(element), event.sources().getRequests(element)));
     }
 }

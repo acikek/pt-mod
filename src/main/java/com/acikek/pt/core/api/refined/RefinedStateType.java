@@ -17,7 +17,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Objects;
 import java.util.function.Function;
 
-public enum RefinedStateTypes {
+public enum RefinedStateType {
 
     METAL("Block of %s", "%s Ingot", "%s Nugget", null, Material.METAL, BlockSoundGroup.METAL),
     GAS("%s Tank", "Compressed %s", "%s Cell", 3.0f, Material.GLASS, BlockSoundGroup.GLASS),
@@ -32,7 +32,7 @@ public enum RefinedStateTypes {
     private final Material material;
     private final BlockSoundGroup sounds;
 
-    RefinedStateTypes(String blockFormat, String itemFormat, String miniItemFormat, Float defaultStrength, Material material, BlockSoundGroup sounds) {
+    RefinedStateType(String blockFormat, String itemFormat, String miniItemFormat, Float defaultStrength, Material material, BlockSoundGroup sounds) {
         this.blockFormat = blockFormat;
         this.itemFormat = itemFormat;
         this.miniItemFormat = miniItemFormat;

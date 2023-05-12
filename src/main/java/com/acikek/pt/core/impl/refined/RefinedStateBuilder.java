@@ -2,7 +2,7 @@ package com.acikek.pt.core.impl.refined;
 
 import com.acikek.pt.core.api.element.ElementalObjects;
 import com.acikek.pt.core.api.refined.ElementRefinedState;
-import com.acikek.pt.core.api.refined.RefinedStateTypes;
+import com.acikek.pt.core.api.refined.RefinedStateType;
 import net.minecraft.block.Block;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.item.Item;
@@ -17,7 +17,7 @@ public class RefinedStateBuilder {
     private Supplier<Item> miniItem;
     private Supplier<Block> block;
     private Supplier<Fluid> fluid;
-    private RefinedStateTypes type;
+    private RefinedStateType type;
 
     public RefinedStateBuilder id(Identifier id) {
         this.id = id;
@@ -34,7 +34,7 @@ public class RefinedStateBuilder {
         return this;
     }
 
-    public RefinedStateBuilder type(RefinedStateTypes type) {
+    public RefinedStateBuilder type(RefinedStateType type) {
         this.type = type;
         return this;
     }
@@ -44,12 +44,12 @@ public class RefinedStateBuilder {
         return this;
     }
 
-    public RefinedStateBuilder block(RefinedStateTypes type, Float strength) {
+    public RefinedStateBuilder block(RefinedStateType type, Float strength) {
         this.type(type);
         return block(() -> type.createBlock(strength));
     }
 
-    public RefinedStateBuilder block(RefinedStateTypes type) {
+    public RefinedStateBuilder block(RefinedStateType type) {
         return block(type, null);
     }
 
@@ -61,6 +61,7 @@ public class RefinedStateBuilder {
     public ElementRefinedState build() {
         Supplier<Item> item = this.item != null ? this.item : ElementalObjects::createItem;
         Supplier<Item> miniItem = this.miniItem != null ? this.miniItem : ElementalObjects::createItem;
+        //System.out.println(item + " " + miniItem + " " + block + " " + id);
         return fluid != null
                 ? new FluidRefinedState(id, item, miniItem, block, fluid)
                 : new BaseRefinedState(id, item, miniItem, block, type);

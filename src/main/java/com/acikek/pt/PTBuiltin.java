@@ -19,7 +19,6 @@ public class PTBuiltin implements PTPlugin {
 
     @Override
     public void requestFeatures(RequestEvent event) {
-        event.submit(PeriodicTable.ANTIMONY, ElementSources.ORE, RequestTypes.CONTENT);
-        PTPlugin.super.requestFeatures(event);
+        event.sources().submit(PeriodicTable.ANTIMONY, ElementSources.ORE, RequestTypes.CONTENT);
     }
 }

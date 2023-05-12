@@ -53,7 +53,7 @@ public class OreSource extends UndergroundSource {
     }
 
     @Override
-    public void register(PTRegistry registry, ElementIds<String> ids, ContentContext.Source context, FeatureRequests.Content features) {
+    public void register(PTRegistry registry, ElementIds<String> ids, ContentContext.Source context, FeatureRequests.Single features) {
         if (!features.contains(RequestTypes.CONTENT)) {
             return;
         }

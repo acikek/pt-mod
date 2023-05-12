@@ -83,9 +83,10 @@ public interface Element extends DisplayHolder<ElementDisplay>, SourceStateMappe
                 : MineralResultHolder.filterAndGet(getRefinedStates(), world).mineralResultItem(); // empty case covered by exception
     }
 
-    default void register(PTRegistry registry, FeatureRequests.Content requests, FeatureRequests.Sources sourceRequests) {
+    default void register(PTRegistry registry, FeatureRequests.Content stateRequests, FeatureRequests.Content sourceRequests) {
         for (Map.Entry<ElementRefinedState, List<ElementSource>> entry : sourceStateMap().entrySet()) {
-            entry.getKey().register(registry, elementIds(), new ContentContext.State(this), requests);
+            var stateRequest = stateRequests.getContent(entry.getKey().getTypeId());
+            entry.getKey().register(registry, elementIds(), new ContentContext.State(this), stateRequest);
             for (ElementSource source : entry.getValue()) {
                 var context = new ContentContext.Source(this, entry.getKey());
                 source.register(registry, elementIds(), context, sourceRequests.getContent(source.getTypeId()));

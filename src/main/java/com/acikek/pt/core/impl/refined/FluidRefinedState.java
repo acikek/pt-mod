@@ -5,7 +5,7 @@ import com.acikek.pt.api.request.RequestTypes;
 import com.acikek.pt.core.api.content.ContentContext;
 import com.acikek.pt.core.api.content.PhasedContent;
 import com.acikek.pt.core.api.element.Element;
-import com.acikek.pt.core.api.refined.RefinedStateTypes;
+import com.acikek.pt.core.api.refined.RefinedStateType;
 import com.acikek.pt.core.api.refined.RefinedStates;
 import com.acikek.pt.core.api.registry.ElementIds;
 import com.acikek.pt.core.api.registry.PTRegistry;
@@ -27,7 +27,7 @@ public class FluidRefinedState extends BaseRefinedState {
     private final PhasedContent<Fluid> fluid;
 
     public FluidRefinedState(Identifier id, Supplier<Item> item, Supplier<Item> miniItem, Supplier<Block> block, Supplier<Fluid> fluid) {
-        super(id, item, miniItem, block, RefinedStateTypes.FLUID);
+        super(id, item, miniItem, block, RefinedStateType.FLUID);
         Objects.requireNonNull(fluid);
         this.fluid = PhasedContent.of(fluid);
     }
@@ -49,7 +49,7 @@ public class FluidRefinedState extends BaseRefinedState {
     }
 
     @Override
-    public void register(PTRegistry registry, ElementIds<String> ids, ContentContext.State context, FeatureRequests.Content features) {
+    public void register(PTRegistry registry, ElementIds<String> ids, ContentContext.State context, FeatureRequests.Single features) {
         super.register(registry, ids, context, features);
         if (features.contains(RequestTypes.CONTENT)) {
             registry.registerFluid(ids.getFluidId(), fluid.create());

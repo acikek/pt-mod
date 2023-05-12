@@ -6,6 +6,8 @@ import net.minecraft.util.Identifier;
 
 public class RefinedStates {
 
+    public static final Identifier MAIN = PT.id("main");
+
     public static final Identifier BASE = PT.id("base");
     public static final Identifier FLUID = PT.id("fluid");
 
@@ -13,35 +15,67 @@ public class RefinedStates {
         return new RefinedStateBuilder();
     }
 
-    public static ElementRefinedState fromType(RefinedStateTypes type, Float strength) {
-        return builder().block(type, strength).build();
+    public static ElementRefinedState fromType(Identifier id, RefinedStateType type, Float strength) {
+        return builder().id(id).block(type, strength).build();
     }
 
-    public static ElementRefinedState fromType(RefinedStateTypes type) {
+    public static ElementRefinedState fromType(RefinedStateType type, Float strength) {
+        return fromType(MAIN, type, strength);
+    }
+
+    public static ElementRefinedState fromType(Identifier id, RefinedStateType type) {
+        return fromType(id, type, null);
+    }
+
+    public static ElementRefinedState fromType(RefinedStateType type) {
         return fromType(type, null);
     }
 
+    public static ElementRefinedState metal(Identifier id, float strength) {
+        return fromType(id, RefinedStateType.METAL, strength);
+    }
+
     public static ElementRefinedState metal(float strength) {
-        return fromType(RefinedStateTypes.METAL, strength);
+        return metal(MAIN, strength);
+    }
+
+    public static ElementRefinedState gas(Identifier id) {
+        return fromType(id, RefinedStateType.GAS);
     }
 
     public static ElementRefinedState gas() {
-        return fromType(RefinedStateTypes.GAS);
+        return gas(MAIN);
+    }
+
+    public static ElementRefinedState fluid(Identifier id) {
+        return fromType(id, RefinedStateType.FLUID);
     }
 
     public static ElementRefinedState fluid() {
-        return fromType(RefinedStateTypes.FLUID);
+        return fluid(MAIN);
+    }
+
+    public static ElementRefinedState sack(Identifier id) {
+        return fromType(id, RefinedStateType.POWDER);
     }
 
     public static ElementRefinedState sack() {
-        return fromType(RefinedStateTypes.POWDER);
+        return sack(MAIN);
+    }
+
+    public static ElementRefinedState synthesized(Identifier id) {
+        return fromType(id, RefinedStateType.SYNTHESIZED);
     }
 
     public static ElementRefinedState synthesized() {
-        return fromType(RefinedStateTypes.SYNTHESIZED);
+        return synthesized(MAIN);
+    }
+
+    public static ElementRefinedState trace(Identifier id) {
+        return fromType(id, RefinedStateType.TRACE);
     }
 
     public static ElementRefinedState trace() {
-        return fromType(RefinedStateTypes.TRACE);
+        return trace(MAIN);
     }
 }

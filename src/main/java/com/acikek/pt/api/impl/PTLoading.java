@@ -4,6 +4,7 @@ import com.acikek.pt.api.impl.request.RequestEventImpl;
 import com.acikek.pt.api.plugin.PTPlugin;
 import com.acikek.pt.api.request.RequestEvent;
 import com.acikek.pt.core.api.AbstractPeriodicTable;
+import com.acikek.pt.core.api.PeriodicTable;
 import com.google.common.base.Suppliers;
 import com.google.common.collect.ImmutableList;
 import net.fabricmc.loader.api.FabricLoader;
@@ -36,6 +37,7 @@ public class PTLoading {
         for (PTPlugin loader : plugins) {
             loader.requestFeatures(event);
         }
+        System.out.println(event);
         for (AbstractPeriodicTable table : tables) {
             table.register(event);
         }

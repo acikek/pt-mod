@@ -90,7 +90,7 @@ public class MineralBlock extends Block implements Mineral {
     }
 
     @Override
-    public void register(PTRegistry registry, FeatureRequests.Content features) {
+    public void register(PTRegistry registry, FeatureRequests.Single features) {
         registry.registerBlock(naming.id(), this);
         if (cluster != null) {
             registry.registerBlock(naming.id() + "_cluster", cluster);
