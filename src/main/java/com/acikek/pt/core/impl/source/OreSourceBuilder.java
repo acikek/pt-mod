@@ -25,7 +25,7 @@ public class OreSourceBuilder {
         return this;
     }
 
-    public OreSourceBuilder addRawForms(Object rawItem, Object rawBlock) {
+    public OreSourceBuilder rawItem(Object rawItem) {
         this.rawItem = PhasedContent.from(rawItem, Item.class);
         return this;
     }
@@ -45,7 +45,7 @@ public class OreSourceBuilder {
         return this;
     }
 
-    public ElementSource build() {
+    public ElementSource<?> build() {
         var item = rawItem != null ? rawItem : hasRaw ? PhasedContent.of(ElementalObjects::createItem) : null;
         var block = rawBlock != null ? rawBlock : hasRaw ? PhasedContent.of(ElementalObjects::createRawSourceBlock) : null;
         return new OreSource(

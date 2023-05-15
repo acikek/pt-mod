@@ -23,7 +23,7 @@ import org.jetbrains.annotations.NotNull;
 public interface ContentBase<D, C extends ContentContext> extends DataHolder<D>, DatagenDelegator, MineralResultHolder {
 
     /**
-     * @return an identifier specifying the type of this source.
+     * @return an identifier specifying the type of this content.
      * For example, ore sources return {@link ElementSources#ORE}.
      */
     @NotNull Identifier getTypeId();
@@ -53,7 +53,7 @@ public interface ContentBase<D, C extends ContentContext> extends DataHolder<D>,
 
     /**
      * Called after this content has been added to an element but before registry.
-     * @throws IllegalStateException if {@link ElementSource#isExclusive()} and {@link ElementSource#isAdded(ContentContext)} are both {@code true}.
+     * @throws IllegalStateException if {@link ContentBase#isExclusive()} and {@link ContentBase#isAdded(ContentContext)} are both {@code true}.
      */
     default void onAdd(C context) {
         if (isExclusive() && isAdded(context)) {

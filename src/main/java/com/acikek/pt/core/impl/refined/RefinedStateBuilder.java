@@ -59,11 +59,11 @@ public class RefinedStateBuilder {
         return this;
     }
 
-    public ElementRefinedState build() {
+    public ElementRefinedState<?> build() {
         var item = this.item != null ? this.item : PhasedContent.of(ElementalObjects::createItem);
         var miniItem = this.miniItem != null ? this.miniItem : PhasedContent.of(ElementalObjects::createItem);
         return fluid != null
                 ? new FluidRefinedState(id, item, miniItem, block, fluid)
-                : new BaseRefinedState(id, item, miniItem, block, type);
+                : new BaseRefinedState.Type(id, item, miniItem, block, type);
     }
 }

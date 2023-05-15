@@ -20,23 +20,23 @@ public class ElementSources {
         return new OreSourceBuilder();
     }
 
-    public static ElementSource ore(int miningLevel) {
-        return oreBuilder().miningLevel(miningLevel).build();
+    public static ElementSource<?> ore(int miningLevel) {
+        return oreBuilder().miningLevel(miningLevel).addRawForms().build();
     }
 
-    public static ElementSource wrapOre(Block ore, Block deepslateOre, Item rawItem, Block rawBlock) {
+    public static ElementSource<?> wrapOre(Block ore, Block deepslateOre, Item rawItem, Block rawBlock) {
         return oreBuilder().ore(ore).deepslateOre(deepslateOre).rawItem(rawItem).rawBlock(rawBlock).build();
     }
 
-    public static ElementSource mineral(Mineral mineral) {
-        return new MineralSource(mineral);
+    public static ElementSource<?> mineral(Mineral<?> mineral) {
+        return new MineralSource<>(mineral);
     }
 
-    public static ElementSource atmospheric(Range<Integer> range) {
+    public static ElementSource<?> atmospheric(Range<Integer> range) {
         return new AtmosphericSource(range);
     }
 
-    public static ElementSource atmospheric(int min, int max) {
+    public static ElementSource<?> atmospheric(int min, int max) {
         return atmospheric(Range.between(min, max));
     }
 }

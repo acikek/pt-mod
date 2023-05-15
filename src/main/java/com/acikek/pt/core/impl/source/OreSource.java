@@ -27,6 +27,7 @@ import net.minecraft.registry.tag.TagKey;
 import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.function.Function;
@@ -141,10 +142,11 @@ public class OreSource extends UndergroundSource<SourceData.Ore> {
 
     @Override
     public void buildBlockModels(BlockStateModelGenerator generator, Element parent) {
-        for (var content : List.of(ore, deepslateOre, rawBlock)) {
-            if (content != null) {
-                content.require(generator::registerSimpleCubeAll);
-            }
+        for (var content : List.of(ore, deepslateOre)) {
+            content.require(generator::registerSimpleCubeAll);
+        }
+        if (rawBlock != null) {
+            rawBlock.require(generator::registerSimpleCubeAll);
         }
     }
 
@@ -157,14 +159,19 @@ public class OreSource extends UndergroundSource<SourceData.Ore> {
 
     @Override
     public List<Block> getBlocks() {
-        return created
-                ? List.of(ore.require(), deepslateOre.require(), rawBlock.require())
-                : Collections.emptyList();
+        if (!created) {
+            return Collections.emptyList();
+        }
+        List<Block> result = new ArrayList<>(List.of(ore.require(), deepslateOre.require()));
+        if (rawBlock != null) {
+            result.add(rawBlock.require());
+        }
+        return result;
     }
 
     @Override
     public List<Item> getItems() {
-        return created
+        return created && rawItem != null
                 ? Collections.singletonList(rawItem.require())
                 : Collections.emptyList();
     }

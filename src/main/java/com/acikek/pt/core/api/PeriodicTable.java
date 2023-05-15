@@ -42,7 +42,7 @@ public class PeriodicTable extends AbstractPeriodicTable {
     );
 
     public static final Mineral ANTHRACITE = Minerals.blockWithRawForm(
-            "Anthracite",
+            MineralDisplay.byName("Anthracite", "Coal"),
             () -> List.of(Signatures.amount(PeriodicTable.CARBON, 8).primary().unit(), Signatures.unit(PeriodicTable.OXYGEN, 2), Signatures.unit(PeriodicTable.HYDROGEN))
     );
 
@@ -90,11 +90,11 @@ public class PeriodicTable extends AbstractPeriodicTable {
 
     @Override
     protected List<Mineral> createMinerals() {
-        return List.of(TEST, LITHIOPHILITE, STIBNITE, /*CHRYSOBERYL,*/ GYPSUM);
+        return List.of(TEST, LITHIOPHILITE, COLEMANITE, ANTHRACITE, STIBNITE, /*CHRYSOBERYL,*/ GYPSUM);
     }
 
     @Override
     protected List<Element> createElements() {
-        return List.of(HYDROGEN, HELIUM, LITHIUM, BERYLLIUM, OXYGEN, SULFUR, ANTIMONY, IRON, PLATINUM, OSMIUM);
+        return List.of(HYDROGEN, HELIUM, LITHIUM, BERYLLIUM, BORON, CARBON, OXYGEN, SULFUR, ANTIMONY, IRON, PLATINUM, OSMIUM);
     }
 }

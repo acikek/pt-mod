@@ -15,13 +15,13 @@ public class ElementImpl implements Element {
 
     private final ElementDisplay names;
     private final ElementIds<String> ids;
-    private final Map<ElementRefinedState<?>, List<ElementSource>> sourceStateMap;
+    private final Map<ElementRefinedState<?>, List<ElementSource<?>>> sourceStateMap;
 
     private boolean registered = false;
 
-    public ElementImpl(ElementDisplay names, Map<ElementRefinedState<?>, List<ElementSource>> sourceStateMap) {
+    public ElementImpl(ElementDisplay names, Map<ElementRefinedState<?>, List<ElementSource<?>>> sourceStateMap) {
         Objects.requireNonNull(names);
-        Map<ElementRefinedState<?>, List<ElementSource>> mutableMap = sourceStateMap.entrySet().stream()
+        Map<ElementRefinedState<?>, List<ElementSource<?>>> mutableMap = sourceStateMap.entrySet().stream()
                         .collect(Collectors.toMap(Map.Entry::getKey, entry -> new ArrayList<>(entry.getValue())));
         this.sourceStateMap = new HashMap<>(mutableMap);
         getAllContent().forEach(Objects::requireNonNull);
@@ -45,12 +45,12 @@ public class ElementImpl implements Element {
     }
 
     @Override
-    public @NotNull Map<ElementRefinedState<?>, List<ElementSource>> sourceStateMap() {
+    public @NotNull Map<ElementRefinedState<?>, List<ElementSource<?>>> sourceStateMap() {
         return sourceStateMap;
     }
 
     @Override
-    public void addSource(ElementSource source, ElementRefinedState toState) {
+    public void addSource(ElementSource<?> source, ElementRefinedState<?> toState) {
         if (registered) {
             throw new IllegalStateException("element already registered");
         }
