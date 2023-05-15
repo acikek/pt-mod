@@ -5,9 +5,11 @@ import com.acikek.pt.api.request.RequestTypes;
 import com.acikek.pt.core.api.content.ContentContext;
 import com.acikek.pt.core.api.content.PhasedContent;
 import com.acikek.pt.core.api.element.Element;
+import com.acikek.pt.core.api.refined.ElementRefinedState;
 import com.acikek.pt.core.api.registry.ElementIds;
 import com.acikek.pt.core.api.registry.PTRegistry;
 import com.acikek.pt.core.api.source.ElementSources;
+import com.acikek.pt.core.impl.refined.BaseRefinedState;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricBlockLootTableProvider;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
@@ -37,6 +39,7 @@ public class OreSource extends UndergroundSource {
     private final int miningLevel;
 
     private boolean created = false;
+    private ElementRefinedState state;
 
     public OreSource(PhasedContent<Block> ore, PhasedContent<Block> deepslateOre, PhasedContent<Item> rawItem, PhasedContent<Block> rawBlock, int miningLevel) {
         this.ore = ore;
@@ -63,9 +66,14 @@ public class OreSource extends UndergroundSource {
         }
         ore.create(ore -> registry.registerBlock(ids.getSourceBlockId(), ore));
         deepslateOre.create(ore -> registry.registerBlock(ids.getDeepslateSourceBlockId(), ore));
-        rawItem.create(raw -> registry.registerItem(ids.getRawSourceItemId(), raw));
-        rawBlock.create(raw -> registry.registerBlock(ids.getRawSourceBlockId(), raw));
+        if (rawItem != null) {
+            rawItem.create(raw -> registry.registerItem(ids.getRawSourceItemId(), raw));
+        }
+        if (rawBlock != null) {
+            rawBlock.create(raw -> registry.registerBlock(ids.getRawSourceBlockId(), raw));
+        }
         created = true;
+        state = context.state();
     }
 
     @Override
@@ -73,8 +81,12 @@ public class OreSource extends UndergroundSource {
         String name = parent.display().englishName();
         ore.require(ore -> builder.add(ore, name + "Ore"));
         deepslateOre.require(ore -> builder.add(ore, "Deepslate " + name + " Ore"));
-        rawItem.require(raw -> builder.add(raw, "Raw " + name));
-        rawBlock.require(raw -> builder.add(raw, "Block of Raw " + name));
+        if (rawItem != null) {
+            rawItem.require(raw -> builder.add(raw, "Raw " + name));
+        }
+        if (rawBlock != null) {
+            rawBlock.require(raw -> builder.add(raw, "Block of Raw " + name));
+        }
     }
 
     @Override

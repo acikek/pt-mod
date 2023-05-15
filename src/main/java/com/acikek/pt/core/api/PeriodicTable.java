@@ -1,5 +1,6 @@
 package com.acikek.pt.core.api;
 
+import com.acikek.pt.PT;
 import com.acikek.pt.core.api.display.ElementDisplay;
 import com.acikek.pt.core.api.display.MineralDisplay;
 import com.acikek.pt.core.api.element.Element;
@@ -13,6 +14,7 @@ import net.minecraft.block.Blocks;
 import net.minecraft.item.Items;
 
 import java.util.List;
+import java.util.Map;
 
 public class PeriodicTable extends AbstractPeriodicTable {
 
@@ -34,6 +36,16 @@ public class PeriodicTable extends AbstractPeriodicTable {
             () -> List.of(Signatures.single(PeriodicTable.LITHIUM).primary().unit(), /*Mn,*/ /*P,*/ Signatures.unit(PeriodicTable.OXYGEN))
     );
 
+    public static final Mineral COLEMANITE = Minerals.block(
+            "Colemanite",
+            () -> List.of(/* Ca2, */ Signatures.amount(PeriodicTable.BORON, 6).primary().unit(), Signatures.unit(PeriodicTable.OXYGEN, 11), Signatures.hydrate(5))
+    );
+
+    public static final Mineral ANTHRACITE = Minerals.blockWithRawForm(
+            "Anthracite",
+            () -> List.of(Signatures.amount(PeriodicTable.CARBON, 8).primary().unit(), Signatures.unit(PeriodicTable.OXYGEN, 2), Signatures.unit(PeriodicTable.HYDROGEN))
+    );
+
     public static final Mineral STIBNITE = Minerals.fullBlock(
             MineralDisplay.byName("Stibnite", "Shard"),
             () -> List.of(Signatures.amount(PeriodicTable.ANTIMONY, 2).primary().unit(), Signatures.unit(PeriodicTable.SULFUR, 3))
@@ -53,6 +65,17 @@ public class PeriodicTable extends AbstractPeriodicTable {
     public static final Element HELIUM = Elements.gas("helium", 255, 300);
     public static final Element LITHIUM = Elements.basic("lithium", RefinedStates.metal(1.6f), ElementSources.mineral(LITHIOPHILITE));
     public static final Element BERYLLIUM = Elements.basic("beryllium", RefinedStates.metal(6.5f), ElementSources.mineral(TEST));
+    public static final Element BORON = Elements.basic(ElementDisplay.byId("boron", "B"), RefinedStates.metal(10.0f), ElementSources.mineral(COLEMANITE));
+    public static final Element CARBON = Elements.create(ElementDisplay.byId("carbon", "C"), Map.of(
+            RefinedStates.metal(1.5f), List.of(ElementSources.mineral(ANTHRACITE)),
+            RefinedStates.builder()
+                    .id(PT.id("vanilla"))
+                    .item(Items.COAL)
+                    .block(Blocks.COAL_BLOCK)
+                    .build(),
+            List.of(ElementSources.oreBuilder().ore(Blocks.COAL_ORE).deepslateOre(Blocks.DEEPSLATE_COAL_ORE).build())
+            RefinedStates.wrap(PT.id("vanilla"), Items.COAL, Items.)
+    ));
     public static final Element OXYGEN = Elements.gas(ElementDisplay.byId("oxygen", "O"), 0, 235);
     public static final Element SULFUR = Elements.basic(ElementDisplay.byId("sulfur", "S"), RefinedStates.sack(), ElementSources.mineral(GYPSUM));
     public static final Element ANTIMONY = Elements.basic(ElementDisplay.byId("antimony", "Sb"), RefinedStates.metal(4.0f), ElementSources.mineral(STIBNITE));
