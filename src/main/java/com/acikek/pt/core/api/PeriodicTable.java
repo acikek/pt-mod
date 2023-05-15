@@ -74,7 +74,6 @@ public class PeriodicTable extends AbstractPeriodicTable {
                     .block(Blocks.COAL_BLOCK)
                     .build(),
             List.of(ElementSources.oreBuilder().ore(Blocks.COAL_ORE).deepslateOre(Blocks.DEEPSLATE_COAL_ORE).build())
-            RefinedStates.wrap(PT.id("vanilla"), Items.COAL, Items.)
     ));
     public static final Element OXYGEN = Elements.gas(ElementDisplay.byId("oxygen", "O"), 0, 235);
     public static final Element SULFUR = Elements.basic(ElementDisplay.byId("sulfur", "S"), RefinedStates.sack(), ElementSources.mineral(GYPSUM));

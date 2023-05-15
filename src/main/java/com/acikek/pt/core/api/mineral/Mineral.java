@@ -2,6 +2,7 @@ package com.acikek.pt.core.api.mineral;
 
 import com.acikek.pt.api.datagen.DatagenDelegator;
 import com.acikek.pt.api.request.FeatureRequests;
+import com.acikek.pt.core.api.data.DataHolder;
 import com.acikek.pt.core.api.display.DisplayHolder;
 import com.acikek.pt.core.api.display.MineralDisplay;
 import com.acikek.pt.core.api.registry.PTRegistry;
@@ -12,7 +13,7 @@ import net.minecraft.world.World;
 
 import java.util.List;
 
-public interface Mineral extends DisplayHolder<MineralDisplay>, DatagenDelegator, SignatureHolder, MineralResultHolder {
+public interface Mineral<D> extends DataHolder<D>, DisplayHolder<MineralDisplay>, DatagenDelegator, SignatureHolder, MineralResultHolder {
 
     void init();
 

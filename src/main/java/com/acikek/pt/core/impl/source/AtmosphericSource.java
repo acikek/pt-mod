@@ -19,7 +19,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Collections;
 import java.util.List;
 
-public class AtmosphericSource implements ElementSource {
+public class AtmosphericSource implements ElementSource<Range<Integer>> {
 
     private final Range<Integer> range;
 
@@ -60,5 +60,10 @@ public class AtmosphericSource implements ElementSource {
     @Override
     public List<Item> getItems() {
         return Collections.emptyList();
+    }
+
+    @Override
+    public Range<Integer> getData() {
+        return range;
     }
 }

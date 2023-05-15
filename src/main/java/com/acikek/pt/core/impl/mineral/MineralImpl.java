@@ -6,6 +6,7 @@ import com.acikek.pt.api.request.RequestTypes;
 import com.acikek.pt.core.api.content.PhasedContent;
 import com.acikek.pt.core.api.display.MineralDisplay;
 import com.acikek.pt.core.api.element.Element;
+import com.acikek.pt.core.api.mineral.DefaultMineralData;
 import com.acikek.pt.core.api.mineral.Mineral;
 import com.acikek.pt.core.api.registry.PTRegistry;
 import com.acikek.pt.core.api.signature.ElementSignature;
@@ -46,7 +47,7 @@ import java.util.List;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
-public class MineralImpl implements Mineral {
+public class MineralImpl implements Mineral<DefaultMineralData> {
 
     private final MineralDisplay naming;
     private final PhasedContent<Block> block;
@@ -234,5 +235,14 @@ public class MineralImpl implements Mineral {
         return rawMineral != null
                 ? Collections.singletonList(rawMineral.require())
                 : Collections.emptyList();
+    }
+
+    @Override
+    public DefaultMineralData getData() {
+        return new DefaultMineralData(
+                block.get(),
+                cluster != null ? cluster.get() : null,
+                rawMineral != null ? rawMineral.get() : null
+        );
     }
 }

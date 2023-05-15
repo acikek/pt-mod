@@ -5,7 +5,7 @@ import com.acikek.pt.core.api.content.ContentContext;
 import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.NotNull;
 
-public interface ElementRefinedState extends ContentBase<ContentContext.State> {
+public interface ElementRefinedState<D> extends ContentBase<D, ContentContext.State> {
 
     /**
      * @return the instance-specific identifier for this refined state

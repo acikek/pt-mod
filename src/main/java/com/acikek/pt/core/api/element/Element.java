@@ -85,7 +85,7 @@ public interface Element extends DisplayHolder<ElementDisplay>, SourceStateMappe
                 : MineralResultHolder.filterAndGet(getRefinedStates(), world).mineralResultItem(); // empty case covered by exception
     }
 
-    default void mapContent(BiConsumer<ElementRefinedState, ContentContext.State> stateFn, BiConsumer<ElementSource, ContentContext.Source> sourceFn) {
+    default void mapContent(BiConsumer<ElementRefinedState<?>, ContentContext.State> stateFn, BiConsumer<ElementSource<?>, ContentContext.Source> sourceFn) {
         for (var entry : sourceStateMap().entrySet()) {
             stateFn.accept(entry.getKey(), new ContentContext.State(this));
             for (var source : entry.getValue()) {
@@ -107,7 +107,7 @@ public interface Element extends DisplayHolder<ElementDisplay>, SourceStateMappe
         mapContent(ContentBase::initClient, ContentBase::initClient);
     }
 
-    private <T> List<T> getValues(Function<ContentBase<?>, List<T>> mapper) {
+    private <T> List<T> getValues(Function<ContentBase<?, ?>, List<T>> mapper) {
         return getAllContent().stream()
                 .flatMap(content -> mapper.apply(content).stream())
                 .toList();

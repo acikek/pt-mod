@@ -5,6 +5,7 @@ import com.acikek.pt.api.request.RequestTypes;
 import com.acikek.pt.core.api.content.ContentContext;
 import com.acikek.pt.core.api.content.PhasedContent;
 import com.acikek.pt.core.api.element.Element;
+import com.acikek.pt.core.api.refined.RefinedStateData;
 import com.acikek.pt.core.api.refined.RefinedStateType;
 import com.acikek.pt.core.api.refined.RefinedStates;
 import com.acikek.pt.core.api.registry.ElementIds;
@@ -22,7 +23,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Objects;
 import java.util.function.Function;
 
-public class FluidRefinedState extends BaseRefinedState {
+public class FluidRefinedState extends BaseRefinedState<RefinedStateData.HasFluid> {
 
     private final PhasedContent<Fluid> fluid;
 
@@ -54,5 +55,10 @@ public class FluidRefinedState extends BaseRefinedState {
         if (features.contains(RequestTypes.CONTENT)) {
             fluid.create(fluid -> registry.registerFluid(ids.getFluidId(), fluid));
         }
+    }
+
+    @Override
+    public RefinedStateData.HasFluid getData() {
+        return new RefinedStateData.HasFluid(block.get(), item.get(), miniItem.get(), fluid.get());
     }
 }

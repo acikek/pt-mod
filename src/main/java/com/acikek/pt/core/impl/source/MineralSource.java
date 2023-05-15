@@ -25,13 +25,13 @@ import java.util.List;
 import java.util.Objects;
 import java.util.function.Function;
 
-public class MineralSource extends UndergroundSource {
+public class MineralSource<D> extends UndergroundSource<D> {
 
-    private static final List<Mineral> ADDED = new ArrayList<>();
+    private static final List<Mineral<?>> ADDED = new ArrayList<>();
 
-    private final Mineral mineral;
+    private final Mineral<D> mineral;
 
-    public MineralSource(Mineral mineral) {
+    public MineralSource(Mineral<D> mineral) {
         Objects.requireNonNull(mineral);
         this.mineral = mineral;
     }
@@ -120,5 +120,10 @@ public class MineralSource extends UndergroundSource {
     @Override
     public String toString() {
         return "MineralSource{" + mineral + "}";
+    }
+
+    @Override
+    public D getData() {
+        return mineral.getData();
     }
 }

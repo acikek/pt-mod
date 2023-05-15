@@ -14,5 +14,5 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
-public interface ElementSource extends ContentBase<ContentContext.Source> {
+public interface ElementSource<D> extends ContentBase<D, ContentContext.Source> {
 }

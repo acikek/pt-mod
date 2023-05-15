@@ -4,6 +4,7 @@ import com.acikek.pt.api.datagen.DatagenDelegator;
 import com.acikek.pt.api.request.FeatureRequests;
 import com.acikek.pt.api.request.event.RequestEvent;
 import com.acikek.pt.core.api.AbstractPeriodicTable;
+import com.acikek.pt.core.api.data.DataHolder;
 import com.acikek.pt.core.api.element.Element;
 import com.acikek.pt.core.api.mineral.MineralResultHolder;
 import com.acikek.pt.core.api.registry.ElementIds;
@@ -15,7 +16,11 @@ import net.fabricmc.api.Environment;
 import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.NotNull;
 
-public interface ContentBase<T extends ContentContext> extends DatagenDelegator, MineralResultHolder {
+/**
+ * @param <C> the context type passed to this content in registry requests and callbacks
+ * @param <D> the public data type exposed from implementation details
+ */
+public interface ContentBase<D, C extends ContentContext> extends DataHolder<D>, DatagenDelegator, MineralResultHolder {
 
     /**
      * @return an identifier specifying the type of this source.
@@ -42,15 +47,15 @@ public interface ContentBase<T extends ContentContext> extends DatagenDelegator,
      * @return whether this content has already been added to <b>any</b> element.
      * Can be {@code false} if this information is not relevant.
      */
-    default boolean isAdded(T context) {
+    default boolean isAdded(C context) {
         return false;
     }
 
     /**
      * Called after this content has been added to an element but before registry.
-     * @throws IllegalStateException if {@link ElementSource#isExclusive()} and {@link ElementSource#isAdded(Element)} are both {@code true}.
+     * @throws IllegalStateException if {@link ElementSource#isExclusive()} and {@link ElementSource#isAdded(ContentContext)} are both {@code true}.
      */
-    default void onAdd(T context) {
+    default void onAdd(C context) {
         if (isExclusive() && isAdded(context)) {
             throw new IllegalStateException("exclusive source '" + this + "' is already attached; cannot be added to element '" + context.parent() + "'");
         }
@@ -62,7 +67,7 @@ public interface ContentBase<T extends ContentContext> extends DatagenDelegator,
      * @param ids the ID util from the parent {@link Element}
      * @param features features requested from this content type by the {@link RequestEvent}
      */
-    void register(PTRegistry registry, ElementIds<String> ids, T context, FeatureRequests.Single features);
+    void register(PTRegistry registry, ElementIds<String> ids, C context, FeatureRequests.Single features);
 
     /**
      * Initializes content on the client <b>after</b>
@@ -70,7 +75,7 @@ public interface ContentBase<T extends ContentContext> extends DatagenDelegator,
      * on the common side.
      */
     @Environment(EnvType.CLIENT)
-    default void initClient(T context) {
+    default void initClient(C context) {
         // Empty
     }
 }

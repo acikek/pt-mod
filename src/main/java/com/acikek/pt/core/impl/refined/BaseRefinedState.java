@@ -6,6 +6,7 @@ import com.acikek.pt.core.api.content.ContentContext;
 import com.acikek.pt.core.api.content.PhasedContent;
 import com.acikek.pt.core.api.element.Element;
 import com.acikek.pt.core.api.refined.ElementRefinedState;
+import com.acikek.pt.core.api.refined.RefinedStateData;
 import com.acikek.pt.core.api.refined.RefinedStateType;
 import com.acikek.pt.core.api.refined.RefinedStates;
 import com.acikek.pt.core.api.registry.ElementIds;
@@ -31,12 +32,24 @@ import java.util.Objects;
 import java.util.function.Function;
 import java.util.stream.Stream;
 
-public class BaseRefinedState implements ElementRefinedState {
+public abstract class BaseRefinedState<D> implements ElementRefinedState<D> {
+
+    public static class Type extends BaseRefinedState<RefinedStateData.Base> {
+
+        public Type(Identifier id, PhasedContent<Item> item, PhasedContent<Item> miniItem, PhasedContent<Block> block, RefinedStateType type) {
+            super(id, item, miniItem, block, type);
+        }
+
+        @Override
+        public RefinedStateData.Base getData() {
+            return new RefinedStateData.Base(block.get(), item.get(), miniItem.get());
+        }
+    }
 
     private final Identifier id;
-    private final PhasedContent<Item> item;
-    private final PhasedContent<Item> miniItem;
-    private final PhasedContent<Block> block;
+    protected final PhasedContent<Item> item;
+    protected final PhasedContent<Item> miniItem;
+    protected final PhasedContent<Block> block;
     protected final RefinedStateType type;
 
     public BaseRefinedState(Identifier id, PhasedContent<Item> item, PhasedContent<Item> miniItem, PhasedContent<Block> block, RefinedStateType type) {
