@@ -1,11 +1,11 @@
 package com.acikek.pt.core.api.content;
 
-import com.acikek.pt.core.api.source.ElementSource;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Objects;
 import java.util.Optional;
+import java.util.function.Consumer;
 import java.util.function.Supplier;
 
 /**
@@ -32,8 +32,8 @@ import java.util.function.Supplier;
  */
 public class PhasedContent<T> {
 
-    private Supplier<T> supplier;
-    private Optional<T> value = Optional.empty();
+    protected Supplier<T> supplier;
+    protected Optional<T> value = Optional.empty();
 
     private PhasedContent(Supplier<T> supplier) {
         this.supplier = supplier;
@@ -46,6 +46,36 @@ public class PhasedContent<T> {
     public static <T> PhasedContent<T> of(@NotNull Supplier<T> supplier) {
         Objects.requireNonNull(supplier);
         return new PhasedContent<>(supplier);
+    }
+
+    /**
+     * Creates a phased content instance where the value already exists.<br>
+     * The existing value cannot be {@code null}.
+     */
+    public static <T> PhasedContent<T> existing(@NotNull T existing) {
+        Objects.requireNonNull(existing);
+        return new MayExist<>(existing, null);
+    }
+
+    /**
+     * Creates a phased content instance from a generic {@link Object}.
+     *
+     * <ul>
+     *     <li>Uses {@link PhasedContent#existing(Object)} if the object is of type {@code T}</li>
+     *     <li>Uses {@link PhasedContent#of(Supplier)} if the object is a {@link Supplier}</li>
+     * </ul>
+     *
+     * @throws IllegalStateException if no suitable constructor can be found
+     */
+    @SuppressWarnings("unchecked")
+    public static <T> PhasedContent<T> from(Object content, Class<T> clazz) {
+        if (clazz.isInstance(content)) {
+            return existing(clazz.cast(content));
+        }
+        if (content instanceof Supplier<?> supplier) {
+            return of((Supplier<T>) supplier);
+        }
+        throw new IllegalStateException("object must be either a content value or a supplier");
     }
 
     /**
@@ -82,6 +112,40 @@ public class PhasedContent<T> {
     }
 
     /**
+     * @return whether this content existed before it was created
+     */
+    public boolean isExternal() {
+        return false;
+    }
+
+    /**
+     * Executes a runnable if {@link PhasedContent#isExternal()} is not {@code true};
+     * that is, if this content was created and did not exist beforehand
+     */
+    public void ifInternal(Runnable fn) {
+        if (!isExternal()) {
+            fn.run();
+        }
+    }
+
+    /**
+     * Creates the content and then, if this content is internal, executes the specified callback.
+     * @see PhasedContent#ifInternal(Runnable)
+     */
+    public void create(Consumer<T> ifInternal) {
+        var value = create();
+        ifInternal(() -> ifInternal.accept(value));
+    }
+
+    /**
+     * Requires and executes the specified callback if this content is internal
+     * @see PhasedContent#ifInternal(Runnable)
+     */
+    public void require(Consumer<T> ifInternal) {
+        ifInternal(() -> ifInternal.accept(require()));
+    }
+
+    /**
      * @return the created value
      * @throws IllegalStateException if the value has not been created
      * @see PhasedContent#create()
@@ -92,5 +156,32 @@ public class PhasedContent<T> {
             throw new IllegalStateException("phased content was never created");
         }
         return get();
+    }
+
+    /**
+     * An extension of {@link PhasedContent} that can accept an existing value as the initial value.
+     */
+    private static class MayExist<T> extends PhasedContent<T> {
+
+        private final T created;
+
+        private MayExist(T created, Supplier<T> supplier) {
+            super(supplier);
+            this.created = created;
+        }
+
+        @Override
+        public T create() {
+            if (supplier != null) {
+                return super.create();
+            }
+            value = Optional.of(created);
+            return created;
+        }
+
+        @Override
+        public boolean isExternal() {
+            return true;
+        }
     }
 }

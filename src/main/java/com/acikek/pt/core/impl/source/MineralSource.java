@@ -14,6 +14,7 @@ import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
 import net.minecraft.block.Block;
 import net.minecraft.data.client.BlockStateModelGenerator;
+import net.minecraft.data.client.ItemModelGenerator;
 import net.minecraft.item.Item;
 import net.minecraft.registry.tag.TagKey;
 import net.minecraft.util.Identifier;
@@ -79,6 +80,11 @@ public class MineralSource extends UndergroundSource {
     @Override
     public void buildBlockModels(BlockStateModelGenerator generator, Element parent) {
         mineral.buildBlockModels(generator, parent);
+    }
+
+    @Override
+    public void buildItemModels(ItemModelGenerator generator, Element parent) {
+        mineral.buildItemModels(generator, parent);
     }
 
     @Override

@@ -2,6 +2,8 @@ package com.acikek.pt.core.api.refined;
 
 import com.acikek.pt.PT;
 import com.acikek.pt.core.impl.refined.RefinedStateBuilder;
+import net.minecraft.block.Block;
+import net.minecraft.item.Item;
 import net.minecraft.util.Identifier;
 
 public class RefinedStates {
@@ -13,6 +15,14 @@ public class RefinedStates {
 
     public static RefinedStateBuilder builder() {
         return new RefinedStateBuilder();
+    }
+
+    public static ElementRefinedState wrap(Identifier id, Item item, Item miniItem, Block block) {
+        return builder().id(id).item(item).miniItem(miniItem).block(block).build();
+    }
+
+    public static ElementRefinedState wrap(Item item, Item miniItem, Block block) {
+        return wrap(MAIN, item, miniItem, block);
     }
 
     public static ElementRefinedState fromType(Identifier id, RefinedStateType type, Float strength) {

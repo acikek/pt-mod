@@ -1,5 +1,6 @@
 package com.acikek.pt.core.impl.refined;
 
+import com.acikek.pt.core.api.content.PhasedContent;
 import com.acikek.pt.core.api.element.ElementalObjects;
 import com.acikek.pt.core.api.refined.ElementRefinedState;
 import com.acikek.pt.core.api.refined.RefinedStateType;
@@ -13,10 +14,10 @@ import java.util.function.Supplier;
 public class RefinedStateBuilder {
 
     private Identifier id;
-    private Supplier<Item> item;
-    private Supplier<Item> miniItem;
-    private Supplier<Block> block;
-    private Supplier<Fluid> fluid;
+    private PhasedContent<Item> item;
+    private PhasedContent<Item> miniItem;
+    private PhasedContent<Block> block;
+    private PhasedContent<Fluid> fluid;
     private RefinedStateType type;
 
     public RefinedStateBuilder id(Identifier id) {
@@ -24,13 +25,13 @@ public class RefinedStateBuilder {
         return this;
     }
 
-    public RefinedStateBuilder item(Supplier<Item> item) {
-        this.item = item;
+    public RefinedStateBuilder item(Object item) {
+        this.item = PhasedContent.from(item, Item.class);
         return this;
     }
 
-    public RefinedStateBuilder miniItem(Supplier<Item> miniItem) {
-        this.miniItem = miniItem;
+    public RefinedStateBuilder miniItem(Object miniItem) {
+        this.miniItem = PhasedContent.from(miniItem, Item.class);
         return this;
     }
 
@@ -39,29 +40,28 @@ public class RefinedStateBuilder {
         return this;
     }
 
-    public RefinedStateBuilder block(Supplier<Block> block) {
-        this.block = block;
+    public RefinedStateBuilder block(Object block) {
+        this.block = PhasedContent.from(block, Block.class);
         return this;
     }
 
     public RefinedStateBuilder block(RefinedStateType type, Float strength) {
         this.type(type);
-        return block(() -> type.createBlock(strength));
+        return block((Supplier<Block>) () -> type.createBlock(strength));
     }
 
     public RefinedStateBuilder block(RefinedStateType type) {
         return block(type, null);
     }
 
-    public RefinedStateBuilder addFluid(Supplier<Fluid> fluid) {
-        this.fluid = fluid;
+    public RefinedStateBuilder addFluid(Object fluid) {
+        this.fluid = PhasedContent.from(fluid, Fluid.class);
         return this;
     }
 
     public ElementRefinedState build() {
-        Supplier<Item> item = this.item != null ? this.item : ElementalObjects::createItem;
-        Supplier<Item> miniItem = this.miniItem != null ? this.miniItem : ElementalObjects::createItem;
-        //System.out.println(item + " " + miniItem + " " + block + " " + id);
+        var item = this.item != null ? this.item : PhasedContent.of(ElementalObjects::createItem);
+        var miniItem = this.miniItem != null ? this.miniItem : PhasedContent.of(ElementalObjects::createItem);
         return fluid != null
                 ? new FluidRefinedState(id, item, miniItem, block, fluid)
                 : new BaseRefinedState(id, item, miniItem, block, type);

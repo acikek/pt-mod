@@ -20,6 +20,8 @@ import net.fabricmc.fabric.api.resource.conditions.v1.DefaultResourceConditions;
 import net.minecraft.block.Block;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.data.client.BlockStateModelGenerator;
+import net.minecraft.data.client.ItemModelGenerator;
+import net.minecraft.data.client.Models;
 import net.minecraft.data.server.loottable.BlockLootTableGenerator;
 import net.minecraft.enchantment.Enchantments;
 import net.minecraft.item.Item;
@@ -127,6 +129,14 @@ public class MineralImpl implements Mineral {
         if (cluster != null) {
             generator.registerAmethyst(cluster.require());
         }
+    }
+
+    @Override
+    public void buildItemModels(ItemModelGenerator generator, Element parent) {
+        if (cluster != null) {
+            generator.register(cluster.require().asItem(), Models.GENERATED);
+        }
+        Mineral.super.buildItemModels(generator, parent);
     }
 
     @Override

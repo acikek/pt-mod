@@ -1,20 +1,22 @@
 package com.acikek.pt.core.impl.source;
 
 import com.acikek.pt.api.request.FeatureRequests;
+import com.acikek.pt.api.request.RequestTypes;
 import com.acikek.pt.core.api.content.ContentContext;
+import com.acikek.pt.core.api.content.PhasedContent;
 import com.acikek.pt.core.api.element.Element;
 import com.acikek.pt.core.api.registry.ElementIds;
 import com.acikek.pt.core.api.registry.PTRegistry;
-import com.acikek.pt.core.api.content.PhasedContent;
 import com.acikek.pt.core.api.source.ElementSources;
-import com.acikek.pt.api.request.RequestTypes;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricBlockLootTableProvider;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
 import net.fabricmc.fabric.api.mininglevel.v1.MiningLevelManager;
 import net.fabricmc.fabric.api.resource.conditions.v1.DefaultResourceConditions;
 import net.minecraft.block.Block;
-import net.minecraft.data.server.loottable.BlockLootTableGenerator;
+import net.minecraft.data.client.BlockStateModelGenerator;
+import net.minecraft.data.client.ItemModelGenerator;
+import net.minecraft.data.client.Models;
 import net.minecraft.item.Item;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.tag.BlockTags;
@@ -25,7 +27,6 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Collections;
 import java.util.List;
 import java.util.function.Function;
-import java.util.function.Supplier;
 
 public class OreSource extends UndergroundSource {
 
@@ -37,11 +38,11 @@ public class OreSource extends UndergroundSource {
 
     private boolean created = false;
 
-    public OreSource(Supplier<Block> ore, Supplier<Block> deepslateOre, Supplier<Item> rawItem, Supplier<Block> rawBlock, int miningLevel) {
-        this.ore = PhasedContent.of(ore);
-        this.deepslateOre = PhasedContent.of(deepslateOre);
-        this.rawItem = PhasedContent.of(rawItem);
-        this.rawBlock = PhasedContent.of(rawBlock);
+    public OreSource(PhasedContent<Block> ore, PhasedContent<Block> deepslateOre, PhasedContent<Item> rawItem, PhasedContent<Block> rawBlock, int miningLevel) {
+        this.ore = ore;
+        this.deepslateOre = deepslateOre;
+        this.rawItem = rawItem;
+        this.rawBlock = rawBlock;
         this.miningLevel = miningLevel;
     }
 
@@ -60,47 +61,68 @@ public class OreSource extends UndergroundSource {
         if (!features.contains(RequestTypes.CONTENT)) {
             return;
         }
-        registry.registerBlock(ids.getSourceBlockId(), ore.create());
-        registry.registerBlock(ids.getDeepslateSourceBlockId(), deepslateOre.create());
-        registry.registerItem(ids.getRawSourceItemId(), rawItem.create());
-        registry.registerBlock(ids.getRawSourceBlockId(), rawBlock.create());
+        ore.create(ore -> registry.registerBlock(ids.getSourceBlockId(), ore));
+        deepslateOre.create(ore -> registry.registerBlock(ids.getDeepslateSourceBlockId(), ore));
+        rawItem.create(raw -> registry.registerItem(ids.getRawSourceItemId(), raw));
+        rawBlock.create(raw -> registry.registerBlock(ids.getRawSourceBlockId(), raw));
         created = true;
     }
 
     @Override
     public void buildTranslations(FabricLanguageProvider.TranslationBuilder builder, Element parent) {
         String name = parent.display().englishName();
-        builder.add(ore.require(), name + " Ore");
-        builder.add(deepslateOre.require(), "Deepslate " + name + " Ore");
-        builder.add(rawItem.require(), "Raw " + name);
-        builder.add(rawBlock.require(), "Block of Raw " + name);
+        ore.require(ore -> builder.add(ore, name + "Ore"));
+        deepslateOre.require(ore -> builder.add(ore, "Deepslate " + name + " Ore"));
+        rawItem.require(raw -> builder.add(raw, "Raw " + name));
+        rawBlock.require(raw -> builder.add(raw, "Block of Raw " + name));
     }
 
     @Override
     public void buildLootTables(FabricBlockLootTableProvider provider, Element parent) {
         var generator = provider.withConditions(DefaultResourceConditions.itemsRegistered(ore.require()));
-        for (Block block : List.of(ore.require(), deepslateOre.require())) {
-            generator.addDrop(block, b -> generator.oreDrops(b, rawItem.require()));
+        for (var content : List.of(ore, deepslateOre)) {
+            content.require(c -> generator.addDrop(c, b -> generator.oreDrops(b, rawItem.require())));
         }
-        generator.addDrop(rawBlock.require());
+        rawBlock.require(generator::addDrop);
     }
 
     @Override
     public void buildBlockTags(Function<TagKey<Block>, FabricTagProvider<Block>.FabricTagBuilder> provider, Element parent) {
-        var ore = Registries.BLOCK.getId(this.ore.require());
-        var deepslate = Registries.BLOCK.getId(deepslateOre.require());
-        var raw = Registries.BLOCK.getId(rawBlock.require());
-        provider.apply(parent.getConventionalBlockTag("%s_ores")).addOptional(ore).addOptional(deepslate);
-        provider.apply(MiningLevelManager.getBlockTag(miningLevel)).addOptional(ore).addOptional(deepslate);
-        provider.apply(parent.getConventionalBlockTag("raw_%s_blocks")).addOptional(raw);
-        provider.apply(BlockTags.NEEDS_STONE_TOOL).addOptional(raw);
-        provider.apply(BlockTags.PICKAXE_MINEABLE).addOptional(ore).addOptional(deepslate).addOptional(raw);
+        var miningLevel = provider.apply(MiningLevelManager.getBlockTag(this.miningLevel));
+        var mineable = provider.apply(BlockTags.PICKAXE_MINEABLE);
+        for (var content : List.of(ore, deepslateOre)) {
+            content.require(c -> {
+                var id =  Registries.BLOCK.getId(c);
+                provider.apply(parent.getConventionalBlockTag("%s_ores")).addOptional(id);
+                miningLevel.addOptional(id);
+                mineable.addOptional(id);
+            });
+        }
+        rawBlock.require(raw -> {
+            var id = Registries.BLOCK.getId(raw);
+            provider.apply(parent.getConventionalBlockTag("raw_%s_blocks")).addOptional(id);
+            miningLevel.addOptional(id);
+            mineable.addOptional(id);
+            provider.apply(BlockTags.NEEDS_STONE_TOOL).addOptional(id);
+        });
     }
 
     @Override
     public void buildItemTags(Function<TagKey<Item>, FabricTagProvider<Item>.FabricTagBuilder> provider, Element parent) {
-        provider.apply(parent.getConventionalItemTag("raw_%s_ores"))
-                .addOptional(Registries.ITEM.getId(rawItem.require()));
+        rawItem.require(raw -> provider.apply(parent.getConventionalItemTag("raw_%s_ores"))
+                .addOptional(Registries.ITEM.getId(raw)));
+    }
+
+    @Override
+    public void buildBlockModels(BlockStateModelGenerator generator, Element parent) {
+        for (var content : List.of(ore, deepslateOre, rawBlock)) {
+            content.require(generator::registerSimpleCubeAll);
+        }
+    }
+
+    @Override
+    public void buildItemModels(ItemModelGenerator generator, Element parent) {
+        rawItem.require(item -> generator.register(item, Models.GENERATED));
     }
 
     @Override

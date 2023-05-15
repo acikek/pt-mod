@@ -5,6 +5,8 @@ import com.acikek.pt.core.impl.source.AtmosphericSource;
 import com.acikek.pt.core.impl.source.MineralSource;
 import com.acikek.pt.core.impl.source.OreSourceBuilder;
 import com.acikek.pt.core.api.mineral.Mineral;
+import net.minecraft.block.Block;
+import net.minecraft.item.Item;
 import net.minecraft.util.Identifier;
 import org.apache.commons.lang3.Range;
 
@@ -20,6 +22,10 @@ public class ElementSources {
 
     public static ElementSource ore(int miningLevel) {
         return oreBuilder().miningLevel(miningLevel).build();
+    }
+
+    public static ElementSource wrapOre(Block ore, Block deepslateOre, Item rawItem, Block rawBlock) {
+        return oreBuilder().ore(ore).deepslateOre(deepslateOre).rawItem(rawItem).rawBlock(rawBlock).build();
     }
 
     public static ElementSource mineral(Mineral mineral) {

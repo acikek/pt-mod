@@ -21,16 +21,15 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
 import java.util.function.Function;
-import java.util.function.Supplier;
 
 public class FluidRefinedState extends BaseRefinedState {
 
     private final PhasedContent<Fluid> fluid;
 
-    public FluidRefinedState(Identifier id, Supplier<Item> item, Supplier<Item> miniItem, Supplier<Block> block, Supplier<Fluid> fluid) {
+    public FluidRefinedState(Identifier id, PhasedContent<Item> item, PhasedContent<Item> miniItem, PhasedContent<Block> block, PhasedContent<Fluid> fluid) {
         super(id, item, miniItem, block, RefinedStateType.FLUID);
         Objects.requireNonNull(fluid);
-        this.fluid = PhasedContent.of(fluid);
+        this.fluid = fluid;
     }
 
     @Override
@@ -41,19 +40,19 @@ public class FluidRefinedState extends BaseRefinedState {
     @Override
     public void buildTranslations(FabricLanguageProvider.TranslationBuilder builder, Element parent) {
         super.buildTranslations(builder, parent);
-        builder.add(fluid.require().getDefaultState().getBlockState().getBlock(), parent.display().englishName());
+        fluid.require(fluid -> builder.add(fluid.getDefaultState().getBlockState().getBlock(), parent.display().englishName()));
     }
 
     @Override
     public void buildFluidTags(Function<TagKey<Fluid>, FabricTagProvider<Fluid>.FabricTagBuilder> provider, Element parent) {
-        provider.apply(parent.getConventionalFluidTag("%s")).addOptional(Registries.FLUID.getId(fluid.require()));
+        fluid.require(fluid -> provider.apply(parent.getConventionalFluidTag("%s")).addOptional(Registries.FLUID.getId(fluid)));
     }
 
     @Override
     public void register(PTRegistry registry, ElementIds<String> ids, ContentContext.State context, FeatureRequests.Single features) {
         super.register(registry, ids, context, features);
         if (features.contains(RequestTypes.CONTENT)) {
-            registry.registerFluid(ids.getFluidId(), fluid.create());
+            fluid.create(fluid -> registry.registerFluid(ids.getFluidId(), fluid));
         }
     }
 }

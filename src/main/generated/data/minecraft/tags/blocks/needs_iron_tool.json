@@ -54,6 +54,10 @@
       "required": false
     },
     {
+      "id": "pt:platinum_raw_block",
+      "required": false
+    },
+    {
       "id": "pt:osmium_block",
       "required": false
     }

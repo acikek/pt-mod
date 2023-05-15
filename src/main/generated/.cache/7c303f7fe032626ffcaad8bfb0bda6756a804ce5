@@ -1,4 +1,4 @@
-// 1.19.4	2023-05-12T12:24:36.558857968	PT/Block Loot Tables
+// 1.19.4	2023-05-15T09:58:53.78220847	PT/Block Loot Tables
 6f597e37d2ced60805dc7e9f7990faf4e6b317d2 data/pt/loot_tables/blocks/platinum_raw_block.json
 94384cab3f8c4e9b17e85055b7404c0d3b7905be data/pt/loot_tables/blocks/stibnite_cluster.json
 d77e3443d88c1b4e7ee2e8288e6a53cb63175b3e data/pt/loot_tables/blocks/beryllium_block.json
@@ -10,8 +10,8 @@ f950cd4b0e073fcc9617c19d102e1a2df535d328 data/pt/loot_tables/blocks/gypsum.json
 abd0ac5e5c142b84e642178858f274a07d74cd21 data/pt/loot_tables/blocks/platinum_source_block.json
 b676d4bf3964a45118f3e82824eeb8564d6fd545 data/pt/loot_tables/blocks/osmium_block.json
 6e21a3f9088d98a369829216d4032fc727771c04 data/pt/loot_tables/blocks/oxygen_block.json
-dd4e1a9866e6c2e50d04ff3c2ec9d9842167308c data/pt/loot_tables/blocks/osmium_source_block.json
 832a04118a2ce1259e37780fccc1c48700ca3d69 data/pt/loot_tables/blocks/platinum_block.json
+dd4e1a9866e6c2e50d04ff3c2ec9d9842167308c data/pt/loot_tables/blocks/osmium_source_block.json
 88d873406898771125d502dd936a3b324407c20e data/pt/loot_tables/blocks/osmium_raw_block.json
 364acb9d8e16163649f52665294d7d03cc7aa004 data/pt/loot_tables/blocks/lithiophilite.json
 f3455094e5a0bd18ccdc062e2255fefe28cbc0af data/pt/loot_tables/blocks/stibnite.json

@@ -9,6 +9,8 @@ import com.acikek.pt.core.api.mineral.Minerals;
 import com.acikek.pt.core.api.refined.RefinedStates;
 import com.acikek.pt.core.api.signature.Signatures;
 import com.acikek.pt.core.api.source.ElementSources;
+import net.minecraft.block.Blocks;
+import net.minecraft.item.Items;
 
 import java.util.List;
 
@@ -54,6 +56,11 @@ public class PeriodicTable extends AbstractPeriodicTable {
     public static final Element OXYGEN = Elements.gas(ElementDisplay.byId("oxygen", "O"), 0, 235);
     public static final Element SULFUR = Elements.basic(ElementDisplay.byId("sulfur", "S"), RefinedStates.sack(), ElementSources.mineral(GYPSUM));
     public static final Element ANTIMONY = Elements.basic(ElementDisplay.byId("antimony", "Sb"), RefinedStates.metal(4.0f), ElementSources.mineral(STIBNITE));
+    public static final Element IRON = Elements.basic(
+            ElementDisplay.byId("iron", "Fe"),
+            RefinedStates.wrap(Items.IRON_INGOT, Items.IRON_NUGGET, Blocks.IRON_BLOCK),
+            ElementSources.wrapOre(Blocks.IRON_ORE, Blocks.DEEPSLATE_IRON_ORE, Items.RAW_IRON, Blocks.RAW_IRON_BLOCK)
+    );
     public static final Element PLATINUM = Elements.basic(ElementDisplay.byId("platinum", "Pt"), RefinedStates.metal(4.5f), ElementSources.ore(2));
     public static final Element OSMIUM = Elements.basic("osmium", RefinedStates.metal(7.0f), ElementSources.ore(3));
 
@@ -66,6 +73,6 @@ public class PeriodicTable extends AbstractPeriodicTable {
 
     @Override
     protected List<Element> createElements() {
-        return List.of(HYDROGEN, HELIUM, LITHIUM, BERYLLIUM, OXYGEN, SULFUR, ANTIMONY, PLATINUM, OSMIUM);
+        return List.of(HYDROGEN, HELIUM, LITHIUM, BERYLLIUM, OXYGEN, SULFUR, ANTIMONY, IRON, PLATINUM, OSMIUM);
     }
 }

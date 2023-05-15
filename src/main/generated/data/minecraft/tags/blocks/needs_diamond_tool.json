@@ -8,6 +8,10 @@
     {
       "id": "pt:osmium_source_deepslate",
       "required": false
+    },
+    {
+      "id": "pt:osmium_raw_block",
+      "required": false
     }
   ]
 }
