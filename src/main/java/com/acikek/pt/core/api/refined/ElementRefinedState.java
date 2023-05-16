@@ -11,4 +11,12 @@ public interface ElementRefinedState<D> extends ContentBase<D, ContentContext.St
      * @return the instance-specific identifier for this refined state
      */
     @NotNull Identifier getId();
+
+    default boolean isInstance(Identifier id) {
+        return getId().equals(id);
+    }
+
+    default boolean isMain() {
+        return isInstance(RefinedStates.MAIN);
+    }
 }

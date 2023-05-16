@@ -16,6 +16,7 @@ public class RefinedStateBuilder {
     private Identifier id;
     private PhasedContent<Item> item;
     private PhasedContent<Item> miniItem;
+    private boolean hasMiniItem;
     private PhasedContent<Block> block;
     private PhasedContent<Fluid> fluid;
     private RefinedStateType type;
@@ -32,6 +33,11 @@ public class RefinedStateBuilder {
 
     public RefinedStateBuilder miniItem(Object miniItem) {
         this.miniItem = PhasedContent.from(miniItem, Item.class);
+        return this;
+    }
+
+    public RefinedStateBuilder addMiniItem() {
+        hasMiniItem = true;
         return this;
     }
 
@@ -61,7 +67,7 @@ public class RefinedStateBuilder {
 
     public ElementRefinedState<?> build() {
         var item = this.item != null ? this.item : PhasedContent.of(ElementalObjects::createItem);
-        var miniItem = this.miniItem != null ? this.miniItem : PhasedContent.of(ElementalObjects::createItem);
+        var miniItem = this.miniItem != null ? this.miniItem : hasMiniItem ? PhasedContent.of(ElementalObjects::createItem) : null;
         return fluid != null
                 ? new FluidRefinedState(id, item, miniItem, block, fluid)
                 : new BaseRefinedState.Type(id, item, miniItem, block, type);

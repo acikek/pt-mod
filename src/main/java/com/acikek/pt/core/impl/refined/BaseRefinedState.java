@@ -53,7 +53,7 @@ public abstract class BaseRefinedState<D> implements ElementRefinedState<D> {
     protected final RefinedStateType type;
 
     public BaseRefinedState(Identifier id, PhasedContent<Item> item, PhasedContent<Item> miniItem, PhasedContent<Block> block, RefinedStateType type) {
-        Stream.of(id, item, miniItem, block).forEach(Objects::requireNonNull);
+        Stream.of(id, item, block).forEach(Objects::requireNonNull);
         this.id = id;
         this.item = item;
         this.miniItem = miniItem;
@@ -77,7 +77,9 @@ public abstract class BaseRefinedState<D> implements ElementRefinedState<D> {
         String name = parent.display().englishName();
         block.require(block -> builder.add(block, type.getBlockName(name)));
         item.require(item -> builder.add(item, type.getItemName(name)));
-        miniItem.require(item -> builder.add(item, type.getMiniItemName(name)));
+        if (miniItem != null) {
+            miniItem.require(item -> builder.add(item, type.getMiniItemName(name)));
+        }
     }
 
     @Override
@@ -87,8 +89,9 @@ public abstract class BaseRefinedState<D> implements ElementRefinedState<D> {
 
     @Override
     public void buildItemModels(ItemModelGenerator generator, Element parent) {
-        for (var content : List.of(item, miniItem)) {
-            content.require(c -> generator.register(c, Models.GENERATED));
+        item.require(item -> generator.register(item, Models.GENERATED));
+        if (miniItem != null) {
+            miniItem.require(item -> generator.register(item, Models.GENERATED));
         }
     }
 
@@ -116,11 +119,13 @@ public abstract class BaseRefinedState<D> implements ElementRefinedState<D> {
                 provider.apply(parent.getConventionalItemTag(format)).addOptional(Registries.ITEM.getId(item));
             }
         });
-        miniItem.require(item -> {
-            for (String format : (powder ? List.of("%s_small_dusts", "%s_tiny_dusts") : List.of("%s_nuggets", "%s_mini"))) {
-                provider.apply(parent.getConventionalItemTag(format)).addOptional(Registries.ITEM.getId(item));
-            }
-        });
+        if (miniItem != null) {
+            miniItem.require(item -> {
+                for (String format : (powder ? List.of("%s_small_dusts", "%s_tiny_dusts") : List.of("%s_nuggets", "%s_mini"))) {
+                    provider.apply(parent.getConventionalItemTag(format)).addOptional(Registries.ITEM.getId(item));
+                }
+            });
+        }
     }
 
     @Override

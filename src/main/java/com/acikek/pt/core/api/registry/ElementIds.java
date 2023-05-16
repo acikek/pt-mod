@@ -30,6 +30,8 @@ public abstract class ElementIds<T> {
 
     public abstract T get(String suffix);
 
+    public abstract ElementIds<T> append(String suffix);
+
     public abstract ElementIds<String> useString();
 
     public abstract ElementIds<Identifier> useIdentifier();
@@ -68,5 +70,12 @@ public abstract class ElementIds<T> {
 
     public T getMineralClusterId() {
         return get(MINERAL_CLUSTER_SUFFIX);
+    }
+
+    @Override
+    public String toString() {
+        return "ElementIds{" +
+                "base=" + value +
+                '}';
     }
 }

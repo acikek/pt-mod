@@ -9,6 +9,7 @@ import com.acikek.pt.core.api.display.DisplayHolder;
 import com.acikek.pt.core.api.display.ElementDisplay;
 import com.acikek.pt.core.api.mineral.MineralResultHolder;
 import com.acikek.pt.core.api.refined.ElementRefinedState;
+import com.acikek.pt.core.api.refined.RefinedStates;
 import com.acikek.pt.core.api.registry.ElementIds;
 import com.acikek.pt.core.api.registry.PTRegistry;
 import com.acikek.pt.core.api.signature.ElementSignature;
@@ -94,10 +95,16 @@ public interface Element extends DisplayHolder<ElementDisplay>, SourceStateMappe
         }
     }
 
+    // Ensure uniqueness between allotrope IDs
+    private ElementIds<String> getElementIdsForState(ElementRefinedState<?> state) {
+        var suffix = state.isMain() ? "" : "_" + state.getId().getPath();
+        return elementIds().append(suffix);
+    }
+
     default void register(PTRegistry registry, FeatureRequests.Content stateRequests, FeatureRequests.Content sourceRequests) {
         mapContent(
-                (state, ctx) -> state.register(registry, elementIds(), ctx, stateRequests.getContent(state.getTypeId())),
-                (source, ctx) -> source.register(registry, elementIds(), ctx, sourceRequests.getContent(source.getTypeId()))
+                (state, ctx) -> state.register(registry, getElementIdsForState(state), ctx, stateRequests.getContent(state.getTypeId())),
+                (source, ctx) -> source.register(registry, getElementIdsForState(ctx.state()), ctx, sourceRequests.getContent(source.getTypeId()))
         );
         afterRegister();
     }

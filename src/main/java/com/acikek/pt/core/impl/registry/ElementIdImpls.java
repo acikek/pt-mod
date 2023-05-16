@@ -18,6 +18,11 @@ public class ElementIdImpls {
         }
 
         @Override
+        public ElementIds<String> append(String suffix) {
+            return ElementIds.create(get(suffix));
+        }
+
+        @Override
         public ElementIds<String> useString() {
             return this;
         }
@@ -37,6 +42,11 @@ public class ElementIdImpls {
         @Override
         public Identifier get(String suffix) {
             return value.withSuffixedPath(suffix);
+        }
+
+        @Override
+        public ElementIds<Identifier> append(String suffix) {
+            return ElementIds.create(get(suffix));
         }
 
         @Override
