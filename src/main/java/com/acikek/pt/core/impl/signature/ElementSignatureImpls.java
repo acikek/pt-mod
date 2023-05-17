@@ -60,11 +60,12 @@ public class ElementSignatureImpls {
         }
     }
 
-    public record Wrapped(List<ElementSignatureEntry> entries, int multiplier) implements ElementSignature {
+    public record Wrapped(List<ElementSignature> signatures, int multiplier) implements ElementSignature {
 
         @Override
         public List<ElementSignatureEntry> all() {
-            return entries.stream()
+            return signatures.stream()
+                    .flatMap(sig -> sig.all().stream())
                     .map(entry -> entry.withAmount(amt -> amt * multiplier))
                     .toList();
         }
@@ -77,8 +78,8 @@ public class ElementSignatureImpls {
         @Override
         public Text getDisplayText() {
             MutableText result = Text.literal("(");
-            for (ElementSignatureEntry entry : entries) {
-                result.append(entry.getQuantifiedText());
+            for (ElementSignature signature : signatures) {
+                result.append(signature.getDisplayText());
             }
             return result.append(")" + PTApi.subscriptChecked(multiplier));
         }

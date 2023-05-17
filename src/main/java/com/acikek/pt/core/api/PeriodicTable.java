@@ -18,35 +18,35 @@ import java.util.Map;
 
 public class PeriodicTable extends AbstractPeriodicTable {
 
-    public static final Mineral TEST = Minerals.block(
+    public static final Mineral<?> TEST = Minerals.block(
             "Test Mineral",
             () -> List.of(
                     Signatures.amount(PeriodicTable.BERYLLIUM, 3).primary().unit(),
                     Signatures.wrap(5,
-                            Signatures.amount(PeriodicTable.SULFUR, 2),
-                            Signatures.single(PeriodicTable.OXYGEN).primary()
+                            Signatures.unit(PeriodicTable.SULFUR, 2),
+                            Signatures.single(PeriodicTable.OXYGEN).primary().unit()
                     ),
                     Signatures.random(7, Signatures.single(PeriodicTable.ANTIMONY).primary(), PeriodicTable.OSMIUM, PeriodicTable.PLATINUM),
                     Signatures.hydrate(4)
             )
     );
 
-    public static final Mineral LITHIOPHILITE = Minerals.block(
+    public static final Mineral<?> LITHIOPHILITE = Minerals.block(
             "Lithiophilite",
             () -> List.of(Signatures.single(PeriodicTable.LITHIUM).primary().unit(), /*Mn,*/ /*P,*/ Signatures.unit(PeriodicTable.OXYGEN))
     );
 
-    public static final Mineral COLEMANITE = Minerals.block(
+    public static final Mineral<?> COLEMANITE = Minerals.block(
             "Colemanite",
             () -> List.of(/* Ca2, */ Signatures.amount(PeriodicTable.BORON, 6).primary().unit(), Signatures.unit(PeriodicTable.OXYGEN, 11), Signatures.hydrate(5))
     );
 
-    public static final Mineral ANTHRACITE = Minerals.blockWithRawForm(
+    public static final Mineral<?> ANTHRACITE = Minerals.blockWithRawForm(
             MineralDisplay.byName("Anthracite", "Coal"),
             () -> List.of(Signatures.amount(PeriodicTable.CARBON, 8).primary().unit(), Signatures.unit(PeriodicTable.OXYGEN, 2), Signatures.unit(PeriodicTable.HYDROGEN))
     );
 
-    public static final Mineral STIBNITE = Minerals.fullBlock(
+    public static final Mineral<?> STIBNITE = Minerals.fullBlock(
             MineralDisplay.byName("Stibnite", "Shard"),
             () -> List.of(Signatures.amount(PeriodicTable.ANTIMONY, 2).primary().unit(), Signatures.unit(PeriodicTable.SULFUR, 3))
     );
@@ -56,7 +56,7 @@ public class PeriodicTable extends AbstractPeriodicTable {
             () -> List.of(Signatures.single(PeriodicTable.BERYLLIUM), /*Al2, Signatures.single(PeriodicTable.OXYGEN, 4))
     );*/
 
-    public static final Mineral GYPSUM = Minerals.fullBlock(
+    public static final Mineral<?> GYPSUM = Minerals.fullBlock(
             MineralDisplay.byName("Gypsum", "Crystal"),
             () -> List.of(/*Ca,*/ Signatures.single(PeriodicTable.SULFUR).primary().unit(), Signatures.unit(PeriodicTable.OXYGEN, 4))
     );

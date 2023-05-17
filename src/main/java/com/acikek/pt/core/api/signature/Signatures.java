@@ -32,12 +32,12 @@ public class Signatures {
         return random(Arrays.stream(singleEntries).map(ElementSignatureEntry::forObject).toList(), amount);
     }
 
-    public static ElementSignature wrap(List<ElementSignatureEntry> entries, int multiplier) {
-        return new ElementSignatureImpls.Wrapped(entries, multiplier);
+    public static ElementSignature wrap(List<ElementSignature> signatures, int multiplier) {
+        return new ElementSignatureImpls.Wrapped(signatures, multiplier);
     }
 
-    public static ElementSignature wrap(int multiplier, ElementSignatureEntry... entries) {
-        return wrap(Arrays.stream(entries).toList(), multiplier);
+    public static ElementSignature wrap(int multiplier, ElementSignature... signatures) {
+        return wrap(Arrays.stream(signatures).toList(), multiplier);
     }
 
     public static ElementSignature hydrate(int amount) {
