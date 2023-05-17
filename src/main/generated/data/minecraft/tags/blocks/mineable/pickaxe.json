@@ -54,6 +54,118 @@
       "required": false
     },
     {
+      "id": "pt:vanadium_block",
+      "required": false
+    },
+    {
+      "id": "pt:vanadium_source_block",
+      "required": false
+    },
+    {
+      "id": "pt:vanadium_source_deepslate",
+      "required": false
+    },
+    {
+      "id": "pt:vanadium_raw_block",
+      "required": false
+    },
+    {
+      "id": "pt:chromium_block",
+      "required": false
+    },
+    {
+      "id": "pt:chromium_source_block",
+      "required": false
+    },
+    {
+      "id": "pt:chromium_source_deepslate",
+      "required": false
+    },
+    {
+      "id": "pt:chromium_raw_block",
+      "required": false
+    },
+    {
+      "id": "pt:manganese_block",
+      "required": false
+    },
+    {
+      "id": "pt:manganese_source_block",
+      "required": false
+    },
+    {
+      "id": "pt:manganese_source_deepslate",
+      "required": false
+    },
+    {
+      "id": "pt:manganese_raw_block",
+      "required": false
+    },
+    {
+      "id": "pt:cobalt_block",
+      "required": false
+    },
+    {
+      "id": "pt:cobalt_source_block",
+      "required": false
+    },
+    {
+      "id": "pt:cobalt_source_deepslate",
+      "required": false
+    },
+    {
+      "id": "pt:cobalt_raw_block",
+      "required": false
+    },
+    {
+      "id": "pt:nickel_block",
+      "required": false
+    },
+    {
+      "id": "pt:nickel_source_block",
+      "required": false
+    },
+    {
+      "id": "pt:nickel_source_deepslate",
+      "required": false
+    },
+    {
+      "id": "pt:nickel_raw_block",
+      "required": false
+    },
+    {
+      "id": "pt:silver_block",
+      "required": false
+    },
+    {
+      "id": "pt:silver_source_block",
+      "required": false
+    },
+    {
+      "id": "pt:silver_source_deepslate",
+      "required": false
+    },
+    {
+      "id": "pt:silver_raw_block",
+      "required": false
+    },
+    {
+      "id": "pt:cadmium_block",
+      "required": false
+    },
+    {
+      "id": "pt:cadmium_source_block",
+      "required": false
+    },
+    {
+      "id": "pt:cadmium_source_deepslate",
+      "required": false
+    },
+    {
+      "id": "pt:cadmium_raw_block",
+      "required": false
+    },
+    {
       "id": "pt:antimony_block",
       "required": false
     },

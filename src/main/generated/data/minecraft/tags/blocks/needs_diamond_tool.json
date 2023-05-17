@@ -2,6 +2,30 @@
   "replace": false,
   "values": [
     {
+      "id": "pt:chromium_source_block",
+      "required": false
+    },
+    {
+      "id": "pt:chromium_source_deepslate",
+      "required": false
+    },
+    {
+      "id": "pt:chromium_raw_block",
+      "required": false
+    },
+    {
+      "id": "pt:cobalt_source_block",
+      "required": false
+    },
+    {
+      "id": "pt:cobalt_source_deepslate",
+      "required": false
+    },
+    {
+      "id": "pt:cobalt_raw_block",
+      "required": false
+    },
+    {
       "id": "pt:osmium_source_block",
       "required": false
     },

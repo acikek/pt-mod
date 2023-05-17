@@ -19,7 +19,7 @@ import java.util.function.Function;
 
 public abstract class AbstractPeriodicTable implements CompoundHolder {
 
-    private final Map<String, Mineral> minerals;
+    private final Map<String, Mineral<?>> minerals;
     private final Map<String, Element> elements;
     private final PTRegistry registry;
 
@@ -29,8 +29,8 @@ public abstract class AbstractPeriodicTable implements CompoundHolder {
             elementBuilder.put(element.id(), element);
         }
         elements = elementBuilder.build();
-        ImmutableMap.Builder<String, Mineral> mineralBuilder = ImmutableMap.builder();
-        for (Mineral mineral : createMinerals()) {
+        ImmutableMap.Builder<String, Mineral<?>> mineralBuilder = ImmutableMap.builder();
+        for (Mineral<?> mineral : createMinerals()) {
             mineral.init();
             mineralBuilder.put(mineral.id(), mineral);
         }
@@ -46,18 +46,18 @@ public abstract class AbstractPeriodicTable implements CompoundHolder {
         this(PT.REGISTRY);
     }
 
-    protected List<Mineral> createMinerals() {
+    protected List<Mineral<?>> createMinerals() {
         return Collections.emptyList();
     }
 
     protected abstract List<Element> createElements();
 
-    public Map<String, Mineral> mineralMap() {
+    public Map<String, Mineral<?>> mineralMap() {
         return minerals;
     }
 
     @Override
-    public List<Mineral> minerals() {
+    public List<Mineral<?>> minerals() {
         return mineralMap().values().stream().toList();
     }
 

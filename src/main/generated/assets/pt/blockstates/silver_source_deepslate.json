@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "pt:block/silver_source_deepslate"
+    }
+  }
+}

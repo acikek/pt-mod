@@ -74,7 +74,7 @@ public class OreSource extends UndergroundSource<SourceData.Ore> {
     @Override
     public void buildTranslations(FabricLanguageProvider.TranslationBuilder builder, Element parent) {
         String name = parent.display().englishName();
-        ore.require(ore -> builder.add(ore, name + "Ore"));
+        ore.require(ore -> builder.add(ore, name + " Ore"));
         deepslateOre.require(ore -> builder.add(ore, "Deepslate " + name + " Ore"));
         rawItem.require(raw -> builder.add(raw, "Raw " + name));
         rawBlock.require(raw -> builder.add(raw, "Block of Raw " + name));

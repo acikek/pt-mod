@@ -77,24 +77,31 @@ public class PeriodicTable extends AbstractPeriodicTable {
     ));
     public static final Element OXYGEN = Elements.gas(ElementDisplay.byId("oxygen", "O"), 0, 235);
     public static final Element SULFUR = Elements.basic(ElementDisplay.byId("sulfur", "S"), RefinedStates.sack(), ElementSources.mineral(GYPSUM));
-    public static final Element ANTIMONY = Elements.basic(ElementDisplay.byId("antimony", "Sb"), RefinedStates.metal(4.0f), ElementSources.mineral(STIBNITE));
+    public static final Element VANADIUM = Elements.basic(ElementDisplay.byId("vanadium", "V"), RefinedStates.metal(8.0f), ElementSources.ore(2));
+    public static final Element CHROMIUM = Elements.basic(ElementDisplay.byId("chromium", "Cr"), RefinedStates.metal(9.5f), ElementSources.ore(3));
+    public static final Element MANGANESE = Elements.basic(ElementDisplay.byId("manganese", "Mn"), RefinedStates.metal(7.0f), ElementSources.ore(1));
     public static final Element IRON = Elements.basic(
             ElementDisplay.byId("iron", "Fe"),
             RefinedStates.wrap(Items.IRON_INGOT, Items.IRON_NUGGET, Blocks.IRON_BLOCK),
             ElementSources.wrapOre(Blocks.IRON_ORE, Blocks.DEEPSLATE_IRON_ORE, Items.RAW_IRON, Blocks.RAW_IRON_BLOCK)
     );
+    public static final Element COBALT = Elements.basic("cobalt", RefinedStates.metal(6.0f), ElementSources.ore(3));
+    public static final Element NICKEL = Elements.basic("nickel", RefinedStates.metal(5.0f), ElementSources.ore(2));
+    public static final Element SILVER = Elements.basic(ElementDisplay.byId("silver", "Ag"), RefinedStates.metal(3.5f), ElementSources.ore(1));
+    public static final Element CADMIUM = Elements.basic(ElementDisplay.byId("cadmium", "Cd"), RefinedStates.metal(3.0f), ElementSources.ore(2));
+    public static final Element ANTIMONY = Elements.basic(ElementDisplay.byId("antimony", "Sb"), RefinedStates.metal(4.0f), ElementSources.mineral(STIBNITE));
     public static final Element PLATINUM = Elements.basic(ElementDisplay.byId("platinum", "Pt"), RefinedStates.metal(4.5f), ElementSources.ore(2));
     public static final Element OSMIUM = Elements.basic("osmium", RefinedStates.metal(7.0f), ElementSources.ore(3));
 
     public static final AbstractPeriodicTable INSTANCE = new PeriodicTable();
 
     @Override
-    protected List<Mineral> createMinerals() {
+    protected List<Mineral<?>> createMinerals() {
         return List.of(TEST, LITHIOPHILITE, COLEMANITE, ANTHRACITE, STIBNITE, /*CHRYSOBERYL,*/ GYPSUM);
     }
 
     @Override
     protected List<Element> createElements() {
-        return List.of(HYDROGEN, HELIUM, LITHIUM, BERYLLIUM, BORON, CARBON, OXYGEN, SULFUR, ANTIMONY, IRON, PLATINUM, OSMIUM);
+        return List.of(HYDROGEN, HELIUM, LITHIUM, BERYLLIUM, BORON, CARBON, OXYGEN, SULFUR, VANADIUM, CHROMIUM, MANGANESE, IRON, COBALT, NICKEL, SILVER, CADMIUM, ANTIMONY, PLATINUM, OSMIUM);
     }
 }

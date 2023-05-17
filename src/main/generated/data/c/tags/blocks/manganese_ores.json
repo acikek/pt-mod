@@ -1,0 +1,13 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "pt:manganese_source_block",
+      "required": false
+    },
+    {
+      "id": "pt:manganese_source_deepslate",
+      "required": false
+    }
+  ]
+}

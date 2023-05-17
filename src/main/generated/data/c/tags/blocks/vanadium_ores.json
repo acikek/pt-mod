@@ -1,0 +1,13 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "pt:vanadium_source_block",
+      "required": false
+    },
+    {
+      "id": "pt:vanadium_source_deepslate",
+      "required": false
+    }
+  ]
+}

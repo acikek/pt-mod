@@ -2,6 +2,58 @@
   "replace": false,
   "values": [
     {
+      "id": "pt:vanadium_raw_block",
+      "required": false
+    },
+    {
+      "id": "pt:chromium_raw_block",
+      "required": false
+    },
+    {
+      "id": "pt:manganese_source_block",
+      "required": false
+    },
+    {
+      "id": "pt:manganese_source_deepslate",
+      "required": false
+    },
+    {
+      "id": "pt:manganese_raw_block",
+      "required": false
+    },
+    {
+      "id": "pt:manganese_raw_block",
+      "required": false
+    },
+    {
+      "id": "pt:cobalt_raw_block",
+      "required": false
+    },
+    {
+      "id": "pt:nickel_raw_block",
+      "required": false
+    },
+    {
+      "id": "pt:silver_source_block",
+      "required": false
+    },
+    {
+      "id": "pt:silver_source_deepslate",
+      "required": false
+    },
+    {
+      "id": "pt:silver_raw_block",
+      "required": false
+    },
+    {
+      "id": "pt:silver_raw_block",
+      "required": false
+    },
+    {
+      "id": "pt:cadmium_raw_block",
+      "required": false
+    },
+    {
       "id": "pt:platinum_raw_block",
       "required": false
     },

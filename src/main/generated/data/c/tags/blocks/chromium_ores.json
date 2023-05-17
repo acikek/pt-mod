@@ -1,0 +1,13 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "pt:chromium_source_block",
+      "required": false
+    },
+    {
+      "id": "pt:chromium_source_deepslate",
+      "required": false
+    }
+  ]
+}

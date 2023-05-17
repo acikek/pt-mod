@@ -50,6 +50,70 @@
       "required": false
     },
     {
+      "id": "pt:vanadium_block",
+      "required": false
+    },
+    {
+      "id": "pt:vanadium_source_block",
+      "required": false
+    },
+    {
+      "id": "pt:vanadium_source_deepslate",
+      "required": false
+    },
+    {
+      "id": "pt:vanadium_raw_block",
+      "required": false
+    },
+    {
+      "id": "pt:chromium_block",
+      "required": false
+    },
+    {
+      "id": "pt:manganese_block",
+      "required": false
+    },
+    {
+      "id": "pt:cobalt_block",
+      "required": false
+    },
+    {
+      "id": "pt:nickel_block",
+      "required": false
+    },
+    {
+      "id": "pt:nickel_source_block",
+      "required": false
+    },
+    {
+      "id": "pt:nickel_source_deepslate",
+      "required": false
+    },
+    {
+      "id": "pt:nickel_raw_block",
+      "required": false
+    },
+    {
+      "id": "pt:silver_block",
+      "required": false
+    },
+    {
+      "id": "pt:cadmium_block",
+      "required": false
+    },
+    {
+      "id": "pt:cadmium_source_block",
+      "required": false
+    },
+    {
+      "id": "pt:cadmium_source_deepslate",
+      "required": false
+    },
+    {
+      "id": "pt:cadmium_raw_block",
+      "required": false
+    },
+    {
       "id": "pt:antimony_block",
       "required": false
     },

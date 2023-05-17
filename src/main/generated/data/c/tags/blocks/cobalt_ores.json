@@ -1,0 +1,13 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "pt:cobalt_source_block",
+      "required": false
+    },
+    {
+      "id": "pt:cobalt_source_deepslate",
+      "required": false
+    }
+  ]
+}
