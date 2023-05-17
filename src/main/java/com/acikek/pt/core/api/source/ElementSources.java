@@ -21,7 +21,7 @@ public class ElementSources {
     }
 
     public static ElementSource<?> ore(int miningLevel) {
-        return oreBuilder().miningLevel(miningLevel).addRawForms().build();
+        return oreBuilder().miningLevel(miningLevel).addOres().addRawForms().build();
     }
 
     public static ElementSource<?> wrapOre(Block ore, Block deepslateOre, Item rawItem, Block rawBlock) {

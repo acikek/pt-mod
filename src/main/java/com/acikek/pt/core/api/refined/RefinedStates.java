@@ -26,7 +26,7 @@ public class RefinedStates {
     }
 
     public static ElementRefinedState<?> fromType(Identifier id, RefinedStateType type, Float strength) {
-        return builder().id(id).block(type, strength).build();
+        return builder().id(id).block(type, strength).addItem().addMiniItem().build();
     }
 
     public static ElementRefinedState<?> fromType(RefinedStateType type, Float strength) {

@@ -1,5 +1,6 @@
 package com.acikek.pt.core.impl.mineral;
 
+import com.acikek.pt.core.api.content.PhasedContent;
 import com.acikek.pt.core.api.element.ElementalObjects;
 import com.acikek.pt.core.api.display.MineralDisplay;
 import com.acikek.pt.core.api.signature.ElementSignature;
@@ -22,16 +23,22 @@ public class MineralBuilder {
             .sounds(BlockSoundGroup.TUFF)
             .strength(3.0f);
 
-    private Supplier<Block> block;
-    private Supplier<Block> cluster;
+    private PhasedContent<Block> block = PhasedContent.none();
+    private boolean hasBlock = false;
+    private PhasedContent<Block> cluster = PhasedContent.none();
     private boolean hasCluster = false;
-    private Supplier<Item> rawMineral;
+    private PhasedContent<Item> rawMineral = PhasedContent.none();
     private boolean hasRawMineral = false;
     private MineralDisplay naming;
     private Supplier<List<ElementSignature>> signature;
 
-    public MineralBuilder block(Supplier<Block> block) {
-        this.block = block;
+    public MineralBuilder block(Object block) {
+        this.block = PhasedContent.from(block, Block.class);
+        return this;
+    }
+
+    public MineralBuilder addBlock() {
+        hasBlock = true;
         return this;
     }
 
@@ -49,8 +56,8 @@ public class MineralBuilder {
         return this;
     }
 
-    public MineralBuilder addCluster(Supplier<Block> cluster) {
-        this.cluster = cluster;
+    public MineralBuilder cluster(Object cluster) {
+        this.cluster = PhasedContent.from(cluster, Block.class);
         return this;
     }
 
@@ -59,8 +66,8 @@ public class MineralBuilder {
         return this;
     }
 
-    public MineralBuilder addRawMineral(Supplier<Item> rawMineral) {
-        this.rawMineral = rawMineral;
+    public MineralBuilder awMineral(Object rawMineral) {
+        this.rawMineral = PhasedContent.from(rawMineral, Item.class);
         return this;
     }
 
@@ -70,11 +77,10 @@ public class MineralBuilder {
     }
 
     public MineralImpl build() {
-        Stream.of(naming, signature).forEach(Objects::requireNonNull);
         return new MineralImpl(
-                block != null ? block : () -> new Block(MINERAL_SETTINGS),
-                cluster != null ? cluster : hasCluster ? ElementalObjects::createClusterBlock : null,
-                rawMineral != null ? rawMineral : hasRawMineral ? ElementalObjects::createItem : null,
+                hasBlock && !block.canExist() ? PhasedContent.of(() -> new Block(MINERAL_SETTINGS)) : block,
+                hasCluster && !cluster.canExist() ? PhasedContent.of(ElementalObjects::createClusterBlock) : cluster,
+                hasRawMineral && !rawMineral.canExist() ? PhasedContent.of(ElementalObjects::createItem) : rawMineral,
                 naming, signature
         );
     }

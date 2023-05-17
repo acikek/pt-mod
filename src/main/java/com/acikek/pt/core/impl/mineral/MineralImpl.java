@@ -44,8 +44,10 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 import java.util.function.Function;
 import java.util.function.Supplier;
+import java.util.stream.Stream;
 
 public class MineralImpl implements Mineral<DefaultMineralData> {
 
@@ -58,16 +60,17 @@ public class MineralImpl implements Mineral<DefaultMineralData> {
     private List<ElementSignature> results;
     private Text tooltip;
 
-    public MineralImpl(Supplier<Block> block, Supplier<Block> cluster, Supplier<Item> rawMineral, MineralDisplay naming, Supplier<List<ElementSignature>> resultSupplier) {
-        this.block = PhasedContent.of(block);
-        if (cluster != null && rawMineral == null) {
+    public MineralImpl(PhasedContent<Block> block, PhasedContent<Block> cluster, PhasedContent<Item> rawMineral, MineralDisplay naming, Supplier<List<ElementSignature>> resultSupplier) {
+        Stream.of(naming, resultSupplier).forEach(Objects::requireNonNull);
+        this.block = block;
+        if (cluster.canExist() && !rawMineral.canExist()) {
             throw new IllegalStateException("mineral clusters must have accompanying raw forms");
         }
-        if (naming.rawFormName() == null && rawMineral != null) {
+        if (naming.rawFormName() == null && rawMineral.canExist()) {
             throw new IllegalStateException("raw mineral must have a unique species name");
         }
-        this.cluster = cluster != null ? PhasedContent.of(cluster) : null;
-        this.rawMineral = rawMineral != null ? PhasedContent.of(rawMineral) : null;
+        this.cluster = cluster;
+        this.rawMineral = rawMineral;
         this.naming = naming;
         this.resultSupplier = resultSupplier;
     }
@@ -91,15 +94,10 @@ public class MineralImpl implements Mineral<DefaultMineralData> {
 
     @Override
     public void injectSignature(SignatureHolder holder) {
-        if (block.isCreated()) {
-            PTApi.injectSignature(block.require(), tooltip);
+        for (var block : PhasedContent.getByCreation(block, cluster)) {
+            PTApi.injectSignature(block, tooltip);
         }
-        if (cluster != null && cluster.isCreated()) {
-            PTApi.injectSignature(cluster.require(), tooltip);
-        }
-        if (rawMineral != null && rawMineral.isCreated()) {
-            PTApi.injectSignature(rawMineral.require(), tooltip);
-        }
+        rawMineral.ifCreated(r -> PTApi.injectSignature(r, tooltip));
     }
 
     @Override
@@ -107,49 +105,35 @@ public class MineralImpl implements Mineral<DefaultMineralData> {
         if (!features.contains(RequestTypes.CONTENT)) {
             return;
         }
-        registry.registerBlock(naming.id(), block.create());
-        if (cluster != null) {
-            registry.registerBlock(naming.id() + "_cluster", cluster.create());
-        }
-        if (rawMineral != null) {
-            registry.registerItem(naming.getRawFormId(), rawMineral.create());
-        }
+        block.create(block -> registry.registerBlock(naming.id(), block));
+        cluster.create(block -> registry.registerBlock(naming.id() + "_cluster", block));
+        rawMineral.create(item -> registry.registerItem(naming.getRawFormId(), item));
     }
 
     @Override
     @Environment(EnvType.CLIENT)
     public void initClient() {
-        if (cluster != null && cluster.isCreated()) {
-            BlockRenderLayerMap.INSTANCE.putBlock(cluster.require(), RenderLayer.getCutout());
-        }
+        cluster.ifCreated(block -> BlockRenderLayerMap.INSTANCE.putBlock(cluster.require(), RenderLayer.getCutout()));
     }
 
     @Override
     public void buildBlockModels(BlockStateModelGenerator generator, Element parent) {
-        generator.registerSimpleCubeAll(block.require());
-        if (cluster != null) {
-            generator.registerAmethyst(cluster.require());
-        }
+        block.require(generator::registerSimpleCubeAll);
+        cluster.require(generator::registerAmethyst);
     }
 
     @Override
     public void buildItemModels(ItemModelGenerator generator, Element parent) {
-        if (cluster != null) {
-            generator.register(cluster.require().asItem(), Models.GENERATED);
-        }
-        Mineral.super.buildItemModels(generator, parent);
+        cluster.require(block -> generator.register(block.asItem(), Models.GENERATED));
+        rawMineral.require(item -> generator.register(item, Models.GENERATED));
     }
 
     @Override
     public void buildTranslations(FabricLanguageProvider.TranslationBuilder builder, Element parent) {
         String name = display().englishName();
-        builder.add(block.require(), name);
-        if (cluster != null) {
-            builder.add(cluster.require(), name + " Cluster");
-        }
-        if (rawMineral != null) {
-            builder.add(rawMineral.require(), name + " " + display().rawFormName());
-        }
+        block.require(b -> builder.add(b, name));
+        cluster.require(block -> builder.add(block, name + " Cluster"));
+        rawMineral.require(item -> builder.add(item, name + " " + display().rawFormName()));
     }
 
     private void buildMineral(BlockLootTableGenerator generator) {
@@ -179,37 +163,41 @@ public class MineralImpl implements Mineral<DefaultMineralData> {
 
     @Override
     public void buildLootTables(FabricBlockLootTableProvider provider, Element parent) {
-        var generator = provider.withConditions(DefaultResourceConditions.itemsRegistered(block.require()));
-        if (rawMineral == null) {
-            generator.addDrop(block.require());
-            return;
-        }
-        buildMineral(generator);
-        if (cluster != null) {
-            buildCluster(generator);
-        }
+        block.require(block -> {
+            var generator = provider.withConditions(DefaultResourceConditions.itemsRegistered(block));
+            if (!rawMineral.canExist()) {
+                generator.addDrop(block);
+                return;
+            }
+            buildMineral(generator);
+            if (cluster.canExist()) {
+                buildCluster(generator);
+            }
+        });
     }
 
     @Override
     public void buildBlockTags(Function<TagKey<Block>, FabricTagProvider<Block>.FabricTagBuilder> provider, Element parent) {
-        var mineral = Registries.BLOCK.getId(block.require());
-        provider.apply(BlockTags.PICKAXE_MINEABLE).addOptional(mineral);
-        provider.apply(BlockTags.NEEDS_IRON_TOOL).addOptional(mineral);
-        provider.apply(getConventionalBlockTag("%ss")).addOptional(mineral);
-        if (cluster != null) {
-            var cluster = Registries.BLOCK.getId(this.cluster.require());
+        block.require(block -> {
+            var mineral = Registries.BLOCK.getId(block);
+            provider.apply(BlockTags.PICKAXE_MINEABLE).addOptional(mineral);
+            provider.apply(BlockTags.NEEDS_IRON_TOOL).addOptional(mineral);
+            provider.apply(getConventionalBlockTag("%ss")).addOptional(mineral);
+        });
+        cluster.require(c -> {
+            var cluster = Registries.BLOCK.getId(c);
             provider.apply(BlockTags.PICKAXE_MINEABLE).addOptional(cluster);
             provider.apply(getConventionalBlockTag("%s_clusters")).addOptional(cluster);
-        }
+        });
     }
 
     @Override
     public void buildItemTags(Function<TagKey<Item>, FabricTagProvider<Item>.FabricTagBuilder> provider, Element parent) {
-        if (rawMineral != null) {
+        rawMineral.require(raw -> {
             for (String formatter : List.of("raw_%ss", "%s_crystals")) {
-                provider.apply(getConventionalItemTag(formatter)).addOptional(Registries.ITEM.getId(rawMineral.require()));
+                provider.apply(getConventionalItemTag(formatter)).addOptional(Registries.ITEM.getId(raw));
             }
-        }
+        });
     }
 
     @Override
@@ -219,12 +207,7 @@ public class MineralImpl implements Mineral<DefaultMineralData> {
 
     @Override
     public List<Block> getBlocks() {
-        if (!block.isCreated()) {
-            return Collections.emptyList();
-        }
-        return cluster != null
-                ? List.of(block.require(), cluster.require())
-                : Collections.singletonList(block.require());
+        return PhasedContent.getByCreation(block, cluster);
     }
 
     @Override
@@ -232,17 +215,13 @@ public class MineralImpl implements Mineral<DefaultMineralData> {
         if (!block.isCreated()) {
             return Collections.emptyList();
         }
-        return rawMineral != null
+        return rawMineral.isCreated()
                 ? Collections.singletonList(rawMineral.require())
                 : Collections.emptyList();
     }
 
     @Override
     public DefaultMineralData getData() {
-        return new DefaultMineralData(
-                block.get(),
-                cluster != null ? cluster.get() : null,
-                rawMineral != null ? rawMineral.get() : null
-        );
+        return new DefaultMineralData(block.get(), cluster.get(), rawMineral.get());
     }
 }

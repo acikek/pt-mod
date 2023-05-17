@@ -1,13 +1,16 @@
-// 1.19.4	2023-05-15T15:07:25.735559149	PT/Tags for minecraft:block
+// 1.19.4	2023-05-17T08:29:36.385365382	PT/Tags for minecraft:block
+46609ece9100845572f1684a14eb5ca8c7295e6e data/c/tags/blocks/colemanites.json
 51756bdf26f11af7318fbbd7b453ef6f85c8248a data/c/tags/blocks/platinum_ores.json
-118be48b741c504bc517c10d764ff9004a2fc80c data/minecraft/tags/blocks/mineable/pickaxe.json
+b9fd1f2abb25e5a8c01f00d3647319b70bbf2302 data/minecraft/tags/blocks/mineable/pickaxe.json
 d547276cc0ac182c296dfdd45d10505f442ff3f6 data/c/tags/blocks/osmium_blocks.json
 9ca4cdd67bd1437721f0b6815cd8685574e298cf data/c/tags/blocks/beryllium_blocks.json
 87067efa85aa2d4d0d5ed2a809ae36a1c7b5c630 data/c/tags/blocks/raw_osmium_blocks.json
 4cb9dac9e532ec2633fc3c0458bfaa76b9eaa605 data/c/tags/blocks/raw_platinum_blocks.json
+d8bfe52ce47d893f536c74b48efbd249518a9961 data/c/tags/blocks/boron_blocks.json
 790fea6a17a504a5b2f7e9fa7f839f18a9e8607d data/c/tags/blocks/antimony_blocks.json
 950131c032ecaf3865032ddcbc691d1e90374b60 data/c/tags/blocks/gypsums.json
 e18075960510cbdb722d7ed373d0a124f191af83 data/c/tags/blocks/osmium_ores.json
+c7e6dd0630d41c766ea95f8e1788a0d3ea67a3c3 data/c/tags/blocks/carbon_blocks.json
 236787ea44670fdb4d0ebcb9f0351fdd6fffa18e data/minecraft/tags/blocks/needs_stone_tool.json
 d5dd637240d4f7bd60aac8a003153c431b7a5b28 data/c/tags/blocks/lithium_blocks.json
 bf19f920079bc26910a22e80f4ff5de6d3da5472 data/c/tags/blocks/lithiophilites.json
@@ -17,8 +20,9 @@ e1919af64048df8d8f85c98c71a645ff951c60a1 data/c/tags/blocks/stibnite_clusters.js
 bb9239cd4a4fa4a386e546811ef2fb43ad3d45d7 data/c/tags/blocks/stibnites.json
 e6f93b7faf330101d3374fccf8c9d6492d6858f4 data/c/tags/blocks/oxygen_blocks.json
 de9dd47db1197e1385c2759335926d79ce4e7593 data/minecraft/tags/blocks/needs_diamond_tool.json
+252e4b0db2cce7488833d9fffbeda84121084568 data/c/tags/blocks/anthracites.json
 5d8fe14ded418142b1ad9a88eebc653bd9d5e91d data/c/tags/blocks/helium_blocks.json
 d4280f3b07844cfadd8cdff045d3011f87645c85 data/c/tags/blocks/platinum_blocks.json
-5935a0d7b1a417e50979c2823bef1374bf304cdf data/minecraft/tags/blocks/needs_iron_tool.json
 791d1c1a495eb76ae3b1317ede6e2c950a60498b data/c/tags/blocks/test_minerals.json
+97890619c56fffef49306beff5f445b3ab947425 data/minecraft/tags/blocks/needs_iron_tool.json
 7886fd05ffd72456eabed6cbda84ba08796586e2 data/c/tags/blocks/sulfur_blocks.json

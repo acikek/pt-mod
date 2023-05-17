@@ -1,0 +1,9 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "pt:colemanite",
+      "required": false
+    }
+  ]
+}

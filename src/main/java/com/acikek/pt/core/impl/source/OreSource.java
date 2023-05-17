@@ -27,7 +27,6 @@ import net.minecraft.registry.tag.TagKey;
 import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.function.Function;
@@ -40,7 +39,6 @@ public class OreSource extends UndergroundSource<SourceData.Ore> {
     private final PhasedContent<Block> rawBlock;
     private final int miningLevel;
 
-    private boolean created = false;
     private ElementRefinedState<?> state;
 
     public OreSource(PhasedContent<Block> ore, PhasedContent<Block> deepslateOre, PhasedContent<Item> rawItem, PhasedContent<Block> rawBlock, int miningLevel) {
@@ -68,13 +66,8 @@ public class OreSource extends UndergroundSource<SourceData.Ore> {
         }
         ore.create(ore -> registry.registerBlock(ids.getSourceBlockId(), ore));
         deepslateOre.create(ore -> registry.registerBlock(ids.getDeepslateSourceBlockId(), ore));
-        if (rawItem != null) {
-            rawItem.create(raw -> registry.registerItem(ids.getRawSourceItemId(), raw));
-        }
-        if (rawBlock != null) {
-            rawBlock.create(raw -> registry.registerBlock(ids.getRawSourceBlockId(), raw));
-        }
-        created = true;
+        rawItem.create(raw -> registry.registerItem(ids.getRawSourceItemId(), raw));
+        rawBlock.create(raw -> registry.registerBlock(ids.getRawSourceBlockId(), raw));
         state = context.state();
     }
 
@@ -83,19 +76,15 @@ public class OreSource extends UndergroundSource<SourceData.Ore> {
         String name = parent.display().englishName();
         ore.require(ore -> builder.add(ore, name + "Ore"));
         deepslateOre.require(ore -> builder.add(ore, "Deepslate " + name + " Ore"));
-        if (rawItem != null) {
-            rawItem.require(raw -> builder.add(raw, "Raw " + name));
-        }
-        if (rawBlock != null) {
-            rawBlock.require(raw -> builder.add(raw, "Block of Raw " + name));
-        }
+        rawItem.require(raw -> builder.add(raw, "Raw " + name));
+        rawBlock.require(raw -> builder.add(raw, "Block of Raw " + name));
     }
 
     @Override
     public void buildLootTables(FabricBlockLootTableProvider provider, Element parent) {
         var generator = provider.withConditions(DefaultResourceConditions.itemsRegistered(ore.require()));
         for (var content : List.of(ore, deepslateOre)) {
-            var drop = rawItem != null
+            var drop = rawItem.isCreated()
                     ? rawItem.require()
                     : state.getData() instanceof RefinedStateData.Base base
                             ? base.item()
@@ -104,9 +93,7 @@ public class OreSource extends UndergroundSource<SourceData.Ore> {
                 content.require(c -> generator.addDrop(c, b -> generator.oreDrops(b, drop)));
             }
         }
-        if (rawBlock != null) {
-            rawBlock.require(generator::addDrop);
-        }
+        rawBlock.require(generator::addDrop);
     }
 
     @Override
@@ -121,57 +108,41 @@ public class OreSource extends UndergroundSource<SourceData.Ore> {
                 mineable.addOptional(id);
             });
         }
-        if (rawBlock != null) {
-            rawBlock.require(raw -> {
-                var id = Registries.BLOCK.getId(raw);
-                provider.apply(parent.getConventionalBlockTag("raw_%s_blocks")).addOptional(id);
-                miningLevel.addOptional(id);
-                mineable.addOptional(id);
-                provider.apply(BlockTags.NEEDS_STONE_TOOL).addOptional(id);
-            });
-        }
+        rawBlock.require(raw -> {
+            var id = Registries.BLOCK.getId(raw);
+            provider.apply(parent.getConventionalBlockTag("raw_%s_blocks")).addOptional(id);
+            miningLevel.addOptional(id);
+            mineable.addOptional(id);
+            provider.apply(BlockTags.NEEDS_STONE_TOOL).addOptional(id);
+        });
     }
 
     @Override
     public void buildItemTags(Function<TagKey<Item>, FabricTagProvider<Item>.FabricTagBuilder> provider, Element parent) {
-        if (rawItem != null) {
-            rawItem.require(raw -> provider.apply(parent.getConventionalItemTag("raw_%s_ores"))
-                    .addOptional(Registries.ITEM.getId(raw)));
-        }
+        rawItem.require(raw -> provider.apply(parent.getConventionalItemTag("raw_%s_ores"))
+                .addOptional(Registries.ITEM.getId(raw)));
     }
 
     @Override
     public void buildBlockModels(BlockStateModelGenerator generator, Element parent) {
-        for (var content : List.of(ore, deepslateOre)) {
+        for (var content : PhasedContent.filterByCreation(ore, deepslateOre, rawBlock)) {
             content.require(generator::registerSimpleCubeAll);
-        }
-        if (rawBlock != null) {
-            rawBlock.require(generator::registerSimpleCubeAll);
         }
     }
 
     @Override
     public void buildItemModels(ItemModelGenerator generator, Element parent) {
-        if (rawItem != null) {
-            rawItem.require(item -> generator.register(item, Models.GENERATED));
-        }
+        rawItem.require(item -> generator.register(item, Models.GENERATED));
     }
 
     @Override
     public List<Block> getBlocks() {
-        if (!created) {
-            return Collections.emptyList();
-        }
-        List<Block> result = new ArrayList<>(List.of(ore.require(), deepslateOre.require()));
-        if (rawBlock != null) {
-            result.add(rawBlock.require());
-        }
-        return result;
+        return PhasedContent.getByCreation(ore, deepslateOre, rawBlock);
     }
 
     @Override
     public List<Item> getItems() {
-        return created && rawItem != null
+        return rawItem.isCreated()
                 ? Collections.singletonList(rawItem.require())
                 : Collections.emptyList();
     }

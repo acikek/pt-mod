@@ -14,8 +14,9 @@ import java.util.function.Supplier;
 public class RefinedStateBuilder {
 
     private Identifier id;
-    private PhasedContent<Item> item;
-    private PhasedContent<Item> miniItem;
+    private PhasedContent<Item> item = PhasedContent.none();
+    private boolean hasItem;
+    private PhasedContent<Item> miniItem = PhasedContent.none();
     private boolean hasMiniItem;
     private PhasedContent<Block> block;
     private PhasedContent<Fluid> fluid;
@@ -28,6 +29,11 @@ public class RefinedStateBuilder {
 
     public RefinedStateBuilder item(Object item) {
         this.item = PhasedContent.from(item, Item.class);
+        return this;
+    }
+
+    public RefinedStateBuilder addItem() {
+        hasItem = true;
         return this;
     }
 
@@ -66,8 +72,8 @@ public class RefinedStateBuilder {
     }
 
     public ElementRefinedState<?> build() {
-        var item = this.item != null ? this.item : PhasedContent.of(ElementalObjects::createItem);
-        var miniItem = this.miniItem != null ? this.miniItem : hasMiniItem ? PhasedContent.of(ElementalObjects::createItem) : null;
+        var item = hasItem && !this.item.canExist() ? PhasedContent.of(ElementalObjects::createItem) : this.item;
+        var miniItem = hasMiniItem && !this.miniItem.canExist() ? PhasedContent.of(ElementalObjects::createItem) : this.miniItem;
         return fluid != null
                 ? new FluidRefinedState(id, item, miniItem, block, fluid)
                 : new BaseRefinedState.Type(id, item, miniItem, block, type);
