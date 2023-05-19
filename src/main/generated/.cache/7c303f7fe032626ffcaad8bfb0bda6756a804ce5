@@ -1,4 +1,4 @@
-// 1.19.4	2023-05-17T09:03:48.71625294	PT/Block Loot Tables
+// 1.19.4	2023-05-18T18:44:26.569937337	PT/Block Loot Tables
 6c8aaca8f51b692e5c2f786d36b5dcba9e9a54e4 data/pt/loot_tables/blocks/nickel_raw_block.json
 8269f4a2923cf13ec0faaaff4380fcdafbe19978 data/pt/loot_tables/blocks/boron_block.json
 623ed1a7a451875bfa03b3ec2bbee4a8a0453dd1 data/pt/loot_tables/blocks/osmium_source_deepslate.json
@@ -8,8 +8,8 @@ b676d4bf3964a45118f3e82824eeb8564d6fd545 data/pt/loot_tables/blocks/osmium_block
 8c49c705e3373f1c66177153cda3e22e408cd4df data/pt/loot_tables/blocks/nickel_source_block.json
 8028b5492361427ee46e96dbe4c03b3f3fc9fa65 data/pt/loot_tables/blocks/nickel_source_deepslate.json
 fbbca7854ebc9b6e0a64698a7c7ee909dc9cb917 data/pt/loot_tables/blocks/helium_block.json
-a27d9385ca531f7b75afbb1cf18485dd04d03112 data/pt/loot_tables/blocks/silver_source_deepslate.json
 dfc5d3b53466155738e70ea416400ce3fdd88597 data/pt/loot_tables/blocks/vanadium_source_deepslate.json
+a27d9385ca531f7b75afbb1cf18485dd04d03112 data/pt/loot_tables/blocks/silver_source_deepslate.json
 3709a22007185c9b2d2cae9b22a176dae5c75e2b data/pt/loot_tables/blocks/chromium_block.json
 f6dc04dd3cf84061964401281461924b7429e9aa data/pt/loot_tables/blocks/cadmium_source_block.json
 cb58fa06cb3f455459091b864f3a4e129a6f691f data/pt/loot_tables/blocks/cobalt_source_block.json
@@ -37,8 +37,8 @@ a8396e15bb20658df14b1b6e2fbdc58bdfafbaae data/pt/loot_tables/blocks/manganese_so
 1c890159099ad4ec54d6721f329f5bf8030dea46 data/pt/loot_tables/blocks/silver_block.json
 0065691d4f9f407979ad42266589132fd6d992a3 data/pt/loot_tables/blocks/vanadium_block.json
 1ecf822dba83cfbfc3cf546762a027f7ca3d9d9f data/pt/loot_tables/blocks/manganese_raw_block.json
-2d062da9b18d102c220fcba88a7d54996eb12fb4 data/pt/loot_tables/blocks/cadmium_raw_block.json
 1379795b3ca552bc82198c2a27cacf1eb3084b60 data/pt/loot_tables/blocks/sulfur_block.json
+2d062da9b18d102c220fcba88a7d54996eb12fb4 data/pt/loot_tables/blocks/cadmium_raw_block.json
 5d5f44fb113b19d8bba978151bce52352ed1ced7 data/pt/loot_tables/blocks/lithium_block.json
 94384cab3f8c4e9b17e85055b7404c0d3b7905be data/pt/loot_tables/blocks/stibnite_cluster.json
 e7a44c5c52a1983b1bdc1add323e7093947a326c data/pt/loot_tables/blocks/chromium_source_block.json

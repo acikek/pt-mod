@@ -2,6 +2,7 @@ package com.acikek.pt.api.impl.datagen;
 
 import com.acikek.pt.api.datagen.DatagenDelegator;
 import com.acikek.pt.block.ModBlocks;
+import com.acikek.pt.core.api.AbstractPeriodicTable;
 import com.acikek.pt.core.api.element.Element;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricBlockLootTableProvider;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
@@ -11,48 +12,22 @@ import net.minecraft.data.client.BlockStateModelGenerator;
 import net.minecraft.data.client.ItemModelGenerator;
 import net.minecraft.data.client.TextureKey;
 import net.minecraft.data.client.TextureMap;
+import net.minecraft.data.server.recipe.RecipeJsonProvider;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.item.Item;
 import net.minecraft.registry.tag.TagKey;
 import net.minecraft.util.Identifier;
 import org.apache.logging.log4j.util.TriConsumer;
 
+import java.util.function.BiConsumer;
+import java.util.function.Consumer;
 import java.util.function.Function;
 
 public class PTDatagenImpl {
 
-    public static <T> void delegate(TriConsumer<DatagenDelegator, T, Element> fn, T context, Element element) {
-        element.forEachContent(content -> fn.accept(content, context, element));
-    }
-
-    public static void buildTranslationsForElement(FabricLanguageProvider.TranslationBuilder builder, Element element) {
-        builder.add(element.getNameKey(), element.display().englishName());
-        builder.add(element.getSymbolKey(), element.display().symbol());
-        delegate(DatagenDelegator::buildTranslations, builder, element);
-    }
-
-    public static void buildBlocksModelsForElement(BlockStateModelGenerator generator, Element element) {
-        delegate(DatagenDelegator::buildBlockModels, generator, element);
-    }
-
-    public static void buildItemModelsForElement(ItemModelGenerator itemModelGenerator, Element element) {
-        delegate(DatagenDelegator::buildItemModels, itemModelGenerator, element);
-    }
-
-    public static void buildLootTablesForElement(FabricBlockLootTableProvider provider, Element element) {
-        delegate(DatagenDelegator::buildLootTables, provider, element);
-    }
-
-    public static void buildBlockTagsForElement(Function<TagKey<Block>, FabricTagProvider<Block>.FabricTagBuilder> provider, Element element) {
-        delegate(DatagenDelegator::buildBlockTags, provider, element);
-    }
-
-    public static void buildItemTagsForElement(Function<TagKey<Item>, FabricTagProvider<Item>.FabricTagBuilder> provider, Element element) {
-        delegate(DatagenDelegator::buildItemTags, provider, element);
-    }
-
-    public static void buildFluidTagsForElement(Function<TagKey<Fluid>, FabricTagProvider<Fluid>.FabricTagBuilder> provider, Element element) {
-        delegate(DatagenDelegator::buildFluidTags, provider, element);
+    public static <T> void delegate(BiConsumer<DatagenDelegator, T> fn, T context, AbstractPeriodicTable table) {
+        table.forEachMineral(mineral -> fn.accept(mineral, context));
+        table.forEachElement(element -> fn.accept(element, context));
     }
 
     public static TextureMap getPowderTextureMap(Block powderBlock) {

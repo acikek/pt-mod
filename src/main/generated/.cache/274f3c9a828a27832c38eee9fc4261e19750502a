@@ -1,4 +1,4 @@
-// 1.19.4	2023-05-17T09:03:48.720517669	PT/Tags for minecraft:block
+// 1.19.4	2023-05-18T18:44:26.576038455	PT/Tags for minecraft:block
 7a1b3e7819ec3eacc41952771e87b3960199a8b7 data/c/tags/blocks/raw_nickel_blocks.json
 d547276cc0ac182c296dfdd45d10505f442ff3f6 data/c/tags/blocks/osmium_blocks.json
 9ca4cdd67bd1437721f0b6815cd8685574e298cf data/c/tags/blocks/beryllium_blocks.json
@@ -15,7 +15,7 @@ d4280f3b07844cfadd8cdff045d3011f87645c85 data/c/tags/blocks/platinum_blocks.json
 7d740746208628919af0f711bb30eae0a686fd33 data/c/tags/blocks/cadmium_blocks.json
 46609ece9100845572f1684a14eb5ca8c7295e6e data/c/tags/blocks/colemanites.json
 51756bdf26f11af7318fbbd7b453ef6f85c8248a data/c/tags/blocks/platinum_ores.json
-764968c25d8cc4d402c442904fc374a837660f5d data/minecraft/tags/blocks/mineable/pickaxe.json
+b869faa8a533340eebe8dde8953b24bc8176a0ae data/minecraft/tags/blocks/mineable/pickaxe.json
 4cb9dac9e532ec2633fc3c0458bfaa76b9eaa605 data/c/tags/blocks/raw_platinum_blocks.json
 6b65fbf88670a623ef0be592f509f0b609c1b749 data/c/tags/blocks/manganese_ores.json
 d8bfe52ce47d893f536c74b48efbd249518a9961 data/c/tags/blocks/boron_blocks.json
@@ -45,5 +45,5 @@ a7bd21d097ab2f19a1d56d6320a908f7206135f2 data/c/tags/blocks/silver_ores.json
 32338eb919e8d1e8f88f635215dab194203a830b data/c/tags/blocks/gypsum_clusters.json
 a6a939b6354640e95ea7cacc967cce94e7a8a8b0 data/c/tags/blocks/raw_silver_blocks.json
 1d84fcd8b93a9cf5b79b0ee203e1f8b66a8fcab2 data/c/tags/blocks/chromium_blocks.json
-9ad1bdf192e56ac0853d68b8b90143188e3e5256 data/minecraft/tags/blocks/needs_iron_tool.json
+1e443cc462fe69e1bf9ba0a872ad12748a62285f data/minecraft/tags/blocks/needs_iron_tool.json
 fb5b600ac57f69914ae89a1c062c3173aeccd347 data/c/tags/blocks/cobalt_blocks.json

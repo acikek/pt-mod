@@ -4,7 +4,6 @@ import com.acikek.pt.api.request.FeatureRequests;
 import com.acikek.pt.api.request.RequestTypes;
 import com.acikek.pt.core.api.content.ContentContext;
 import com.acikek.pt.core.api.content.PhasedContent;
-import com.acikek.pt.core.api.element.Element;
 import com.acikek.pt.core.api.refined.RefinedStateData;
 import com.acikek.pt.core.api.refined.RefinedStateType;
 import com.acikek.pt.core.api.refined.RefinedStates;
@@ -44,13 +43,13 @@ public class FluidRefinedState extends BaseRefinedState<RefinedStateData.HasFlui
     }
 
     @Override
-    public void buildTranslations(FabricLanguageProvider.TranslationBuilder builder, Element parent) {
-        super.buildTranslations(builder, parent);
+    public void buildTranslations(FabricLanguageProvider.TranslationBuilder builder) {
+        super.buildTranslations(builder);
         fluid.require(fluid -> builder.add(fluid.getDefaultState().getBlockState().getBlock(), parent.display().englishName()));
     }
 
     @Override
-    public void buildFluidTags(Function<TagKey<Fluid>, FabricTagProvider<Fluid>.FabricTagBuilder> provider, Element parent) {
+    public void buildFluidTags(Function<TagKey<Fluid>, FabricTagProvider<Fluid>.FabricTagBuilder> provider) {
         fluid.require(fluid -> provider.apply(parent.getConventionalFluidTag("%s")).addOptional(Registries.FLUID.getId(fluid)));
     }
 

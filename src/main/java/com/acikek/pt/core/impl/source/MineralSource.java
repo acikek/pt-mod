@@ -2,28 +2,20 @@ package com.acikek.pt.core.impl.source;
 
 import com.acikek.pt.api.request.FeatureRequests;
 import com.acikek.pt.core.api.content.ContentContext;
-import com.acikek.pt.core.api.element.Element;
 import com.acikek.pt.core.api.mineral.Mineral;
 import com.acikek.pt.core.api.registry.ElementIds;
 import com.acikek.pt.core.api.registry.PTRegistry;
 import com.acikek.pt.core.api.signature.ElementSignatureEntry;
 import com.acikek.pt.core.api.signature.SignatureHolder;
 import com.acikek.pt.core.api.source.ElementSources;
-import net.fabricmc.fabric.api.datagen.v1.provider.FabricBlockLootTableProvider;
-import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
-import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
 import net.minecraft.block.Block;
-import net.minecraft.data.client.BlockStateModelGenerator;
-import net.minecraft.data.client.ItemModelGenerator;
 import net.minecraft.item.Item;
-import net.minecraft.registry.tag.TagKey;
 import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.function.Function;
 
 public class MineralSource<D> extends UndergroundSource<D> {
 
@@ -75,36 +67,6 @@ public class MineralSource<D> extends UndergroundSource<D> {
     @Override
     public void injectSignature(SignatureHolder holder) {
         mineral.injectSignature(holder);
-    }
-
-    @Override
-    public void buildBlockModels(BlockStateModelGenerator generator, Element parent) {
-        mineral.buildBlockModels(generator, parent);
-    }
-
-    @Override
-    public void buildItemModels(ItemModelGenerator generator, Element parent) {
-        mineral.buildItemModels(generator, parent);
-    }
-
-    @Override
-    public void buildTranslations(FabricLanguageProvider.TranslationBuilder builder, Element parent) {
-        mineral.buildTranslations(builder, parent);
-    }
-
-    @Override
-    public void buildLootTables(FabricBlockLootTableProvider provider, Element parent) {
-        mineral.buildLootTables(provider, parent);
-    }
-
-    @Override
-    public void buildBlockTags(Function<TagKey<Block>, FabricTagProvider<Block>.FabricTagBuilder> provider, Element parent) {
-        mineral.buildBlockTags(provider, parent);
-    }
-
-    @Override
-    public void buildItemTags(Function<TagKey<Item>, FabricTagProvider<Item>.FabricTagBuilder> provider, Element parent) {
-        mineral.buildItemTags(provider, parent);
     }
 
     @Override

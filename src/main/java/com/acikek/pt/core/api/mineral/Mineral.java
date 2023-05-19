@@ -8,12 +8,13 @@ import com.acikek.pt.core.api.display.MineralDisplay;
 import com.acikek.pt.core.api.registry.PTRegistry;
 import com.acikek.pt.core.api.signature.ElementSignatureEntry;
 import com.acikek.pt.core.api.signature.SignatureHolder;
+import com.acikek.pt.core.api.source.MaterialHolder;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
 import java.util.List;
 
-public interface Mineral<D> extends DataHolder<D>, DisplayHolder<MineralDisplay>, DatagenDelegator, SignatureHolder, MineralResultHolder {
+public interface Mineral<D> extends DataHolder<D>, DisplayHolder<MineralDisplay>, SignatureHolder, MineralResultHolder, DatagenDelegator, MaterialHolder {
 
     void init();
 

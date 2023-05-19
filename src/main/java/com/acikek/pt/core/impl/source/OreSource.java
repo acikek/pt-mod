@@ -39,6 +39,7 @@ public class OreSource extends UndergroundSource<SourceData.Ore> {
     private final PhasedContent<Block> rawBlock;
     private final int miningLevel;
 
+    private Element parent;
     private ElementRefinedState<?> state;
 
     public OreSource(PhasedContent<Block> ore, PhasedContent<Block> deepslateOre, PhasedContent<Item> rawItem, PhasedContent<Block> rawBlock, int miningLevel) {
@@ -61,6 +62,7 @@ public class OreSource extends UndergroundSource<SourceData.Ore> {
 
     @Override
     public void register(PTRegistry registry, ElementIds<String> ids, ContentContext.Source context, FeatureRequests.Single features) {
+        parent = context.parent();
         if (!features.contains(RequestTypes.CONTENT)) {
             return;
         }
@@ -72,7 +74,7 @@ public class OreSource extends UndergroundSource<SourceData.Ore> {
     }
 
     @Override
-    public void buildTranslations(FabricLanguageProvider.TranslationBuilder builder, Element parent) {
+    public void buildTranslations(FabricLanguageProvider.TranslationBuilder builder) {
         String name = parent.display().englishName();
         ore.require(ore -> builder.add(ore, name + " Ore"));
         deepslateOre.require(ore -> builder.add(ore, "Deepslate " + name + " Ore"));
@@ -81,7 +83,7 @@ public class OreSource extends UndergroundSource<SourceData.Ore> {
     }
 
     @Override
-    public void buildLootTables(FabricBlockLootTableProvider provider, Element parent) {
+    public void buildLootTables(FabricBlockLootTableProvider provider) {
         var generator = provider.withConditions(DefaultResourceConditions.itemsRegistered(ore.require()));
         for (var content : List.of(ore, deepslateOre)) {
             var drop = rawItem.isCreated()
@@ -97,7 +99,7 @@ public class OreSource extends UndergroundSource<SourceData.Ore> {
     }
 
     @Override
-    public void buildBlockTags(Function<TagKey<Block>, FabricTagProvider<Block>.FabricTagBuilder> provider, Element parent) {
+    public void buildBlockTags(Function<TagKey<Block>, FabricTagProvider<Block>.FabricTagBuilder> provider) {
         var miningLevel = provider.apply(MiningLevelManager.getBlockTag(this.miningLevel));
         var mineable = provider.apply(BlockTags.PICKAXE_MINEABLE);
         for (var content : List.of(ore, deepslateOre)) {
@@ -118,20 +120,20 @@ public class OreSource extends UndergroundSource<SourceData.Ore> {
     }
 
     @Override
-    public void buildItemTags(Function<TagKey<Item>, FabricTagProvider<Item>.FabricTagBuilder> provider, Element parent) {
+    public void buildItemTags(Function<TagKey<Item>, FabricTagProvider<Item>.FabricTagBuilder> provider) {
         rawItem.require(raw -> provider.apply(parent.getConventionalItemTag("raw_%s_ores"))
                 .addOptional(Registries.ITEM.getId(raw)));
     }
 
     @Override
-    public void buildBlockModels(BlockStateModelGenerator generator, Element parent) {
+    public void buildBlockModels(BlockStateModelGenerator generator) {
         for (var content : PhasedContent.filterByCreation(ore, deepslateOre, rawBlock)) {
             content.require(generator::registerSimpleCubeAll);
         }
     }
 
     @Override
-    public void buildItemModels(ItemModelGenerator generator, Element parent) {
+    public void buildItemModels(ItemModelGenerator generator) {
         rawItem.require(item -> generator.register(item, Models.GENERATED));
     }
 

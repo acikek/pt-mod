@@ -43,16 +43,6 @@ public class AtmosphericSource implements ElementSource<Range<Integer>> {
     }
 
     @Override
-    public void buildTranslations(FabricLanguageProvider.TranslationBuilder builder, Element parent) {
-        // Empty
-    }
-
-    @Override
-    public void buildLootTables(FabricBlockLootTableProvider provider, Element parent) {
-        // Empty
-    }
-
-    @Override
     public List<Block> getBlocks() {
         return Collections.emptyList();
     }

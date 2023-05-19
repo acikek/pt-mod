@@ -52,6 +52,8 @@ public abstract class BaseRefinedState<D> implements ElementRefinedState<D> {
     protected final PhasedContent<Block> block;
     protected final RefinedStateType type;
 
+    protected Element parent;
+
     public BaseRefinedState(Identifier id, PhasedContent<Item> item, PhasedContent<Item> miniItem, PhasedContent<Block> block, RefinedStateType type) {
         Stream.of(id, item, miniItem, block).forEach(Objects::requireNonNull);
         if (!block.canExist()) {
@@ -76,7 +78,18 @@ public abstract class BaseRefinedState<D> implements ElementRefinedState<D> {
     }
 
     @Override
-    public void buildTranslations(FabricLanguageProvider.TranslationBuilder builder, Element parent) {
+    public void register(PTRegistry registry, ElementIds<String> ids, ContentContext.State context, FeatureRequests.Single features) {
+        parent = context.parent();
+        if (!features.contains(RequestTypes.CONTENT)) {
+            return;
+        }
+        item.create(item -> registry.registerItem(ids.getItemId(), item));
+        miniItem.create(item -> registry.registerItem(ids.getMiniItemId(), item));
+        block.create(block -> registry.registerBlock(ids.getBlockId(), block));
+    }
+
+    @Override
+    public void buildTranslations(FabricLanguageProvider.TranslationBuilder builder) {
         String name = parent.display().englishName();
         block.require(block -> builder.add(block, type.getBlockName(name)));
         item.require(item -> builder.add(item, type.getItemName(name)));
@@ -84,19 +97,19 @@ public abstract class BaseRefinedState<D> implements ElementRefinedState<D> {
     }
 
     @Override
-    public void buildBlockModels(BlockStateModelGenerator generator, Element parent) {
+    public void buildBlockModels(BlockStateModelGenerator generator) {
         block.require(block -> type.buildRefinedBlockModel(generator, block));
     }
 
     @Override
-    public void buildItemModels(ItemModelGenerator generator, Element parent) {
+    public void buildItemModels(ItemModelGenerator generator) {
         for (var content : PhasedContent.filterByCreation(item, miniItem)) {
             content.require(c -> generator.register(c, Models.GENERATED));
         }
     }
 
     @Override
-    public void buildBlockTags(Function<TagKey<Block>, FabricTagProvider<Block>.FabricTagBuilder> provider, Element parent) {
+    public void buildBlockTags(Function<TagKey<Block>, FabricTagProvider<Block>.FabricTagBuilder> provider) {
         block.require(block -> {
             var id = Registries.BLOCK.getId(block);
             type.buildRefinedBlockTags(provider, id);
@@ -105,14 +118,14 @@ public abstract class BaseRefinedState<D> implements ElementRefinedState<D> {
     }
 
     @Override
-    public void buildLootTables(FabricBlockLootTableProvider provider, Element parent) {
+    public void buildLootTables(FabricBlockLootTableProvider provider) {
         block.require(block ->
             provider.withConditions(DefaultResourceConditions.itemsRegistered(block)).addDrop(block)
         );
     }
 
     @Override
-    public void buildItemTags(Function<TagKey<Item>, FabricTagProvider<Item>.FabricTagBuilder> provider, Element parent) {
+    public void buildItemTags(Function<TagKey<Item>, FabricTagProvider<Item>.FabricTagBuilder> provider) {
         boolean powder = type == RefinedStateType.POWDER;
         item.require(item -> {
             for (String format : (powder ? List.of("%s_dusts", "%ss") : List.of("%s_ingots", "%s"))) {
@@ -124,16 +137,6 @@ public abstract class BaseRefinedState<D> implements ElementRefinedState<D> {
                 provider.apply(parent.getConventionalItemTag(format)).addOptional(Registries.ITEM.getId(item));
             }
         });
-    }
-
-    @Override
-    public void register(PTRegistry registry, ElementIds<String> ids, ContentContext.State context, FeatureRequests.Single features) {
-        if (!features.contains(RequestTypes.CONTENT)) {
-            return;
-        }
-        item.create(item -> registry.registerItem(ids.getItemId(), item));
-        miniItem.create(item -> registry.registerItem(ids.getMiniItemId(), item));
-        block.create(block -> registry.registerBlock(ids.getBlockId(), block));
     }
 
     @Override

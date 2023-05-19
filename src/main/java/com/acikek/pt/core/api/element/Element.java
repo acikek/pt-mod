@@ -1,6 +1,7 @@
 package com.acikek.pt.core.api.element;
 
 import com.acikek.pt.api.PTApi;
+import com.acikek.pt.api.datagen.DatagenDelegator;
 import com.acikek.pt.api.request.FeatureRequests;
 import com.acikek.pt.core.api.content.ContentBase;
 import com.acikek.pt.core.api.content.ContentContext;
@@ -19,8 +20,16 @@ import com.acikek.pt.core.api.source.ElementSource;
 import com.acikek.pt.core.api.source.MaterialHolder;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
+import net.fabricmc.fabric.api.datagen.v1.provider.FabricBlockLootTableProvider;
+import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
+import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
 import net.minecraft.block.Block;
+import net.minecraft.data.client.BlockStateModelGenerator;
+import net.minecraft.data.client.ItemModelGenerator;
+import net.minecraft.data.server.recipe.RecipeJsonProvider;
+import net.minecraft.fluid.Fluid;
 import net.minecraft.item.Item;
+import net.minecraft.registry.tag.TagKey;
 import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
@@ -29,9 +38,10 @@ import net.minecraft.world.World;
 import java.util.Collections;
 import java.util.List;
 import java.util.function.BiConsumer;
+import java.util.function.Consumer;
 import java.util.function.Function;
 
-public interface Element extends DisplayHolder<ElementDisplay>, SourceStateMapper, SignatureHolder, MaterialHolder {
+public interface Element extends DisplayHolder<ElementDisplay>, SourceStateMapper, SignatureHolder, DatagenDelegator, MaterialHolder {
 
     ElementIds<String> elementIds();
 
@@ -107,6 +117,48 @@ public interface Element extends DisplayHolder<ElementDisplay>, SourceStateMappe
                 (source, ctx) -> source.register(registry, getElementIdsForState(ctx.state()), ctx, sourceRequests.getContent(source.getTypeId()))
         );
         afterRegister();
+    }
+
+    @Override
+    default void buildTranslations(FabricLanguageProvider.TranslationBuilder builder) {
+        builder.add(getNameKey(), display().englishName());
+        builder.add(getSymbolKey(), display().symbol());
+        forEachContent(content -> content.buildTranslations(builder));
+    }
+
+    @Override
+    default void buildBlockModels(BlockStateModelGenerator generator) {
+        forEachContent(content -> content.buildBlockModels(generator));
+    }
+
+    @Override
+    default void buildItemModels(ItemModelGenerator generator) {
+        forEachContent(content -> content.buildItemModels(generator));
+    }
+
+    @Override
+    default void buildLootTables(FabricBlockLootTableProvider provider) {
+        forEachContent(content -> content.buildLootTables(provider));
+    }
+
+    @Override
+    default void buildRecipes(Consumer<RecipeJsonProvider> exporter) {
+        forEachContent(content -> content.buildRecipes(exporter));
+    }
+
+    @Override
+    default void buildBlockTags(Function<TagKey<Block>, FabricTagProvider<Block>.FabricTagBuilder> provider) {
+        forEachContent(content -> content.buildBlockTags(provider));
+    }
+
+    @Override
+    default void buildItemTags(Function<TagKey<Item>, FabricTagProvider<Item>.FabricTagBuilder> provider) {
+        forEachContent(content -> content.buildItemTags(provider));
+    }
+
+    @Override
+    default void buildFluidTags(Function<TagKey<Fluid>, FabricTagProvider<Fluid>.FabricTagBuilder> provider) {
+        forEachContent(content -> content.buildFluidTags(provider));
     }
 
     @Environment(EnvType.CLIENT)

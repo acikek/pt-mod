@@ -2,6 +2,38 @@
   "replace": false,
   "values": [
     {
+      "id": "pt:test_mineral",
+      "required": false
+    },
+    {
+      "id": "pt:lithiophilite",
+      "required": false
+    },
+    {
+      "id": "pt:colemanite",
+      "required": false
+    },
+    {
+      "id": "pt:anthracite",
+      "required": false
+    },
+    {
+      "id": "pt:stibnite",
+      "required": false
+    },
+    {
+      "id": "pt:stibnite_cluster",
+      "required": false
+    },
+    {
+      "id": "pt:gypsum",
+      "required": false
+    },
+    {
+      "id": "pt:gypsum_cluster",
+      "required": false
+    },
+    {
       "id": "pt:hydrogen_block",
       "required": false
     },
@@ -14,15 +46,7 @@
       "required": false
     },
     {
-      "id": "pt:lithiophilite",
-      "required": false
-    },
-    {
       "id": "pt:beryllium_block",
-      "required": false
-    },
-    {
-      "id": "pt:test_mineral",
       "required": false
     },
     {
@@ -30,27 +54,11 @@
       "required": false
     },
     {
-      "id": "pt:colemanite",
-      "required": false
-    },
-    {
       "id": "pt:carbon_block",
       "required": false
     },
     {
-      "id": "pt:anthracite",
-      "required": false
-    },
-    {
       "id": "pt:oxygen_block",
-      "required": false
-    },
-    {
-      "id": "pt:gypsum",
-      "required": false
-    },
-    {
-      "id": "pt:gypsum_cluster",
       "required": false
     },
     {
@@ -167,14 +175,6 @@
     },
     {
       "id": "pt:antimony_block",
-      "required": false
-    },
-    {
-      "id": "pt:stibnite",
-      "required": false
-    },
-    {
-      "id": "pt:stibnite_cluster",
       "required": false
     },
     {

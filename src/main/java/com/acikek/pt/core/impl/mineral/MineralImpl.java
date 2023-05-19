@@ -5,7 +5,6 @@ import com.acikek.pt.api.request.FeatureRequests;
 import com.acikek.pt.api.request.RequestTypes;
 import com.acikek.pt.core.api.content.PhasedContent;
 import com.acikek.pt.core.api.display.MineralDisplay;
-import com.acikek.pt.core.api.element.Element;
 import com.acikek.pt.core.api.mineral.DefaultMineralData;
 import com.acikek.pt.core.api.mineral.Mineral;
 import com.acikek.pt.core.api.registry.PTRegistry;
@@ -117,19 +116,19 @@ public class MineralImpl implements Mineral<DefaultMineralData> {
     }
 
     @Override
-    public void buildBlockModels(BlockStateModelGenerator generator, Element parent) {
+    public void buildBlockModels(BlockStateModelGenerator generator) {
         block.require(generator::registerSimpleCubeAll);
         cluster.require(generator::registerAmethyst);
     }
 
     @Override
-    public void buildItemModels(ItemModelGenerator generator, Element parent) {
+    public void buildItemModels(ItemModelGenerator generator) {
         cluster.require(block -> generator.register(block.asItem(), Models.GENERATED));
         rawMineral.require(item -> generator.register(item, Models.GENERATED));
     }
 
     @Override
-    public void buildTranslations(FabricLanguageProvider.TranslationBuilder builder, Element parent) {
+    public void buildTranslations(FabricLanguageProvider.TranslationBuilder builder) {
         String name = display().englishName();
         block.require(b -> builder.add(b, name));
         cluster.require(block -> builder.add(block, name + " Cluster"));
@@ -162,7 +161,7 @@ public class MineralImpl implements Mineral<DefaultMineralData> {
     }
 
     @Override
-    public void buildLootTables(FabricBlockLootTableProvider provider, Element parent) {
+    public void buildLootTables(FabricBlockLootTableProvider provider) {
         block.require(block -> {
             var generator = provider.withConditions(DefaultResourceConditions.itemsRegistered(block));
             if (!rawMineral.canExist()) {
@@ -177,7 +176,7 @@ public class MineralImpl implements Mineral<DefaultMineralData> {
     }
 
     @Override
-    public void buildBlockTags(Function<TagKey<Block>, FabricTagProvider<Block>.FabricTagBuilder> provider, Element parent) {
+    public void buildBlockTags(Function<TagKey<Block>, FabricTagProvider<Block>.FabricTagBuilder> provider) {
         block.require(block -> {
             var mineral = Registries.BLOCK.getId(block);
             provider.apply(BlockTags.PICKAXE_MINEABLE).addOptional(mineral);
@@ -192,7 +191,7 @@ public class MineralImpl implements Mineral<DefaultMineralData> {
     }
 
     @Override
-    public void buildItemTags(Function<TagKey<Item>, FabricTagProvider<Item>.FabricTagBuilder> provider, Element parent) {
+    public void buildItemTags(Function<TagKey<Item>, FabricTagProvider<Item>.FabricTagBuilder> provider) {
         rawMineral.require(raw -> {
             for (String formatter : List.of("raw_%ss", "%s_crystals")) {
                 provider.apply(getConventionalItemTag(formatter)).addOptional(Registries.ITEM.getId(raw));
@@ -212,10 +211,7 @@ public class MineralImpl implements Mineral<DefaultMineralData> {
 
     @Override
     public List<Item> getItems() {
-        if (!block.isCreated()) {
-            return Collections.emptyList();
-        }
-        return rawMineral.isCreated()
+        return block.isCreated() && rawMineral.isCreated()
                 ? Collections.singletonList(rawMineral.require())
                 : Collections.emptyList();
     }

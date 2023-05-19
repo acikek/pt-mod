@@ -11,6 +11,7 @@ import com.acikek.pt.core.api.registry.ElementIds;
 import com.acikek.pt.core.api.registry.PTRegistry;
 import com.acikek.pt.core.api.source.ElementSource;
 import com.acikek.pt.core.api.source.ElementSources;
+import com.acikek.pt.core.api.source.MaterialHolder;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.util.Identifier;
@@ -20,7 +21,7 @@ import org.jetbrains.annotations.NotNull;
  * @param <C> the context type passed to this content in registry requests and callbacks
  * @param <D> the public data type exposed from implementation details
  */
-public interface ContentBase<D, C extends ContentContext> extends DataHolder<D>, DatagenDelegator, MineralResultHolder {
+public interface ContentBase<D, C extends ContentContext> extends DataHolder<D>, DatagenDelegator, MineralResultHolder, MaterialHolder {
 
     /**
      * @return an identifier specifying the type of this content.

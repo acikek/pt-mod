@@ -6,16 +6,15 @@ import com.acikek.pt.core.api.PeriodicTable;
 import net.fabricmc.fabric.api.datagen.v1.DataGeneratorEntrypoint;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
-import net.fabricmc.fabric.api.datagen.v1.provider.FabricBlockLootTableProvider;
-import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
-import net.fabricmc.fabric.api.datagen.v1.provider.FabricModelProvider;
-import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
+import net.fabricmc.fabric.api.datagen.v1.provider.*;
 import net.minecraft.data.client.BlockStateModelGenerator;
 import net.minecraft.data.client.ItemModelGenerator;
 import net.minecraft.data.client.TexturedModel;
+import net.minecraft.data.server.recipe.RecipeJsonProvider;
 import net.minecraft.registry.RegistryWrapper;
 
 import java.io.IOException;
+import java.util.function.Consumer;
 
 public class PTDatagen implements DataGeneratorEntrypoint {
 
@@ -56,6 +55,13 @@ public class PTDatagen implements DataGeneratorEntrypoint {
             @Override
             public void generate() {
                 PTDatagenApi.buildLootTables(this, PeriodicTable.INSTANCE);
+            }
+        });
+
+        pack.addProvider((FabricDataOutput output) -> new FabricRecipeProvider(output) {
+            @Override
+            public void generate(Consumer<RecipeJsonProvider> exporter) {
+                PTDatagenApi.buildRecipes(exporter, PeriodicTable.INSTANCE);
             }
         });
 

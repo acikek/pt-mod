@@ -1,4 +1,4 @@
-// 1.19.4	2023-05-17T09:03:48.718932791	PT/Tags for minecraft:item
+// 1.19.4	2023-05-18T18:44:26.574526304	PT/Tags for minecraft:item
 ac32083eaeb99acbb09ae2a46128e964bf1b9861 data/c/tags/items/beryllium_nuggets.json
 3cc45da958fb5745220860c826bfdfb6d6908936 data/c/tags/items/raw_silver_ores.json
 3071a3d905a52d5940290ddfd5692314d5838d86 data/c/tags/items/nickel_mini.json
@@ -6,9 +6,9 @@ ac32083eaeb99acbb09ae2a46128e964bf1b9861 data/c/tags/items/beryllium_nuggets.jso
 c021db72f7a3d74f9712d35b48af13267200d4ed data/c/tags/items/vanadium_nuggets.json
 6c35ea4278d9d427b795b86151804d178cbeed88 data/c/tags/items/platinum_mini.json
 061adf1e48b58a1a38a0479fd2e18c5c32e146be data/c/tags/items/platinum_ingots.json
+09511e7e9b4584f7ebb9041318452bdfcbc0d001 data/c/tags/items/stibnite_crystals.json
 85e9a86a176539189d157afc282291e3e520dec5 data/c/tags/items/helium.json
 458607ee8fcee1ed4b46f4c088cc6c8096d18417 data/c/tags/items/chromium.json
-09511e7e9b4584f7ebb9041318452bdfcbc0d001 data/c/tags/items/stibnite_crystals.json
 d61f82657ec031ad5504f0cbf97626aee4c0cbb9 data/c/tags/items/silver_nuggets.json
 1b1fe345b00d6faf9361c912b2658e491a00fb73 data/c/tags/items/manganese_mini.json
 01e4c6fe045ce86a295d0dd52d4f08b2dbed4ea2 data/c/tags/items/antimony_ingots.json
@@ -37,13 +37,13 @@ bce597d5a13647e2e7c8d2db0ae04d3bfb91aab3 data/c/tags/items/carbon_ingots.json
 569f47c9e93006c2be936377c1df2ac6111c099a data/c/tags/items/hydrogen_ingots.json
 9107dea67affe0e5c2d9ebd541f0bf98bb869be0 data/c/tags/items/carbon_mini.json
 4e62fc313dbd29429c2f236ca39c96a96a951207 data/c/tags/items/nickel_ingots.json
-bce597d5a13647e2e7c8d2db0ae04d3bfb91aab3 data/c/tags/items/carbon.json
 c6e515fd147fe45a39f6e626c6f724787d088bab data/c/tags/items/gypsum_crystals.json
+bce597d5a13647e2e7c8d2db0ae04d3bfb91aab3 data/c/tags/items/carbon.json
 d9b141b0c0bc9964f6d05b8e9fc4f2aab17b5a0c data/c/tags/items/raw_osmium_ores.json
 3ef142d8860faa62a0b33f46e0b61736d8ff5b3e data/c/tags/items/hydrogen_mini.json
 01e4c6fe045ce86a295d0dd52d4f08b2dbed4ea2 data/c/tags/items/antimony.json
-dd6d52c26734ad428c7670fce131361f9e717d67 data/c/tags/items/cadmium_nuggets.json
 09511e7e9b4584f7ebb9041318452bdfcbc0d001 data/c/tags/items/raw_stibnites.json
+dd6d52c26734ad428c7670fce131361f9e717d67 data/c/tags/items/cadmium_nuggets.json
 285dea9d77b3b1f4ee89c5646ae72f641dfc3c21 data/c/tags/items/chromium_mini.json
 9fa6c0e92a586f55c7ac0cc7495f33282f8caf41 data/c/tags/items/oxygen_ingots.json
 f6d73e42a29d36ae7fa0d81337a432891f552330 data/c/tags/items/raw_vanadium_ores.json
@@ -81,8 +81,8 @@ c2c2e2a2afcdc7300026198d0ab3e207f15a02e6 data/c/tags/items/cadmium.json
 6b8523585356410f249ea469441185f7022c3187 data/c/tags/items/raw_chromium_ores.json
 530f0c3e9f9981a83bbedd44cf9a13901f691f7e data/c/tags/items/raw_cobalt_ores.json
 ead0dd8902fae7996801a8ba1fb0b39ccae45e02 data/c/tags/items/silver.json
-78abc6ca59c764ce8d62c8ec913d324f1a10018b data/c/tags/items/raw_anthracites.json
 c6e515fd147fe45a39f6e626c6f724787d088bab data/c/tags/items/raw_gypsums.json
+78abc6ca59c764ce8d62c8ec913d324f1a10018b data/c/tags/items/raw_anthracites.json
 ead0dd8902fae7996801a8ba1fb0b39ccae45e02 data/c/tags/items/silver_ingots.json
 78abc6ca59c764ce8d62c8ec913d324f1a10018b data/c/tags/items/anthracite_crystals.json
 3071a3d905a52d5940290ddfd5692314d5838d86 data/c/tags/items/nickel_nuggets.json
