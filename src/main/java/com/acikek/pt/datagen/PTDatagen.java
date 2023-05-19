@@ -35,55 +35,15 @@ public class PTDatagen implements DataGeneratorEntrypoint {
             }
         });
 
-        pack.addProvider((FabricDataOutput output) -> new FabricLanguageProvider(output) {
-            @Override
-            public void generateTranslations(TranslationBuilder translationBuilder) {
-                PTDatagenApi.buildEnglishTranslations(translationBuilder, PeriodicTable.INSTANCE);
-                try {
-                    var existing = output.getModContainer().findPath("assets/pt/lang/en_us.existing.json");
-                    if (existing.isPresent()) {
-                        translationBuilder.add(existing.get());
-                    }
-                }
-                catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
-            }
-        });
+        pack.addProvider((FabricDataOutput output) -> PTDatagenApi.createLanguageProvider(
+                output, PeriodicTable.INSTANCE,
+                "assets/pt/lang/en_us.existing.json")
+        );
 
-        pack.addProvider((FabricDataOutput output) -> new FabricBlockLootTableProvider(output) {
-            @Override
-            public void generate() {
-                PTDatagenApi.buildLootTables(this, PeriodicTable.INSTANCE);
-            }
-        });
-
-        pack.addProvider((FabricDataOutput output) -> new FabricRecipeProvider(output) {
-            @Override
-            public void generate(Consumer<RecipeJsonProvider> exporter) {
-                PTDatagenApi.buildRecipes(exporter, PeriodicTable.INSTANCE);
-            }
-        });
-
-        pack.addProvider((output, lookup) -> new FabricTagProvider.BlockTagProvider(output, lookup) {
-            @Override
-            protected void configure(RegistryWrapper.WrapperLookup arg) {
-                PTDatagenApi.buildBlockTags(this::getOrCreateTagBuilder, PeriodicTable.INSTANCE);
-            }
-        });
-
-        pack.addProvider((output, lookup) -> new FabricTagProvider.ItemTagProvider(output, lookup) {
-            @Override
-            protected void configure(RegistryWrapper.WrapperLookup arg) {
-                PTDatagenApi.buildItemTags(this::getOrCreateTagBuilder, PeriodicTable.INSTANCE);
-            }
-        });
-
-        pack.addProvider((output, lookup) -> new FabricTagProvider.FluidTagProvider(output, lookup) {
-            @Override
-            protected void configure(RegistryWrapper.WrapperLookup arg) {
-                PTDatagenApi.buildFluidTags(this::getOrCreateTagBuilder, PeriodicTable.INSTANCE);
-            }
-        });
+        pack.addProvider((FabricDataOutput output) -> PTDatagenApi.createLootTableProvider(output, PeriodicTable.INSTANCE));
+        pack.addProvider((FabricDataOutput output) -> PTDatagenApi.createRecipeProvider(output, PeriodicTable.INSTANCE));
+        pack.addProvider((output, lookup) -> PTDatagenApi.createBlockTagProvider(output, lookup, PeriodicTable.INSTANCE));
+        pack.addProvider((output, lookup) -> PTDatagenApi.createItemTagProvider(output, lookup, PeriodicTable.INSTANCE));
+        pack.addProvider((output, lookup) -> PTDatagenApi.createFluidTagProvider(output, lookup, PeriodicTable.INSTANCE));
     }
 }
