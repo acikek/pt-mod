@@ -32,7 +32,7 @@ public interface DatagenDelegator {
         // Empty
     }
 
-    default void buildRecipes(Consumer<RecipeJsonProvider> exporter) {
+    default void buildRecipes(PTRecipeProvider provider) {
         // Empty
     }
 

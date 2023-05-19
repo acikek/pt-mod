@@ -2,6 +2,7 @@ package com.acikek.pt.core.api.element;
 
 import com.acikek.pt.api.PTApi;
 import com.acikek.pt.api.datagen.DatagenDelegator;
+import com.acikek.pt.api.datagen.PTRecipeProvider;
 import com.acikek.pt.api.request.FeatureRequests;
 import com.acikek.pt.core.api.content.ContentBase;
 import com.acikek.pt.core.api.content.ContentContext;
@@ -22,6 +23,7 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricBlockLootTableProvider;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
+import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
 import net.minecraft.block.Block;
 import net.minecraft.data.client.BlockStateModelGenerator;
@@ -142,8 +144,8 @@ public interface Element extends DisplayHolder<ElementDisplay>, SourceStateMappe
     }
 
     @Override
-    default void buildRecipes(Consumer<RecipeJsonProvider> exporter) {
-        forEachContent(content -> content.buildRecipes(exporter));
+    default void buildRecipes(PTRecipeProvider provider) {
+        forEachContent(content -> content.buildRecipes(provider));
     }
 
     @Override

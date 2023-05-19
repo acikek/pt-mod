@@ -73,15 +73,16 @@ public class PTDatagenApi {
         };
     }
 
-    public static void buildRecipes(Consumer<RecipeJsonProvider> exporter, AbstractPeriodicTable table) {
-        PTDatagenImpl.delegate(DatagenDelegator::buildRecipes, exporter, table);
+    public static void buildRecipes(PTRecipeProvider provider, AbstractPeriodicTable table) {
+        PTDatagenImpl.delegate(DatagenDelegator::buildRecipes, provider, table);
     }
 
     public static FabricRecipeProvider createRecipeProvider(FabricDataOutput output, AbstractPeriodicTable table) {
-        return new FabricRecipeProvider(output) {
+        return new PTRecipeProvider(output) {
             @Override
             public void generate(Consumer<RecipeJsonProvider> exporter) {
-                buildRecipes(exporter, table);
+                super.generate(exporter);
+                buildRecipes(this, table);
             }
         };
     }

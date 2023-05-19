@@ -1,5 +1,6 @@
 package com.acikek.pt.core.impl.source;
 
+import com.acikek.pt.api.datagen.PTRecipeProvider;
 import com.acikek.pt.api.request.FeatureRequests;
 import com.acikek.pt.api.request.RequestTypes;
 import com.acikek.pt.core.api.content.ContentContext;
@@ -20,7 +21,10 @@ import net.minecraft.block.Block;
 import net.minecraft.data.client.BlockStateModelGenerator;
 import net.minecraft.data.client.ItemModelGenerator;
 import net.minecraft.data.client.Models;
+import net.minecraft.data.server.recipe.RecipeProvider;
+import net.minecraft.data.server.recipe.ShapedRecipeJsonBuilder;
 import net.minecraft.item.Item;
+import net.minecraft.recipe.book.RecipeCategory;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.tag.BlockTags;
 import net.minecraft.registry.tag.TagKey;
@@ -39,6 +43,7 @@ public class OreSource extends UndergroundSource<SourceData.Ore> {
     private final PhasedContent<Block> rawBlock;
     private final int miningLevel;
 
+    private ElementIds<String> ids;
     private Element parent;
     private ElementRefinedState<?> state;
 
@@ -62,6 +67,7 @@ public class OreSource extends UndergroundSource<SourceData.Ore> {
 
     @Override
     public void register(PTRegistry registry, ElementIds<String> ids, ContentContext.Source context, FeatureRequests.Single features) {
+        this.ids = ids;
         parent = context.parent();
         if (!features.contains(RequestTypes.CONTENT)) {
             return;
@@ -96,6 +102,21 @@ public class OreSource extends UndergroundSource<SourceData.Ore> {
             }
         }
         rawBlock.require(generator::addDrop);
+    }
+
+    @Override
+    public void buildRecipes(PTRecipeProvider provider) {
+        rawBlock.require(block ->
+            rawItem.require(item -> {
+                var exporter = provider.withConditions(DefaultResourceConditions.itemsRegistered(block, item));
+                ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, block)
+                        .criterion("raw_block", RecipeProvider.conditionsFromItem(block))
+                        .criterion("raw_item", RecipeProvider.conditionsFromItem(item))
+                        .pattern("RRR").pattern("RRR").pattern("RRR")
+                        .input('R', item)
+                        .offerTo(exporter, ids.useIdentifier().get("_raw_ore_to_block"));
+            })
+        );
     }
 
     @Override
