@@ -39,6 +39,11 @@ public class FluidRefinedState extends BaseRefinedState<RefinedStateData.HasFlui
     }
 
     @Override
+    public boolean isType(Identifier id) {
+        return super.isType(id) || id.equals(RefinedStates.BASE);
+    }
+
+    @Override
     public void buildTranslations(FabricLanguageProvider.TranslationBuilder builder, Element parent) {
         super.buildTranslations(builder, parent);
         fluid.require(fluid -> builder.add(fluid.getDefaultState().getBlockState().getBlock(), parent.display().englishName()));
