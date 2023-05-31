@@ -1,0 +1,43 @@
+{
+  "fabric:load_conditions": [
+    {
+      "condition": "fabric:registry_contains",
+      "values": [
+        "pt:nickel_source_deepslate",
+        "pt:nickel"
+      ]
+    }
+  ],
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_nickel_source_deepslate": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "pt:nickel_source_deepslate"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "pt:nickel_blasting_deepslate_ore_to_refined"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_nickel_source_deepslate",
+      "has_the_recipe"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "pt:nickel_blasting_deepslate_ore_to_refined"
+    ]
+  }
+}

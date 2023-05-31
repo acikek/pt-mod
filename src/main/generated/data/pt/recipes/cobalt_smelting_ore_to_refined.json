@@ -1,0 +1,19 @@
+{
+  "fabric:load_conditions": [
+    {
+      "condition": "fabric:registry_contains",
+      "values": [
+        "pt:cobalt_source_block",
+        "pt:cobalt"
+      ]
+    }
+  ],
+  "type": "minecraft:smelting",
+  "category": "misc",
+  "cookingtime": 200,
+  "experience": 0.90000004,
+  "ingredient": {
+    "item": "pt:cobalt_source_block"
+  },
+  "result": "pt:cobalt"
+}

@@ -1,0 +1,19 @@
+{
+  "fabric:load_conditions": [
+    {
+      "condition": "fabric:registry_contains",
+      "values": [
+        "pt:platinum_source",
+        "pt:platinum"
+      ]
+    }
+  ],
+  "type": "minecraft:smelting",
+  "category": "misc",
+  "cookingtime": 200,
+  "experience": 0.6,
+  "ingredient": {
+    "item": "pt:platinum_source"
+  },
+  "result": "pt:platinum"
+}

@@ -3,7 +3,7 @@
     {
       "condition": "fabric:registry_contains",
       "values": [
-        "pt:silver_source_block"
+        "pt:silver_raw_block"
       ]
     }
   ],

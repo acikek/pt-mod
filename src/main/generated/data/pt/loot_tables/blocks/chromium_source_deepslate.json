@@ -3,7 +3,8 @@
     {
       "condition": "fabric:registry_contains",
       "values": [
-        "pt:chromium_source_block"
+        "pt:chromium_source_deepslate",
+        "pt:chromium_source"
       ]
     }
   ],

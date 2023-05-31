@@ -1,0 +1,19 @@
+{
+  "fabric:load_conditions": [
+    {
+      "condition": "fabric:registry_contains",
+      "values": [
+        "pt:manganese_source_deepslate",
+        "pt:manganese"
+      ]
+    }
+  ],
+  "type": "minecraft:smelting",
+  "category": "misc",
+  "cookingtime": 200,
+  "experience": 0.3,
+  "ingredient": {
+    "item": "pt:manganese_source_deepslate"
+  },
+  "result": "pt:manganese"
+}

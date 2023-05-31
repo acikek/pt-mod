@@ -1,0 +1,19 @@
+{
+  "fabric:load_conditions": [
+    {
+      "condition": "fabric:registry_contains",
+      "values": [
+        "pt:platinum_source_deepslate",
+        "pt:platinum"
+      ]
+    }
+  ],
+  "type": "minecraft:blasting",
+  "category": "misc",
+  "cookingtime": 200,
+  "experience": 0.6,
+  "ingredient": {
+    "item": "pt:platinum_source_deepslate"
+  },
+  "result": "pt:platinum"
+}

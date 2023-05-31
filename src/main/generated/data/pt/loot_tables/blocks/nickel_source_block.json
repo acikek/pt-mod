@@ -3,7 +3,8 @@
     {
       "condition": "fabric:registry_contains",
       "values": [
-        "pt:nickel_source_block"
+        "pt:nickel_source_block",
+        "pt:nickel_source"
       ]
     }
   ],

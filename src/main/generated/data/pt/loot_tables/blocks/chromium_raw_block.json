@@ -3,7 +3,7 @@
     {
       "condition": "fabric:registry_contains",
       "values": [
-        "pt:chromium_source_block"
+        "pt:chromium_raw_block"
       ]
     }
   ],

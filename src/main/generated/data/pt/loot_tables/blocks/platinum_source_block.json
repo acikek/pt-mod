@@ -3,7 +3,8 @@
     {
       "condition": "fabric:registry_contains",
       "values": [
-        "pt:platinum_source_block"
+        "pt:platinum_source_block",
+        "pt:platinum_source"
       ]
     }
   ],

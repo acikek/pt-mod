@@ -3,7 +3,7 @@
     {
       "condition": "fabric:registry_contains",
       "values": [
-        "pt:vanadium_source_block"
+        "pt:vanadium_raw_block"
       ]
     }
   ],

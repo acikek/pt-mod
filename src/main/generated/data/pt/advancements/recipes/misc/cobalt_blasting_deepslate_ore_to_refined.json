@@ -1,0 +1,43 @@
+{
+  "fabric:load_conditions": [
+    {
+      "condition": "fabric:registry_contains",
+      "values": [
+        "pt:cobalt_source_deepslate",
+        "pt:cobalt"
+      ]
+    }
+  ],
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_cobalt_source_deepslate": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "pt:cobalt_source_deepslate"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "pt:cobalt_blasting_deepslate_ore_to_refined"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_cobalt_source_deepslate",
+      "has_the_recipe"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "pt:cobalt_blasting_deepslate_ore_to_refined"
+    ]
+  }
+}

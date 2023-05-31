@@ -1,0 +1,22 @@
+{
+  "fabric:load_conditions": [
+    {
+      "condition": "fabric:registry_contains",
+      "values": [
+        "pt:chromium_raw_block",
+        "pt:chromium_source"
+      ]
+    }
+  ],
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "pt:chromium_raw_block"
+    }
+  ],
+  "result": {
+    "count": 9,
+    "item": "pt:chromium_source"
+  }
+}

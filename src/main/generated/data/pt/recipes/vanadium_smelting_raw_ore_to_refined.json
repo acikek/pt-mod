@@ -1,0 +1,19 @@
+{
+  "fabric:load_conditions": [
+    {
+      "condition": "fabric:registry_contains",
+      "values": [
+        "pt:vanadium_source",
+        "pt:vanadium"
+      ]
+    }
+  ],
+  "type": "minecraft:smelting",
+  "category": "misc",
+  "cookingtime": 200,
+  "experience": 0.6,
+  "ingredient": {
+    "item": "pt:vanadium_source"
+  },
+  "result": "pt:vanadium"
+}

@@ -16,19 +16,7 @@
       },
       "trigger": "minecraft:recipe_unlocked"
     },
-    "raw_block": {
-      "conditions": {
-        "items": [
-          {
-            "items": [
-              "pt:vanadium_raw_block"
-            ]
-          }
-        ]
-      },
-      "trigger": "minecraft:inventory_changed"
-    },
-    "raw_item": {
+    "has_vanadium_source": {
       "conditions": {
         "items": [
           {
@@ -43,8 +31,7 @@
   },
   "requirements": [
     [
-      "raw_block",
-      "raw_item",
+      "has_vanadium_source",
       "has_the_recipe"
     ]
   ],

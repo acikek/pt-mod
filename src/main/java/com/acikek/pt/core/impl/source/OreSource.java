@@ -21,9 +21,11 @@ import net.minecraft.block.Block;
 import net.minecraft.data.client.BlockStateModelGenerator;
 import net.minecraft.data.client.ItemModelGenerator;
 import net.minecraft.data.client.Models;
-import net.minecraft.data.server.recipe.RecipeProvider;
-import net.minecraft.data.server.recipe.ShapedRecipeJsonBuilder;
+import net.minecraft.data.server.recipe.*;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemConvertible;
+import net.minecraft.recipe.Ingredient;
+import net.minecraft.recipe.RecipeSerializer;
 import net.minecraft.recipe.book.RecipeCategory;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.tag.BlockTags;
@@ -90,18 +92,37 @@ public class OreSource extends UndergroundSource<SourceData.Ore> {
 
     @Override
     public void buildLootTables(FabricBlockLootTableProvider provider) {
-        var generator = provider.withConditions(DefaultResourceConditions.itemsRegistered(ore.require()));
-        for (var content : List.of(ore, deepslateOre)) {
+        for (var oreBlock : List.of(ore, deepslateOre)) {
             var drop = rawItem.isCreated()
                     ? rawItem.require()
                     : state.getData() instanceof RefinedStateData.Base base
                             ? base.item()
                             : null;
             if (drop != null) {
-                content.require(c -> generator.addDrop(c, b -> generator.oreDrops(b, drop)));
+                oreBlock.require(block -> {
+                    var generator = provider.withConditions(DefaultResourceConditions.itemsRegistered(block, drop));
+                    generator.addDrop(block, b -> generator.oreDrops(b, drop));
+                });
             }
         }
-        rawBlock.require(generator::addDrop);
+        rawBlock.require(block -> provider.withConditions(DefaultResourceConditions.itemsRegistered(block)).addDrop(block));
+    }
+
+    // To account for floating point precision errors
+    private float getSmeltingExperience() {
+        return miningLevel == 3
+                ? 0.9f
+                : miningLevel * 0.3f;
+    }
+
+    private void offerSmelting(PTRecipeProvider provider, ItemConvertible ore, Item result, String prefix) {
+        var exporter = provider.withConditions(DefaultResourceConditions.itemsRegistered(ore, result));
+        for (var serializer : List.of(RecipeSerializer.SMELTING, RecipeSerializer.BLASTING)) {
+            String type = serializer == RecipeSerializer.SMELTING ? "_smelting" : "_blasting";
+            CookingRecipeJsonBuilder.create(Ingredient.ofItems(ore), RecipeCategory.MISC, result, getSmeltingExperience(), 200, serializer)
+                    .criterion(RecipeProvider.hasItem(ore), RecipeProvider.conditionsFromItem(ore))
+                    .offerTo(exporter, ids.useIdentifier().get(type + prefix + "_to_refined"));
+        }
     }
 
     @Override
@@ -110,13 +131,22 @@ public class OreSource extends UndergroundSource<SourceData.Ore> {
             rawItem.require(item -> {
                 var exporter = provider.withConditions(DefaultResourceConditions.itemsRegistered(block, item));
                 ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, block)
-                        .criterion("raw_block", RecipeProvider.conditionsFromItem(block))
-                        .criterion("raw_item", RecipeProvider.conditionsFromItem(item))
+                        .criterion(RecipeProvider.hasItem(item), RecipeProvider.conditionsFromItem(item))
                         .pattern("RRR").pattern("RRR").pattern("RRR")
                         .input('R', item)
                         .offerTo(exporter, ids.useIdentifier().get("_raw_ore_to_block"));
+                ShapelessRecipeJsonBuilder.create(RecipeCategory.MISC, item, 9)
+                        .criterion(RecipeProvider.hasItem(block), RecipeProvider.conditionsFromItem(item))
+                        .input(block)
+                        .offerTo(exporter, ids.useIdentifier().get("_raw_block_to_ore"));
             })
         );
+
+        if (state.getData() instanceof RefinedStateData.Base base && base.item() != null) {
+            ore.require(block -> offerSmelting(provider, block, base.item(), "_ore"));
+            deepslateOre.require(block -> offerSmelting(provider, block, base.item(), "_deepslate_ore"));
+            rawItem.require(item -> offerSmelting(provider, item, base.item(), "_raw_ore"));
+        }
     }
 
     @Override

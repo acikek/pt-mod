@@ -3,7 +3,8 @@
     {
       "condition": "fabric:registry_contains",
       "values": [
-        "pt:cadmium_source_block"
+        "pt:cadmium_source_block",
+        "pt:cadmium_source"
       ]
     }
   ],
