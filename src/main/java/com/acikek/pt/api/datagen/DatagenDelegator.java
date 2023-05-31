@@ -18,10 +18,6 @@ public interface DatagenDelegator {
         // Empty
     }
 
-    default void buildTagTranslations(FabricLanguageProvider.TranslationBuilder builder) {
-        // Empty
-    }
-
     default void buildBlockModels(BlockStateModelGenerator generator) {
         // Empty
     }

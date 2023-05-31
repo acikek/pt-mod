@@ -2,12 +2,12 @@ package com.acikek.pt.core.impl.source;
 
 import com.acikek.pt.api.request.FeatureRequests;
 import com.acikek.pt.core.api.content.ContentContext;
+import com.acikek.pt.core.api.content.ContentIdentifier;
 import com.acikek.pt.core.api.registry.PTRegistry;
 import com.acikek.pt.core.api.source.ElementSource;
 import com.acikek.pt.core.api.source.ElementSources;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
-import net.minecraft.util.Identifier;
 import org.apache.commons.lang3.Range;
 import org.jetbrains.annotations.NotNull;
 
@@ -35,7 +35,7 @@ public class AtmosphericSource implements ElementSource<Range<Integer>> {
     }
 
     @Override
-    public @NotNull Identifier typeId() {
+    public @NotNull ContentIdentifier typeId() {
         return ElementSources.ATMOSPHERIC;
     }
 

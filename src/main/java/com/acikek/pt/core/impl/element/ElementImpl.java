@@ -1,6 +1,7 @@
 package com.acikek.pt.core.impl.element;
 
 import com.acikek.pt.core.api.content.ContentContext;
+import com.acikek.pt.core.api.content.ContentIdentifier;
 import com.acikek.pt.core.api.display.ElementDisplay;
 import com.acikek.pt.core.api.element.Element;
 import com.acikek.pt.core.api.refined.ElementRefinedState;
@@ -15,8 +16,7 @@ import java.util.stream.Collectors;
 
 public class ElementImpl implements Element {
 
-    private static final List<Identifier> sourceTagTranslations = new ArrayList<>();
-    private static final List<Identifier> stateTagTranslations = new ArrayList<>();
+    private static final List<ContentIdentifier> currentPass = new ArrayList<>();
 
     private final ElementDisplay names;
     private final ElementIds<String> ids;
@@ -50,21 +50,8 @@ public class ElementImpl implements Element {
     }
 
     @Override
-    public void buildTagTranslations(FabricLanguageProvider.TranslationBuilder builder) {
-        forEachRefinedState(state -> {
-            if (!stateTagTranslations.contains(state.typeId())) {
-                state.buildTagTranslations(builder);
-                stateTagTranslations.add(state.typeId());
-            }
-        });
-        System.out.println("aa");
-        forEachSource(source -> {
-            if (!sourceTagTranslations.contains(source.typeId())) {
-                System.out.println(source.typeId());
-                source.buildTagTranslations(builder);
-                sourceTagTranslations.add(source.typeId());
-            }
-        });
+    public List<ContentIdentifier> contentBuildPass() {
+        return currentPass;
     }
 
     @Override

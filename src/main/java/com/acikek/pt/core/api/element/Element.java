@@ -4,8 +4,9 @@ import com.acikek.pt.api.PTApi;
 import com.acikek.pt.api.datagen.DatagenDelegator;
 import com.acikek.pt.api.datagen.PTRecipeProvider;
 import com.acikek.pt.api.request.FeatureRequests;
-import com.acikek.pt.core.api.content.ElementContentBase;
 import com.acikek.pt.core.api.content.ContentContext;
+import com.acikek.pt.core.api.content.ContentIdentifier;
+import com.acikek.pt.core.api.content.ElementContentBase;
 import com.acikek.pt.core.api.content.SourceStateMapper;
 import com.acikek.pt.core.api.display.DisplayHolder;
 import com.acikek.pt.core.api.display.ElementDisplay;
@@ -35,6 +36,7 @@ import net.minecraft.world.World;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.function.Consumer;
 import java.util.function.Function;
 
 public interface Element extends DisplayHolder<ElementDisplay>, SourceStateMapper, SignatureHolder, DatagenDelegator, MaterialHolder {
@@ -114,46 +116,61 @@ public interface Element extends DisplayHolder<ElementDisplay>, SourceStateMappe
         afterRegister();
     }
 
+
+    List<ContentIdentifier> contentBuildPass();
+
+    private <T> void forEachContentPass(Consumer<ElementContentBase<?, ?>> fn) {
+        forEachContent(content -> {
+            fn.accept(content);
+            contentBuildPass().add(content.typeId());
+        });
+        contentBuildPass().clear();
+    }
+
+    default boolean hasBuiltContentPass(ContentIdentifier contentId) {
+        return contentBuildPass().contains(contentId);
+    }
+
     @Override
     default void buildTranslations(FabricLanguageProvider.TranslationBuilder builder) {
         builder.add(getNameKey(), display().englishName());
         builder.add(getSymbolKey(), display().symbol());
-        forEachContent(content -> content.buildTranslations(builder));
+        forEachContentPass(content -> content.buildTranslations(builder));
     }
 
     @Override
     default void buildBlockModels(BlockStateModelGenerator generator) {
-        forEachContent(content -> content.buildBlockModels(generator));
+        forEachContentPass(content -> content.buildBlockModels(generator));
     }
 
     @Override
     default void buildItemModels(ItemModelGenerator generator) {
-        forEachContent(content -> content.buildItemModels(generator));
+        forEachContentPass(content -> content.buildItemModels(generator));
     }
 
     @Override
     default void buildLootTables(FabricBlockLootTableProvider provider) {
-        forEachContent(content -> content.buildLootTables(provider));
+        forEachContentPass(content -> content.buildLootTables(provider));
     }
 
     @Override
     default void buildRecipes(PTRecipeProvider provider) {
-        forEachContent(content -> content.buildRecipes(provider));
+        forEachContentPass(content -> content.buildRecipes(provider));
     }
 
     @Override
     default void buildBlockTags(Function<TagKey<Block>, FabricTagProvider<Block>.FabricTagBuilder> provider) {
-        forEachContent(content -> content.buildBlockTags(provider));
+        forEachContentPass(content -> content.buildBlockTags(provider));
     }
 
     @Override
     default void buildItemTags(Function<TagKey<Item>, FabricTagProvider<Item>.FabricTagBuilder> provider) {
-        forEachContent(content -> content.buildItemTags(provider));
+        forEachContentPass(content -> content.buildItemTags(provider));
     }
 
     @Override
     default void buildFluidTags(Function<TagKey<Fluid>, FabricTagProvider<Fluid>.FabricTagBuilder> provider) {
-        forEachContent(content -> content.buildFluidTags(provider));
+        forEachContentPass(content -> content.buildFluidTags(provider));
     }
 
     @Environment(EnvType.CLIENT)

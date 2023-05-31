@@ -2,6 +2,7 @@ package com.acikek.pt.core.impl.source;
 
 import com.acikek.pt.api.request.FeatureRequests;
 import com.acikek.pt.core.api.content.ContentContext;
+import com.acikek.pt.core.api.content.ContentIdentifier;
 import com.acikek.pt.core.api.mineral.Mineral;
 import com.acikek.pt.core.api.registry.PTRegistry;
 import com.acikek.pt.core.api.signature.ElementSignatureEntry;
@@ -29,7 +30,7 @@ public class MineralSource<D> extends UndergroundSource<D> {
     }
 
     @Override
-    public @NotNull Identifier typeId() {
+    public @NotNull ContentIdentifier typeId() {
         return ElementSources.MINERAL;
     }
 

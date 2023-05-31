@@ -2,6 +2,7 @@ package com.acikek.pt.core.impl.refined;
 
 import com.acikek.pt.api.request.FeatureRequests;
 import com.acikek.pt.api.request.RequestTypes;
+import com.acikek.pt.core.api.content.ContentIdentifier;
 import com.acikek.pt.core.api.content.PhasedContent;
 import com.acikek.pt.core.api.refined.RefinedStateData;
 import com.acikek.pt.core.api.refined.RefinedStateType;
@@ -31,7 +32,7 @@ public class FluidRefinedState extends BaseRefinedState<RefinedStateData.HasFlui
     }
 
     @Override
-    public @NotNull Identifier typeId() {
+    public @NotNull ContentIdentifier typeId() {
         return RefinedStates.FLUID;
     }
 

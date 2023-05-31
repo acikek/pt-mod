@@ -22,7 +22,7 @@ public interface ElementContentBase<D, C extends ContentContext> extends Content
      * @return an identifier specifying the type of this content.
      * For example, ore sources return {@link ElementSources#ORE}.
      */
-    @NotNull Identifier typeId();
+    @NotNull ContentIdentifier typeId();
 
     /**
      * @return whether this content is an instance of the specified type.
@@ -62,6 +62,14 @@ public interface ElementContentBase<D, C extends ContentContext> extends Content
         if (context() != null) {
             throw new IllegalStateException("context is already set");
         }
+    }
+
+    /**
+     * @return whether, at this pass of data generation, this content type
+     * ({@link ElementContentBase#typeId()}) has built already
+     */
+    default boolean hasBuiltPass() {
+        return parent().hasBuiltContentPass(typeId());
     }
 
     /**

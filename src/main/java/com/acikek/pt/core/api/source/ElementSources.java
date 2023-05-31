@@ -1,6 +1,7 @@
 package com.acikek.pt.core.api.source;
 
 import com.acikek.pt.PT;
+import com.acikek.pt.core.api.content.ContentIdentifier;
 import com.acikek.pt.core.impl.source.AtmosphericSource;
 import com.acikek.pt.core.impl.source.MineralSource;
 import com.acikek.pt.core.impl.source.OreSourceBuilder;
@@ -12,9 +13,15 @@ import org.apache.commons.lang3.Range;
 
 public class ElementSources {
 
-    public static final Identifier ORE = PT.id("ore");
-    public static final Identifier MINERAL = PT.id("mineral");
-    public static final Identifier ATMOSPHERIC = PT.id("atmospheric");
+    public static final Identifier CONTENT_TYPE = PT.id("source");
+
+    public static ContentIdentifier id(String of) {
+        return new ContentIdentifier(CONTENT_TYPE, PT.id(of));
+    }
+
+    public static final ContentIdentifier ORE = id("ore");
+    public static final ContentIdentifier MINERAL = id("mineral");
+    public static final ContentIdentifier ATMOSPHERIC = id("atmospheric");
 
     public static OreSourceBuilder oreBuilder() {
         return new OreSourceBuilder();

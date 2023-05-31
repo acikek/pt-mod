@@ -4,6 +4,7 @@ import com.acikek.pt.api.datagen.PTRecipeProvider;
 import com.acikek.pt.api.request.FeatureRequests;
 import com.acikek.pt.api.request.RequestTypes;
 import com.acikek.pt.core.api.content.ContentContext;
+import com.acikek.pt.core.api.content.ContentIdentifier;
 import com.acikek.pt.core.api.content.PhasedContent;
 import com.acikek.pt.core.api.refined.RefinedStateData;
 import com.acikek.pt.core.api.registry.PTRegistry;
@@ -56,7 +57,7 @@ public class OreSource extends UndergroundSource<SourceData.Ore> {
     }
 
     @Override
-    public @NotNull Identifier typeId() {
+    public @NotNull ContentIdentifier typeId() {
         return ElementSources.ORE;
     }
 
@@ -94,14 +95,11 @@ public class OreSource extends UndergroundSource<SourceData.Ore> {
         deepslateOre.require(ore -> builder.add(ore, "Deepslate " + name + " Ore"));
         rawItem.require(raw -> builder.add(raw, "Raw " + name));
         rawBlock.require(raw -> builder.add(raw, "Block of Raw " + name));
-    }
-
-    @Override
-    public void buildTagTranslations(FabricLanguageProvider.TranslationBuilder builder) {
-        String name = parent().display().englishName();
-        builder.add(parent().getConventionalTagId("%s_ores"), name + " Ores");
-        builder.add(parent().getConventionalTagId("raw_%s_blocks"), "Raw " + name + " Blocks");
-        builder.add(parent().getConventionalTagId("raw_%s_ores"), "Raw " + name + " Ores");
+        if (!hasBuiltPass()) {
+            builder.add(parent().getConventionalTagId("%s_ores"), name + " Ores");
+            builder.add(parent().getConventionalTagId("raw_%s_blocks"), "Raw " + name + " Blocks");
+            builder.add(parent().getConventionalTagId("raw_%s_ores"), "Raw " + name + " Ores");
+        }
     }
 
     @Override
