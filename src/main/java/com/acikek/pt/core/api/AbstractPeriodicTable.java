@@ -2,7 +2,6 @@ package com.acikek.pt.core.api;
 
 import com.acikek.pt.PT;
 import com.acikek.pt.api.request.event.RequestEvent;
-import com.acikek.pt.core.api.content.ContentContext;
 import com.acikek.pt.core.api.element.Element;
 import com.acikek.pt.core.api.mineral.Mineral;
 import com.acikek.pt.core.api.registry.PTRegistry;
@@ -36,8 +35,8 @@ public abstract class AbstractPeriodicTable implements CompoundHolder {
         }
         minerals = mineralBuilder.build();
         for (Element element : elements()) {
-            element.forEachRefinedState(state -> state.onAdd(new ContentContext.State(element)));
-            element.forEachSource((source, state) -> source.onAdd(new ContentContext.Source(element, state)));
+            element.forEachRefinedState(state -> state.onAdd(element.getStateContext(state)));
+            element.forEachSource((source, state) -> source.onAdd(element.getSourceContext(state)));
         }
         this.registry = registry;
     }

@@ -69,11 +69,17 @@ public class PeriodicTable extends AbstractPeriodicTable {
     public static final Element CARBON = Elements.create(ElementDisplay.byId("carbon", "C"), Map.of(
             RefinedStates.metal(1.5f), List.of(ElementSources.mineral(ANTHRACITE)),
             RefinedStates.builder()
-                    .id(PT.id("vanilla"))
+                    .id(PT.id("vanilla_coal"))
                     .item(Items.COAL)
                     .block(Blocks.COAL_BLOCK)
                     .build(),
-            List.of(ElementSources.oreBuilder().ore(Blocks.COAL_ORE).deepslateOre(Blocks.DEEPSLATE_COAL_ORE).build())
+            List.of(ElementSources.oreBuilder().ore(Blocks.COAL_ORE).deepslateOre(Blocks.DEEPSLATE_COAL_ORE).build()),
+            RefinedStates.builder()
+                    .id(PT.id("vanilla_diamond"))
+                    .item(Items.DIAMOND)
+                    .block(Blocks.DIAMOND_BLOCK)
+                    .build(),
+            List.of(ElementSources.oreBuilder().ore(Blocks.DIAMOND_ORE).deepslateOre(Blocks.DEEPSLATE_DIAMOND_ORE).build())
     ));
     public static final Element OXYGEN = Elements.gas(ElementDisplay.byId("oxygen", "O"), 0, 235);
     public static final Element SULFUR = Elements.basic(ElementDisplay.byId("sulfur", "S"), RefinedStates.sack(), ElementSources.mineral(GYPSUM));

@@ -2,12 +2,10 @@ package com.acikek.pt.core.impl.refined;
 
 import com.acikek.pt.api.request.FeatureRequests;
 import com.acikek.pt.api.request.RequestTypes;
-import com.acikek.pt.core.api.content.ContentContext;
 import com.acikek.pt.core.api.content.PhasedContent;
 import com.acikek.pt.core.api.refined.RefinedStateData;
 import com.acikek.pt.core.api.refined.RefinedStateType;
 import com.acikek.pt.core.api.refined.RefinedStates;
-import com.acikek.pt.core.api.registry.ElementIds;
 import com.acikek.pt.core.api.registry.PTRegistry;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
@@ -33,7 +31,7 @@ public class FluidRefinedState extends BaseRefinedState<RefinedStateData.HasFlui
     }
 
     @Override
-    public @NotNull Identifier getTypeId() {
+    public @NotNull Identifier typeId() {
         return RefinedStates.FLUID;
     }
 
@@ -45,19 +43,19 @@ public class FluidRefinedState extends BaseRefinedState<RefinedStateData.HasFlui
     @Override
     public void buildTranslations(FabricLanguageProvider.TranslationBuilder builder) {
         super.buildTranslations(builder);
-        fluid.require(fluid -> builder.add(fluid.getDefaultState().getBlockState().getBlock(), parent.display().englishName()));
+        fluid.require(fluid -> builder.add(fluid.getDefaultState().getBlockState().getBlock(), parent().display().englishName()));
     }
 
     @Override
     public void buildFluidTags(Function<TagKey<Fluid>, FabricTagProvider<Fluid>.FabricTagBuilder> provider) {
-        fluid.require(fluid -> provider.apply(parent.getConventionalFluidTag("%s")).addOptional(Registries.FLUID.getId(fluid)));
+        fluid.require(fluid -> provider.apply(parent().getConventionalFluidTag("%s")).addOptional(Registries.FLUID.getId(fluid)));
     }
 
     @Override
-    public void register(PTRegistry registry, ElementIds<String> ids, ContentContext.State context, FeatureRequests.Single features) {
-        super.register(registry, ids, context, features);
+    public void register(PTRegistry registry, FeatureRequests.Single features) {
+        super.register(registry, features);
         if (features.contains(RequestTypes.CONTENT)) {
-            fluid.create(fluid -> registry.registerFluid(ids.getFluidId(), fluid));
+            fluid.create(fluid -> registry.registerFluid(contentIds().getFluidId(), fluid));
         }
     }
 

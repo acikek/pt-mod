@@ -4,12 +4,10 @@ import com.acikek.pt.api.request.FeatureRequests;
 import com.acikek.pt.api.request.RequestTypes;
 import com.acikek.pt.core.api.content.ContentContext;
 import com.acikek.pt.core.api.content.PhasedContent;
-import com.acikek.pt.core.api.element.Element;
 import com.acikek.pt.core.api.refined.ElementRefinedState;
 import com.acikek.pt.core.api.refined.RefinedStateData;
 import com.acikek.pt.core.api.refined.RefinedStateType;
 import com.acikek.pt.core.api.refined.RefinedStates;
-import com.acikek.pt.core.api.registry.ElementIds;
 import com.acikek.pt.core.api.registry.PTRegistry;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricBlockLootTableProvider;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
@@ -52,7 +50,7 @@ public abstract class BaseRefinedState<D> implements ElementRefinedState<D> {
     protected final PhasedContent<Block> block;
     protected final RefinedStateType type;
 
-    protected Element parent;
+    private ContentContext.State context;
 
     public BaseRefinedState(Identifier id, PhasedContent<Item> item, PhasedContent<Item> miniItem, PhasedContent<Block> block, RefinedStateType type) {
         Stream.of(id, item, miniItem, block).forEach(Objects::requireNonNull);
@@ -68,29 +66,39 @@ public abstract class BaseRefinedState<D> implements ElementRefinedState<D> {
 
     @NotNull
     @Override
-    public Identifier getId() {
+    public Identifier id() {
         return id;
     }
 
     @Override
-    public @NotNull Identifier getTypeId() {
+    public @NotNull Identifier typeId() {
         return RefinedStates.BASE;
     }
 
     @Override
-    public void register(PTRegistry registry, ElementIds<String> ids, ContentContext.State context, FeatureRequests.Single features) {
-        parent = context.parent();
+    public ContentContext.State context() {
+        return context;
+    }
+
+    @Override
+    public void setContext(ContentContext.State context) {
+        ElementRefinedState.super.setContext(context);
+        this.context = context;
+    }
+
+    @Override
+    public void register(PTRegistry registry, FeatureRequests.Single features) {
         if (!features.contains(RequestTypes.CONTENT)) {
             return;
         }
-        item.create(item -> registry.registerItem(ids.getItemId(), item));
-        miniItem.create(item -> registry.registerItem(ids.getMiniItemId(), item));
-        block.create(block -> registry.registerBlock(ids.getBlockId(), block));
+        item.create(item -> registry.registerItem(contentIds().getItemId(), item));
+        miniItem.create(item -> registry.registerItem(contentIds().getMiniItemId(), item));
+        block.create(block -> registry.registerBlock(contentIds().getBlockId(), block));
     }
 
     @Override
     public void buildTranslations(FabricLanguageProvider.TranslationBuilder builder) {
-        String name = parent.display().englishName();
+        String name = parent().display().englishName();
         block.require(block -> builder.add(block, type.getBlockName(name)));
         item.require(item -> builder.add(item, type.getItemName(name)));
         miniItem.require(item -> builder.add(item, type.getMiniItemName(name)));
@@ -113,7 +121,7 @@ public abstract class BaseRefinedState<D> implements ElementRefinedState<D> {
         block.require(block -> {
             var id = Registries.BLOCK.getId(block);
             type.buildRefinedBlockTags(provider, id);
-            provider.apply(parent.getConventionalBlockTag("%s_blocks")).addOptional(id);
+            provider.apply(parent().getConventionalBlockTag("%s_blocks")).addOptional(id);
         });
     }
 
@@ -129,12 +137,12 @@ public abstract class BaseRefinedState<D> implements ElementRefinedState<D> {
         boolean powder = type == RefinedStateType.POWDER;
         item.require(item -> {
             for (String format : (powder ? List.of("%s_dusts", "%ss") : List.of("%s_ingots", "%s"))) {
-                provider.apply(parent.getConventionalItemTag(format)).addOptional(Registries.ITEM.getId(item));
+                provider.apply(parent().getConventionalItemTag(format)).addOptional(Registries.ITEM.getId(item));
             }
         });
         miniItem.require(item -> {
             for (String format : (powder ? List.of("%s_small_dusts", "%s_tiny_dusts") : List.of("%s_nuggets", "%s_mini"))) {
-                provider.apply(parent.getConventionalItemTag(format)).addOptional(Registries.ITEM.getId(item));
+                provider.apply(parent().getConventionalItemTag(format)).addOptional(Registries.ITEM.getId(item));
             }
         });
     }

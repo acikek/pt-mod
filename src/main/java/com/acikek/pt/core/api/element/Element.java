@@ -4,31 +4,27 @@ import com.acikek.pt.api.PTApi;
 import com.acikek.pt.api.datagen.DatagenDelegator;
 import com.acikek.pt.api.datagen.PTRecipeProvider;
 import com.acikek.pt.api.request.FeatureRequests;
-import com.acikek.pt.core.api.content.ContentBase;
+import com.acikek.pt.core.api.content.ElementContentBase;
 import com.acikek.pt.core.api.content.ContentContext;
 import com.acikek.pt.core.api.content.SourceStateMapper;
 import com.acikek.pt.core.api.display.DisplayHolder;
 import com.acikek.pt.core.api.display.ElementDisplay;
 import com.acikek.pt.core.api.mineral.MineralResultHolder;
 import com.acikek.pt.core.api.refined.ElementRefinedState;
-import com.acikek.pt.core.api.refined.RefinedStates;
 import com.acikek.pt.core.api.registry.ElementIds;
 import com.acikek.pt.core.api.registry.PTRegistry;
 import com.acikek.pt.core.api.signature.ElementSignature;
 import com.acikek.pt.core.api.signature.SignatureHolder;
 import com.acikek.pt.core.api.signature.Signatures;
-import com.acikek.pt.core.api.source.ElementSource;
 import com.acikek.pt.core.api.source.MaterialHolder;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricBlockLootTableProvider;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
-import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
 import net.minecraft.block.Block;
 import net.minecraft.data.client.BlockStateModelGenerator;
 import net.minecraft.data.client.ItemModelGenerator;
-import net.minecraft.data.server.recipe.RecipeJsonProvider;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.item.Item;
 import net.minecraft.registry.tag.TagKey;
@@ -39,8 +35,6 @@ import net.minecraft.world.World;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.function.BiConsumer;
-import java.util.function.Consumer;
 import java.util.function.Function;
 
 public interface Element extends DisplayHolder<ElementDisplay>, SourceStateMapper, SignatureHolder, DatagenDelegator, MaterialHolder {
@@ -98,26 +92,25 @@ public interface Element extends DisplayHolder<ElementDisplay>, SourceStateMappe
                 : MineralResultHolder.filterAndGet(getRefinedStates(), world).mineralResultItem(); // empty case covered by exception
     }
 
-    default void mapContent(BiConsumer<ElementRefinedState<?>, ContentContext.State> stateFn, BiConsumer<ElementSource<?>, ContentContext.Source> sourceFn) {
-        for (var entry : sourceStateMap().entrySet()) {
-            stateFn.accept(entry.getKey(), new ContentContext.State(this));
-            for (var source : entry.getValue()) {
-                sourceFn.accept(source, new ContentContext.Source(this, entry.getKey()));
-            }
-        }
-    }
-
     // Ensure uniqueness between allotrope IDs
     private ElementIds<String> getElementIdsForState(ElementRefinedState<?> state) {
-        var suffix = state.isMain() ? "" : "_" + state.getId().getPath();
-        return elementIds().append(suffix);
+        return state.isMain()
+                ? elementIds()
+                : elementIds().append("_" + state.id().getPath());
+    }
+
+
+    default ContentContext.State getStateContext(ElementRefinedState<?> state) {
+        return new ContentContext.State(this, getElementIdsForState(state));
+    }
+
+    default ContentContext.Source getSourceContext(ElementRefinedState<?> parentState) {
+        return new ContentContext.Source(this, getElementIdsForState(parentState), parentState);
     }
 
     default void register(PTRegistry registry, FeatureRequests.Content stateRequests, FeatureRequests.Content sourceRequests) {
-        mapContent(
-                (state, ctx) -> state.register(registry, getElementIdsForState(state), ctx, stateRequests.getContent(state.getTypeId())),
-                (source, ctx) -> source.register(registry, getElementIdsForState(ctx.state()), ctx, sourceRequests.getContent(source.getTypeId()))
-        );
+        forEachRefinedState(state -> state.register(registry, stateRequests.getContent(state.typeId())));
+        forEachSource(source -> source.register(registry, sourceRequests.getContent(source.typeId())));
         afterRegister();
     }
 
@@ -165,10 +158,10 @@ public interface Element extends DisplayHolder<ElementDisplay>, SourceStateMappe
 
     @Environment(EnvType.CLIENT)
     default void initClient() {
-        mapContent(ContentBase::initClient, ContentBase::initClient);
+        forEachContent(ElementContentBase::initClient);
     }
 
-    private <T> List<T> getValues(Function<ContentBase<?, ?>, List<T>> mapper) {
+    private <T> List<T> getValues(Function<ElementContentBase<?, ?>, List<T>> mapper) {
         return getAllContent().stream()
                 .flatMap(content -> mapper.apply(content).stream())
                 .toList();
@@ -176,11 +169,11 @@ public interface Element extends DisplayHolder<ElementDisplay>, SourceStateMappe
 
     @Override
     default List<Block> getBlocks() {
-        return getValues(ContentBase::getBlocks);
+        return getValues(ElementContentBase::getBlocks);
     }
 
     @Override
     default List<Item> getItems() {
-        return getValues(ContentBase::getItems);
+        return getValues(ElementContentBase::getItems);
     }
 }

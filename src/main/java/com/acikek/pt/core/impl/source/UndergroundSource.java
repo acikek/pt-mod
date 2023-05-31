@@ -9,7 +9,7 @@ import com.acikek.pt.core.api.source.ElementSource;
 public abstract class UndergroundSource<D> implements ElementSource<D> {
 
     @Override
-    public void register(PTRegistry registry, ElementIds<String> ids, ContentContext.Source context, FeatureRequests.Single features) {
+    public void register(PTRegistry registry, FeatureRequests.Single features) {
 
     }
 }

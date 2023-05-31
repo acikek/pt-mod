@@ -3,7 +3,6 @@ package com.acikek.pt.core.impl.source;
 import com.acikek.pt.api.request.FeatureRequests;
 import com.acikek.pt.core.api.content.ContentContext;
 import com.acikek.pt.core.api.mineral.Mineral;
-import com.acikek.pt.core.api.registry.ElementIds;
 import com.acikek.pt.core.api.registry.PTRegistry;
 import com.acikek.pt.core.api.signature.ElementSignatureEntry;
 import com.acikek.pt.core.api.signature.SignatureHolder;
@@ -22,6 +21,7 @@ public class MineralSource<D> extends UndergroundSource<D> {
     private static final List<Mineral<?>> ADDED = new ArrayList<>();
 
     private final Mineral<D> mineral;
+    private ContentContext.Source context;
 
     public MineralSource(Mineral<D> mineral) {
         Objects.requireNonNull(mineral);
@@ -29,8 +29,19 @@ public class MineralSource<D> extends UndergroundSource<D> {
     }
 
     @Override
-    public @NotNull Identifier getTypeId() {
+    public @NotNull Identifier typeId() {
         return ElementSources.MINERAL;
+    }
+
+    @Override
+    public ContentContext.Source context() {
+        return context;
+    }
+
+    @Override
+    public void setContext(ContentContext.Source context) {
+        super.setContext(context);
+        this.context = context;
     }
 
     @Override
@@ -44,7 +55,7 @@ public class MineralSource<D> extends UndergroundSource<D> {
     }
 
     @Override
-    public boolean isAdded(ContentContext.Source context) {
+    public boolean isAdded() {
         return ADDED.contains(mineral);
     }
 
@@ -60,7 +71,7 @@ public class MineralSource<D> extends UndergroundSource<D> {
     }
 
     @Override
-    public void register(PTRegistry registry, ElementIds<String> ids, ContentContext.Source context, FeatureRequests.Single features) {
+    public void register(PTRegistry registry, FeatureRequests.Single features) {
         // TODO
     }
 

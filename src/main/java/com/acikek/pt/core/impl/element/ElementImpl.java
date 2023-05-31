@@ -6,12 +6,17 @@ import com.acikek.pt.core.api.element.Element;
 import com.acikek.pt.core.api.refined.ElementRefinedState;
 import com.acikek.pt.core.api.registry.ElementIds;
 import com.acikek.pt.core.api.source.ElementSource;
+import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
+import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
 public class ElementImpl implements Element {
+
+    private static final List<Identifier> sourceTagTranslations = new ArrayList<>();
+    private static final List<Identifier> stateTagTranslations = new ArrayList<>();
 
     private final ElementDisplay names;
     private final ElementIds<String> ids;
@@ -45,6 +50,24 @@ public class ElementImpl implements Element {
     }
 
     @Override
+    public void buildTagTranslations(FabricLanguageProvider.TranslationBuilder builder) {
+        forEachRefinedState(state -> {
+            if (!stateTagTranslations.contains(state.typeId())) {
+                state.buildTagTranslations(builder);
+                stateTagTranslations.add(state.typeId());
+            }
+        });
+        System.out.println("aa");
+        forEachSource(source -> {
+            if (!sourceTagTranslations.contains(source.typeId())) {
+                System.out.println(source.typeId());
+                source.buildTagTranslations(builder);
+                sourceTagTranslations.add(source.typeId());
+            }
+        });
+    }
+
+    @Override
     public @NotNull Map<ElementRefinedState<?>, List<ElementSource<?>>> sourceStateMap() {
         return sourceStateMap;
     }
@@ -55,7 +78,7 @@ public class ElementImpl implements Element {
             throw new IllegalStateException("element already registered");
         }
         var list = sourceStateMap.computeIfAbsent(toState, k -> new ArrayList<>());
-        source.onAdd(new ContentContext.Source(this, toState));
+        source.onAdd(getSourceContext(toState));
         list.add(source);
     }
 

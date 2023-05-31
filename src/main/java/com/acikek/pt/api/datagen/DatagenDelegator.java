@@ -6,17 +6,19 @@ import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
 import net.minecraft.block.Block;
 import net.minecraft.data.client.BlockStateModelGenerator;
 import net.minecraft.data.client.ItemModelGenerator;
-import net.minecraft.data.server.recipe.RecipeJsonProvider;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.item.Item;
 import net.minecraft.registry.tag.TagKey;
 
-import java.util.function.Consumer;
 import java.util.function.Function;
 
 public interface DatagenDelegator {
 
     default void buildTranslations(FabricLanguageProvider.TranslationBuilder builder) {
+        // Empty
+    }
+
+    default void buildTagTranslations(FabricLanguageProvider.TranslationBuilder builder) {
         // Empty
     }
 

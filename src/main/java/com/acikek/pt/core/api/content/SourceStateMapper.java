@@ -43,7 +43,7 @@ public interface SourceStateMapper {
                 .toList();
     }
 
-    private <T extends ContentBase<?, ?>> List<T> getByType(List<T> list, Identifier type) {
+    private <T extends ElementContentBase<?, ?>> List<T> getByType(List<T> list, Identifier type) {
         return list.stream()
                 .filter(content -> content.isType(type))
                 .toList();
@@ -65,7 +65,7 @@ public interface SourceStateMapper {
      */
     default @Nullable ElementRefinedState<?> getRefinedStateById(Identifier id) {
         var list = getRefinedStates().stream()
-                .filter(state -> state.getId().equals(id))
+                .filter(state -> state.id().equals(id))
                 .toList();
         if (list.size() > 1) {
             throw new IllegalStateException("there exists more than one refined state with the id '" + id + "'");
@@ -88,8 +88,8 @@ public interface SourceStateMapper {
      * @return a list of all the refined states and element sources, in order of sources before states,
      * unified in a single interface
      */
-    default List<ContentBase<?, ?>> getAllContent() {
-        List<ContentBase<?, ?>> result = new ArrayList<>();
+    default List<ElementContentBase<?, ?>> getAllContent() {
+        List<ElementContentBase<?, ?>> result = new ArrayList<>();
         result.addAll(getRefinedStates());
         result.addAll(getSources());
         return result;
@@ -119,7 +119,7 @@ public interface SourceStateMapper {
      * Maps over all content bases, including all refined states and element sources, using the specified callback.
      * @see SourceStateMapper#getAllContent() 
      */
-    default void forEachContent(Consumer<ContentBase<?, ?>> fn) {
+    default void forEachContent(Consumer<ElementContentBase<?, ?>> fn) {
         for (var content : getAllContent()) {
             fn.accept(content);
         }

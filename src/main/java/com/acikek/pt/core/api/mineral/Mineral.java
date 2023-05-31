@@ -1,11 +1,10 @@
 package com.acikek.pt.core.api.mineral;
 
 import com.acikek.pt.api.datagen.DatagenDelegator;
-import com.acikek.pt.api.request.FeatureRequests;
 import com.acikek.pt.core.api.data.DataHolder;
 import com.acikek.pt.core.api.display.DisplayHolder;
 import com.acikek.pt.core.api.display.MineralDisplay;
-import com.acikek.pt.core.api.registry.PTRegistry;
+import com.acikek.pt.core.api.content.ContentBase;
 import com.acikek.pt.core.api.signature.ElementSignatureEntry;
 import com.acikek.pt.core.api.signature.SignatureHolder;
 import com.acikek.pt.core.api.source.MaterialHolder;
@@ -14,15 +13,9 @@ import net.minecraft.world.World;
 
 import java.util.List;
 
-public interface Mineral<D> extends DataHolder<D>, DisplayHolder<MineralDisplay>, SignatureHolder, MineralResultHolder, DatagenDelegator, MaterialHolder {
+public interface Mineral<D> extends ContentBase, DataHolder<D>, DisplayHolder<MineralDisplay>, SignatureHolder, MineralResultHolder, DatagenDelegator, MaterialHolder {
 
     void init();
-
-    void register(PTRegistry registry, FeatureRequests.Single requests);
-
-    default void initClient() {
-        // Empty
-    }
 
     default List<ElementSignatureEntry> getAllResultEntries() {
         return signature().stream()

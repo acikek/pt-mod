@@ -8,8 +8,6 @@ import net.minecraft.util.Identifier;
 
 public class RefinedStates {
 
-    public static final Identifier MAIN = PT.id("main");
-
     public static final Identifier BASE = PT.id("base");
     public static final Identifier FLUID = PT.id("fluid");
 
@@ -22,7 +20,7 @@ public class RefinedStates {
     }
 
     public static ElementRefinedState<?> wrap(Item item, Item miniItem, Block block) {
-        return wrap(MAIN, item, miniItem, block);
+        return wrap(ElementRefinedState.MAIN, item, miniItem, block);
     }
 
     public static ElementRefinedState<?> fromType(Identifier id, RefinedStateType type, Float strength) {
@@ -30,7 +28,7 @@ public class RefinedStates {
     }
 
     public static ElementRefinedState<?> fromType(RefinedStateType type, Float strength) {
-        return fromType(MAIN, type, strength);
+        return fromType(ElementRefinedState.MAIN, type, strength);
     }
 
     public static ElementRefinedState<?> fromType(Identifier id, RefinedStateType type) {
@@ -46,7 +44,7 @@ public class RefinedStates {
     }
 
     public static ElementRefinedState<?> metal(float strength) {
-        return metal(MAIN, strength);
+        return metal(ElementRefinedState.MAIN, strength);
     }
 
     public static ElementRefinedState<?> gas(Identifier id) {
@@ -54,7 +52,7 @@ public class RefinedStates {
     }
 
     public static ElementRefinedState<?> gas() {
-        return gas(MAIN);
+        return gas(ElementRefinedState.MAIN);
     }
 
     public static ElementRefinedState<?> fluid(Identifier id) {
@@ -62,7 +60,7 @@ public class RefinedStates {
     }
 
     public static ElementRefinedState<?> fluid() {
-        return fluid(MAIN);
+        return fluid(ElementRefinedState.MAIN);
     }
 
     public static ElementRefinedState<?> sack(Identifier id) {
@@ -70,7 +68,7 @@ public class RefinedStates {
     }
 
     public static ElementRefinedState<?> sack() {
-        return sack(MAIN);
+        return sack(ElementRefinedState.MAIN);
     }
 
     public static ElementRefinedState<?> synthesized(Identifier id) {
@@ -78,7 +76,7 @@ public class RefinedStates {
     }
 
     public static ElementRefinedState<?> synthesized() {
-        return synthesized(MAIN);
+        return synthesized(ElementRefinedState.MAIN);
     }
 
     public static ElementRefinedState<?> trace(Identifier id) {
@@ -86,6 +84,6 @@ public class RefinedStates {
     }
 
     public static ElementRefinedState<?> trace() {
-        return trace(MAIN);
+        return trace(ElementRefinedState.MAIN);
     }
 }
