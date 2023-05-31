@@ -11,7 +11,7 @@
   "type": "minecraft:blasting",
   "category": "misc",
   "cookingtime": 200,
-  "experience": 0.90000004,
+  "experience": 0.9,
   "ingredient": {
     "item": "pt:osmium_source_deepslate"
   },

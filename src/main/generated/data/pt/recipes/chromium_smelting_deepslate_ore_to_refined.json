@@ -11,7 +11,7 @@
   "type": "minecraft:smelting",
   "category": "misc",
   "cookingtime": 200,
-  "experience": 0.90000004,
+  "experience": 0.9,
   "ingredient": {
     "item": "pt:chromium_source_deepslate"
   },
