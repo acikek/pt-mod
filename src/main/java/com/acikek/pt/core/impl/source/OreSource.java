@@ -31,7 +31,6 @@ import net.minecraft.recipe.book.RecipeCategory;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.tag.BlockTags;
 import net.minecraft.registry.tag.TagKey;
-import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Collections;
@@ -96,9 +95,9 @@ public class OreSource extends UndergroundSource<SourceData.Ore> {
         rawItem.require(raw -> builder.add(raw, "Raw " + name));
         rawBlock.require(raw -> builder.add(raw, "Block of Raw " + name));
         if (!hasBuiltPass()) {
-            builder.add(parent().getConventionalTagId("%s_ores"), name + " Ores");
-            builder.add(parent().getConventionalTagId("raw_%s_blocks"), "Raw " + name + " Blocks");
-            builder.add(parent().getConventionalTagId("raw_%s_ores"), "Raw " + name + " Ores");
+            builder.add(parent().getConventionalBlockKey("%s_ores"), name + " Ores");
+            builder.add(parent().getConventionalBlockKey("raw_%s_blocks"), "Raw " + name + " Blocks");
+            builder.add(parent().getConventionalItemKey("raw_%s_ores"), "Raw " + name + " Ores");
         }
     }
 

@@ -20,15 +20,31 @@ public interface DisplayHolder<T extends CompoundDisplay> {
         return new Identifier("c", formatter.formatted(id()));
     }
 
+    default String getConventionalTagKey(String formatter, String type) {
+        return "tag." + type + ".c." + formatter.formatted(id());
+    }
+
     default TagKey<Block> getConventionalBlockTag(String formatter) {
         return TagKey.of(RegistryKeys.BLOCK, getConventionalTagId(formatter));
+    }
+
+    default String getConventionalBlockKey(String formatter) {
+        return getConventionalTagKey(formatter, "block");
     }
 
     default TagKey<Item> getConventionalItemTag(String formatter) {
         return TagKey.of(RegistryKeys.ITEM, getConventionalTagId(formatter));
     }
 
+    default String getConventionalItemKey(String formatter) {
+        return getConventionalTagKey(formatter, "item");
+    }
+
     default TagKey<Fluid> getConventionalFluidTag(String formatter) {
         return TagKey.of(RegistryKeys.FLUID, getConventionalTagId(formatter));
+    }
+
+    default String getConventionalFluidKey(String formatter) {
+        return getConventionalTagKey(formatter, "fluid");
     }
 }
