@@ -13,15 +13,9 @@ import org.apache.commons.lang3.Range;
 
 public class ElementSources {
 
-    public static final Identifier CONTENT_TYPE = PT.id("source");
-
-    public static ContentIdentifier id(String of) {
-        return new ContentIdentifier(CONTENT_TYPE, PT.id(of));
-    }
-
-    public static final ContentIdentifier ORE = id("ore");
-    public static final ContentIdentifier MINERAL = id("mineral");
-    public static final ContentIdentifier ATMOSPHERIC = id("atmospheric");
+    public static final ContentIdentifier ORE = ElementSource.id("ore");
+    public static final ContentIdentifier MINERAL = ElementSource.id("mineral");
+    public static final ContentIdentifier ATMOSPHERIC = ElementSource.id("atmospheric");
 
     public static OreSourceBuilder oreBuilder() {
         return new OreSourceBuilder();

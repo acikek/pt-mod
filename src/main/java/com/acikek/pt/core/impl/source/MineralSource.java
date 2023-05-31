@@ -10,7 +10,6 @@ import com.acikek.pt.core.api.signature.SignatureHolder;
 import com.acikek.pt.core.api.source.ElementSources;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
-import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;

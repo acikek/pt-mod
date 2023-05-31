@@ -133,6 +133,15 @@ public class MineralImpl implements Mineral<DefaultMineralData> {
         block.require(b -> builder.add(b, name));
         cluster.require(block -> builder.add(block, name + " Cluster"));
         rawMineral.require(item -> builder.add(item, name + " " + display().rawFormName()));
+        builder.add(getConventionalBlockKey("%ss"), name);
+        if (cluster.canExist()) {
+            builder.add(getConventionalBlockKey("%s_clusters"), name + " Clusters");
+        }
+        if (rawMineral.canExist()) {
+            for (var formatter : List.of("raw_%ss", "%s_crystals")) {
+                builder.add(getConventionalItemKey(formatter), name + " Crystals");
+            }
+        }
     }
 
     private void buildMineral(BlockLootTableGenerator generator) {

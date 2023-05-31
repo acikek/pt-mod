@@ -103,6 +103,17 @@ public abstract class BaseRefinedState<D> implements ElementRefinedState<D> {
         block.require(block -> builder.add(block, type.getBlockName(name)));
         item.require(item -> builder.add(item, type.getItemName(name)));
         miniItem.require(item -> builder.add(item, type.getMiniItemName(name)));
+        boolean powder = type == RefinedStateType.POWDER;
+        if (!hasBuiltPass()) {
+            builder.add(parent().getConventionalBlockKey("%s_blocks"), name + " Blocks");
+            for (String format : (powder ? List.of("%s_dusts", "%ss") : List.of("%s_ingots", "%s"))) {
+                builder.add(parent().getConventionalItemKey(format), name + (powder ? " Dusts" : ""));
+            }
+            for (String format : (powder ? List.of("%s_small_dusts", "%s_tiny_dusts") : List.of("%s_nuggets", "%s_mini"))) {
+                String itemName = powder ? "Small " + name + " Dusts" : "Miniature " + name;
+                builder.add(parent().getConventionalItemKey(format), itemName);
+            }
+        }
     }
 
     @Override

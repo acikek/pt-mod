@@ -45,6 +45,9 @@ public class FluidRefinedState extends BaseRefinedState<RefinedStateData.HasFlui
     public void buildTranslations(FabricLanguageProvider.TranslationBuilder builder) {
         super.buildTranslations(builder);
         fluid.require(fluid -> builder.add(fluid.getDefaultState().getBlockState().getBlock(), parent().display().englishName()));
+        if (!hasBuiltPass()) {
+            builder.add(parent().getConventionalFluidKey("%s"), parent().display().englishName());
+        }
     }
 
     @Override

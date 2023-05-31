@@ -1,6 +1,5 @@
 package com.acikek.pt.core.api.refined;
 
-import com.acikek.pt.PT;
 import com.acikek.pt.core.api.content.ContentIdentifier;
 import com.acikek.pt.core.impl.refined.RefinedStateBuilder;
 import net.minecraft.block.Block;
@@ -9,14 +8,8 @@ import net.minecraft.util.Identifier;
 
 public class RefinedStates {
 
-    public static final Identifier CONTENT_TYPE = PT.id("refined_state");
-
-    public static ContentIdentifier id(String path) {
-        return new ContentIdentifier(CONTENT_TYPE, PT.id(path));
-    }
-
-    public static final ContentIdentifier BASE = id("base");
-    public static final ContentIdentifier FLUID = id("fluid");
+    public static final ContentIdentifier BASE = ElementRefinedState.id("base");
+    public static final ContentIdentifier FLUID = ElementRefinedState.id("fluid");
 
     public static RefinedStateBuilder builder() {
         return new RefinedStateBuilder();

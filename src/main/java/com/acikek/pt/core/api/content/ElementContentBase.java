@@ -66,7 +66,7 @@ public interface ElementContentBase<D, C extends ContentContext> extends Content
 
     /**
      * @return whether, at this pass of data generation, this content type
-     * ({@link ElementContentBase#typeId()}) has built already
+     * ({@link ElementContentBase#typeId()}) has built for the {@link ElementContentBase#parent()} element already
      */
     default boolean hasBuiltPass() {
         return parent().hasBuiltContentPass(typeId());
