@@ -130,9 +130,11 @@ public abstract class BaseRefinedState<D> implements ElementRefinedState<D> {
 
     @Override
     public void buildBlockTags(Function<TagKey<Block>, FabricTagProvider<Block>.FabricTagBuilder> provider) {
-        block.require(block -> {
-            var id = Registries.BLOCK.getId(block);
-            type.buildRefinedBlockTags(provider, id);
+        block.ifCreated(b -> {
+            var id = Registries.BLOCK.getId(b);
+            if (block.isInternal()) {
+                type.buildRefinedBlockTags(provider, id);
+            }
             provider.apply(parent().getConventionalBlockTag("%s_blocks")).addOptional(id);
         });
     }
@@ -147,12 +149,12 @@ public abstract class BaseRefinedState<D> implements ElementRefinedState<D> {
     @Override
     public void buildItemTags(Function<TagKey<Item>, FabricTagProvider<Item>.FabricTagBuilder> provider) {
         boolean powder = type == RefinedStateType.POWDER;
-        item.require(item -> {
+        item.ifCreated(item -> {
             for (String format : (powder ? List.of("%s_dusts", "%ss") : List.of("%s_ingots", "%s"))) {
                 provider.apply(parent().getConventionalItemTag(format)).addOptional(Registries.ITEM.getId(item));
             }
         });
-        miniItem.require(item -> {
+        miniItem.ifCreated(item -> {
             for (String format : (powder ? List.of("%s_small_dusts", "%s_tiny_dusts") : List.of("%s_nuggets", "%s_mini"))) {
                 provider.apply(parent().getConventionalItemTag(format)).addOptional(Registries.ITEM.getId(item));
             }

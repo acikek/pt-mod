@@ -148,6 +148,13 @@ public class PhasedContent<T> {
     }
 
     /**
+     * @return the opposite of {@link PhasedContent#isExternal()}
+     */
+    public boolean isInternal() {
+        return !isExternal();
+    }
+
+    /**
      * @return whether the value is able to be created or already exists
      */
     public boolean canExist() {
@@ -159,7 +166,7 @@ public class PhasedContent<T> {
      * that is, if this content was created and did not exist beforehand
      */
     public void ifInternal(Runnable fn) {
-        if (!isExternal()) {
+        if (isInternal()) {
             fn.run();
         }
     }

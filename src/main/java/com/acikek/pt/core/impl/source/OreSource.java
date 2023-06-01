@@ -160,25 +160,29 @@ public class OreSource extends UndergroundSource<SourceData.Ore> {
         var miningLevel = provider.apply(MiningLevelManager.getBlockTag(this.miningLevel));
         var mineable = provider.apply(BlockTags.PICKAXE_MINEABLE);
         for (var content : List.of(ore, deepslateOre)) {
-            content.require(c -> {
+            content.ifCreated(c -> {
                 var id =  Registries.BLOCK.getId(c);
                 provider.apply(parent().getConventionalBlockTag("%s_ores")).addOptional(id);
-                miningLevel.addOptional(id);
-                mineable.addOptional(id);
+                if (content.isInternal()) {
+                    miningLevel.addOptional(id);
+                    mineable.addOptional(id);
+                }
             });
         }
-        rawBlock.require(raw -> {
+        rawBlock.ifCreated(raw -> {
             var id = Registries.BLOCK.getId(raw);
             provider.apply(parent().getConventionalBlockTag("raw_%s_blocks")).addOptional(id);
-            miningLevel.addOptional(id);
-            mineable.addOptional(id);
-            provider.apply(BlockTags.NEEDS_STONE_TOOL).addOptional(id);
+            if (rawBlock.isInternal()) {
+                miningLevel.addOptional(id);
+                mineable.addOptional(id);
+                provider.apply(BlockTags.NEEDS_STONE_TOOL).addOptional(id);
+            }
         });
     }
 
     @Override
     public void buildItemTags(Function<TagKey<Item>, FabricTagProvider<Item>.FabricTagBuilder> provider) {
-        rawItem.require(raw -> provider.apply(parent().getConventionalItemTag("raw_%s_ores"))
+        rawItem.ifCreated(raw -> provider.apply(parent().getConventionalItemTag("raw_%s_ores"))
                 .addOptional(Registries.ITEM.getId(raw)));
     }
 

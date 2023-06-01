@@ -186,22 +186,26 @@ public class MineralImpl implements Mineral<DefaultMineralData> {
 
     @Override
     public void buildBlockTags(Function<TagKey<Block>, FabricTagProvider<Block>.FabricTagBuilder> provider) {
-        block.require(block -> {
-            var mineral = Registries.BLOCK.getId(block);
-            provider.apply(BlockTags.PICKAXE_MINEABLE).addOptional(mineral);
-            provider.apply(BlockTags.NEEDS_IRON_TOOL).addOptional(mineral);
-            provider.apply(getConventionalBlockTag("%ss")).addOptional(mineral);
+        block.ifCreated(b -> {
+            var id = Registries.BLOCK.getId(b);
+            provider.apply(getConventionalBlockTag("%ss")).addOptional(id);
+            if (block.isInternal()) {
+                provider.apply(BlockTags.PICKAXE_MINEABLE).addOptional(id);
+                provider.apply(BlockTags.NEEDS_IRON_TOOL).addOptional(id);
+            }
         });
-        cluster.require(c -> {
-            var cluster = Registries.BLOCK.getId(c);
-            provider.apply(BlockTags.PICKAXE_MINEABLE).addOptional(cluster);
-            provider.apply(getConventionalBlockTag("%s_clusters")).addOptional(cluster);
+        cluster.ifCreated(c -> {
+            var id = Registries.BLOCK.getId(c);
+            provider.apply(getConventionalBlockTag("%s_clusters")).addOptional(id);
+            if (cluster.isInternal()) {
+                provider.apply(BlockTags.PICKAXE_MINEABLE).addOptional(id);
+            }
         });
     }
 
     @Override
     public void buildItemTags(Function<TagKey<Item>, FabricTagProvider<Item>.FabricTagBuilder> provider) {
-        rawMineral.require(raw -> {
+        rawMineral.ifCreated(raw -> {
             for (String formatter : List.of("raw_%ss", "%s_crystals")) {
                 provider.apply(getConventionalItemTag(formatter)).addOptional(Registries.ITEM.getId(raw));
             }

@@ -2,7 +2,15 @@
   "replace": false,
   "values": [
     {
+      "id": "minecraft:diamond",
+      "required": false
+    },
+    {
       "id": "pt:carbon",
+      "required": false
+    },
+    {
+      "id": "minecraft:coal",
       "required": false
     }
   ]
