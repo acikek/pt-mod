@@ -1,6 +1,6 @@
 package com.acikek.pt.core.impl.mineral;
 
-import com.acikek.pt.core.api.content.PhasedContent;
+import com.acikek.pt.core.api.content.phase.PhasedContent;
 import com.acikek.pt.core.api.element.ElementalObjects;
 import com.acikek.pt.core.api.display.MineralDisplay;
 import com.acikek.pt.core.api.signature.ElementSignature;
@@ -12,9 +12,7 @@ import net.minecraft.item.Item;
 import net.minecraft.sound.BlockSoundGroup;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.function.Supplier;
-import java.util.stream.Stream;
 
 public class MineralBuilder {
 

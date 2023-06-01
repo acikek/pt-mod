@@ -3,7 +3,7 @@ package com.acikek.pt.core.impl.mineral;
 import com.acikek.pt.api.PTApi;
 import com.acikek.pt.api.request.FeatureRequests;
 import com.acikek.pt.api.request.RequestTypes;
-import com.acikek.pt.core.api.content.PhasedContent;
+import com.acikek.pt.core.api.content.phase.PhasedContent;
 import com.acikek.pt.core.api.display.MineralDisplay;
 import com.acikek.pt.core.api.mineral.DefaultMineralData;
 import com.acikek.pt.core.api.mineral.Mineral;
@@ -186,18 +186,18 @@ public class MineralImpl implements Mineral<DefaultMineralData> {
 
     @Override
     public void buildBlockTags(Function<TagKey<Block>, FabricTagProvider<Block>.FabricTagBuilder> provider) {
-        block.ifCreated(b -> {
-            var id = Registries.BLOCK.getId(b);
+        block.ifCreated((block, content) -> {
+            var id = Registries.BLOCK.getId(block);
             provider.apply(getConventionalBlockTag("%ss")).addOptional(id);
-            if (block.isInternal()) {
+            if (content.isInternal()) {
                 provider.apply(BlockTags.PICKAXE_MINEABLE).addOptional(id);
                 provider.apply(BlockTags.NEEDS_IRON_TOOL).addOptional(id);
             }
         });
-        cluster.ifCreated(c -> {
-            var id = Registries.BLOCK.getId(c);
+        cluster.ifCreated((block, content) -> {
+            var id = Registries.BLOCK.getId(block);
             provider.apply(getConventionalBlockTag("%s_clusters")).addOptional(id);
-            if (cluster.isInternal()) {
+            if (content.isInternal()) {
                 provider.apply(BlockTags.PICKAXE_MINEABLE).addOptional(id);
             }
         });

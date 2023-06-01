@@ -1,4 +1,4 @@
-// 1.19.4	2023-06-01T11:49:57.406441079	PT/Tags for minecraft:item
+// 1.19.4	2023-06-01T12:23:40.743385135	PT/Tags for minecraft:item
 ac32083eaeb99acbb09ae2a46128e964bf1b9861 data/c/tags/items/beryllium_nuggets.json
 3cc45da958fb5745220860c826bfdfb6d6908936 data/c/tags/items/raw_silver_ores.json
 3071a3d905a52d5940290ddfd5692314d5838d86 data/c/tags/items/nickel_mini.json
@@ -89,5 +89,5 @@ c6e515fd147fe45a39f6e626c6f724787d088bab data/c/tags/items/raw_gypsums.json
 78abc6ca59c764ce8d62c8ec913d324f1a10018b data/c/tags/items/raw_anthracites.json
 ead0dd8902fae7996801a8ba1fb0b39ccae45e02 data/c/tags/items/silver_ingots.json
 78abc6ca59c764ce8d62c8ec913d324f1a10018b data/c/tags/items/anthracite_crystals.json
-4a0dc769e4b974d80e01af28a78fef1b4944ec67 data/c/tags/items/raw_iron_ores.json
 3071a3d905a52d5940290ddfd5692314d5838d86 data/c/tags/items/nickel_nuggets.json
+4a0dc769e4b974d80e01af28a78fef1b4944ec67 data/c/tags/items/raw_iron_ores.json

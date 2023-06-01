@@ -5,7 +5,7 @@ import com.acikek.pt.api.request.FeatureRequests;
 import com.acikek.pt.api.request.RequestTypes;
 import com.acikek.pt.core.api.content.ContentContext;
 import com.acikek.pt.core.api.content.ContentIdentifier;
-import com.acikek.pt.core.api.content.PhasedContent;
+import com.acikek.pt.core.api.content.phase.PhasedContent;
 import com.acikek.pt.core.api.refined.RefinedStateData;
 import com.acikek.pt.core.api.registry.PTRegistry;
 import com.acikek.pt.core.api.source.ElementSources;
@@ -159,9 +159,9 @@ public class OreSource extends UndergroundSource<SourceData.Ore> {
     public void buildBlockTags(Function<TagKey<Block>, FabricTagProvider<Block>.FabricTagBuilder> provider) {
         var miningLevel = provider.apply(MiningLevelManager.getBlockTag(this.miningLevel));
         var mineable = provider.apply(BlockTags.PICKAXE_MINEABLE);
-        for (var content : List.of(ore, deepslateOre)) {
-            content.ifCreated(c -> {
-                var id =  Registries.BLOCK.getId(c);
+        for (var ore : List.of(ore, deepslateOre)) {
+            ore.ifCreated((block, content) -> {
+                var id =  Registries.BLOCK.getId(block);
                 provider.apply(parent().getConventionalBlockTag("%s_ores")).addOptional(id);
                 if (content.isInternal()) {
                     miningLevel.addOptional(id);
@@ -169,10 +169,10 @@ public class OreSource extends UndergroundSource<SourceData.Ore> {
                 }
             });
         }
-        rawBlock.ifCreated(raw -> {
+        rawBlock.ifCreated((raw, content) -> {
             var id = Registries.BLOCK.getId(raw);
             provider.apply(parent().getConventionalBlockTag("raw_%s_blocks")).addOptional(id);
-            if (rawBlock.isInternal()) {
+            if (content.isInternal()) {
                 miningLevel.addOptional(id);
                 mineable.addOptional(id);
                 provider.apply(BlockTags.NEEDS_STONE_TOOL).addOptional(id);

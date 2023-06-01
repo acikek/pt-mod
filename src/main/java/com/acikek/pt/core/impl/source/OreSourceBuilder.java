@@ -1,6 +1,6 @@
 package com.acikek.pt.core.impl.source;
 
-import com.acikek.pt.core.api.content.PhasedContent;
+import com.acikek.pt.core.api.content.phase.PhasedContent;
 import com.acikek.pt.core.api.element.ElementalObjects;
 import com.acikek.pt.core.api.source.ElementSource;
 import net.minecraft.block.Block;

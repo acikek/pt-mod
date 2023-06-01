@@ -1,9 +1,12 @@
-package com.acikek.pt.core.api.content;
+package com.acikek.pt.core.api.content.phase;
 
+import com.acikek.pt.core.api.content.ElementContentBase;
+import com.acikek.pt.core.impl.content.phase.PhasedContentImpls;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
+import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
@@ -29,12 +32,12 @@ import java.util.function.Supplier;
  * }
  * </pre>
  */
-public class PhasedContent<T> {
+public abstract class PhasedContent<T> {
 
     protected Supplier<T> supplier;
     protected Optional<T> value = Optional.empty();
 
-    private PhasedContent(Supplier<T> supplier) {
+    protected PhasedContent(Supplier<T> supplier) {
         this.supplier = supplier;
     }
 
@@ -44,14 +47,14 @@ public class PhasedContent<T> {
      */
     public static <T> PhasedContent<T> of(@NotNull Supplier<T> supplier) {
         Objects.requireNonNull(supplier);
-        return new PhasedContent<>(supplier);
+        return new PhasedContentImpls.Internal<>(supplier);
     }
 
     /**
      * @return a phased content implementation wherein creation calls do nothing
      */
     public static <T> PhasedContent<T> none() {
-        return new Null<>();
+        return new PhasedContentImpls.Null<>();
     }
 
     /**
@@ -68,16 +71,16 @@ public class PhasedContent<T> {
      * Creates a phased content instance where the value already exists.<br>
      * The existing value cannot be {@code null}.
      */
-    public static <T> PhasedContent<T> existing(@NotNull T existing) {
+    public static <T> PhasedContent<T> ofExternal(@NotNull T existing) {
         Objects.requireNonNull(existing);
-        return new MayExist<>(existing, null);
+        return new PhasedContentImpls.External<>(existing);
     }
 
     /**
      * Creates a phased content instance from a generic {@link Object}.
      *
      * <ul>
-     *     <li>Uses {@link PhasedContent#existing(Object)} if the object is of type {@code T}</li>
+     *     <li>Uses {@link PhasedContent#ofExternal(Object)} if the object is of type {@code T}</li>
      *     <li>Uses {@link PhasedContent#of(Supplier)} if the object is a {@link Supplier}</li>
      * </ul>
      *
@@ -86,13 +89,44 @@ public class PhasedContent<T> {
     @SuppressWarnings("unchecked")
     public static <T> PhasedContent<T> from(Object content, Class<T> clazz) {
         if (clazz.isInstance(content)) {
-            return existing(clazz.cast(content));
+            return ofExternal(clazz.cast(content));
         }
         if (content instanceof Supplier<?> supplier) {
             return of((Supplier<T>) supplier);
         }
         throw new IllegalStateException("object must be either a content value or a supplier");
     }
+
+    /**
+     * @return the current phase of the content
+     */
+    public abstract ContentPhase phase();
+
+    /**
+     * @return whether this content existed before it was created
+     */
+    public boolean isExternal() {
+        return phase() == ContentPhase.EXTERNAL;
+    }
+
+    /**
+     * @return the opposite of {@link PhasedContent#isExternal()}
+     */
+    public boolean isInternal() {
+        return !isExternal() && canExist();
+    }
+
+    /**
+     * @return whether the value is able to be created or already exists
+     */
+    public boolean canExist() {
+        return phase() != ContentPhase.NULL;
+    }
+
+    /**
+     * Creates the content and returns it for a {@link PhasedContent#create()} call.
+     */
+    protected abstract T createContent();
 
     /**
      * Retrieves, caches, and returns the value from the original supplier.
@@ -102,12 +136,11 @@ public class PhasedContent<T> {
      * @see PhasedContent#isCreated()
      */
     public T create() {
-        if (value.isPresent()) {
+        if (isCreated()) {
             throw new IllegalStateException("phased content has already been created");
         }
-        value = Optional.of(supplier.get());
-        supplier = null;
-        return value.get();
+        return createContent();
+        /*;*/
     }
 
     /**
@@ -141,27 +174,6 @@ public class PhasedContent<T> {
     }
 
     /**
-     * @return whether this content existed before it was created
-     */
-    public boolean isExternal() {
-        return false;
-    }
-
-    /**
-     * @return the opposite of {@link PhasedContent#isExternal()}
-     */
-    public boolean isInternal() {
-        return !isExternal();
-    }
-
-    /**
-     * @return whether the value is able to be created or already exists
-     */
-    public boolean canExist() {
-        return true;
-    }
-
-    /**
      * Executes a runnable if {@link PhasedContent#isExternal()} is not {@code true};
      * that is, if this content was created and did not exist beforehand
      */
@@ -172,7 +184,7 @@ public class PhasedContent<T> {
     }
 
     /**
-     * Creates the content and then, if this content is internal, executes the specified callback.
+     * Creates the content and then, <b>if this content is internal</b>, executes the specified callback.
      * @see PhasedContent#create()
      * @see PhasedContent#ifInternal(Runnable)
      */
@@ -182,12 +194,26 @@ public class PhasedContent<T> {
     }
 
     /**
-     * Requires and executes the specified callback if this content is internal.
+     * @see PhasedContent#create(Consumer)
+     */
+    public void create(BiConsumer<T, PhasedContent<T>> ifInternal) {
+        create(content -> ifInternal.accept(content, this));
+    }
+
+    /**
+     * Requires and executes the specified callback <b>if this content is internal</b>.
      * @see PhasedContent#require()
      * @see PhasedContent#ifInternal(Runnable)
      */
     public void require(Consumer<T> ifInternal) {
         ifInternal(() -> ifInternal.accept(require()));
+    }
+
+    /**
+     * @see PhasedContent#require(Consumer)
+     */
+    public void require(BiConsumer<T, PhasedContent<T>> ifInternal) {
+        require(content -> ifInternal.accept(content, this));
     }
 
     /**
@@ -198,6 +224,13 @@ public class PhasedContent<T> {
         if (isCreated()) {
             callback.accept(require());
         }
+    }
+
+    /**
+     * @see PhasedContent#ifCreated(Consumer)
+     */
+    public void ifCreated(BiConsumer<T, PhasedContent<T>> callback) {
+        ifCreated(content -> callback.accept(content, this));
     }
 
     /**
@@ -231,58 +264,5 @@ public class PhasedContent<T> {
      */
     public static <T> List<T> getByCreation(PhasedContent<T>... containers) {
         return getByCreation(Arrays.stream(containers).toList());
-    }
-
-    /**
-     * An extension of {@link PhasedContent} that can accept an existing value as the initial value.
-     */
-    private static class MayExist<T> extends PhasedContent<T> {
-
-        private final T created;
-
-        private MayExist(T created, Supplier<T> supplier) {
-            super(supplier);
-            this.created = created;
-        }
-
-        @Override
-        public T create() {
-            if (supplier != null) {
-                return super.create();
-            }
-            value = Optional.of(created);
-            return created;
-        }
-
-        @Override
-        public boolean isExternal() {
-            return true;
-        }
-    }
-
-    /**
-     * An extension of {@link PhasedContent} where the content explicitly never exists
-     */
-    private static class Null<T> extends PhasedContent<T> {
-
-        private Null() {
-            super(() -> null);
-        }
-
-        @Override
-        public T create() {
-            // Empty
-            return null;
-        }
-
-        @Override
-        public boolean isExternal() {
-            return true;
-        }
-
-        @Override
-        public boolean canExist() {
-            return false;
-        }
     }
 }

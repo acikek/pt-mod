@@ -1,4 +1,4 @@
-// 1.19.4	2023-06-01T11:49:57.4048	PT/Recipes
+// 1.19.4	2023-06-01T12:23:40.741963931	PT/Recipes
 198e1e77b7c701cc86afe2ca758fb0d446d28356 data/pt/advancements/recipes/misc/silver_smelting_ore_to_refined.json
 65ac70b0920a838c8e072056e40b11e71021b406 data/pt/recipes/manganese_smelting_raw_ore_to_refined.json
 66ba6659f4cb4bf39c3c453c1878391c9877f684 data/pt/recipes/cadmium_blasting_deepslate_ore_to_refined.json
@@ -50,9 +50,9 @@ d75f11969e783106f214cd756189044bbf405a7f data/pt/advancements/recipes/building_b
 7fba47d772a2869668751a47bf850b5810f4f3a2 data/pt/advancements/recipes/misc/nickel_smelting_ore_to_refined.json
 b0f06b6c16f4e917aab7d2261f5aba41429168cc data/pt/recipes/nickel_raw_block_to_ore.json
 ad0e03fe9ec886d4cd0754a974188b7473072f33 data/pt/advancements/recipes/misc/cobalt_blasting_deepslate_ore_to_refined.json
+ebaa78d9f3ce0f7dc661db0e2061c5d50c6e87e0 data/pt/advancements/recipes/misc/manganese_smelting_ore_to_refined.json
 9e88764d9c26645bb4792e8565f4450828aa736e data/pt/recipes/manganese_smelting_ore_to_refined.json
 f60e9333f6a6d71ca7970cc98012c6288c069068 data/pt/advancements/recipes/misc/vanadium_raw_block_to_ore.json
-ebaa78d9f3ce0f7dc661db0e2061c5d50c6e87e0 data/pt/advancements/recipes/misc/manganese_smelting_ore_to_refined.json
 ec3b9e39760c27e00e89d93edb2e4e2c3906f689 data/pt/recipes/silver_blasting_deepslate_ore_to_refined.json
 82d0677f7174f51f09d1f5b42f50b2d4c35fb372 data/pt/advancements/recipes/misc/vanadium_blasting_ore_to_refined.json
 2850eb8105adb8df0f5973147e53e3dffc7cccb9 data/pt/advancements/recipes/misc/platinum_blasting_deepslate_ore_to_refined.json

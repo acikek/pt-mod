@@ -4,7 +4,7 @@ import com.acikek.pt.api.request.FeatureRequests;
 import com.acikek.pt.api.request.RequestTypes;
 import com.acikek.pt.core.api.content.ContentContext;
 import com.acikek.pt.core.api.content.ContentIdentifier;
-import com.acikek.pt.core.api.content.PhasedContent;
+import com.acikek.pt.core.api.content.phase.PhasedContent;
 import com.acikek.pt.core.api.refined.ElementRefinedState;
 import com.acikek.pt.core.api.refined.RefinedStateData;
 import com.acikek.pt.core.api.refined.RefinedStateType;
@@ -130,9 +130,9 @@ public abstract class BaseRefinedState<D> implements ElementRefinedState<D> {
 
     @Override
     public void buildBlockTags(Function<TagKey<Block>, FabricTagProvider<Block>.FabricTagBuilder> provider) {
-        block.ifCreated(b -> {
+        block.ifCreated((b, content) -> {
             var id = Registries.BLOCK.getId(b);
-            if (block.isInternal()) {
+            if (content.isInternal()) {
                 type.buildRefinedBlockTags(provider, id);
             }
             provider.apply(parent().getConventionalBlockTag("%s_blocks")).addOptional(id);
