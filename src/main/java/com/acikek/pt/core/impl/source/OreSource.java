@@ -1,6 +1,7 @@
 package com.acikek.pt.core.impl.source;
 
-import com.acikek.pt.api.datagen.PTRecipeProvider;
+import com.acikek.pt.api.datagen.provider.PTRecipeProvider;
+import com.acikek.pt.api.datagen.provider.tag.PTTagProviders;
 import com.acikek.pt.api.request.FeatureRequests;
 import com.acikek.pt.api.request.RequestTypes;
 import com.acikek.pt.core.api.content.ContentContext;
@@ -156,34 +157,30 @@ public class OreSource extends UndergroundSource<SourceData.Ore> {
     }
 
     @Override
-    public void buildBlockTags(Function<TagKey<Block>, FabricTagProvider<Block>.FabricTagBuilder> provider) {
-        var miningLevel = provider.apply(MiningLevelManager.getBlockTag(this.miningLevel));
-        var mineable = provider.apply(BlockTags.PICKAXE_MINEABLE);
+    public void buildBlockTags(PTTagProviders.BlockTagProvider provider) {
+        var miningLevel = MiningLevelManager.getBlockTag(this.miningLevel);
         for (var ore : List.of(ore, deepslateOre)) {
             ore.ifCreated((block, content) -> {
-                var id =  Registries.BLOCK.getId(block);
-                provider.apply(parent().getConventionalBlockTag("%s_ores")).addOptional(id);
+                provider.add(parent().getConventionalBlockTag("%s_ores"), block);
                 if (content.isInternal()) {
-                    miningLevel.addOptional(id);
-                    mineable.addOptional(id);
+                    provider.add(miningLevel, block);
+                    provider.add(BlockTags.PICKAXE_MINEABLE, block);
                 }
             });
         }
         rawBlock.ifCreated((raw, content) -> {
-            var id = Registries.BLOCK.getId(raw);
-            provider.apply(parent().getConventionalBlockTag("raw_%s_blocks")).addOptional(id);
+            provider.add(parent().getConventionalBlockTag("raw_%s_blocks"), raw);
             if (content.isInternal()) {
-                miningLevel.addOptional(id);
-                mineable.addOptional(id);
-                provider.apply(BlockTags.NEEDS_STONE_TOOL).addOptional(id);
+                provider.add(miningLevel, raw);
+                provider.add(BlockTags.PICKAXE_MINEABLE, raw);
+                provider.add(BlockTags.NEEDS_STONE_TOOL, raw);
             }
         });
     }
 
     @Override
-    public void buildItemTags(Function<TagKey<Item>, FabricTagProvider<Item>.FabricTagBuilder> provider) {
-        rawItem.ifCreated(raw -> provider.apply(parent().getConventionalItemTag("raw_%s_ores"))
-                .addOptional(Registries.ITEM.getId(raw)));
+    public void buildItemTags(PTTagProviders.ItemTagProvider provider) {
+        rawItem.ifCreated(raw -> provider.add(parent().getConventionalItemTag("raw_%s_ores"), raw));
     }
 
     @Override

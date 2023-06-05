@@ -2,7 +2,8 @@ package com.acikek.pt.core.api.element;
 
 import com.acikek.pt.api.PTApi;
 import com.acikek.pt.api.datagen.DatagenDelegator;
-import com.acikek.pt.api.datagen.PTRecipeProvider;
+import com.acikek.pt.api.datagen.provider.PTRecipeProvider;
+import com.acikek.pt.api.datagen.provider.tag.PTTagProviders;
 import com.acikek.pt.api.request.FeatureRequests;
 import com.acikek.pt.core.api.content.ContentContext;
 import com.acikek.pt.core.api.content.ContentIdentifier;
@@ -159,17 +160,17 @@ public interface Element extends DisplayHolder<ElementDisplay>, SourceStateMappe
     }
 
     @Override
-    default void buildBlockTags(Function<TagKey<Block>, FabricTagProvider<Block>.FabricTagBuilder> provider) {
+    default void buildBlockTags(PTTagProviders.BlockTagProvider provider) {
         forEachContentPass(content -> content.buildBlockTags(provider));
     }
 
     @Override
-    default void buildItemTags(Function<TagKey<Item>, FabricTagProvider<Item>.FabricTagBuilder> provider) {
+    default void buildItemTags(PTTagProviders.ItemTagProvider provider) {
         forEachContentPass(content -> content.buildItemTags(provider));
     }
 
     @Override
-    default void buildFluidTags(Function<TagKey<Fluid>, FabricTagProvider<Fluid>.FabricTagBuilder> provider) {
+    default void buildFluidTags(PTTagProviders.FluidTagProvider provider) {
         forEachContentPass(content -> content.buildFluidTags(provider));
     }
 

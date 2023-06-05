@@ -1,22 +1,19 @@
 package com.acikek.pt.core.api.refined;
 
 import com.acikek.pt.api.datagen.PTDatagenApi;
+import com.acikek.pt.api.datagen.provider.tag.PTTagProviders;
 import com.acikek.pt.sound.ModSoundGroups;
-import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.block.*;
 import net.minecraft.data.client.BlockStateModelGenerator;
 import net.minecraft.data.client.TexturedModel;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.registry.tag.BlockTags;
-import net.minecraft.registry.tag.TagKey;
 import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.state.StateManager;
-import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Objects;
-import java.util.function.Function;
 
 public enum RefinedStateType {
 
@@ -99,10 +96,10 @@ public enum RefinedStateType {
         }
     }
 
-    public void buildRefinedBlockTags(Function<TagKey<Block>, FabricTagProvider<Block>.FabricTagBuilder> provider, Identifier id) {
+    public void buildRefinedBlockTags(PTTagProviders.BlockTagProvider provider, Block block) {
         if (this != POWDER) {
-            provider.apply(BlockTags.PICKAXE_MINEABLE).addOptional(id);
-            provider.apply(this == TRACE ? BlockTags.NEEDS_STONE_TOOL : BlockTags.NEEDS_IRON_TOOL).addOptional(id);
+            provider.add(BlockTags.PICKAXE_MINEABLE, block);
+            provider.add(this == TRACE ? BlockTags.NEEDS_STONE_TOOL : BlockTags.NEEDS_IRON_TOOL, block);
         }
     }
 }

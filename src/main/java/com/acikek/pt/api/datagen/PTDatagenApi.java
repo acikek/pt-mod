@@ -1,23 +1,20 @@
 package com.acikek.pt.api.datagen;
 
+import com.acikek.pt.api.datagen.provider.PTRecipeProvider;
+import com.acikek.pt.api.datagen.provider.tag.PTTagProviders;
 import com.acikek.pt.api.impl.datagen.PTDatagenImpl;
 import com.acikek.pt.core.api.AbstractPeriodicTable;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.*;
-import net.minecraft.block.Block;
 import net.minecraft.data.client.BlockStateModelGenerator;
 import net.minecraft.data.client.ItemModelGenerator;
 import net.minecraft.data.client.Models;
 import net.minecraft.data.client.TexturedModel;
 import net.minecraft.data.server.recipe.RecipeJsonProvider;
-import net.minecraft.fluid.Fluid;
-import net.minecraft.item.Item;
 import net.minecraft.registry.RegistryWrapper;
-import net.minecraft.registry.tag.TagKey;
 
 import java.util.concurrent.CompletableFuture;
 import java.util.function.Consumer;
-import java.util.function.Function;
 
 public class PTDatagenApi {
 
@@ -87,41 +84,41 @@ public class PTDatagenApi {
         };
     }
 
-    public static void buildBlockTags(Function<TagKey<Block>, FabricTagProvider<Block>.FabricTagBuilder> provider, AbstractPeriodicTable table) {
+    public static void buildBlockTags(PTTagProviders.BlockTagProvider provider, AbstractPeriodicTable table) {
         PTDatagenImpl.delegate(DatagenDelegator::buildBlockTags, provider, table);
     }
 
     public static FabricTagProvider.BlockTagProvider createBlockTagProvider(FabricDataOutput output, CompletableFuture<RegistryWrapper.WrapperLookup> lookup, AbstractPeriodicTable table) {
-        return new FabricTagProvider.BlockTagProvider(output, lookup) {
+        return new PTTagProviders.BlockTagProvider(output, lookup) {
             @Override
             protected void configure(RegistryWrapper.WrapperLookup arg) {
-                buildBlockTags(this::getOrCreateTagBuilder, table);
+                buildBlockTags(this, table);
             }
         };
     }
 
-    public static void buildItemTags(Function<TagKey<Item>, FabricTagProvider<Item>.FabricTagBuilder> provider, AbstractPeriodicTable table) {
+    public static void buildItemTags(PTTagProviders.ItemTagProvider provider, AbstractPeriodicTable table) {
         PTDatagenImpl.delegate(DatagenDelegator::buildItemTags, provider, table);
     }
 
     public static FabricTagProvider.ItemTagProvider createItemTagProvider(FabricDataOutput output, CompletableFuture<RegistryWrapper.WrapperLookup> lookup, AbstractPeriodicTable table) {
-        return new FabricTagProvider.ItemTagProvider(output, lookup) {
+        return new PTTagProviders.ItemTagProvider(output, lookup) {
             @Override
             protected void configure(RegistryWrapper.WrapperLookup arg) {
-                buildItemTags(this::getOrCreateTagBuilder, table);
+                buildItemTags(this, table);
             }
         };
     }
 
-    public static void buildFluidTags(Function<TagKey<Fluid>, FabricTagProvider<Fluid>.FabricTagBuilder> provider, AbstractPeriodicTable table) {
+    public static void buildFluidTags(PTTagProviders.FluidTagProvider provider, AbstractPeriodicTable table) {
         PTDatagenImpl.delegate(DatagenDelegator::buildFluidTags, provider, table);
     }
 
     public static FabricTagProvider.FluidTagProvider createFluidTagProvider(FabricDataOutput output, CompletableFuture<RegistryWrapper.WrapperLookup> lookup, AbstractPeriodicTable table) {
-        return new FabricTagProvider.FluidTagProvider(output, lookup) {
+        return new PTTagProviders.FluidTagProvider(output, lookup) {
             @Override
             protected void configure(RegistryWrapper.WrapperLookup arg) {
-                buildFluidTags(this::getOrCreateTagBuilder, table);
+                buildFluidTags(this, table);
             }
         };
     }

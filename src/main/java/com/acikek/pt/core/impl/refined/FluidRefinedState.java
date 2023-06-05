@@ -1,5 +1,6 @@
 package com.acikek.pt.core.impl.refined;
 
+import com.acikek.pt.api.datagen.provider.tag.PTTagProviders;
 import com.acikek.pt.api.request.FeatureRequests;
 import com.acikek.pt.api.request.RequestTypes;
 import com.acikek.pt.core.api.content.ContentIdentifier;
@@ -51,8 +52,8 @@ public class FluidRefinedState extends BaseRefinedState<RefinedStateData.HasFlui
     }
 
     @Override
-    public void buildFluidTags(Function<TagKey<Fluid>, FabricTagProvider<Fluid>.FabricTagBuilder> provider) {
-        fluid.require(fluid -> provider.apply(parent().getConventionalFluidTag("%s")).addOptional(Registries.FLUID.getId(fluid)));
+    public void buildFluidTags(PTTagProviders.FluidTagProvider provider) {
+        fluid.require(fluid -> provider.add(parent().getConventionalFluidTag("%s"), fluid));
     }
 
     @Override

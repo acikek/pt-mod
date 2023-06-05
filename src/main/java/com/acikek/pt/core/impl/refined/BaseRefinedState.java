@@ -1,5 +1,6 @@
 package com.acikek.pt.core.impl.refined;
 
+import com.acikek.pt.api.datagen.provider.tag.PTTagProviders;
 import com.acikek.pt.api.request.FeatureRequests;
 import com.acikek.pt.api.request.RequestTypes;
 import com.acikek.pt.core.api.content.ContentContext;
@@ -12,15 +13,12 @@ import com.acikek.pt.core.api.refined.RefinedStates;
 import com.acikek.pt.core.api.registry.PTRegistry;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricBlockLootTableProvider;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
-import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
 import net.fabricmc.fabric.api.resource.conditions.v1.DefaultResourceConditions;
 import net.minecraft.block.Block;
 import net.minecraft.data.client.BlockStateModelGenerator;
 import net.minecraft.data.client.ItemModelGenerator;
 import net.minecraft.data.client.Models;
 import net.minecraft.item.Item;
-import net.minecraft.registry.Registries;
-import net.minecraft.registry.tag.TagKey;
 import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -28,7 +26,6 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
-import java.util.function.Function;
 import java.util.stream.Stream;
 
 public abstract class BaseRefinedState<D> implements ElementRefinedState<D> {
@@ -129,13 +126,12 @@ public abstract class BaseRefinedState<D> implements ElementRefinedState<D> {
     }
 
     @Override
-    public void buildBlockTags(Function<TagKey<Block>, FabricTagProvider<Block>.FabricTagBuilder> provider) {
-        block.ifCreated((b, content) -> {
-            var id = Registries.BLOCK.getId(b);
+    public void buildBlockTags(PTTagProviders.BlockTagProvider provider) {
+        block.ifCreated((block, content) -> {
             if (content.isInternal()) {
-                type.buildRefinedBlockTags(provider, id);
+                type.buildRefinedBlockTags(provider, block);
             }
-            provider.apply(parent().getConventionalBlockTag("%s_blocks")).addOptional(id);
+            provider.add(parent().getConventionalBlockTag("%s_blocks"), block);
         });
     }
 
@@ -147,16 +143,16 @@ public abstract class BaseRefinedState<D> implements ElementRefinedState<D> {
     }
 
     @Override
-    public void buildItemTags(Function<TagKey<Item>, FabricTagProvider<Item>.FabricTagBuilder> provider) {
+    public void buildItemTags(PTTagProviders.ItemTagProvider provider) {
         boolean powder = type == RefinedStateType.POWDER;
         item.ifCreated(item -> {
             for (String format : (powder ? List.of("%s_dusts", "%ss") : List.of("%s_ingots", "%s"))) {
-                provider.apply(parent().getConventionalItemTag(format)).addOptional(Registries.ITEM.getId(item));
+                provider.add(parent().getConventionalItemTag(format), item);
             }
         });
         miniItem.ifCreated(item -> {
             for (String format : (powder ? List.of("%s_small_dusts", "%s_tiny_dusts") : List.of("%s_nuggets", "%s_mini"))) {
-                provider.apply(parent().getConventionalItemTag(format)).addOptional(Registries.ITEM.getId(item));
+                provider.add(parent().getConventionalItemTag(format), item);
             }
         });
     }

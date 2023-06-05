@@ -1,6 +1,7 @@
 package com.acikek.pt.core.impl.mineral;
 
 import com.acikek.pt.api.PTApi;
+import com.acikek.pt.api.datagen.provider.tag.PTTagProviders;
 import com.acikek.pt.api.request.FeatureRequests;
 import com.acikek.pt.api.request.RequestTypes;
 import com.acikek.pt.core.api.content.phase.PhasedContent;
@@ -185,29 +186,27 @@ public class MineralImpl implements Mineral<DefaultMineralData> {
     }
 
     @Override
-    public void buildBlockTags(Function<TagKey<Block>, FabricTagProvider<Block>.FabricTagBuilder> provider) {
+    public void buildBlockTags(PTTagProviders.BlockTagProvider provider) {
         block.ifCreated((block, content) -> {
-            var id = Registries.BLOCK.getId(block);
-            provider.apply(getConventionalBlockTag("%ss")).addOptional(id);
+            provider.add(getConventionalBlockTag("%ss"), block);
             if (content.isInternal()) {
-                provider.apply(BlockTags.PICKAXE_MINEABLE).addOptional(id);
-                provider.apply(BlockTags.NEEDS_IRON_TOOL).addOptional(id);
+                provider.add(BlockTags.PICKAXE_MINEABLE, block);
+                provider.add(BlockTags.NEEDS_IRON_TOOL, block);
             }
         });
         cluster.ifCreated((block, content) -> {
-            var id = Registries.BLOCK.getId(block);
-            provider.apply(getConventionalBlockTag("%s_clusters")).addOptional(id);
+            provider.add(getConventionalBlockTag("%s_clusters"), block);
             if (content.isInternal()) {
-                provider.apply(BlockTags.PICKAXE_MINEABLE).addOptional(id);
+                provider.add(BlockTags.PICKAXE_MINEABLE, block);
             }
         });
     }
 
     @Override
-    public void buildItemTags(Function<TagKey<Item>, FabricTagProvider<Item>.FabricTagBuilder> provider) {
+    public void buildItemTags(PTTagProviders.ItemTagProvider provider) {
         rawMineral.ifCreated(raw -> {
             for (String formatter : List.of("raw_%ss", "%s_crystals")) {
-                provider.apply(getConventionalItemTag(formatter)).addOptional(Registries.ITEM.getId(raw));
+                provider.add(getConventionalItemTag(formatter), raw);
             }
         });
     }

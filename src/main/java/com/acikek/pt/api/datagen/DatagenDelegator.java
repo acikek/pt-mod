@@ -1,9 +1,10 @@
 package com.acikek.pt.api.datagen;
 
+import com.acikek.pt.api.datagen.provider.PTRecipeProvider;
+import com.acikek.pt.api.datagen.provider.tag.PTTagProviders;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricBlockLootTableProvider;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
-import net.minecraft.block.Block;
 import net.minecraft.data.client.BlockStateModelGenerator;
 import net.minecraft.data.client.ItemModelGenerator;
 import net.minecraft.fluid.Fluid;
@@ -34,15 +35,15 @@ public interface DatagenDelegator {
         // Empty
     }
 
-    default void buildBlockTags(Function<TagKey<Block>, FabricTagProvider<Block>.FabricTagBuilder> provider) {
+    default void buildBlockTags(PTTagProviders.BlockTagProvider provider) {
         // Empty
     }
 
-    default void buildItemTags(Function<TagKey<Item>, FabricTagProvider<Item>.FabricTagBuilder> provider) {
+    default void buildItemTags(PTTagProviders.ItemTagProvider provider) {
         // Empty
     }
 
-    default void buildFluidTags(Function<TagKey<Fluid>, FabricTagProvider<Fluid>.FabricTagBuilder> provider) {
+    default void buildFluidTags(PTTagProviders.FluidTagProvider provider) {
         // Empty
     }
 }
