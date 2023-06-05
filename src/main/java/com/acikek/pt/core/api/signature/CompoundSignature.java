@@ -12,14 +12,14 @@ public interface CompoundSignature {
 
     List<SignatureEntry> all();
 
-    default List<SignatureEntry> elements(World world) {
+    default List<SignatureEntry> getResults(World world) {
         return components().stream()
                 .flatMap(result -> result.get(world).stream())
                 .toList();
     }
 
-    default List<ItemStack> stacks(World world) {
-        return elements(world).stream()
+    default List<ItemStack> getResultStacks(World world) {
+        return getResults(world).stream()
                 .map(entry -> entry.getResultStack(world))
                 .toList();
     }
