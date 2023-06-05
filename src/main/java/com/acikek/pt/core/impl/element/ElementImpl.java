@@ -1,14 +1,11 @@
 package com.acikek.pt.core.impl.element;
 
-import com.acikek.pt.core.api.content.ContentContext;
 import com.acikek.pt.core.api.content.ContentIdentifier;
 import com.acikek.pt.core.api.display.ElementDisplay;
 import com.acikek.pt.core.api.element.Element;
 import com.acikek.pt.core.api.refined.ElementRefinedState;
 import com.acikek.pt.core.api.registry.ElementIds;
 import com.acikek.pt.core.api.source.ElementSource;
-import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
-import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
@@ -46,7 +43,7 @@ public class ElementImpl implements Element {
     @Override
     public void afterRegister() {
         registered = true;
-        forEachContent(content -> content.injectSignature(this));
+        forEachContent(content -> content.addSignatures(this));
     }
 
     @Override

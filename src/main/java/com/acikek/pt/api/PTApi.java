@@ -4,8 +4,9 @@ import com.acikek.pt.api.impl.PTApiImpl;
 import com.acikek.pt.api.impl.PTLoading;
 import com.acikek.pt.core.api.AbstractPeriodicTable;
 import com.acikek.pt.core.api.element.Element;
-import com.acikek.pt.core.api.signature.ElementSignature;
-import com.acikek.pt.core.api.signature.SignatureInjector;
+import com.acikek.pt.core.api.signature.CompoundSignature;
+import com.acikek.pt.core.api.signature.SignatureComponent;
+import com.acikek.pt.core.api.signature.SignatureAcceptor;
 import net.minecraft.item.ItemConvertible;
 import net.minecraft.text.Text;
 
@@ -41,11 +42,7 @@ public class PTApi {
         }
     }
 
-    public static void injectSignature(ItemConvertible item, List<ElementSignature> signature) {
-        ((SignatureInjector) item.asItem()).setSignature(signature);
-    }
-
-    public static void injectSignature(ItemConvertible item, Text tooltip) {
-        ((SignatureInjector) item.asItem()).setSignatureTooltip(tooltip);
+    public static void addSignature(ItemConvertible item, CompoundSignature signature) {
+        ((SignatureAcceptor) item.asItem()).setSignature(signature);
     }
 }

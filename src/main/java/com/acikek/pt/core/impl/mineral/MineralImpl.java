@@ -9,14 +9,13 @@ import com.acikek.pt.core.api.display.MineralDisplay;
 import com.acikek.pt.core.api.mineral.DefaultMineralData;
 import com.acikek.pt.core.api.mineral.Mineral;
 import com.acikek.pt.core.api.registry.PTRegistry;
-import com.acikek.pt.core.api.signature.ElementSignature;
+import com.acikek.pt.core.api.signature.CompoundSignature;
 import com.acikek.pt.core.api.signature.SignatureHolder;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricBlockLootTableProvider;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
-import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
 import net.fabricmc.fabric.api.resource.conditions.v1.DefaultResourceConditions;
 import net.minecraft.block.Block;
 import net.minecraft.client.render.RenderLayer;
@@ -34,10 +33,8 @@ import net.minecraft.loot.function.SetCountLootFunction;
 import net.minecraft.loot.provider.number.ConstantLootNumberProvider;
 import net.minecraft.loot.provider.number.UniformLootNumberProvider;
 import net.minecraft.predicate.item.ItemPredicate;
-import net.minecraft.registry.Registries;
 import net.minecraft.registry.tag.BlockTags;
 import net.minecraft.registry.tag.ItemTags;
-import net.minecraft.registry.tag.TagKey;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 import org.jetbrains.annotations.NotNull;
@@ -45,7 +42,6 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
-import java.util.function.Function;
 import java.util.function.Supplier;
 import java.util.stream.Stream;
 
@@ -55,13 +51,13 @@ public class MineralImpl implements Mineral<DefaultMineralData> {
     private final PhasedContent<Block> block;
     private final PhasedContent<Block> cluster;
     public final PhasedContent<Item> rawMineral;
-    private Supplier<List<ElementSignature>> resultSupplier;
+    private Supplier<CompoundSignature> signatureSupplier;
 
-    private List<ElementSignature> results;
+    private CompoundSignature signature;
     private Text tooltip;
 
-    public MineralImpl(PhasedContent<Block> block, PhasedContent<Block> cluster, PhasedContent<Item> rawMineral, MineralDisplay naming, Supplier<List<ElementSignature>> resultSupplier) {
-        Stream.of(naming, resultSupplier).forEach(Objects::requireNonNull);
+    public MineralImpl(PhasedContent<Block> block, PhasedContent<Block> cluster, PhasedContent<Item> rawMineral, MineralDisplay naming, Supplier<CompoundSignature> signatureSupplier) {
+        Stream.of(naming, signatureSupplier).forEach(Objects::requireNonNull);
         this.block = block;
         if (cluster.canExist() && !rawMineral.canExist()) {
             throw new IllegalStateException("mineral clusters must have accompanying raw forms");
@@ -72,7 +68,7 @@ public class MineralImpl implements Mineral<DefaultMineralData> {
         this.cluster = cluster;
         this.rawMineral = rawMineral;
         this.naming = naming;
-        this.resultSupplier = resultSupplier;
+        this.signatureSupplier = signatureSupplier;
     }
 
     @Override
@@ -87,17 +83,17 @@ public class MineralImpl implements Mineral<DefaultMineralData> {
 
     @Override
     public void init() {
-        results = resultSupplier.get();
-        resultSupplier = null;
-        tooltip = createTooltip().copy().formatted(Formatting.GRAY);
+        signature = signatureSupplier.get();
+        signatureSupplier = null;
+        tooltip = getSignatureText().copy().formatted(Formatting.GRAY);
     }
 
     @Override
-    public void injectSignature(SignatureHolder holder) {
+    public void addSignatures(SignatureHolder holder) {
         for (var block : PhasedContent.getByCreation(block, cluster)) {
-            PTApi.injectSignature(block, tooltip);
+            PTApi.addSignature(block, holder.signature());
         }
-        rawMineral.ifCreated(r -> PTApi.injectSignature(r, tooltip));
+        rawMineral.ifCreated(r -> PTApi.addSignature(r, holder.signature()));
     }
 
     @Override
@@ -212,8 +208,8 @@ public class MineralImpl implements Mineral<DefaultMineralData> {
     }
 
     @Override
-    public List<ElementSignature> signature() {
-        return results;
+    public CompoundSignature signature() {
+        return signature;
     }
 
     @Override

@@ -5,8 +5,8 @@ import com.acikek.pt.core.api.content.ContentContext;
 import com.acikek.pt.core.api.content.ContentIdentifier;
 import com.acikek.pt.core.api.mineral.Mineral;
 import com.acikek.pt.core.api.registry.PTRegistry;
-import com.acikek.pt.core.api.signature.ElementSignatureEntry;
 import com.acikek.pt.core.api.signature.SignatureHolder;
+import com.acikek.pt.core.api.signature.Signatures;
 import com.acikek.pt.core.api.source.ElementSources;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
@@ -61,13 +61,12 @@ public class MineralSource<D> extends UndergroundSource<D> {
 
     @Override
     public void onAdd(ContentContext.Source context) {
-        for (ElementSignatureEntry entry : mineral.getAllResultEntries()) {
-            if (entry.element() == context.parent() && entry.isPrimary()) {
-                ADDED.add(mineral);
-                return;
-            }
+        if (Signatures.isElementIn(mineral.signature().all(), context.parent(), true)) {
+            ADDED.add(mineral);
         }
-        throw new IllegalStateException("element '" + context.parent() + "' is not a primary component of source '" + this + "'");
+        else {
+            throw new IllegalStateException("element '" + context.parent() + "' is not a primary component of source '" + this + "'");
+        }
     }
 
     @Override
@@ -76,8 +75,8 @@ public class MineralSource<D> extends UndergroundSource<D> {
     }
 
     @Override
-    public void injectSignature(SignatureHolder holder) {
-        mineral.injectSignature(holder);
+    public void addSignatures(SignatureHolder holder) {
+        mineral.addSignatures(mineral);
     }
 
     @Override

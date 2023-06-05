@@ -1,7 +1,6 @@
-package com.acikek.pt.core.api.source;
+package com.acikek.pt.core.api.content;
 
 import com.acikek.pt.api.PTApi;
-import com.acikek.pt.core.api.element.Element;
 import com.acikek.pt.core.api.signature.SignatureHolder;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
@@ -14,13 +13,12 @@ public interface MaterialHolder {
 
     List<Item> getItems();
 
-    default void injectSignature(SignatureHolder holder) {
-        var tooltip = holder.createTooltip();
+    default void addSignatures(SignatureHolder holder) {
         for (Item item : getItems()) {
-            PTApi.injectSignature(item, tooltip);
+            PTApi.addSignature(item, holder.signature());
         }
         for (Block block : getBlocks()) {
-            PTApi.injectSignature(block, tooltip);
+            PTApi.addSignature(block, holder.signature());
         }
     }
 }

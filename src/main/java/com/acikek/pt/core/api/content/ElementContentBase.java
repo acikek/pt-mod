@@ -7,7 +7,6 @@ import com.acikek.pt.core.api.mineral.MineralResultHolder;
 import com.acikek.pt.core.api.refined.RefinedStates;
 import com.acikek.pt.core.api.registry.ElementIds;
 import com.acikek.pt.core.api.source.ElementSources;
-import com.acikek.pt.core.api.source.MaterialHolder;
 import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;

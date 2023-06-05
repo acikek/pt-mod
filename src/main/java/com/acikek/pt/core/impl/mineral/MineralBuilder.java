@@ -3,7 +3,8 @@ package com.acikek.pt.core.impl.mineral;
 import com.acikek.pt.core.api.content.phase.PhasedContent;
 import com.acikek.pt.core.api.element.ElementalObjects;
 import com.acikek.pt.core.api.display.MineralDisplay;
-import com.acikek.pt.core.api.signature.ElementSignature;
+import com.acikek.pt.core.api.signature.CompoundSignature;
+import com.acikek.pt.core.api.signature.SignatureComponent;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
@@ -28,7 +29,7 @@ public class MineralBuilder {
     private PhasedContent<Item> rawMineral = PhasedContent.none();
     private boolean hasRawMineral = false;
     private MineralDisplay naming;
-    private Supplier<List<ElementSignature>> signature;
+    private Supplier<CompoundSignature> signature;
 
     public MineralBuilder block(Object block) {
         this.block = PhasedContent.from(block, Block.class);
@@ -49,7 +50,7 @@ public class MineralBuilder {
         return this.naming(MineralDisplay.forObject(naming));
     }
 
-    public MineralBuilder signature(Supplier<List<ElementSignature>> signature) {
+    public MineralBuilder signature(Supplier<CompoundSignature> signature) {
         this.signature = signature;
         return this;
     }

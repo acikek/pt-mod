@@ -5,37 +5,29 @@ import com.acikek.pt.api.datagen.DatagenDelegator;
 import com.acikek.pt.api.datagen.provider.PTRecipeProvider;
 import com.acikek.pt.api.datagen.provider.tag.PTTagProviders;
 import com.acikek.pt.api.request.FeatureRequests;
-import com.acikek.pt.core.api.content.ContentContext;
-import com.acikek.pt.core.api.content.ContentIdentifier;
-import com.acikek.pt.core.api.content.ElementContentBase;
-import com.acikek.pt.core.api.content.SourceStateMapper;
+import com.acikek.pt.core.api.content.*;
 import com.acikek.pt.core.api.display.DisplayHolder;
 import com.acikek.pt.core.api.display.ElementDisplay;
 import com.acikek.pt.core.api.mineral.MineralResultHolder;
 import com.acikek.pt.core.api.refined.ElementRefinedState;
 import com.acikek.pt.core.api.registry.ElementIds;
 import com.acikek.pt.core.api.registry.PTRegistry;
-import com.acikek.pt.core.api.signature.ElementSignature;
+import com.acikek.pt.core.api.signature.CompoundSignature;
 import com.acikek.pt.core.api.signature.SignatureHolder;
 import com.acikek.pt.core.api.signature.Signatures;
-import com.acikek.pt.core.api.source.MaterialHolder;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricBlockLootTableProvider;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
-import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
 import net.minecraft.block.Block;
 import net.minecraft.data.client.BlockStateModelGenerator;
 import net.minecraft.data.client.ItemModelGenerator;
-import net.minecraft.fluid.Fluid;
 import net.minecraft.item.Item;
-import net.minecraft.registry.tag.TagKey;
 import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 import net.minecraft.world.World;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.function.Consumer;
 import java.util.function.Function;
@@ -47,8 +39,8 @@ public interface Element extends DisplayHolder<ElementDisplay>, SourceStateMappe
     void afterRegister();
 
     @Override
-    default List<ElementSignature> signature() {
-        return Collections.singletonList(Signatures.unit(this, display().signatureAmount()));
+    default CompoundSignature signature() {
+        return Signatures.unit(this, display().signatureAmount()).build();
     }
 
     default String getTextKey(String path) {

@@ -4,9 +4,11 @@
   "package": "com.acikek.pt.mixin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
-    "impl.ItemSignatureInjector"
+    "impl.ItemSignatureAcceptor"
   ],
   "client": [
+    "client.ItemRendererMixin",
+    "client.ParentElementMixin"
   ],
   "injectors": {
     "defaultRequire": 1

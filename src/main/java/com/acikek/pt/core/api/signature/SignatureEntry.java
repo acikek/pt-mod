@@ -8,13 +8,13 @@ import net.minecraft.world.World;
 
 import java.util.function.UnaryOperator;
 
-public class ElementSignatureEntry {
+public class SignatureEntry {
 
     private final Element element;
     private final int amount;
     private boolean primary;
 
-    public ElementSignatureEntry(Element element, int amount) {
+    public SignatureEntry(Element element, int amount) {
         this.element = element;
         this.amount = amount;
     }
@@ -23,15 +23,15 @@ public class ElementSignatureEntry {
         return element;
     }
 
-    public ElementSignatureEntry withAmount(int newAmount) {
-        var entry = new ElementSignatureEntry(element, newAmount);
+    public SignatureEntry withAmount(int newAmount) {
+        var entry = new SignatureEntry(element, newAmount);
         if (primary) {
             entry.primary();
         }
         return entry;
     }
 
-    public ElementSignatureEntry withAmount(UnaryOperator<Integer> op) {
+    public SignatureEntry withAmount(UnaryOperator<Integer> op) {
         return withAmount(op.apply(amount));
     }
 
@@ -39,7 +39,7 @@ public class ElementSignatureEntry {
         return element.getMineralResultItem(world).getDefaultStack().copyWithCount(amount);
     }
 
-    public ElementSignatureEntry primary() {
+    public SignatureEntry primary() {
         primary = true;
         return this;
     }
@@ -52,12 +52,12 @@ public class ElementSignatureEntry {
         return element.getQuantifiedText(amount, primary);
     }
 
-    public ElementSignature unit() {
+    public SignatureComponent unit() {
         return new ElementSignatureImpls.Unit(this);
     }
 
-    public static ElementSignatureEntry forObject(Object obj) {
-        if (obj instanceof ElementSignatureEntry entry) {
+    public static SignatureEntry forObject(Object obj) {
+        if (obj instanceof SignatureEntry entry) {
             return entry;
         }
         if (obj instanceof Element element) {

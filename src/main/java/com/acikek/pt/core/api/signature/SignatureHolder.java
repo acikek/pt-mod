@@ -4,17 +4,19 @@ import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 
-import java.util.List;
-
 public interface SignatureHolder {
 
-    List<ElementSignature> signature();
+    CompoundSignature signature();
+
+    default boolean hasSignature() {
+        return signature() != null;
+    }
 
     default Text stylizeSignature(MutableText tooltip) {
         return tooltip.formatted(Formatting.GRAY);
     }
 
-    default Text createTooltip() {
-        return stylizeSignature(ElementSignature.createTooltip(signature()).copy());
+    default Text getSignatureText() {
+        return stylizeSignature(signature().text());
     }
 }

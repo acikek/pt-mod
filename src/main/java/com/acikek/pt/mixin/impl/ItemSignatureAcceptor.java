@@ -1,7 +1,7 @@
 package com.acikek.pt.mixin.impl;
 
-import com.acikek.pt.core.api.signature.ElementSignature;
-import com.acikek.pt.core.api.signature.SignatureInjector;
+import com.acikek.pt.core.api.signature.CompoundSignature;
+import com.acikek.pt.core.api.signature.SignatureAcceptor;
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -16,26 +16,20 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import java.util.List;
 
 @Mixin(Item.class)
-public class ItemSignatureInjector implements SignatureInjector {
+public class ItemSignatureAcceptor implements SignatureAcceptor {
 
-    private List<ElementSignature> pt$signature;
+    private CompoundSignature pt$signature;
     private Text pt$signatureTooltip;
 
     @Override
-    public List<ElementSignature> signature() {
+    public CompoundSignature signature() {
         return pt$signature;
     }
 
     @Override
-    public void setSignature(List<ElementSignature> signature) {
+    public void setSignature(CompoundSignature signature) {
         pt$signature = signature;
-        setSignatureTooltip(createTooltip());
-        pt$signature = null;
-    }
-
-    @Override
-    public void setSignatureTooltip(Text tooltip) {
-        pt$signatureTooltip = tooltip;
+        pt$signatureTooltip = getSignatureText();
     }
 
     @Inject(method = "appendTooltip", at = @At("HEAD"))
