@@ -52,9 +52,6 @@ public abstract class BaseRefinedState<D> implements ElementRefinedState<D> {
 
     public BaseRefinedState(Identifier id, PhasedContent<Item> item, PhasedContent<Item> miniItem, PhasedContent<Block> block, RefinedStateType type) {
         Stream.of(id, item, miniItem, block).forEach(Objects::requireNonNull);
-        if (!block.canExist()) {
-            throw new IllegalStateException("refined state block must exist");
-        }
         this.id = id;
         this.item = item;
         this.miniItem = miniItem;
