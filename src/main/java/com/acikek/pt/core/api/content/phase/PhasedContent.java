@@ -1,6 +1,6 @@
 package com.acikek.pt.core.api.content.phase;
 
-import com.acikek.pt.core.api.content.ElementContentBase;
+import com.acikek.pt.core.api.content.element.ElementContentBase;
 import com.acikek.pt.core.impl.content.phase.PhasedContentImpls;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;

@@ -9,14 +9,18 @@ import com.acikek.pt.core.api.mineral.Mineral;
 import com.acikek.pt.core.api.mineral.Minerals;
 import com.acikek.pt.core.api.refined.RefinedStates;
 import com.acikek.pt.core.api.signature.Signatures;
+import com.acikek.pt.core.api.source.ElementSource;
 import com.acikek.pt.core.api.source.ElementSources;
 import net.minecraft.block.Blocks;
 import net.minecraft.item.Items;
+import net.minecraft.util.Identifier;
 
 import java.util.List;
 import java.util.Map;
 
 public class PeriodicTable extends AbstractPeriodicTable {
+
+    public static final Identifier ID = PT.id("pt");
 
     public static final Mineral<?> TEST = Minerals.block(
             "Test Mineral",
@@ -73,13 +77,13 @@ public class PeriodicTable extends AbstractPeriodicTable {
                     .item(Items.COAL)
                     .block(Blocks.COAL_BLOCK)
                     .build(),
-            List.of(ElementSources.oreBuilder().ore(Blocks.COAL_ORE).deepslateOre(Blocks.DEEPSLATE_COAL_ORE).build()),
+            List.of(ElementSources.oreBuilder().id(ElementSource.MAIN).ore(Blocks.COAL_ORE).deepslateOre(Blocks.DEEPSLATE_COAL_ORE).build()),
             RefinedStates.builder()
                     .id(PT.id("vanilla_diamond"))
                     .item(Items.DIAMOND)
                     .block(Blocks.DIAMOND_BLOCK)
                     .build(),
-            List.of(ElementSources.oreBuilder().ore(Blocks.DIAMOND_ORE).deepslateOre(Blocks.DEEPSLATE_DIAMOND_ORE).build())
+            List.of(ElementSources.oreBuilder().id(PT.id("vanilla_diamond")).ore(Blocks.DIAMOND_ORE).deepslateOre(Blocks.DEEPSLATE_DIAMOND_ORE).build())
     ));
     public static final Element OXYGEN = Elements.gas(ElementDisplay.byId("oxygen", "O"), 0, 235);
     public static final Element SULFUR = Elements.basic(ElementDisplay.byId("sulfur", "S"), RefinedStates.sack(), ElementSources.mineral(GYPSUM));
@@ -109,5 +113,10 @@ public class PeriodicTable extends AbstractPeriodicTable {
     @Override
     protected List<Element> createElements() {
         return List.of(HYDROGEN, HELIUM, LITHIUM, BERYLLIUM, BORON, CARBON, OXYGEN, SULFUR, VANADIUM, CHROMIUM, MANGANESE, IRON, COBALT, NICKEL, SILVER, CADMIUM, ANTIMONY, PLATINUM, OSMIUM);
+    }
+
+    @Override
+    public Identifier id() {
+        return ID;
     }
 }

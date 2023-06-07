@@ -5,7 +5,10 @@ import com.acikek.pt.api.datagen.DatagenDelegator;
 import com.acikek.pt.api.datagen.provider.PTRecipeProvider;
 import com.acikek.pt.api.datagen.provider.tag.PTTagProviders;
 import com.acikek.pt.api.request.FeatureRequests;
-import com.acikek.pt.core.api.content.*;
+import com.acikek.pt.core.api.content.MaterialHolder;
+import com.acikek.pt.core.api.content.element.ContentContext;
+import com.acikek.pt.core.api.content.element.ElementContentBase;
+import com.acikek.pt.core.api.content.element.SourceStateMapper;
 import com.acikek.pt.core.api.display.DisplayHolder;
 import com.acikek.pt.core.api.display.ElementDisplay;
 import com.acikek.pt.core.api.mineral.MineralResultHolder;
@@ -15,6 +18,7 @@ import com.acikek.pt.core.api.registry.PTRegistry;
 import com.acikek.pt.core.api.signature.CompoundSignature;
 import com.acikek.pt.core.api.signature.SignatureHolder;
 import com.acikek.pt.core.api.signature.Signatures;
+import com.acikek.pt.core.api.source.ElementSource;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricBlockLootTableProvider;
@@ -29,14 +33,11 @@ import net.minecraft.util.Formatting;
 import net.minecraft.world.World;
 
 import java.util.List;
-import java.util.function.Consumer;
 import java.util.function.Function;
 
 public interface Element extends DisplayHolder<ElementDisplay>, SourceStateMapper, SignatureHolder, DatagenDelegator, MaterialHolder {
 
     ElementIds<String> elementIds();
-
-    void afterRegister();
 
     @Override
     default CompoundSignature signature() {
@@ -87,13 +88,11 @@ public interface Element extends DisplayHolder<ElementDisplay>, SourceStateMappe
                 : MineralResultHolder.filterAndGet(getRefinedStates(), world).mineralResultItem(); // empty case covered by exception
     }
 
-    // Ensure uniqueness between allotrope IDs
-    private ElementIds<String> getElementIdsForState(ElementRefinedState<?> state) {
+    default ElementIds<String> getElementIdsForState(ElementRefinedState<?> state) {
         return state.isMain()
                 ? elementIds()
                 : elementIds().append("_" + state.id().getPath());
     }
-
 
     default ContentContext.State getStateContext(ElementRefinedState<?> state) {
         return new ContentContext.State(this, getElementIdsForState(state));
@@ -103,67 +102,71 @@ public interface Element extends DisplayHolder<ElementDisplay>, SourceStateMappe
         return new ContentContext.Source(this, getElementIdsForState(parentState), parentState);
     }
 
+    default void onRegister() {
+        try {
+            validateContent();
+        }
+        catch (Exception e) {
+            throw new IllegalStateException("Error while validating element '" + this + "'", e);
+        }
+    }
+
+    default void afterRegister() {
+        forEachContent(content -> content.addSignatures(this));
+    }
+
     default void register(PTRegistry registry, FeatureRequests.Content stateRequests, FeatureRequests.Content sourceRequests) {
-        forEachRefinedState(state -> state.register(registry, stateRequests.getContent(state.typeId())));
-        forEachSource(source -> source.register(registry, sourceRequests.getContent(source.typeId())));
-        afterRegister();
-    }
-
-
-    List<ContentIdentifier> contentBuildPass();
-
-    private <T> void forEachContentPass(Consumer<ElementContentBase<?, ?>> fn) {
-        forEachContent(content -> {
-            fn.accept(content);
-            contentBuildPass().add(content.typeId());
-        });
-        contentBuildPass().clear();
-    }
-
-    default boolean hasBuiltContentPass(ContentIdentifier contentId) {
-        return contentBuildPass().contains(contentId);
+        onRegister();
+        try {
+            forEachRefinedState(state -> state.register(registry, stateRequests.getContent(state.typeId())));
+            forEachSource(source -> source.register(registry, sourceRequests.getContent(source.typeId())));
+            afterRegister();
+        }
+        catch (Exception e) {
+            throw new IllegalStateException("Error while registering element '" + this + "'", e);
+        }
     }
 
     @Override
     default void buildTranslations(FabricLanguageProvider.TranslationBuilder builder) {
         builder.add(getNameKey(), display().englishName());
         builder.add(getSymbolKey(), display().symbol());
-        forEachContentPass(content -> content.buildTranslations(builder));
+        forEachContent(content -> content.buildTranslations(builder));
     }
 
     @Override
     default void buildBlockModels(BlockStateModelGenerator generator) {
-        forEachContentPass(content -> content.buildBlockModels(generator));
+        forEachContent(content -> content.buildBlockModels(generator));
     }
 
     @Override
     default void buildItemModels(ItemModelGenerator generator) {
-        forEachContentPass(content -> content.buildItemModels(generator));
+        forEachContent(content -> content.buildItemModels(generator));
     }
 
     @Override
     default void buildLootTables(FabricBlockLootTableProvider provider) {
-        forEachContentPass(content -> content.buildLootTables(provider));
+        forEachContent(content -> content.buildLootTables(provider));
     }
 
     @Override
     default void buildRecipes(PTRecipeProvider provider) {
-        forEachContentPass(content -> content.buildRecipes(provider));
+        forEachContent(content -> content.buildRecipes(provider));
     }
 
     @Override
     default void buildBlockTags(PTTagProviders.BlockTagProvider provider) {
-        forEachContentPass(content -> content.buildBlockTags(provider));
+        forEachContent(content -> content.buildBlockTags(provider));
     }
 
     @Override
     default void buildItemTags(PTTagProviders.ItemTagProvider provider) {
-        forEachContentPass(content -> content.buildItemTags(provider));
+        forEachContent(content -> content.buildItemTags(provider));
     }
 
     @Override
     default void buildFluidTags(PTTagProviders.FluidTagProvider provider) {
-        forEachContentPass(content -> content.buildFluidTags(provider));
+        forEachContent(content -> content.buildFluidTags(provider));
     }
 
     @Environment(EnvType.CLIENT)

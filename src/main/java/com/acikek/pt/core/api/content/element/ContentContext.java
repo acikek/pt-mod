@@ -1,4 +1,4 @@
-package com.acikek.pt.core.api.content;
+package com.acikek.pt.core.api.content.element;
 
 import com.acikek.pt.core.api.element.Element;
 import com.acikek.pt.core.api.refined.ElementRefinedState;

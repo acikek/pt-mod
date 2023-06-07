@@ -1,11 +1,16 @@
-package com.acikek.pt.core.api.content;
+package com.acikek.pt.core.api.content.element;
 
+import com.acikek.pt.PT;
 import com.acikek.pt.api.datagen.DatagenDelegator;
+import com.acikek.pt.core.api.content.ContentBase;
+import com.acikek.pt.core.api.content.MaterialHolder;
 import com.acikek.pt.core.api.data.DataHolder;
 import com.acikek.pt.core.api.element.Element;
 import com.acikek.pt.core.api.mineral.MineralResultHolder;
+import com.acikek.pt.core.api.refined.ElementRefinedState;
 import com.acikek.pt.core.api.refined.RefinedStates;
 import com.acikek.pt.core.api.registry.ElementIds;
+import com.acikek.pt.core.api.source.ElementSource;
 import com.acikek.pt.core.api.source.ElementSources;
 import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.ApiStatus;
@@ -16,6 +21,13 @@ import org.jetbrains.annotations.NotNull;
  * @param <D> the public data type exposed from implementation details
  */
 public interface ElementContentBase<D, C extends ContentContext> extends ContentBase, DataHolder<D>, DatagenDelegator, MineralResultHolder, MaterialHolder {
+
+    /**
+     * The instance ID of the <b>main</b> content instance of the parent.<br>
+     * If this is an {@link ElementRefinedState}, the parent is the element.
+     * Otherwise, if this is an {@link ElementSource}, the parent is its refined state.
+     */
+    Identifier MAIN = PT.id("main");
 
     /**
      * @return an identifier specifying the type of this content.
@@ -31,6 +43,26 @@ public interface ElementContentBase<D, C extends ContentContext> extends Content
      */
     default boolean isType(Identifier id) {
         return typeId().equals(id);
+    }
+
+    /**
+     * @return the instance-specific identifier for this content
+     */
+    @NotNull Identifier id();
+
+    /**
+     * @return whether this content is an instance of the specified ID
+     * @see ElementContentBase#id()
+     */
+    default boolean isInstance(Identifier id) {
+        return id().equals(id);
+    }
+
+    /**
+     * @return whether the instance ID of this content is {@link ElementContentBase#MAIN}
+     */
+    default boolean isMain() {
+        return isInstance(MAIN);
     }
 
     /**
@@ -61,14 +93,6 @@ public interface ElementContentBase<D, C extends ContentContext> extends Content
         if (context() != null) {
             throw new IllegalStateException("context is already set");
         }
-    }
-
-    /**
-     * @return whether, at this pass of data generation, this content type
-     * ({@link ElementContentBase#typeId()}) has built for the {@link ElementContentBase#parent()} element already
-     */
-    default boolean hasBuiltPass() {
-        return parent().hasBuiltContentPass(typeId());
     }
 
     /**

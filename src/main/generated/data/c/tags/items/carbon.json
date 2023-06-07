@@ -2,11 +2,11 @@
   "replace": false,
   "values": [
     {
-      "id": "pt:carbon",
+      "id": "minecraft:coal",
       "required": false
     },
     {
-      "id": "minecraft:coal",
+      "id": "pt:carbon",
       "required": false
     },
     {

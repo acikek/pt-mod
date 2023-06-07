@@ -228,4 +228,9 @@ public class MineralImpl implements Mineral<DefaultMineralData> {
     public DefaultMineralData getData() {
         return new DefaultMineralData(block.get(), cluster.get(), rawMineral.get());
     }
+
+    @Override
+    public String toString() {
+        return id();
+    }
 }

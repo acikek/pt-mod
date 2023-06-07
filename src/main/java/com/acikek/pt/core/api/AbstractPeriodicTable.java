@@ -10,6 +10,7 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
+import net.minecraft.util.Identifier;
 
 import java.util.Collections;
 import java.util.List;
@@ -51,6 +52,8 @@ public abstract class AbstractPeriodicTable implements CompoundHolder {
 
     protected abstract List<Element> createElements();
 
+    public abstract Identifier id();
+
     public Map<String, Mineral<?>> mineralMap() {
         return minerals;
     }
@@ -83,9 +86,25 @@ public abstract class AbstractPeriodicTable implements CompoundHolder {
         return getValues(Element::getItems);
     }
 
+    private void registerMinerals(RequestEvent event) {
+        for (var mineral : minerals()) {
+            try {
+                mineral.register(registry, event.minerals().getRequests(mineral));
+            }
+            catch (Exception e) {
+                throw new IllegalStateException("Error while registering mineral '" + mineral + "'", e);
+            }
+        }
+    }
+
     public void register(RequestEvent event) {
-        forEachMineral(mineral -> mineral.register(registry, event.minerals().getRequests(mineral)));
-        forEachElement(element -> element.register(registry, event.states().getRequests(element), event.sources().getRequests(element)));
+        try {
+            registerMinerals(event);
+            forEachElement(element -> element.register(registry, event.states().getRequests(element), event.sources().getRequests(element)));
+        }
+        catch (Exception e) {
+            throw new IllegalStateException("Error while registering table '" + id() + "'", e);
+        }
     }
 
     @Environment(EnvType.CLIENT)

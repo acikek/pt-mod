@@ -1,4 +1,4 @@
-package com.acikek.pt.core.api.content;
+package com.acikek.pt.core.api.content.element;
 
 import net.minecraft.util.Identifier;
 
@@ -22,6 +22,10 @@ public class ContentIdentifier extends Identifier {
         return type;
     }
 
+    public Identifier base() {
+        return new Identifier(getNamespace(), getPath());
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -42,5 +46,10 @@ public class ContentIdentifier extends Identifier {
         int result = super.hashCode();
         result = 31 * result + type.hashCode();
         return result;
+    }
+
+    @Override
+    public String toString() {
+        return type + "[" + super.toString() + "]";
     }
 }

@@ -1,6 +1,6 @@
 package com.acikek.pt.core.api.refined;
 
-import com.acikek.pt.core.api.content.ContentIdentifier;
+import com.acikek.pt.core.api.content.element.ContentIdentifier;
 import com.acikek.pt.core.impl.refined.RefinedStateBuilder;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;

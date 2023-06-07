@@ -1,6 +1,6 @@
 package com.acikek.pt.core.impl.element;
 
-import com.acikek.pt.core.api.content.ContentIdentifier;
+import com.acikek.pt.core.api.content.element.ContentIdentifier;
 import com.acikek.pt.core.api.display.ElementDisplay;
 import com.acikek.pt.core.api.element.Element;
 import com.acikek.pt.core.api.refined.ElementRefinedState;
@@ -13,8 +13,6 @@ import java.util.stream.Collectors;
 
 public class ElementImpl implements Element {
 
-    private static final List<ContentIdentifier> currentPass = new ArrayList<>();
-
     private final ElementDisplay names;
     private final ElementIds<String> ids;
     private final Map<ElementRefinedState<?>, List<ElementSource<?>>> sourceStateMap;
@@ -26,7 +24,6 @@ public class ElementImpl implements Element {
         Map<ElementRefinedState<?>, List<ElementSource<?>>> mutableMap = sourceStateMap.entrySet().stream()
                         .collect(Collectors.toMap(Map.Entry::getKey, entry -> new ArrayList<>(entry.getValue())));
         this.sourceStateMap = new HashMap<>(mutableMap);
-        getAllContent().forEach(Objects::requireNonNull);
         this.names = names;
         this.ids = ElementIds.create(id());
     }
@@ -41,14 +38,10 @@ public class ElementImpl implements Element {
     }
 
     @Override
-    public void afterRegister() {
+    public void onRegister() {
+        Element.super.onRegister();
+        getAllContent().forEach(Objects::requireNonNull);
         registered = true;
-        forEachContent(content -> content.addSignatures(this));
-    }
-
-    @Override
-    public List<ContentIdentifier> contentBuildPass() {
-        return currentPass;
     }
 
     @Override

@@ -1,8 +1,8 @@
 package com.acikek.pt.core.impl.source;
 
 import com.acikek.pt.api.request.FeatureRequests;
-import com.acikek.pt.core.api.content.ContentContext;
-import com.acikek.pt.core.api.content.ContentIdentifier;
+import com.acikek.pt.core.api.content.element.ContentContext;
+import com.acikek.pt.core.api.content.element.ContentIdentifier;
 import com.acikek.pt.core.api.mineral.Mineral;
 import com.acikek.pt.core.api.registry.PTRegistry;
 import com.acikek.pt.core.api.signature.SignatureHolder;
@@ -10,6 +10,7 @@ import com.acikek.pt.core.api.signature.Signatures;
 import com.acikek.pt.core.api.source.ElementSources;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
+import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
@@ -23,7 +24,8 @@ public class MineralSource<D> extends UndergroundSource<D> {
     private final Mineral<D> mineral;
     private ContentContext.Source context;
 
-    public MineralSource(Mineral<D> mineral) {
+    public MineralSource(Identifier id, Mineral<D> mineral) {
+        super(id);
         Objects.requireNonNull(mineral);
         this.mineral = mineral;
     }

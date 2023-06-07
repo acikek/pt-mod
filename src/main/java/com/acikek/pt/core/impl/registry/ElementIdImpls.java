@@ -28,8 +28,8 @@ public class ElementIdImpls {
         }
 
         @Override
-        public ElementIds<Identifier> useIdentifier() {
-            return ElementIds.create(PT.id(value));
+        public ElementIds<Identifier> useIdentifier(String key) {
+            return ElementIds.create(new Identifier(key, value));
         }
     }
 
@@ -55,8 +55,8 @@ public class ElementIdImpls {
         }
 
         @Override
-        public ElementIds<Identifier> useIdentifier() {
-            return this;
+        public ElementIds<Identifier> useIdentifier(String key) {
+            return new IdentifierBacked(new Identifier(key, value.getPath()));
         }
     }
 }

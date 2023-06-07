@@ -1,25 +1,26 @@
 package com.acikek.pt.core.impl.source;
 
 import com.acikek.pt.api.request.FeatureRequests;
-import com.acikek.pt.core.api.content.ContentContext;
-import com.acikek.pt.core.api.content.ContentIdentifier;
+import com.acikek.pt.core.api.content.element.ContentContext;
+import com.acikek.pt.core.api.content.element.ContentIdentifier;
 import com.acikek.pt.core.api.registry.PTRegistry;
-import com.acikek.pt.core.api.source.ElementSource;
 import com.acikek.pt.core.api.source.ElementSources;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
+import net.minecraft.util.Identifier;
 import org.apache.commons.lang3.Range;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Collections;
 import java.util.List;
 
-public class AtmosphericSource implements ElementSource<Range<Integer>> {
+public class AtmosphericSource extends BaseSource<Range<Integer>> {
 
     private final Range<Integer> range;
     private ContentContext.Source context;
 
-    public AtmosphericSource(Range<Integer> range) {
+    public AtmosphericSource(Identifier id, Range<Integer> range) {
+        super(id);
         this.range = range;
     }
 
@@ -30,7 +31,7 @@ public class AtmosphericSource implements ElementSource<Range<Integer>> {
 
     @Override
     public void setContext(ContentContext.Source context) {
-        ElementSource.super.setContext(context);
+        super.setContext(context);
         this.context = context;
     }
 

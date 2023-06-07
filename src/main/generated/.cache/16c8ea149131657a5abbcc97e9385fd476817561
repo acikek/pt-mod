@@ -1,4 +1,4 @@
-// 1.19.4	2023-06-04T22:26:59.143004052	PT/Recipes
+// 1.19.4	2023-06-07T12:54:21.046727885	PT/Recipes
 198e1e77b7c701cc86afe2ca758fb0d446d28356 data/pt/advancements/recipes/misc/silver_smelting_ore_to_refined.json
 65ac70b0920a838c8e072056e40b11e71021b406 data/pt/recipes/manganese_smelting_raw_ore_to_refined.json
 66ba6659f4cb4bf39c3c453c1878391c9877f684 data/pt/recipes/cadmium_blasting_deepslate_ore_to_refined.json
@@ -128,8 +128,8 @@ e9ede36faed3a54f9256b37f81b37251960730ee data/pt/recipes/cobalt_smelting_deepsla
 af28629ec91db41a72701829877c2d921d676c52 data/pt/recipes/cobalt_smelting_ore_to_refined.json
 8f6f2d5033e54d6cdaf5b964b283b8103a60476d data/pt/recipes/chromium_blasting_ore_to_refined.json
 be8e699c96dbb1b81942efc36dae93b28b5e757a data/pt/recipes/cobalt_blasting_ore_to_refined.json
-cdc2f2a94fdbf4d7f510be175977104d01e8cb04 data/pt/recipes/chromium_smelting_ore_to_refined.json
 b0a270ecc19e2006a18885bdcbe4f7cb845b4af6 data/pt/advancements/recipes/misc/chromium_smelting_ore_to_refined.json
+cdc2f2a94fdbf4d7f510be175977104d01e8cb04 data/pt/recipes/chromium_smelting_ore_to_refined.json
 e7d9ea32bf5371fe0999721a2534e02b7a847956 data/pt/recipes/nickel_smelting_ore_to_refined.json
 418c3868a1fc5f05051112a9bca561b95c733e45 data/pt/recipes/cadmium_raw_ore_to_block.json
 d6729eefd7b9ac7424120a7693e609b65c8a8237 data/pt/advancements/recipes/misc/silver_smelting_deepslate_ore_to_refined.json

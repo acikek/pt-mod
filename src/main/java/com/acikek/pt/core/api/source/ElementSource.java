@@ -1,9 +1,9 @@
 package com.acikek.pt.core.api.source;
 
 import com.acikek.pt.PT;
-import com.acikek.pt.core.api.content.ContentIdentifier;
-import com.acikek.pt.core.api.content.ElementContentBase;
-import com.acikek.pt.core.api.content.ContentContext;
+import com.acikek.pt.core.api.content.element.ContentIdentifier;
+import com.acikek.pt.core.api.content.element.ElementContentBase;
+import com.acikek.pt.core.api.content.element.ContentContext;
 import com.acikek.pt.core.api.refined.ElementRefinedState;
 import net.minecraft.util.Identifier;
 

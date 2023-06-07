@@ -1,5 +1,6 @@
 package com.acikek.pt.core.api.registry;
 
+import com.acikek.pt.PT;
 import com.acikek.pt.core.impl.registry.ElementIdImpls;
 import net.minecraft.util.Identifier;
 
@@ -34,7 +35,11 @@ public abstract class ElementIds<T> {
 
     public abstract ElementIds<String> useString();
 
-    public abstract ElementIds<Identifier> useIdentifier();
+    public abstract ElementIds<Identifier> useIdentifier(String key);
+
+    public ElementIds<Identifier> useIdentifier() {
+        return useIdentifier(PT.ID);
+    }
 
     public T getItemId() {
         return value;

@@ -3,8 +3,8 @@ package com.acikek.pt.core.impl.refined;
 import com.acikek.pt.api.datagen.provider.tag.PTTagProviders;
 import com.acikek.pt.api.request.FeatureRequests;
 import com.acikek.pt.api.request.RequestTypes;
-import com.acikek.pt.core.api.content.ContentContext;
-import com.acikek.pt.core.api.content.ContentIdentifier;
+import com.acikek.pt.core.api.content.element.ContentContext;
+import com.acikek.pt.core.api.content.element.ContentIdentifier;
 import com.acikek.pt.core.api.content.phase.PhasedContent;
 import com.acikek.pt.core.api.refined.ElementRefinedState;
 import com.acikek.pt.core.api.refined.RefinedStateData;
@@ -101,7 +101,7 @@ public abstract class BaseRefinedState<D> implements ElementRefinedState<D> {
         item.require(item -> builder.add(item, type.getItemName(name)));
         miniItem.require(item -> builder.add(item, type.getMiniItemName(name)));
         boolean powder = type == RefinedStateType.POWDER;
-        if (!hasBuiltPass()) {
+        if (isMain()) {
             builder.add(parent().getConventionalBlockKey("%s_blocks"), name + " Blocks");
             for (String format : (powder ? List.of("%s_dusts", "%ss") : List.of("%s_ingots", "%s"))) {
                 builder.add(parent().getConventionalItemKey(format), name + (powder ? " Dusts" : ""));

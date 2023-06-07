@@ -3,24 +3,20 @@ package com.acikek.pt.core.impl.refined;
 import com.acikek.pt.api.datagen.provider.tag.PTTagProviders;
 import com.acikek.pt.api.request.FeatureRequests;
 import com.acikek.pt.api.request.RequestTypes;
-import com.acikek.pt.core.api.content.ContentIdentifier;
+import com.acikek.pt.core.api.content.element.ContentIdentifier;
 import com.acikek.pt.core.api.content.phase.PhasedContent;
 import com.acikek.pt.core.api.refined.RefinedStateData;
 import com.acikek.pt.core.api.refined.RefinedStateType;
 import com.acikek.pt.core.api.refined.RefinedStates;
 import com.acikek.pt.core.api.registry.PTRegistry;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
-import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
 import net.minecraft.block.Block;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.item.Item;
-import net.minecraft.registry.Registries;
-import net.minecraft.registry.tag.TagKey;
 import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
-import java.util.function.Function;
 
 public class FluidRefinedState extends BaseRefinedState<RefinedStateData.HasFluid> {
 
@@ -46,7 +42,7 @@ public class FluidRefinedState extends BaseRefinedState<RefinedStateData.HasFlui
     public void buildTranslations(FabricLanguageProvider.TranslationBuilder builder) {
         super.buildTranslations(builder);
         fluid.require(fluid -> builder.add(fluid.getDefaultState().getBlockState().getBlock(), parent().display().englishName()));
-        if (!hasBuiltPass()) {
+        if (isMain()) {
             builder.add(parent().getConventionalFluidKey("%s"), parent().display().englishName());
         }
     }

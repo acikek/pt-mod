@@ -1,12 +1,14 @@
 package com.acikek.pt.core.impl.source;
 
 import com.acikek.pt.api.request.FeatureRequests;
-import com.acikek.pt.core.api.content.ContentContext;
-import com.acikek.pt.core.api.registry.ElementIds;
 import com.acikek.pt.core.api.registry.PTRegistry;
-import com.acikek.pt.core.api.source.ElementSource;
+import net.minecraft.util.Identifier;
 
-public abstract class UndergroundSource<D> implements ElementSource<D> {
+public abstract class UndergroundSource<D> extends BaseSource<D> {
+
+    public UndergroundSource(Identifier id) {
+        super(id);
+    }
 
     @Override
     public void register(PTRegistry registry, FeatureRequests.Single features) {

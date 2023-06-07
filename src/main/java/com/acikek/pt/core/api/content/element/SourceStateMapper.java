@@ -1,4 +1,4 @@
-package com.acikek.pt.core.api.content;
+package com.acikek.pt.core.api.content.element;
 
 import com.acikek.pt.core.api.refined.ElementRefinedState;
 import com.acikek.pt.core.api.refined.RefinedStates;
@@ -9,6 +9,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.BiConsumer;
@@ -187,5 +188,51 @@ public interface SourceStateMapper {
             throw new IllegalStateException("refined state '" + stateId + "' was not found");
         }
         addSource(source, state);
+    }
+
+    /*
+        private void throwDuplicate(Identifier type, Identifier id) {
+        throw new IllegalStateException("duplicate '" + type + "' content: '" + id + "'");
+    }
+
+    private boolean checkForMain(Collection<Identifier> ids) {
+        if ()
+    }
+     */
+
+    private boolean validateStates() {
+        List<Identifier> checked = new ArrayList<>();
+        for (var state : getRefinedStates()) {
+            if (checked.contains(state.id())) {
+                throw new IllegalStateException("duplicate '" + state.typeId().type() + "' content: '" + state.id() + "'");
+            }
+            checked.add(state.id());
+        }
+        if (!checked.contains(ElementRefinedState.MAIN)) {
+            throw new IllegalStateException("must contain one 'main' refined state");
+        }
+        return true;
+    }
+
+    private boolean validateSources() {
+        Map<ContentIdentifier, List<Identifier>> checked = new HashMap<>();
+        for (var source : getSources()) {
+            var list = checked.computeIfAbsent(source.typeId(), k -> new ArrayList<>());
+            if (list.contains(source.id())) {
+                throw new IllegalStateException("duplicate '" + source.typeId() + "' content: '" + source.id() + "'");
+            }
+            list.add(source.id());
+        }
+        return true;
+    }
+
+    /**
+     * Checks all content {@link ElementContentBase#id()}s to make sure they are unique for
+     * their content types and, for {@link ElementSource}s, their {@link ElementContentBase#typeId()}s.
+     * @return whether the validation was successful
+     * @throws IllegalStateException if the validation fails
+     */
+    default boolean validateContent() {
+        return validateStates() && validateSources();
     }
 }

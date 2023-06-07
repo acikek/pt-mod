@@ -2,11 +2,11 @@
   "replace": false,
   "values": [
     {
-      "id": "pt:carbon_block",
+      "id": "minecraft:coal_block",
       "required": false
     },
     {
-      "id": "minecraft:coal_block",
+      "id": "pt:carbon_block",
       "required": false
     },
     {

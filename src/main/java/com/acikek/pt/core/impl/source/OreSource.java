@@ -4,8 +4,8 @@ import com.acikek.pt.api.datagen.provider.PTRecipeProvider;
 import com.acikek.pt.api.datagen.provider.tag.PTTagProviders;
 import com.acikek.pt.api.request.FeatureRequests;
 import com.acikek.pt.api.request.RequestTypes;
-import com.acikek.pt.core.api.content.ContentContext;
-import com.acikek.pt.core.api.content.ContentIdentifier;
+import com.acikek.pt.core.api.content.element.ContentContext;
+import com.acikek.pt.core.api.content.element.ContentIdentifier;
 import com.acikek.pt.core.api.content.phase.PhasedContent;
 import com.acikek.pt.core.api.refined.RefinedStateData;
 import com.acikek.pt.core.api.registry.PTRegistry;
@@ -13,7 +13,6 @@ import com.acikek.pt.core.api.source.ElementSources;
 import com.acikek.pt.core.api.source.SourceData;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricBlockLootTableProvider;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
-import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
 import net.fabricmc.fabric.api.mininglevel.v1.MiningLevelManager;
 import net.fabricmc.fabric.api.resource.conditions.v1.DefaultResourceConditions;
 import net.minecraft.block.Block;
@@ -29,14 +28,12 @@ import net.minecraft.item.ItemConvertible;
 import net.minecraft.recipe.Ingredient;
 import net.minecraft.recipe.RecipeSerializer;
 import net.minecraft.recipe.book.RecipeCategory;
-import net.minecraft.registry.Registries;
 import net.minecraft.registry.tag.BlockTags;
-import net.minecraft.registry.tag.TagKey;
+import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.function.Function;
 
 public class OreSource extends UndergroundSource<SourceData.Ore> {
 
@@ -48,7 +45,8 @@ public class OreSource extends UndergroundSource<SourceData.Ore> {
 
     private ContentContext.Source context;
 
-    public OreSource(PhasedContent<Block> ore, PhasedContent<Block> deepslateOre, PhasedContent<Item> rawItem, PhasedContent<Block> rawBlock, int miningLevel) {
+    public OreSource(Identifier id, PhasedContent<Block> ore, PhasedContent<Block> deepslateOre, PhasedContent<Item> rawItem, PhasedContent<Block> rawBlock, int miningLevel) {
+        super(id);
         this.ore = ore;
         this.deepslateOre = deepslateOre;
         this.rawItem = rawItem;
@@ -95,7 +93,7 @@ public class OreSource extends UndergroundSource<SourceData.Ore> {
         deepslateOre.require(ore -> builder.add(ore, "Deepslate " + name + " Ore"));
         rawItem.require(raw -> builder.add(raw, "Raw " + name));
         rawBlock.require(raw -> builder.add(raw, "Block of Raw " + name));
-        if (!hasBuiltPass()) {
+        if (isMain()) {
             builder.add(parent().getConventionalBlockKey("%s_ores"), name + " Ores");
             builder.add(parent().getConventionalBlockKey("raw_%s_blocks"), "Raw " + name + " Blocks");
             builder.add(parent().getConventionalItemKey("raw_%s_ores"), "Raw " + name + " Ores");
