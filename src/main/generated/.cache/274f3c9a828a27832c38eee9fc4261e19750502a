@@ -1,11 +1,11 @@
-// 1.19.4	2023-06-07T12:54:21.050031082	PT/Tags for minecraft:block
+// 1.19.4	2023-06-07T13:57:45.555149407	PT/Tags for minecraft:block
 7a1b3e7819ec3eacc41952771e87b3960199a8b7 data/c/tags/blocks/raw_nickel_blocks.json
 d547276cc0ac182c296dfdd45d10505f442ff3f6 data/c/tags/blocks/osmium_blocks.json
 9ca4cdd67bd1437721f0b6815cd8685574e298cf data/c/tags/blocks/beryllium_blocks.json
 d5322f720ccba2ec53e85b5462ff794f50a9779e data/c/tags/blocks/raw_vanadium_blocks.json
 4325e4fceb23e08d5967a607b7d0d46a0e7b40ea data/c/tags/blocks/iron_ores.json
 0c6ff680a1e952661875303d2c3dccaeab94a7e4 data/c/tags/blocks/raw_cadmium_blocks.json
-fa15816aa8cd8a8683f16243f3bfae24296ce695 data/c/tags/blocks/carbon_blocks.json
+dbfcdc5264ac975748761c8252fd0190b6fa07e2 data/c/tags/blocks/carbon_blocks.json
 9d48de0d424e1c19705ad0ba94f80a8ec1753748 data/c/tags/blocks/raw_cobalt_blocks.json
 bf19f920079bc26910a22e80f4ff5de6d3da5472 data/c/tags/blocks/lithiophilites.json
 96fc3d111701bbb025c98dff8ec97c41fc1f1ae0 data/c/tags/blocks/manganese_blocks.json
@@ -27,15 +27,15 @@ e1919af64048df8d8f85c98c71a645ff951c60a1 data/c/tags/blocks/stibnite_clusters.js
 bb9239cd4a4fa4a386e546811ef2fb43ad3d45d7 data/c/tags/blocks/stibnites.json
 c70c1b4c85abf28897b60dc16dc0058c78c2d50f data/minecraft/tags/blocks/needs_diamond_tool.json
 e7ee53624bedf821d927eb959fd6354dee8d188a data/c/tags/blocks/raw_iron_blocks.json
-ea1e98f3ee5e59b8fd15d4e9c9b541b9cca45ca6 data/c/tags/blocks/carbon_ores.json
+d9073507496fc00a4c57d3150ac97c7b6a98eb2c data/c/tags/blocks/carbon_ores.json
 791d1c1a495eb76ae3b1317ede6e2c950a60498b data/c/tags/blocks/test_minerals.json
 87067efa85aa2d4d0d5ed2a809ae36a1c7b5c630 data/c/tags/blocks/raw_osmium_blocks.json
 c8f31986859459ac066c67321250ea562e115de3 data/c/tags/blocks/vanadium_blocks.json
 e18075960510cbdb722d7ed373d0a124f191af83 data/c/tags/blocks/osmium_ores.json
 d5dd637240d4f7bd60aac8a003153c431b7a5b28 data/c/tags/blocks/lithium_blocks.json
 ac3323f8eaa5ffd0453973fc9aa19f802b1116f1 data/c/tags/blocks/hydrogen_blocks.json
-489489087f566af50c529788f05307129713134a data/c/tags/blocks/cobalt_ores.json
 53d8878bece776c4603d07ac1c05a424ad288cf4 data/c/tags/blocks/nickel_ores.json
+489489087f566af50c529788f05307129713134a data/c/tags/blocks/cobalt_ores.json
 7d9e353b6a0e8572ac49c1c1ec6782d3da9ca04e data/c/tags/blocks/cadmium_ores.json
 e1ae941291eb85f3e574cf2c0f127e9d1ba0f487 data/c/tags/blocks/chromium_ores.json
 bde3ac94861eb0e095e2b949a4932c1bcee3b8a9 data/c/tags/blocks/vanadium_ores.json

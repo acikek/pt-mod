@@ -1,5 +1,6 @@
 package com.acikek.pt.core.impl.source;
 
+import com.acikek.pt.api.datagen.PTDatagenApi;
 import com.acikek.pt.api.datagen.provider.PTRecipeProvider;
 import com.acikek.pt.api.datagen.provider.tag.PTTagProviders;
 import com.acikek.pt.api.request.FeatureRequests;
@@ -133,18 +134,12 @@ public class OreSource extends UndergroundSource<SourceData.Ore> {
     @Override
     public void buildRecipes(PTRecipeProvider provider) {
         rawBlock.require(block ->
-            rawItem.require(item -> {
-                var exporter = provider.withConditions(DefaultResourceConditions.itemsRegistered(block, item));
-                ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, block)
-                        .criterion(RecipeProvider.hasItem(item), RecipeProvider.conditionsFromItem(item))
-                        .pattern("RRR").pattern("RRR").pattern("RRR")
-                        .input('R', item)
-                        .offerTo(exporter, contentIds().useIdentifier().get("_raw_ore_to_block"));
-                ShapelessRecipeJsonBuilder.create(RecipeCategory.MISC, item, 9)
-                        .criterion(RecipeProvider.hasItem(block), RecipeProvider.conditionsFromItem(item))
-                        .input(block)
-                        .offerTo(exporter, contentIds().useIdentifier().get("_raw_block_to_ore"));
-            })
+                rawItem.require(item ->
+                        PTDatagenApi.buildReversibleRecipes(
+                                provider, contentIds().useIdentifier(),
+                                item, "raw_item", block, "raw_block"
+                        )
+                )
         );
 
         if (context().state().getData() instanceof RefinedStateData.Base base && base.item() != null) {

@@ -1,0 +1,22 @@
+{
+  "fabric:load_conditions": [
+    {
+      "condition": "fabric:registry_contains",
+      "values": [
+        "pt:helium",
+        "pt:helium_mini"
+      ]
+    }
+  ],
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "pt:helium_mini"
+    }
+  ],
+  "result": {
+    "count": 9,
+    "item": "pt:helium"
+  }
+}

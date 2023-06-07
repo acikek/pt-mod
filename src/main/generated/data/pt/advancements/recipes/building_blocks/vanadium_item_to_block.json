@@ -1,0 +1,43 @@
+{
+  "fabric:load_conditions": [
+    {
+      "condition": "fabric:registry_contains",
+      "values": [
+        "pt:vanadium",
+        "pt:vanadium_block"
+      ]
+    }
+  ],
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "pt:vanadium_item_to_block"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    },
+    "has_vanadium": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "pt:vanadium"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "requirements": [
+    [
+      "has_vanadium",
+      "has_the_recipe"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "pt:vanadium_item_to_block"
+    ]
+  }
+}

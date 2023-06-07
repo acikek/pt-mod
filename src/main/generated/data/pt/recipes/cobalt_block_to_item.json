@@ -1,0 +1,22 @@
+{
+  "fabric:load_conditions": [
+    {
+      "condition": "fabric:registry_contains",
+      "values": [
+        "pt:cobalt",
+        "pt:cobalt_block"
+      ]
+    }
+  ],
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "pt:cobalt_block"
+    }
+  ],
+  "result": {
+    "count": 9,
+    "item": "pt:cobalt"
+  }
+}

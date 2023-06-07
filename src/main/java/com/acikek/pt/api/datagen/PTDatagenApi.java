@@ -4,14 +4,21 @@ import com.acikek.pt.api.datagen.provider.PTRecipeProvider;
 import com.acikek.pt.api.datagen.provider.tag.PTTagProviders;
 import com.acikek.pt.api.impl.datagen.PTDatagenImpl;
 import com.acikek.pt.core.api.AbstractPeriodicTable;
+import com.acikek.pt.core.api.registry.ElementIds;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.*;
+import net.fabricmc.fabric.api.resource.conditions.v1.DefaultResourceConditions;
+import net.minecraft.block.Block;
 import net.minecraft.data.client.BlockStateModelGenerator;
 import net.minecraft.data.client.ItemModelGenerator;
 import net.minecraft.data.client.Models;
 import net.minecraft.data.client.TexturedModel;
-import net.minecraft.data.server.recipe.RecipeJsonProvider;
+import net.minecraft.data.server.recipe.*;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemConvertible;
+import net.minecraft.recipe.book.RecipeCategory;
 import net.minecraft.registry.RegistryWrapper;
+import net.minecraft.util.Identifier;
 
 import java.util.concurrent.CompletableFuture;
 import java.util.function.Consumer;
@@ -72,6 +79,22 @@ public class PTDatagenApi {
 
     public static void buildRecipes(PTRecipeProvider provider, AbstractPeriodicTable table) {
         PTDatagenImpl.delegate(DatagenDelegator::buildRecipes, provider, table);
+    }
+
+    public static void buildReversibleRecipes(PTRecipeProvider provider, ItemConvertible base, Identifier baseId, RecipeCategory baseCategory, ItemConvertible compact, Identifier compactId, RecipeCategory compactCategory) {
+        PTDatagenImpl.buildReversibleRecipes(provider, base, baseId, baseCategory, compact, compactId, compactCategory);
+    }
+
+    public static void buildReversibleRecipes(PTRecipeProvider provider, ElementIds<Identifier> ids, ItemConvertible base, String baseName, RecipeCategory baseCategory, ItemConvertible compact, String compactName, RecipeCategory compactCategory) {
+        PTDatagenImpl.buildReversibleRecipes(provider, ids, base, baseName, baseCategory, compact, compactName, compactCategory);
+    }
+
+    public static void buildReversibleRecipes(PTRecipeProvider provider, Item item, Identifier itemId, Block block, Identifier blockId) {
+        buildReversibleRecipes(provider, item, itemId, RecipeCategory.MISC, block, blockId, RecipeCategory.BUILDING_BLOCKS);
+    }
+
+    public static void buildReversibleRecipes(PTRecipeProvider provider, ElementIds<Identifier> ids, Item item, String itemName, Block block, String blockName) {
+        buildReversibleRecipes(provider, ids, item, itemName, RecipeCategory.MISC, block, blockName, RecipeCategory.BUILDING_BLOCKS);
     }
 
     public static FabricRecipeProvider createRecipeProvider(FabricDataOutput output, AbstractPeriodicTable table) {

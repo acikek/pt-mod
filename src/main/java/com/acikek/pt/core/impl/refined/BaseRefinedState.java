@@ -1,5 +1,7 @@
 package com.acikek.pt.core.impl.refined;
 
+import com.acikek.pt.api.datagen.PTDatagenApi;
+import com.acikek.pt.api.datagen.provider.PTRecipeProvider;
 import com.acikek.pt.api.datagen.provider.tag.PTTagProviders;
 import com.acikek.pt.api.request.FeatureRequests;
 import com.acikek.pt.api.request.RequestTypes;
@@ -19,6 +21,7 @@ import net.minecraft.data.client.BlockStateModelGenerator;
 import net.minecraft.data.client.ItemModelGenerator;
 import net.minecraft.data.client.Models;
 import net.minecraft.item.Item;
+import net.minecraft.recipe.book.RecipeCategory;
 import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -120,6 +123,27 @@ public abstract class BaseRefinedState<D> implements ElementRefinedState<D> {
         for (var content : PhasedContent.filterByCreation(item, miniItem)) {
             content.require(c -> generator.register(c, Models.GENERATED));
         }
+    }
+
+    @Override
+    public void buildRecipes(PTRecipeProvider provider) {
+        block.require(block ->
+                item.require(item ->
+                        PTDatagenApi.buildReversibleRecipes(
+                                provider, contentIds().useIdentifier(),
+                                item, "item", block, "block"
+                        )
+                )
+        );
+        item.require(item ->
+                miniItem.require(mini ->
+                        PTDatagenApi.buildReversibleRecipes(
+                                provider, contentIds().useIdentifier(),
+                                item, "item", RecipeCategory.MISC,
+                                mini, "mini", RecipeCategory.MISC
+                        )
+                )
+        );
     }
 
     @Override

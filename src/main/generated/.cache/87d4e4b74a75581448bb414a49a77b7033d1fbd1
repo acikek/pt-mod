@@ -1,4 +1,4 @@
-// 1.19.4	2023-06-07T12:54:21.048699407	PT/Tags for minecraft:item
+// 1.19.4	2023-06-07T13:57:45.55358386	PT/Tags for minecraft:item
 ac32083eaeb99acbb09ae2a46128e964bf1b9861 data/c/tags/items/beryllium_nuggets.json
 3cc45da958fb5745220860c826bfdfb6d6908936 data/c/tags/items/raw_silver_ores.json
 3071a3d905a52d5940290ddfd5692314d5838d86 data/c/tags/items/nickel_mini.json
@@ -29,7 +29,7 @@ ab26485efea6ff5e602cc75b02799059c7938f93 data/c/tags/items/helium_mini.json
 ac32083eaeb99acbb09ae2a46128e964bf1b9861 data/c/tags/items/beryllium_mini.json
 dd6d52c26734ad428c7670fce131361f9e717d67 data/c/tags/items/cadmium_mini.json
 0795cbede37685c1690700589f944db92b6f042c data/c/tags/items/beryllium.json
-23518d2089e13d1ee0349ebd21a3e750853bc78c data/c/tags/items/carbon_ingots.json
+240be1a130af6b5c0548e26c26612585addfa19a data/c/tags/items/carbon_ingots.json
 651ef721a9332e10b41d13fa17dbf84f37724761 data/c/tags/items/cobalt_ingots.json
 3ef142d8860faa62a0b33f46e0b61736d8ff5b3e data/c/tags/items/hydrogen_nuggets.json
 8b54468cf27236b9aa6132bde2d119543f532b3c data/c/tags/items/vanadium.json
@@ -39,7 +39,7 @@ dd6d52c26734ad428c7670fce131361f9e717d67 data/c/tags/items/cadmium_mini.json
 11418c1dc6419047b530f657cca0a0898ecbea07 data/c/tags/items/iron.json
 4e62fc313dbd29429c2f236ca39c96a96a951207 data/c/tags/items/nickel_ingots.json
 c6e515fd147fe45a39f6e626c6f724787d088bab data/c/tags/items/gypsum_crystals.json
-23518d2089e13d1ee0349ebd21a3e750853bc78c data/c/tags/items/carbon.json
+240be1a130af6b5c0548e26c26612585addfa19a data/c/tags/items/carbon.json
 d9b141b0c0bc9964f6d05b8e9fc4f2aab17b5a0c data/c/tags/items/raw_osmium_ores.json
 3ef142d8860faa62a0b33f46e0b61736d8ff5b3e data/c/tags/items/hydrogen_mini.json
 01e4c6fe045ce86a295d0dd52d4f08b2dbed4ea2 data/c/tags/items/antimony.json

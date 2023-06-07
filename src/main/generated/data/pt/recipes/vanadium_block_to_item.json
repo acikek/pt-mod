@@ -1,0 +1,22 @@
+{
+  "fabric:load_conditions": [
+    {
+      "condition": "fabric:registry_contains",
+      "values": [
+        "pt:vanadium",
+        "pt:vanadium_block"
+      ]
+    }
+  ],
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "pt:vanadium_block"
+    }
+  ],
+  "result": {
+    "count": 9,
+    "item": "pt:vanadium"
+  }
+}
