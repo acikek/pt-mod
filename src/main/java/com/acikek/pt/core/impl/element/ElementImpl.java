@@ -55,7 +55,7 @@ public class ElementImpl implements Element {
             throw new IllegalStateException("element already registered");
         }
         var list = sourceStateMap.computeIfAbsent(toState, k -> new ArrayList<>());
-        source.onAdd(getSourceContext(toState));
+        source.onAdd(getSourceContext(source, toState));
         list.add(source);
     }
 

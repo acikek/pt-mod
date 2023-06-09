@@ -44,9 +44,15 @@ public interface SourceStateMapper {
                 .toList();
     }
 
-    private <T extends ElementContentBase<?, ?>> List<T> getByType(List<T> list, Identifier type) {
+    private <T extends ElementContentBase<?, ?>> List<T> getByType(List<T> list, ContentIdentifier type) {
         return list.stream()
                 .filter(content -> content.isType(type))
+                .toList();
+    }
+
+    private <T extends ElementContentBase<?, ?>> List<T> getById(List<T> list, Identifier id) {
+        return list.stream()
+                .filter(content -> content.isInstance(id))
                 .toList();
     }
 
@@ -55,25 +61,16 @@ public interface SourceStateMapper {
      * @return a list of refined states that match the specified type
      * @see RefinedStates
      */
-    default List<ElementRefinedState<?>> getRefinedStatesByType(Identifier stateType) {
+    default List<ElementRefinedState<?>> getRefinedStatesByType(ContentIdentifier stateType) {
         return getByType(getRefinedStates(), stateType);
     }
 
     /**
-     * @param id the unique ID specific to the state to check against
+     * @param id the state instance ID to check against
      * @return the specific refined state, if found
-     * @throws IllegalStateException if more than one refined state with the specified id is found
      */
     default @Nullable ElementRefinedState<?> getRefinedStateById(Identifier id) {
-        var list = getRefinedStates().stream()
-                .filter(state -> state.id().equals(id))
-                .toList();
-        if (list.size() > 1) {
-            throw new IllegalStateException("there exists more than one refined state with the id '" + id + "'");
-        }
-        return !list.isEmpty()
-                ? list.get(0)
-                : null;
+        return getById(getRefinedStates(), id).get(0);
     }
 
     /**
@@ -81,8 +78,23 @@ public interface SourceStateMapper {
      * @return a list of element sources that match the specified type
      * @see ElementSources
      */
-    default List<ElementSource<?>> getSourcesByType(Identifier sourceType) {
+    default List<ElementSource<?>> getSourcesByType(ContentIdentifier sourceType) {
         return getByType(getSources(), sourceType);
+    }
+
+    /**
+     * @param id the source instance ID to check against
+     * @return the specific source, if found
+     */
+    default @Nullable ElementSource<?> getSourceById(Identifier id) {
+        return getById(getSources(), id).get(0);
+    }
+
+    /**
+     * @return a list of sources mapping to the specified refined state, if any
+     */
+    default List<ElementSource<?>> getSourcesForState(ElementRefinedState<?> state) {
+        return sourceStateMap().get(state);
     }
 
     /**
@@ -152,16 +164,20 @@ public interface SourceStateMapper {
     }
 
     /**
-     * @return the only refined state, also known as the "main" state, used by this holder
-     * @throws IllegalStateException if this holder does not have exactly one refined state
-     * @see SourceStateMapper#hasSingleState()
-     *
+     * @return the primary refined state used by this holder
+     * @throws IllegalStateException if a single primary state is not found
      */
-    default ElementRefinedState<?> getSingleState() {
-        if (!hasSingleState()) {
-            throw new IllegalStateException("state holder has multiple refined states");
+    default ElementRefinedState<?> getPrimaryState() {
+        if (hasSingleState()) {
+            return getRefinedStates().get(0);
         }
-        return getRefinedStates().get(0);
+        var primaries = getRefinedStates().stream()
+                .filter(ElementRefinedState::isPrimary)
+                .toList();
+        if (primaries.size() != 1) {
+            throw new IllegalStateException("must have exactly one primary refined state (actual: " + primaries.size() + ")");
+        }
+        return primaries.get(0);
     }
 
     /**
@@ -170,11 +186,11 @@ public interface SourceStateMapper {
     void addSource(ElementSource<?> source, ElementRefinedState<?> toState);
 
     /**
-     * Adds a source to the "main" refined state, if any.
-     * @see SourceStateMapper#getSingleState()
+     * Adds a source to the primary refined state, if any.
+     * @see SourceStateMapper#getPrimaryState()
      */
     default void addSource(ElementSource<?> source) {
-        addSource(source, getSingleState());
+        addSource(source, getPrimaryState());
     }
 
     /**
@@ -200,7 +216,7 @@ public interface SourceStateMapper {
     }
      */
 
-    private boolean validateStates() {
+    /*private boolean validateStates() {
         List<Identifier> checked = new ArrayList<>();
         for (var state : getRefinedStates()) {
             if (checked.contains(state.id())) {
@@ -224,15 +240,29 @@ public interface SourceStateMapper {
             list.add(source.id());
         }
         return true;
-    }
+    }*/
 
     /**
      * Checks all content {@link ElementContentBase#id()}s to make sure they are unique for
-     * their content types and, for {@link ElementSource}s, their {@link ElementContentBase#typeId()}s.
+     * their content {@link ElementContentBase#typeId()}s and that they have at least one {@link ElementContentBase#MAIN} instance per type.<br>
+     * Additionally checks that this mapper's {@link ElementRefinedState}s have a single primary state.
      * @return whether the validation was successful
      * @throws IllegalStateException if the validation fails
      */
     default boolean validateContent() {
-        return validateStates() && validateSources();
+        Map<ContentIdentifier, List<Identifier>> checked = new HashMap<>();
+        for (var content : getAllContent()) {
+            var list = checked.computeIfAbsent(content.typeId(), k -> new ArrayList<>());
+            if (list.contains(content.id())) {
+                throw new IllegalStateException("duplicate '" + content.typeId() + "' content: '" + content.id() + "'");
+            }
+            list.add(content.id());
+        }
+        for (var entry : checked.entrySet()) {
+            if (!entry.getValue().contains(ElementContentBase.MAIN)) {
+                throw new IllegalStateException("content type '" + entry.getKey() + "' does not have a " + ElementContentBase.MAIN + " instance");
+            }
+        }
+        return getPrimaryState() != null;
     }
 }

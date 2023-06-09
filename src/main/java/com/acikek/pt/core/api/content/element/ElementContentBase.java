@@ -23,9 +23,7 @@ import org.jetbrains.annotations.NotNull;
 public interface ElementContentBase<D, C extends ContentContext> extends ContentBase, DataHolder<D>, DatagenDelegator, MineralResultHolder, MaterialHolder {
 
     /**
-     * The instance ID of the <b>main</b> content instance of the parent.<br>
-     * If this is an {@link ElementRefinedState}, the parent is the element.
-     * Otherwise, if this is an {@link ElementSource}, the parent is its refined state.
+     * The instance ID of the <b>main</b> content instance for the specified type.
      */
     Identifier MAIN = PT.id("main");
 
@@ -41,17 +39,17 @@ public interface ElementContentBase<D, C extends ContentContext> extends Content
      * @see ElementSources
      * @see RefinedStates
      */
-    default boolean isType(Identifier id) {
+    default boolean isType(ContentIdentifier id) {
         return typeId().equals(id);
     }
 
     /**
-     * @return the instance-specific identifier for this content
+     * @return the type instance-specific identifier for this content
      */
     @NotNull Identifier id();
 
     /**
-     * @return whether this content is an instance of the specified ID
+     * @return whether this content is a type instance of the specified ID
      * @see ElementContentBase#id()
      */
     default boolean isInstance(Identifier id) {
@@ -59,10 +57,18 @@ public interface ElementContentBase<D, C extends ContentContext> extends Content
     }
 
     /**
-     * @return whether the instance ID of this content is {@link ElementContentBase#MAIN}
+     * @return whether this content is the primary instance of the specified {@link ElementContentBase#typeId()}
      */
     default boolean isMain() {
         return isInstance(MAIN);
+    }
+
+    /**
+     * @return returns a suffix for end-point IDs that takes into account
+     * whether this content {@link ElementContentBase#isMain()}.
+     */
+    default String getContentSuffix() {
+        return isMain() ? "" : ("_" + id());
     }
 
     /**

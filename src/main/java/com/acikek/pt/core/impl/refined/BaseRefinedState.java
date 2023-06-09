@@ -46,6 +46,7 @@ public abstract class BaseRefinedState<D> implements ElementRefinedState<D> {
     }
 
     private final Identifier id;
+    private boolean primary;
     protected final PhasedContent<Item> item;
     protected final PhasedContent<Item> miniItem;
     protected final PhasedContent<Block> block;
@@ -76,6 +77,17 @@ public abstract class BaseRefinedState<D> implements ElementRefinedState<D> {
     @Override
     public ContentContext.State context() {
         return context;
+    }
+
+    @Override
+    public boolean isPrimary() {
+        return primary;
+    }
+
+    @Override
+    public ElementRefinedState<D> primary() {
+        primary = true;
+        return this;
     }
 
     @Override

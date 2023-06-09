@@ -81,10 +81,10 @@ public class OreSource extends UndergroundSource<SourceData.Ore> {
         if (!features.contains(RequestTypes.CONTENT)) {
             return;
         }
-        ore.create(ore -> registry.registerBlock(contentIds().getSourceBlockId(), ore));
-        deepslateOre.create(ore -> registry.registerBlock(contentIds().getDeepslateSourceBlockId(), ore));
-        rawItem.create(raw -> registry.registerItem(contentIds().getRawSourceItemId(), raw));
-        rawBlock.create(raw -> registry.registerBlock(contentIds().getRawSourceBlockId(), raw));
+        ore.create(ore -> registry.registerBlock(contentIds().getBlockId(), ore));
+        deepslateOre.create(ore -> registry.registerBlock(contentIds().get("_deepslate"), ore));
+        rawItem.create(raw -> registry.registerItem(contentIds().getItemId(), raw));
+        rawBlock.create(raw -> registry.registerBlock(contentIds().get("_raw_block"), raw));
     }
 
     @Override

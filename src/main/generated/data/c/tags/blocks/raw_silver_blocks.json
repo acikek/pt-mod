@@ -2,7 +2,7 @@
   "replace": false,
   "values": [
     {
-      "id": "pt:silver_raw_block",
+      "id": "pt:silver_source_raw_block",
       "required": false
     }
   ]

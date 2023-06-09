@@ -37,7 +37,7 @@ public abstract class AbstractPeriodicTable implements CompoundHolder {
         minerals = mineralBuilder.build();
         for (Element element : elements()) {
             element.forEachRefinedState(state -> state.onAdd(element.getStateContext(state)));
-            element.forEachSource((source, state) -> source.onAdd(element.getSourceContext(state)));
+            element.forEachSource((source, state) -> source.onAdd(element.getSourceContext(source, state)));
         }
         this.registry = registry;
     }

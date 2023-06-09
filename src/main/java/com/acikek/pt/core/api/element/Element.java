@@ -89,17 +89,21 @@ public interface Element extends DisplayHolder<ElementDisplay>, SourceStateMappe
     }
 
     default ElementIds<String> getElementIdsForState(ElementRefinedState<?> state) {
-        return state.isMain()
-                ? elementIds()
-                : elementIds().append("_" + state.id().getPath());
+        return elementIds().append(state.getContentSuffix());
+    }
+
+    default ElementIds<String> getElementIdsForSource(ElementRefinedState<?> parentState, ElementSource<?> source) {
+        return getElementIdsForState(parentState)
+                .append("_source")
+                .append(source.getContentSuffix());
     }
 
     default ContentContext.State getStateContext(ElementRefinedState<?> state) {
         return new ContentContext.State(this, getElementIdsForState(state));
     }
 
-    default ContentContext.Source getSourceContext(ElementRefinedState<?> parentState) {
-        return new ContentContext.Source(this, getElementIdsForState(parentState), parentState);
+    default ContentContext.Source getSourceContext(ElementSource<?> source, ElementRefinedState<?> parentState) {
+        return new ContentContext.Source(this, getElementIdsForSource(parentState, source), parentState);
     }
 
     default void onRegister() {

@@ -10,7 +10,7 @@
       "required": false
     },
     {
-      "id": "pt:chromium_raw_block",
+      "id": "pt:chromium_source_raw_block",
       "required": false
     },
     {
@@ -22,7 +22,7 @@
       "required": false
     },
     {
-      "id": "pt:cobalt_raw_block",
+      "id": "pt:cobalt_source_raw_block",
       "required": false
     },
     {
@@ -34,7 +34,7 @@
       "required": false
     },
     {
-      "id": "pt:osmium_raw_block",
+      "id": "pt:osmium_source_raw_block",
       "required": false
     }
   ]

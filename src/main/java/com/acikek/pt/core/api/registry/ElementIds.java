@@ -8,12 +8,6 @@ public abstract class ElementIds<T> {
 
     private static final String MINI_ITEM_SUFFIX = "_mini";
     private static final String BLOCK_SUFFIX = "_block";
-    private static final String SOURCE_BLOCK_SUFFIX = "_source_block";
-    private static final String DEEPSLATE_SOURCE_BLOCK_SUFFIX = "_source_deepslate";
-    private static final String RAW_SOURCE_ITEM_SUFFIX = "_source";
-    private static final String RAW_SOURCE_BLOCK_SUFFIX = "_raw_block";
-
-    private static final String MINERAL_CLUSTER_SUFFIX = "_cluster";
 
     protected T value;
 
@@ -55,26 +49,6 @@ public abstract class ElementIds<T> {
 
     public T getFluidId() {
         return value;
-    }
-
-    public T getSourceBlockId() {
-        return get(SOURCE_BLOCK_SUFFIX);
-    }
-
-    public T getDeepslateSourceBlockId() {
-        return get(DEEPSLATE_SOURCE_BLOCK_SUFFIX);
-    }
-
-    public T getRawSourceItemId() {
-        return get(RAW_SOURCE_ITEM_SUFFIX);
-    }
-
-    public T getRawSourceBlockId() {
-        return get(RAW_SOURCE_BLOCK_SUFFIX);
-    }
-
-    public T getMineralClusterId() {
-        return get(MINERAL_CLUSTER_SUFFIX);
     }
 
     @Override

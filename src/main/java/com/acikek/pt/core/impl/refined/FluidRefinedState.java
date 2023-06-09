@@ -34,7 +34,7 @@ public class FluidRefinedState extends BaseRefinedState<RefinedStateData.HasFlui
     }
 
     @Override
-    public boolean isType(Identifier id) {
+    public boolean isType(ContentIdentifier id) {
         return super.isType(id) || id.equals(RefinedStates.BASE);
     }
 

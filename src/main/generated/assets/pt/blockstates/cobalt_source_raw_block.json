@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "pt:block/cobalt_source_raw_block"
+    }
+  }
+}

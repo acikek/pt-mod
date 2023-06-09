@@ -14,6 +14,16 @@ public interface ElementRefinedState<D> extends ElementContentBase<D, ContentCon
     Identifier CONTENT_TYPE = PT.id("refined_state");
 
     /**
+     * @return whether this state is the primary state for the parent element
+     */
+    boolean isPrimary();
+
+    /**
+     * @return this refined state with {@link ElementRefinedState#isPrimary()} set to {@code true}
+     */
+    ElementRefinedState<D> primary();
+
+    /**
      * @return a content identifier wrapper using the {@link ElementRefinedState#CONTENT_TYPE}
      */
     static ContentIdentifier id(Identifier of) {

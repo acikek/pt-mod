@@ -2,7 +2,7 @@
   "replace": false,
   "values": [
     {
-      "id": "pt:osmium_raw_block",
+      "id": "pt:osmium_source_raw_block",
       "required": false
     }
   ]

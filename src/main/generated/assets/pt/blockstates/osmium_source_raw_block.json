@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "pt:block/osmium_source_raw_block"
+    }
+  }
+}

@@ -2,7 +2,7 @@
   "replace": false,
   "values": [
     {
-      "id": "pt:manganese_raw_block",
+      "id": "pt:manganese_source_raw_block",
       "required": false
     }
   ]
