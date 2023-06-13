@@ -9,34 +9,32 @@ import com.acikek.pt.core.api.refined.RefinedStates;
 import com.acikek.pt.core.api.source.ElementSources;
 import net.minecraft.util.Identifier;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public interface ContentRequestEvent {
 
     /**
-     * Submits a list of requests to a specific content instance in the specified element.
+     * Submits a set of requests to a specific content instance in the specified element.
      * @param contentType the "type" identifier of the relevant content
      * @see RefinedStates
      * @see ElementSources
      * @see RequestTypes
      */
-    void submit(Element element, Identifier contentType, List<Identifier> requests);
+    void submit(Element element, Identifier contentType, Set<Identifier> requests);
 
     /**
-     * @see ContentRequestEvent#submit(Element, Identifier, List)
+     * @see ContentRequestEvent#submit(Element, Identifier, Set)
      */
     default void submit(Element element, Identifier contentType, Identifier... requests) {
-        submit(element, contentType, Arrays.stream(requests).toList());
+        submit(element, contentType, Arrays.stream(requests).collect(Collectors.toSet()));
     }
 
     /**
-     * @see ContentRequestEvent#submit(Element, Identifier, List)
+     * @see ContentRequestEvent#submit(Element, Identifier, Set)
      */
     default void submit(Element element, Identifier contentType, Identifier request) {
-        submit(element, contentType, Collections.singletonList(request));
+        submit(element, contentType, Collections.singleton(request));
     }
 
     /**
@@ -78,7 +76,7 @@ public interface ContentRequestEvent {
     }
 
     /**
-     * @return a map of minerals to content instances to request lists
+     * @return a map of minerals to content instances to request sets
      */
     Map<Element, FeatureRequests.Content> requests();
 

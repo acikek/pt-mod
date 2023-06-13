@@ -7,10 +7,8 @@ import com.acikek.pt.core.api.PeriodicTable;
 import com.acikek.pt.core.api.mineral.Mineral;
 import net.minecraft.util.Identifier;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public interface MineralRequestEvent {
 
@@ -18,26 +16,26 @@ public interface MineralRequestEvent {
      * Submits a list of requests to the specified mineral.
      * @see RequestTypes
      */
-    void submit(Mineral mineral, List<Identifier> requests);
+    void submit(Mineral<?> mineral, Set<Identifier> requests);
 
     /**
-     * @see MineralRequestEvent#submit(Mineral, List)
+     * @see MineralRequestEvent#submit(Mineral, Set)
      */
-    default void submit(Mineral mineral, Identifier... requests) {
-        submit(mineral, Arrays.stream(requests).toList());
+    default void submit(Mineral<?> mineral, Identifier... requests) {
+        submit(mineral, Arrays.stream(requests).collect(Collectors.toSet()));
     }
 
     /**
-     * @see MineralRequestEvent#submit(Mineral, List)
+     * @see MineralRequestEvent#submit(Mineral, Set)
      */
-    default void submit(Mineral mineral, Identifier request) {
-        submit(mineral, Collections.singletonList(request));
+    default void submit(Mineral<?> mineral, Identifier request) {
+        submit(mineral, Collections.singleton(request));
     }
 
     /**
      * Submits a request for all features to the specified mineral.
      */
-    void all(Mineral mineral);
+    void all(Mineral<?> mineral);
 
     /**
      * Submits a request for all features to all minerals created in the specified table.
@@ -56,12 +54,12 @@ public interface MineralRequestEvent {
     /**
      * @return a map of minerals to request lists
      */
-    Map<Mineral, FeatureRequests.Single> requests();
+    Map<Mineral<?>, FeatureRequests.Single> requests();
 
     /**
      * @return submitted requests for the specified mineral
      */
-    default FeatureRequests.Single getRequests(Mineral mineral) {
+    default FeatureRequests.Single getRequests(Mineral<?> mineral) {
         return requests().getOrDefault(mineral, FeatureRequests.Single.empty());
     }
 }

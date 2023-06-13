@@ -6,14 +6,14 @@ import java.util.*;
 
 public class FeatureRequests<T> {
 
-    public static class Single extends FeatureRequests<List<Identifier>> {
+    public static class Single extends FeatureRequests<Set<Identifier>> {
 
-        public Single(boolean all, List<Identifier> requests) {
+        public Single(boolean all, Set<Identifier> requests) {
             super(all, requests);
         }
 
         private static Single emptyWithAll(boolean all) {
-            return new Single(all, new ArrayList<>());
+            return new Single(all, new HashSet<>());
         }
 
         public static Single empty() {

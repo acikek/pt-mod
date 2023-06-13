@@ -91,9 +91,9 @@ public class MineralImpl implements Mineral<DefaultMineralData> {
     @Override
     public void addSignatures(SignatureHolder holder) {
         for (var block : PhasedContent.getByCreation(block, cluster)) {
-            PTApi.addSignature(block, holder.signature());
+            PTApi.setSignature(block, holder.signature());
         }
-        rawMineral.ifCreated(r -> PTApi.addSignature(r, holder.signature()));
+        rawMineral.ifCreated(r -> PTApi.setSignature(r, holder.signature()));
     }
 
     @Override

@@ -8,6 +8,7 @@ import net.minecraft.util.Identifier;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public class ContentRequestImpl implements ContentRequestEvent {
 
@@ -18,7 +19,7 @@ public class ContentRequestImpl implements ContentRequestEvent {
     }
 
     @Override
-    public void submit(Element element, Identifier contentType, List<Identifier> requests) {
+    public void submit(Element element, Identifier contentType, Set<Identifier> requests) {
         var features = getContent(element)
                 .requests()
                 .computeIfAbsent(contentType, k -> FeatureRequests.Single.empty());

@@ -15,10 +15,10 @@ public interface MaterialHolder {
 
     default void addSignatures(SignatureHolder holder) {
         for (Item item : getItems()) {
-            PTApi.addSignature(item, holder.signature());
+            PTApi.setSignature(item, holder.signature());
         }
         for (Block block : getBlocks()) {
-            PTApi.addSignature(block, holder.signature());
+            PTApi.setSignature(block, holder.signature());
         }
     }
 }

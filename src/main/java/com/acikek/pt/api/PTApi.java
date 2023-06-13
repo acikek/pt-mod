@@ -5,10 +5,8 @@ import com.acikek.pt.api.impl.PTLoading;
 import com.acikek.pt.core.api.AbstractPeriodicTable;
 import com.acikek.pt.core.api.element.Element;
 import com.acikek.pt.core.api.signature.CompoundSignature;
-import com.acikek.pt.core.api.signature.SignatureComponent;
 import com.acikek.pt.core.api.signature.SignatureAcceptor;
 import net.minecraft.item.ItemConvertible;
-import net.minecraft.text.Text;
 
 import java.util.List;
 import java.util.function.Consumer;
@@ -42,7 +40,7 @@ public class PTApi {
         }
     }
 
-    public static void addSignature(ItemConvertible item, CompoundSignature signature) {
+    public static void setSignature(ItemConvertible item, CompoundSignature signature) {
         ((SignatureAcceptor) item.asItem()).setSignature(signature);
     }
 }
