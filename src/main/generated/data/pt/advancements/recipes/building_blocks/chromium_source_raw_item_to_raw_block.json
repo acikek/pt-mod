@@ -3,19 +3,19 @@
     {
       "condition": "fabric:registry_contains",
       "values": [
-        "pt:chromium_source",
+        "pt:chromium_source_raw",
         "pt:chromium_source_raw_block"
       ]
     }
   ],
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_chromium_source": {
+    "has_chromium_source_raw": {
       "conditions": {
         "items": [
           {
             "items": [
-              "pt:chromium_source"
+              "pt:chromium_source_raw"
             ]
           }
         ]
@@ -31,7 +31,7 @@
   },
   "requirements": [
     [
-      "has_chromium_source",
+      "has_chromium_source_raw",
       "has_the_recipe"
     ]
   ],

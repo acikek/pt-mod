@@ -3,19 +3,19 @@
     {
       "condition": "fabric:registry_contains",
       "values": [
-        "pt:manganese_source",
+        "pt:manganese_source_raw",
         "pt:manganese_source_raw_block"
       ]
     }
   ],
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_manganese_source": {
+    "has_manganese_source_raw": {
       "conditions": {
         "items": [
           {
             "items": [
-              "pt:manganese_source"
+              "pt:manganese_source_raw"
             ]
           }
         ]
@@ -31,7 +31,7 @@
   },
   "requirements": [
     [
-      "has_manganese_source",
+      "has_manganese_source_raw",
       "has_the_recipe"
     ]
   ],

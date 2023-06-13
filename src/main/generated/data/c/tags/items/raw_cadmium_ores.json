@@ -2,7 +2,7 @@
   "replace": false,
   "values": [
     {
-      "id": "pt:cadmium_source",
+      "id": "pt:cadmium_source_raw",
       "required": false
     }
   ]

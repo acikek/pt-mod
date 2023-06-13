@@ -2,7 +2,7 @@
   "replace": false,
   "values": [
     {
-      "id": "pt:osmium_source",
+      "id": "pt:osmium_source_raw",
       "required": false
     }
   ]

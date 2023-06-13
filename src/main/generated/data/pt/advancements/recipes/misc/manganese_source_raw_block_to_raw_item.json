@@ -3,7 +3,7 @@
     {
       "condition": "fabric:registry_contains",
       "values": [
-        "pt:manganese_source",
+        "pt:manganese_source_raw",
         "pt:manganese_source_raw_block"
       ]
     }

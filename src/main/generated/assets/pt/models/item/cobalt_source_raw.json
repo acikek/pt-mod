@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "pt:item/platinum_source"
+    "layer0": "pt:item/cobalt_source_raw"
   }
 }

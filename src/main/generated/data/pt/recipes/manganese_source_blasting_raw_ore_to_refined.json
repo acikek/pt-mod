@@ -3,7 +3,7 @@
     {
       "condition": "fabric:registry_contains",
       "values": [
-        "pt:manganese_source",
+        "pt:manganese_source_raw",
         "pt:manganese"
       ]
     }
@@ -13,7 +13,7 @@
   "cookingtime": 200,
   "experience": 0.3,
   "ingredient": {
-    "item": "pt:manganese_source"
+    "item": "pt:manganese_source_raw"
   },
   "result": "pt:manganese"
 }

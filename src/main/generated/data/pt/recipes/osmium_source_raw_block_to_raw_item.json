@@ -3,7 +3,7 @@
     {
       "condition": "fabric:registry_contains",
       "values": [
-        "pt:osmium_source",
+        "pt:osmium_source_raw",
         "pt:osmium_source_raw_block"
       ]
     }
@@ -17,6 +17,6 @@
   ],
   "result": {
     "count": 9,
-    "item": "pt:osmium_source"
+    "item": "pt:osmium_source_raw"
   }
 }

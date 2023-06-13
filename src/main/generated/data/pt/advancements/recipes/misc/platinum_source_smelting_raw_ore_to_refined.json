@@ -3,19 +3,19 @@
     {
       "condition": "fabric:registry_contains",
       "values": [
-        "pt:platinum_source",
+        "pt:platinum_source_raw",
         "pt:platinum"
       ]
     }
   ],
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_platinum_source": {
+    "has_platinum_source_raw": {
       "conditions": {
         "items": [
           {
             "items": [
-              "pt:platinum_source"
+              "pt:platinum_source_raw"
             ]
           }
         ]
@@ -31,7 +31,7 @@
   },
   "requirements": [
     [
-      "has_platinum_source",
+      "has_platinum_source_raw",
       "has_the_recipe"
     ]
   ],

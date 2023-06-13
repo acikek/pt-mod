@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "pt:item/cadmium_source"
+    "layer0": "pt:item/chromium_source_raw"
   }
 }

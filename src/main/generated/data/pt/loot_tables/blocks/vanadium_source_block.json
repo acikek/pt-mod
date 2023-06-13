@@ -4,7 +4,7 @@
       "condition": "fabric:registry_contains",
       "values": [
         "pt:vanadium_source_block",
-        "pt:vanadium_source"
+        "pt:vanadium_source_raw"
       ]
     }
   ],
@@ -47,7 +47,7 @@
                   "function": "minecraft:explosion_decay"
                 }
               ],
-              "name": "pt:vanadium_source"
+              "name": "pt:vanadium_source_raw"
             }
           ]
         }

@@ -1,4 +1,4 @@
-// 1.19.4	2023-06-09T14:32:47.010014117	PT/Model Definitions
+// 1.19.4	2023-06-09T14:55:34.02023624	PT/Model Definitions
 a06931934aab5287d6846cf40e68d2cbfdbc5541 assets/pt/blockstates/stibnite.json
 b187ec0501edac978aa77b1cbd52ec4478403c83 assets/pt/models/block/vanadium_source_deepslate.json
 6b07b2ebcc511004c9cb028a76cb2d1b5dbdea19 assets/pt/blockstates/silver_source_deepslate.json
@@ -10,7 +10,6 @@ a880da78ec9b8c2b41e1184c919d106e2c4cc62f assets/pt/models/block/osmium_source_bl
 7604c30ff072fc32126de1476deebb16023b2683 assets/pt/models/item/antimony_block.json
 d400804ad4c9539359c3a05b0787ac5dae6785bc assets/pt/models/block/beryllium_block.json
 4d078185ae8545446fbbe439c9f96fedb440e7c8 assets/pt/models/block/chromium_source_deepslate.json
-4332511639923d2d8fb1e3b58fa65fa3da7f2aff assets/pt/models/item/vanadium_source.json
 831334658efa2942a1a34ca579c808111d3d009a assets/pt/models/item/lithiophilite.json
 021732c8a33a9106ffc5666a353ef056d2e00025 assets/pt/models/block/chromium_source_block.json
 ac2644ad22649b31b361492ed6ce37ab7c7d51da assets/pt/blockstates/vanadium_source_raw_block.json
@@ -50,15 +49,14 @@ f8e60fcf28d6818298f74f6d2ac19c071211e612 assets/pt/models/block/silver_source_ra
 32db31e79bec16b00a9e6057c1792c98737e9361 assets/pt/models/block/osmium_block.json
 7264a9f3637e9ca72c4185d496e70a51378b0b2e assets/pt/models/block/manganese_block.json
 93e2a95e6a6affd19bc927e8cf0e732952e93e96 assets/pt/models/item/colemanite.json
-e4b442371e732d040bdbe90c3f018ef25a288cf1 assets/pt/models/item/silver_source_block.json
 eaec4d8493a1f24fe02bf7348a67895508e59f3e assets/pt/blockstates/osmium_source_block.json
+e4b442371e732d040bdbe90c3f018ef25a288cf1 assets/pt/models/item/silver_source_block.json
 b214c830c9ab13cbbbc2a7a47bc1d895116f8d1e assets/pt/blockstates/silver_block.json
 bcf0c025411aecfd56e9c24e31c54da8bfe0a934 assets/pt/models/block/lithiophilite.json
 38045d6f19ef8a0590e9b6b4bd9733ff6cd4ec5e assets/pt/blockstates/cobalt_source_raw_block.json
 56e5a35f67f628443e9329289065d7dbbfd64ef5 assets/pt/models/block/cobalt_block.json
 2a0e6a4abbff8ceae2fa9627dc1d98970b868fc8 assets/pt/blockstates/beryllium_block.json
 6d28983d564ec3ca513f49cc5edc95b6bf8cc429 assets/pt/models/item/lithium_block.json
-316c078ba3a8c3aab7f8a3c4f922b02c5dedd578 assets/pt/models/item/cadmium_source.json
 fbccf713bd1644a45bc7652155e74e91a30d05d3 assets/pt/blockstates/osmium_source_deepslate.json
 d7cca9bb514a106ca895335f28eab6d6f0b49fd1 assets/pt/models/item/helium_block.json
 24230790e63b60ddcffe692d7ed066107d058594 assets/pt/models/item/manganese_block.json
@@ -66,13 +64,14 @@ d7cca9bb514a106ca895335f28eab6d6f0b49fd1 assets/pt/models/item/helium_block.json
 0d1ad4500c2ad7538cd9214d33a7e1453823eb41 assets/pt/models/item/platinum.json
 a813405ab1dca92253358e6e9cdc188394ba971d assets/pt/models/block/colemanite.json
 153104016240d396d5ac6ae4aec23ed18fe6873b assets/pt/models/block/cobalt_source_raw_block.json
-765afa2278b9c521d8c48683fb1e81464032f2f7 assets/pt/models/item/silver_source.json
 bc49c5c7e5e921b7c2ca4584f37e2ed4435e97e3 assets/pt/models/item/chromium_mini.json
 3a2753697682c0c81320053d1858ec28a892118b assets/pt/models/item/chromium_source_raw_block.json
 9dd7744213f695e9f89524620f24499a732fa772 assets/pt/models/item/beryllium_mini.json
 9c21948cc1d507d4201cc573af3031069d717922 assets/pt/blockstates/platinum_source_block.json
 c746ca355d30cba14f6f67a81310fc82a11df80d assets/pt/models/block/vanadium_block.json
 236736c4a836cd915dd3c94a217729d6ad279200 assets/pt/models/item/cadmium_source_raw_block.json
+3d37b0e2bae067b250be3d24ecea187a2a13276c assets/pt/models/item/vanadium_source_raw.json
+44faba8b481f040b33042eef71d3fd69de8654a0 assets/pt/models/item/nickel_source_raw.json
 e4442e11865ae44da5c75e388a6867cdbc12480f assets/pt/models/block/chromium_block.json
 9c5c46be898dd2f7c5a8edb1e3298724c9dcaed1 assets/pt/blockstates/oxygen_block.json
 511a0467b99c8757abff2eb3f113ba9679763737 assets/pt/models/item/beryllium.json
@@ -93,7 +92,6 @@ b640e637862e6338c800ddbeb360a5759aed95f1 assets/pt/models/item/cadmium_source_bl
 4f791fe2b72d3d1f5dbb4dabd59145c3d0f20cc0 assets/pt/models/block/platinum_source_block.json
 8732c87c2197228419701847277f601c329127f2 assets/pt/models/item/cadmium.json
 e36847a0f42b4e59284d16de0b9b218946fd4b65 assets/pt/models/item/oxygen_mini.json
-c3473f61e21eb49a7f164c7bfc74b6f5867d8629 assets/pt/models/item/manganese_source.json
 fa98bb5e7ee482d134cab3c127a952ee582c968a assets/pt/models/block/lithium_block.json
 83c45e6d85c61012a31c5933e581347022f69aa6 assets/pt/models/item/manganese_source_block.json
 dc9f74b1e1859bd96fe262efb0a27615054710d0 assets/pt/blockstates/nickel_source_block.json
@@ -101,6 +99,7 @@ a829511f6c5182cfc0605bad05b92ae6ce0cd04e assets/pt/models/block/platinum_block.j
 c89f8374e28e12d3a496bf8f9c84f91d448e56bf assets/pt/models/item/vanadium_mini.json
 2126ccc4aa500abe69cfb4811d3a848f27cd2973 assets/pt/models/item/vanadium_block.json
 4327e36f5bf012d694e250b87d3ce8e2e923e178 assets/pt/models/block/cobalt_source_block.json
+1529e4bbc5d8ff674e103eb14a918996efffccab assets/pt/models/item/silver_source_raw.json
 7b12afd725130d1821924d92d251f2bdc72064a7 assets/pt/models/item/chromium_source_deepslate.json
 ac377ac78a6cf00b18613818622505946757de9f assets/pt/models/block/nickel_block.json
 dbc4eeb5b0300a76cd06a03f92092fda66e62ea1 assets/pt/models/item/silver_block.json
@@ -112,10 +111,13 @@ d678ee68c575e1bfa7b0d43cb86c2b45cc8073d8 assets/pt/models/item/vanadium_source_r
 4198690f158f940c0ef31094bb85a1f9efe1f970 assets/pt/models/item/hydrogen.json
 56be84abdbf993bf1d1efd40cfdac3aa4613a348 assets/pt/blockstates/test_mineral.json
 e8403f002bb3c47ef9659bda5d7249695a510fd5 assets/pt/blockstates/chromium_block.json
+8dd8eef75eb2d4fdf96aa2571d9abf7915bfab76 assets/pt/models/item/cobalt_source_raw.json
 04579103ec06e1b8c21c3dfdff30e535567ced0a assets/pt/models/item/nickel_source_raw_block.json
+60d0e59491420fb7b03f46a7e25e2b330c1736d0 assets/pt/models/item/cadmium_source_raw.json
 97434f47dc03b512db2820d1b28e7f0bcca1f5f5 assets/pt/models/item/vanadium_source_deepslate.json
 2f02b72a87911c56f6fde9c688c6b6a2f42197c5 assets/pt/models/block/osmium_source_raw_block.json
 a588f9fa377a52d2fe94cc5b794fe1393e138281 assets/pt/models/block/empty_sack.json
+8a10684672564ef30998fb7a2d7c9d65ca220937 assets/pt/models/item/manganese_source_raw.json
 6da5f91c749a7bf20ceb78655af80dfad31fe476 assets/pt/blockstates/cadmium_source_deepslate.json
 c918492e7563cead91606a361a029c031093f51b assets/pt/models/block/silver_block.json
 a76571a0604e732179e781c8be293475b9ecaf4e assets/pt/models/block/manganese_source_deepslate.json
@@ -127,6 +129,7 @@ e22e8edadcb0e65bcd363a437bb94c2fb9390624 assets/pt/models/item/osmium_source_blo
 d9badce4e6f3dfea07c9ac7bf20b7d36fd28c214 assets/pt/models/item/sulfur_mini.json
 e3ee8720b2a849eb5d04d64e7a7cceee38c89977 assets/pt/blockstates/gypsum_cluster.json
 db8afd362e65446c7293e80f2b251438d43fad26 assets/pt/models/block/vanadium_source_block.json
+2fb242c6458aad24aeccfd16c6340d4da12125dd assets/pt/models/item/platinum_source_raw.json
 aab380a7e11694c1e49b5defc3d1b5c6a0996302 assets/pt/blockstates/silver_source_block.json
 c3796f11f16e3a6198f5ca02a5245608c1341b0c assets/pt/blockstates/cadmium_source_raw_block.json
 668ffd4024235d3b7e438af1e3db7ab64ce9713f assets/pt/models/block/manganese_source_raw_block.json
@@ -153,11 +156,8 @@ ea3bea11ef0a862a1a2431b947fc21e92ac95555 assets/pt/models/item/chromium_block.js
 1ca640f3831721542f1dc4389f47bb0e98e453b0 assets/pt/models/block/helium_block.json
 821a0194e461f575badeecb59258ff3504e8f57a assets/pt/models/item/cobalt_source_deepslate.json
 52a399ed7b8ef2e02dd54413f02ed88d90398d7f assets/pt/blockstates/nickel_source_deepslate.json
-ca95f44bd67cd1dc99630bbc098d008acc6fa749 assets/pt/models/item/cobalt_source.json
 a3503301b281a19b473410f700e8afe71a41ee67 assets/pt/models/block/test_mineral.json
 94bad460c2fc78cb54cec16881c0b1782df42bd9 assets/pt/models/block/antimony_block.json
-92787ebf03cb36d966cb6a1ae29628cd58bc3ffa assets/pt/models/item/nickel_source.json
-631f498e10c99aa96cec5135a3276f64a1306344 assets/pt/models/item/platinum_source.json
 b3f641e661142fa4835baf557de79221a134316d assets/pt/models/item/silver_source_deepslate.json
 a08723aed20fe42090f615915a79689f50d58542 assets/pt/models/block/carbon_block.json
 b924518e4218b6d48ee15228e8dc52b90d24dd16 assets/pt/models/block/nickel_source_block.json
@@ -166,17 +166,17 @@ fff01d066d6f5288d549128879c15077d72ecccc assets/pt/blockstates/anthracite.json
 b81685d348f8d8c09601640be9ad7743941227b4 assets/pt/models/item/hydrogen_block.json
 83053db0a37a00cc0da0f7d08a4aeaf84dfe093b assets/pt/models/block/stibnite.json
 0ef879c9383fd9c2db62c2f0449a3e16dcd40469 assets/pt/blockstates/manganese_source_deepslate.json
+97b0fd3779e9a7f2a3e540b686187fb1c4d44f48 assets/pt/models/item/chromium_source_raw.json
 cc9ecde3b58210a6eb9f7ac85d420920a325c307 assets/pt/models/block/osmium_source_deepslate.json
 df7479a8ab915cb3e183a03e9ad4de0aae24875f assets/pt/blockstates/vanadium_source_deepslate.json
 3d3843b67504fe042732febff599f99dd610e586 assets/pt/models/item/chromium_source_block.json
-2c1b06c39e7f19b6f68e351a8e54b89ab3e78301 assets/pt/models/item/chromium_source.json
 5e43d3b6b8c49e90516491075264b10402e96d6c assets/pt/models/item/vanadium_source_block.json
 9c1bc08aacc908822baf918ec85556df4afd1ee4 assets/pt/models/item/stibnite_shard.json
 50bf793edf503ab87256cb6c244486085abdbd5c assets/pt/blockstates/platinum_source_deepslate.json
 3319c396e58630686e3d2efd41f327960a2ee270 assets/pt/blockstates/stibnite_cluster.json
 f803a3ed57eed32af5c89cb1de0e9fe9149ba4af assets/pt/models/block/chromium_source_raw_block.json
-a2bcca29613abacf6d5ece6c94fbdf141726b231 assets/pt/blockstates/manganese_source_raw_block.json
 adc62f33eb2a9bd7a38831ba85a5d0d75e4dd066 assets/pt/blockstates/platinum_block.json
+a2bcca29613abacf6d5ece6c94fbdf141726b231 assets/pt/blockstates/manganese_source_raw_block.json
 1983b2e4da25451f20ad3c8be74e248b987e03a6 assets/pt/models/item/cadmium_mini.json
 16ad79e676b448fa43db5854a1c22fea6a16426a assets/pt/models/item/osmium_block.json
 38a577c973db31f1a4faa1bde7a61a161473d763 assets/pt/models/item/nickel_source_block.json
@@ -187,7 +187,6 @@ f5f2ca1c7e384b1afc3d357b7081e01e1d2741bc assets/pt/blockstates/colemanite.json
 f2d62c12d9df293c48d3258a4fa0902dcd62e492 assets/pt/models/item/osmium_mini.json
 74a1a2a1915b351677ecadf0af1acdab535fe78c assets/pt/blockstates/chromium_source_deepslate.json
 42ae04e6836c730c1bc337ed2e53bac7b69a0f7b assets/pt/models/block/nickel_source_deepslate.json
-609b3a047286e550e603253fcd7a58e9e5430713 assets/pt/models/item/osmium_source.json
 ca231b90aad8c38a2516bad6007247dd2bcc365d assets/pt/models/block/vanadium_source_raw_block.json
 9eeff775f47546a38a3d8e3056c78e38a1c51d4a assets/pt/models/item/silver_source_raw_block.json
 33a30022483c8e479a96c497758f2978269251ef assets/pt/blockstates/nickel_block.json
@@ -195,6 +194,7 @@ c4d054e69b2bf026979abf21ce5a9462509920b1 assets/pt/models/item/lithium.json
 a49f0cf1aca6ca46b00eb51cdc13924aeed1afea assets/pt/models/item/boron.json
 ec15df611996cba5e79d30b61f5b2997dddfee4d assets/pt/models/item/antimony.json
 ee7d0040412d7da57c55ab1b4e4c0b807656ce81 assets/pt/models/item/anthracite_coal.json
+20abe81a55a4411f92597dc7a701e1cd52b0dc08 assets/pt/models/item/osmium_source_raw.json
 c07df7fdd5875eafc1c192898970fc499c80593e assets/pt/models/item/cobalt_source_raw_block.json
 1862048b52b3bd766ebe0607e853c8ba074084fb assets/pt/models/item/nickel_mini.json
 420e15cffe79dd00398749894ed9c186e6f2822c assets/pt/blockstates/manganese_source_block.json

@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "pt:item/osmium_source"
+    "layer0": "pt:item/silver_source_raw"
   }
 }

@@ -3,19 +3,19 @@
     {
       "condition": "fabric:registry_contains",
       "values": [
-        "pt:osmium_source",
+        "pt:osmium_source_raw",
         "pt:osmium_source_raw_block"
       ]
     }
   ],
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_osmium_source": {
+    "has_osmium_source_raw": {
       "conditions": {
         "items": [
           {
             "items": [
-              "pt:osmium_source"
+              "pt:osmium_source_raw"
             ]
           }
         ]
@@ -31,7 +31,7 @@
   },
   "requirements": [
     [
-      "has_osmium_source",
+      "has_osmium_source_raw",
       "has_the_recipe"
     ]
   ],

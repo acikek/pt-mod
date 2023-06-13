@@ -3,7 +3,7 @@
     {
       "condition": "fabric:registry_contains",
       "values": [
-        "pt:platinum_source",
+        "pt:platinum_source_raw",
         "pt:platinum"
       ]
     }
@@ -13,7 +13,7 @@
   "cookingtime": 200,
   "experience": 0.6,
   "ingredient": {
-    "item": "pt:platinum_source"
+    "item": "pt:platinum_source_raw"
   },
   "result": "pt:platinum"
 }

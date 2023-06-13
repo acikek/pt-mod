@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "pt:item/silver_source"
+    "layer0": "pt:item/vanadium_source_raw"
   }
 }

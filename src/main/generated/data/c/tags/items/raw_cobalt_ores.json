@@ -2,7 +2,7 @@
   "replace": false,
   "values": [
     {
-      "id": "pt:cobalt_source",
+      "id": "pt:cobalt_source_raw",
       "required": false
     }
   ]

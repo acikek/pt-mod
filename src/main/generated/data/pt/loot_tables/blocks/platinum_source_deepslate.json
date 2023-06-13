@@ -4,7 +4,7 @@
       "condition": "fabric:registry_contains",
       "values": [
         "pt:platinum_source_deepslate",
-        "pt:platinum_source"
+        "pt:platinum_source_raw"
       ]
     }
   ],
@@ -47,7 +47,7 @@
                   "function": "minecraft:explosion_decay"
                 }
               ],
-              "name": "pt:platinum_source"
+              "name": "pt:platinum_source_raw"
             }
           ]
         }

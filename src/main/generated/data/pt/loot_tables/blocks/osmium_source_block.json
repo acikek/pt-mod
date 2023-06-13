@@ -4,7 +4,7 @@
       "condition": "fabric:registry_contains",
       "values": [
         "pt:osmium_source_block",
-        "pt:osmium_source"
+        "pt:osmium_source_raw"
       ]
     }
   ],
@@ -47,7 +47,7 @@
                   "function": "minecraft:explosion_decay"
                 }
               ],
-              "name": "pt:osmium_source"
+              "name": "pt:osmium_source_raw"
             }
           ]
         }

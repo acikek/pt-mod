@@ -4,7 +4,7 @@
       "condition": "fabric:registry_contains",
       "values": [
         "pt:manganese_source_block",
-        "pt:manganese_source"
+        "pt:manganese_source_raw"
       ]
     }
   ],
@@ -47,7 +47,7 @@
                   "function": "minecraft:explosion_decay"
                 }
               ],
-              "name": "pt:manganese_source"
+              "name": "pt:manganese_source_raw"
             }
           ]
         }

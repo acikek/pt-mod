@@ -3,7 +3,7 @@
     {
       "condition": "fabric:registry_contains",
       "values": [
-        "pt:cadmium_source",
+        "pt:cadmium_source_raw",
         "pt:cadmium"
       ]
     }
@@ -13,7 +13,7 @@
   "cookingtime": 200,
   "experience": 0.6,
   "ingredient": {
-    "item": "pt:cadmium_source"
+    "item": "pt:cadmium_source_raw"
   },
   "result": "pt:cadmium"
 }

@@ -2,7 +2,7 @@
   "replace": false,
   "values": [
     {
-      "id": "pt:vanadium_source",
+      "id": "pt:vanadium_source_raw",
       "required": false
     }
   ]

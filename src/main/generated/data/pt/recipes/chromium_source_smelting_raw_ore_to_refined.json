@@ -3,7 +3,7 @@
     {
       "condition": "fabric:registry_contains",
       "values": [
-        "pt:chromium_source",
+        "pt:chromium_source_raw",
         "pt:chromium"
       ]
     }
@@ -13,7 +13,7 @@
   "cookingtime": 200,
   "experience": 0.9,
   "ingredient": {
-    "item": "pt:chromium_source"
+    "item": "pt:chromium_source_raw"
   },
   "result": "pt:chromium"
 }

@@ -3,7 +3,7 @@
     {
       "condition": "fabric:registry_contains",
       "values": [
-        "pt:osmium_source",
+        "pt:osmium_source_raw",
         "pt:osmium"
       ]
     }
@@ -13,7 +13,7 @@
   "cookingtime": 200,
   "experience": 0.9,
   "ingredient": {
-    "item": "pt:osmium_source"
+    "item": "pt:osmium_source_raw"
   },
   "result": "pt:osmium"
 }

@@ -4,7 +4,7 @@
       "condition": "fabric:registry_contains",
       "values": [
         "pt:chromium_source_deepslate",
-        "pt:chromium_source"
+        "pt:chromium_source_raw"
       ]
     }
   ],
@@ -47,7 +47,7 @@
                   "function": "minecraft:explosion_decay"
                 }
               ],
-              "name": "pt:chromium_source"
+              "name": "pt:chromium_source_raw"
             }
           ]
         }

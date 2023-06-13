@@ -2,7 +2,7 @@
   "replace": false,
   "values": [
     {
-      "id": "pt:platinum_source",
+      "id": "pt:platinum_source_raw",
       "required": false
     }
   ]

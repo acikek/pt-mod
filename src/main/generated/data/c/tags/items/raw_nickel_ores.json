@@ -2,7 +2,7 @@
   "replace": false,
   "values": [
     {
-      "id": "pt:nickel_source",
+      "id": "pt:nickel_source_raw",
       "required": false
     }
   ]

@@ -3,19 +3,19 @@
     {
       "condition": "fabric:registry_contains",
       "values": [
-        "pt:silver_source",
+        "pt:silver_source_raw",
         "pt:silver"
       ]
     }
   ],
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_silver_source": {
+    "has_silver_source_raw": {
       "conditions": {
         "items": [
           {
             "items": [
-              "pt:silver_source"
+              "pt:silver_source_raw"
             ]
           }
         ]
@@ -31,7 +31,7 @@
   },
   "requirements": [
     [
-      "has_silver_source",
+      "has_silver_source_raw",
       "has_the_recipe"
     ]
   ],

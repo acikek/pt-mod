@@ -3,7 +3,7 @@
     {
       "condition": "fabric:registry_contains",
       "values": [
-        "pt:cobalt_source",
+        "pt:cobalt_source_raw",
         "pt:cobalt_source_raw_block"
       ]
     }
