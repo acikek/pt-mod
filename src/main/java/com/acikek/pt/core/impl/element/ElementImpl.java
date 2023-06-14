@@ -1,6 +1,5 @@
 package com.acikek.pt.core.impl.element;
 
-import com.acikek.pt.core.api.content.element.ContentIdentifier;
 import com.acikek.pt.core.api.display.ElementDisplay;
 import com.acikek.pt.core.api.element.Element;
 import com.acikek.pt.core.api.refined.ElementRefinedState;

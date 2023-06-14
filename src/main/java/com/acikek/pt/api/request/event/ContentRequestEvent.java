@@ -15,23 +15,23 @@ import java.util.stream.Collectors;
 public interface ContentRequestEvent {
 
     /**
-     * Submits a set of requests to a specific content instance in the specified element.
+     * Submits a collection of requests to a specific content instance in the specified element.
      * @param contentType the "type" identifier of the relevant content
      * @see RefinedStates
      * @see ElementSources
      * @see RequestTypes
      */
-    void submit(Element element, Identifier contentType, Set<Identifier> requests);
+    void submit(Element element, Identifier contentType, Collection<Identifier> requests);
 
     /**
-     * @see ContentRequestEvent#submit(Element, Identifier, Set)
+     * @see ContentRequestEvent#submit(Element, Identifier, Collection)
      */
     default void submit(Element element, Identifier contentType, Identifier... requests) {
         submit(element, contentType, Arrays.stream(requests).collect(Collectors.toSet()));
     }
 
     /**
-     * @see ContentRequestEvent#submit(Element, Identifier, Set)
+     * @see ContentRequestEvent#submit(Element, Identifier, Collection)
      */
     default void submit(Element element, Identifier contentType, Identifier request) {
         submit(element, contentType, Collections.singleton(request));

@@ -8,10 +8,7 @@ import com.acikek.pt.api.request.RequestTypes;
 import com.acikek.pt.core.api.content.element.ContentContext;
 import com.acikek.pt.core.api.content.element.ContentIdentifier;
 import com.acikek.pt.core.api.content.phase.PhasedContent;
-import com.acikek.pt.core.api.refined.ElementRefinedState;
-import com.acikek.pt.core.api.refined.RefinedStateData;
-import com.acikek.pt.core.api.refined.RefinedStateType;
-import com.acikek.pt.core.api.refined.RefinedStates;
+import com.acikek.pt.core.api.refined.*;
 import com.acikek.pt.core.api.registry.PTRegistry;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricBlockLootTableProvider;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
@@ -31,7 +28,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Stream;
 
-public abstract class BaseRefinedState<D> implements ElementRefinedState<D> {
+public abstract class BaseRefinedState<D> extends AbstractRefinedState<D> {
 
     public static class Type extends BaseRefinedState<RefinedStateData.Base> {
 
@@ -45,55 +42,23 @@ public abstract class BaseRefinedState<D> implements ElementRefinedState<D> {
         }
     }
 
-    private final Identifier id;
-    private boolean primary;
     protected final PhasedContent<Item> item;
     protected final PhasedContent<Item> miniItem;
     protected final PhasedContent<Block> block;
     protected final RefinedStateType type;
 
-    private ContentContext.State context;
-
     public BaseRefinedState(Identifier id, PhasedContent<Item> item, PhasedContent<Item> miniItem, PhasedContent<Block> block, RefinedStateType type) {
+        super(id);
         Stream.of(id, item, miniItem, block).forEach(Objects::requireNonNull);
-        this.id = id;
         this.item = item;
         this.miniItem = miniItem;
         this.block = block;
         this.type = type;
     }
 
-    @NotNull
-    @Override
-    public Identifier id() {
-        return id;
-    }
-
     @Override
     public @NotNull ContentIdentifier typeId() {
         return RefinedStates.BASE;
-    }
-
-    @Override
-    public ContentContext.State context() {
-        return context;
-    }
-
-    @Override
-    public boolean isPrimary() {
-        return primary;
-    }
-
-    @Override
-    public ElementRefinedState<D> primary() {
-        primary = true;
-        return this;
-    }
-
-    @Override
-    public void setContext(ContentContext.State context) {
-        ElementRefinedState.super.setContext(context);
-        this.context = context;
     }
 
     @Override

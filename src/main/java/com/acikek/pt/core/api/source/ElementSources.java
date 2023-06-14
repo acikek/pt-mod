@@ -2,13 +2,11 @@ package com.acikek.pt.core.api.source;
 
 import com.acikek.pt.core.api.content.element.ContentIdentifier;
 import com.acikek.pt.core.api.mineral.Mineral;
-import com.acikek.pt.core.impl.source.AtmosphericSource;
 import com.acikek.pt.core.impl.source.MineralSource;
 import com.acikek.pt.core.impl.source.OreSourceBuilder;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.util.Identifier;
-import org.apache.commons.lang3.Range;
 
 public class ElementSources {
 
@@ -42,21 +40,5 @@ public class ElementSources {
 
     public static ElementSource<?> mineral(Mineral<?> mineral) {
         return new MineralSource<>(ElementSource.MAIN, mineral);
-    }
-
-    public static ElementSource<?> atmospheric(Identifier id, Range<Integer> range) {
-        return new AtmosphericSource(id, range);
-    }
-
-    public static ElementSource<?> atmospheric(Range<Integer> range) {
-        return new AtmosphericSource(ElementSource.MAIN, range);
-    }
-
-    public static ElementSource<?> atmospheric(Identifier id, int min, int max) {
-        return atmospheric(id, Range.between(min, max));
-    }
-
-    public static ElementSource<?> atmospheric(int min, int max) {
-        return atmospheric(ElementSource.MAIN, min, max);
     }
 }

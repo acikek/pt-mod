@@ -1,13 +1,15 @@
 package com.acikek.pt.core.api.element;
 
-import com.acikek.pt.core.api.refined.ElementRefinedState;
-import com.acikek.pt.core.impl.element.ElementImpl;
 import com.acikek.pt.core.api.display.ElementDisplay;
+import com.acikek.pt.core.api.refined.ElementRefinedState;
 import com.acikek.pt.core.api.refined.RefinedStates;
 import com.acikek.pt.core.api.source.ElementSource;
-import com.acikek.pt.core.api.source.ElementSources;
+import com.acikek.pt.core.impl.element.ElementImpl;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class Elements {
@@ -44,7 +46,7 @@ public class Elements {
         return noSources(naming, Arrays.stream(states).toList());
     }
 
-    public static Element gas(Object naming, int atmosphericMin, int atmosphericMax) {
-        return basic(naming, RefinedStates.gas(), ElementSources.atmospheric(atmosphericMin, atmosphericMax));
+    public static Element gas(Object naming) {
+        return noSources(naming, RefinedStates.gas());
     }
 }

@@ -5,10 +5,7 @@ import com.acikek.pt.api.request.FeatureRequests;
 import com.acikek.pt.core.api.element.Element;
 import net.minecraft.util.Identifier;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 public class ContentRequestImpl implements ContentRequestEvent {
 
@@ -19,7 +16,7 @@ public class ContentRequestImpl implements ContentRequestEvent {
     }
 
     @Override
-    public void submit(Element element, Identifier contentType, Set<Identifier> requests) {
+    public void submit(Element element, Identifier contentType, Collection<Identifier> requests) {
         var features = getContent(element)
                 .requests()
                 .computeIfAbsent(contentType, k -> FeatureRequests.Single.empty());

@@ -1,6 +1,6 @@
 package com.acikek.pt.core.api.content.phase;
 
-import com.acikek.pt.core.api.content.element.ElementContentBase;
+import com.acikek.pt.core.api.content.ContentBase;
 import com.acikek.pt.core.impl.content.phase.PhasedContentImpls;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -16,13 +16,12 @@ import java.util.function.Supplier;
  * </p>
  *
  * <p>
- *     This is useful for {@link ElementContentBase} implementations, wherein due to the request system, content may not be
+ *     This is useful for {@link ContentBase} implementations, wherein due to the request system, content may not be
  *     registered; however, all created content must be registered, so this content must not be created either.
  * </p>
  *
  * <pre>
  * {@code
- *
  * PhasedContent<Block> block = PhasedContent.of(() -> new Block(...));
  * if (someCondition) {
  *     registerBlock(block.create());
@@ -255,6 +254,7 @@ public abstract class PhasedContent<T> {
     /**
      * @see PhasedContent#filterByCreation(Collection)
      */
+    @SafeVarargs
     public static <T> List<PhasedContent<T>> filterByCreation(PhasedContent<T>... containers) {
         return filterByCreation(Arrays.stream(containers).toList());
     }
@@ -262,6 +262,7 @@ public abstract class PhasedContent<T> {
     /**
      * @see PhasedContent#getByCreation(Collection)
      */
+    @SafeVarargs
     public static <T> List<T> getByCreation(PhasedContent<T>... containers) {
         return getByCreation(Arrays.stream(containers).toList());
     }

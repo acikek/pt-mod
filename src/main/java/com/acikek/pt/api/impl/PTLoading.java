@@ -31,11 +31,11 @@ public class PTLoading {
             tables.addAll(loader.createTables());
         }
         for (PTPlugin loader : plugins) {
-            loader.beforeRegister();
+            loader.onRegister();
         }
         RequestEvent event = new RequestEventImpl();
         for (PTPlugin loader : plugins) {
-            loader.requestFeatures(event);
+            loader.request(event);
         }
         System.out.println(event);
         for (AbstractPeriodicTable table : tables) {

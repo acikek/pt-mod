@@ -33,7 +33,6 @@ import net.minecraft.util.Formatting;
 import net.minecraft.world.World;
 
 import java.util.List;
-import java.util.function.Function;
 
 public interface Element extends DisplayHolder<ElementDisplay>, SourceStateMapper, SignatureHolder, DatagenDelegator, MaterialHolder {
 
@@ -178,19 +177,13 @@ public interface Element extends DisplayHolder<ElementDisplay>, SourceStateMappe
         forEachContent(ElementContentBase::initClient);
     }
 
-    private <T> List<T> getValues(Function<ElementContentBase<?, ?>, List<T>> mapper) {
-        return getAllContent().stream()
-                .flatMap(content -> mapper.apply(content).stream())
-                .toList();
-    }
-
     @Override
     default List<Block> getBlocks() {
-        return getValues(ElementContentBase::getBlocks);
+        return MaterialHolder.getAllMaterials(getAllContent(), ElementContentBase::getAllBlocks);
     }
 
     @Override
     default List<Item> getItems() {
-        return getValues(ElementContentBase::getItems);
+        return MaterialHolder.getAllMaterials(getAllContent(), ElementContentBase::getAllItems);
     }
 }

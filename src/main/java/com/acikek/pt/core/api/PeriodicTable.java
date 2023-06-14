@@ -20,7 +20,7 @@ import java.util.Map;
 
 public class PeriodicTable extends AbstractPeriodicTable {
 
-    public static final Identifier ID = PT.id("pt");
+    public static final Identifier ID = PT.id("periodic_table");
 
     public static final Mineral<?> TEST = Minerals.block(
             "Test Mineral",
@@ -65,8 +65,8 @@ public class PeriodicTable extends AbstractPeriodicTable {
             () -> Signatures.of(/*Ca,*/ Signatures.single(PeriodicTable.SULFUR).primary().unit(), Signatures.unit(PeriodicTable.OXYGEN, 4))
     );
 
-    public static final Element HYDROGEN = Elements.gas(ElementDisplay.byId("hydrogen", "H", 2), 280, 319);
-    public static final Element HELIUM = Elements.gas("helium", 255, 300);
+    public static final Element HYDROGEN = Elements.gas(ElementDisplay.byId("hydrogen", "H", 2));
+    public static final Element HELIUM = Elements.gas("helium");
     public static final Element LITHIUM = Elements.basic("lithium", RefinedStates.metal(1.6f), ElementSources.mineral(LITHIOPHILITE));
     public static final Element BERYLLIUM = Elements.basic("beryllium", RefinedStates.metal(6.5f), ElementSources.mineral(TEST));
     public static final Element BORON = Elements.basic(ElementDisplay.byId("boron", "B"), RefinedStates.metal(10.0f), ElementSources.mineral(COLEMANITE));
@@ -85,7 +85,7 @@ public class PeriodicTable extends AbstractPeriodicTable {
                     .build(),
             List.of(ElementSources.oreBuilder().id(PT.id("vanilla_diamond")).ore(Blocks.DIAMOND_ORE).deepslateOre(Blocks.DEEPSLATE_DIAMOND_ORE).build())
     ));
-    public static final Element OXYGEN = Elements.gas(ElementDisplay.byId("oxygen", "O"), 0, 235);
+    public static final Element OXYGEN = Elements.gas(ElementDisplay.byId("oxygen", "O"));
     public static final Element SULFUR = Elements.basic(ElementDisplay.byId("sulfur", "S"), RefinedStates.sack(), ElementSources.mineral(GYPSUM));
     public static final Element VANADIUM = Elements.basic(ElementDisplay.byId("vanadium", "V"), RefinedStates.metal(8.0f), ElementSources.ore(2));
     public static final Element CHROMIUM = Elements.basic(ElementDisplay.byId("chromium", "Cr"), RefinedStates.metal(9.5f), ElementSources.ore(3));

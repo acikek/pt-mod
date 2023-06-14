@@ -5,7 +5,6 @@ import com.acikek.pt.api.datagen.provider.PTRecipeProvider;
 import com.acikek.pt.api.datagen.provider.tag.PTTagProviders;
 import com.acikek.pt.api.request.FeatureRequests;
 import com.acikek.pt.api.request.RequestTypes;
-import com.acikek.pt.core.api.content.element.ContentContext;
 import com.acikek.pt.core.api.content.element.ContentIdentifier;
 import com.acikek.pt.core.api.content.phase.PhasedContent;
 import com.acikek.pt.core.api.refined.RefinedStateData;
@@ -22,8 +21,6 @@ import net.minecraft.data.client.ItemModelGenerator;
 import net.minecraft.data.client.Models;
 import net.minecraft.data.server.recipe.CookingRecipeJsonBuilder;
 import net.minecraft.data.server.recipe.RecipeProvider;
-import net.minecraft.data.server.recipe.ShapedRecipeJsonBuilder;
-import net.minecraft.data.server.recipe.ShapelessRecipeJsonBuilder;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemConvertible;
 import net.minecraft.recipe.Ingredient;
@@ -44,8 +41,6 @@ public class OreSource extends UndergroundSource<SourceData.Ore> {
     private final PhasedContent<Block> rawBlock;
     private final int miningLevel;
 
-    private ContentContext.Source context;
-
     public OreSource(Identifier id, PhasedContent<Block> ore, PhasedContent<Block> deepslateOre, PhasedContent<Item> rawItem, PhasedContent<Block> rawBlock, int miningLevel) {
         super(id);
         this.ore = ore;
@@ -58,17 +53,6 @@ public class OreSource extends UndergroundSource<SourceData.Ore> {
     @Override
     public @NotNull ContentIdentifier typeId() {
         return ElementSources.ORE;
-    }
-
-    @Override
-    public ContentContext.Source context() {
-        return context;
-    }
-
-    @Override
-    public void setContext(ContentContext.Source context) {
-        super.setContext(context);
-        this.context = context;
     }
 
     @Override

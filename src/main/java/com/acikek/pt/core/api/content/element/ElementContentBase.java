@@ -7,14 +7,18 @@ import com.acikek.pt.core.api.content.MaterialHolder;
 import com.acikek.pt.core.api.data.DataHolder;
 import com.acikek.pt.core.api.element.Element;
 import com.acikek.pt.core.api.mineral.MineralResultHolder;
-import com.acikek.pt.core.api.refined.ElementRefinedState;
 import com.acikek.pt.core.api.refined.RefinedStates;
 import com.acikek.pt.core.api.registry.ElementIds;
-import com.acikek.pt.core.api.source.ElementSource;
 import com.acikek.pt.core.api.source.ElementSources;
+import net.minecraft.block.Block;
+import net.minecraft.item.Item;
 import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.function.Function;
 
 /**
  * @param <C> the context type passed to this content in registry requests and callbacks
@@ -126,5 +130,23 @@ public interface ElementContentBase<D, C extends ContentContext> extends Content
         if (isExclusive() && isAdded()) {
             throw new IllegalStateException("exclusive source '" + this + "' is already attached; cannot be added to element '" + context.parent() + "'");
         }
+    }
+
+    ElementContentBase<D, C> extend(ElementContentBase<?, C> extension);
+
+    List<ElementContentBase<?, C>> extensions();
+
+    private <M> List<M> getMaterials(List<M> others, Function<List<? extends MaterialHolder>, List<M>> mapper) {
+        var list = new ArrayList<>(mapper.apply(extensions()));
+        list.addAll(others);
+        return list;
+    }
+
+    default List<Block> getAllBlocks() {
+        return getMaterials(getBlocks(), MaterialHolder::getAllBlocks);
+    }
+
+    default List<Item> getAllItems() {
+        return getMaterials(getItems(), MaterialHolder::getAllItems);
     }
 }

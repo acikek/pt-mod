@@ -2,6 +2,7 @@ package com.acikek.pt.core.api;
 
 import com.acikek.pt.PT;
 import com.acikek.pt.api.request.event.RequestEvent;
+import com.acikek.pt.core.api.content.MaterialHolder;
 import com.acikek.pt.core.api.element.Element;
 import com.acikek.pt.core.api.mineral.Mineral;
 import com.acikek.pt.core.api.registry.PTRegistry;
@@ -72,18 +73,12 @@ public abstract class AbstractPeriodicTable implements CompoundHolder {
         return elementMap().values().stream().toList();
     }
 
-    private <T> List<T> getValues(Function<Element, List<T>> list) {
-        return elements().stream()
-                .flatMap(element -> list.apply(element).stream())
-                .toList();
-    }
-
     public List<Block> getBlocks() {
-        return getValues(Element::getBlocks);
+        return MaterialHolder.getAllBlocks(elements());
     }
 
     public List<Item> getItems() {
-        return getValues(Element::getItems);
+        return MaterialHolder.getAllItems(elements());
     }
 
     private void registerMinerals(RequestEvent event) {
