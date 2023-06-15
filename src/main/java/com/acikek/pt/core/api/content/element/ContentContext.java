@@ -38,9 +38,9 @@ public abstract class ContentContext {
 
     public static class Source extends ContentContext {
 
-        private final ElementRefinedState<?> state;
+        private final ElementRefinedState state;
 
-        public Source(Element parent, ElementIds<String> contentIds, ElementRefinedState<?> state) {
+        public Source(Element parent, ElementIds<String> contentIds, ElementRefinedState state) {
             super(parent, contentIds);
             this.state = state;
         }
@@ -48,7 +48,7 @@ public abstract class ContentContext {
         /**
          * @return the refined state that this source is attached to
          */
-        public ElementRefinedState<?> state() {
+        public ElementRefinedState state() {
             return this.state;
         }
     }

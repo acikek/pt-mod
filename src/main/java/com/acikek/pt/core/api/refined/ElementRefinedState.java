@@ -6,7 +6,7 @@ import com.acikek.pt.core.api.content.element.ElementContentBase;
 import com.acikek.pt.core.api.content.element.ContentContext;
 import net.minecraft.util.Identifier;
 
-public interface ElementRefinedState<D> extends ElementContentBase<D, ContentContext.State> {
+public interface ElementRefinedState extends ElementContentBase<ContentContext.State> {
 
     /**
      * The content type for {@link ContentIdentifier}s.
@@ -21,7 +21,7 @@ public interface ElementRefinedState<D> extends ElementContentBase<D, ContentCon
     /**
      * @return this refined state with {@link ElementRefinedState#isPrimary()} set to {@code true}
      */
-    ElementRefinedState<D> primary();
+    ElementRefinedState primary();
 
     /**
      * @return a content identifier wrapper using the {@link ElementRefinedState#CONTENT_TYPE}

@@ -1,5 +1,7 @@
 package com.acikek.pt.core.api.content.element;
 
+import com.acikek.pt.core.api.data.ContentData;
+import com.acikek.pt.core.api.data.DataHolder;
 import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.NotNull;
 
@@ -11,12 +13,14 @@ import java.util.Objects;
  * A base implementation of {@link ElementContentBase} that future implementors may inherit from.<br>
  *
  */
-public abstract class AbstractElementContent<D, C extends ContentContext> implements ElementContentBase<D, C> {
+public abstract class AbstractElementContent<C extends ContentContext> implements ElementContentBase<C> {
 
     private final Identifier id;
 
     private C context;
-    private List<ElementContentBase<?, C>> extensions;
+    private List<ElementContentBase<C>> extensions;
+
+    private ContentData allData;
 
     protected AbstractElementContent(Identifier id) {
         Objects.requireNonNull(id);
@@ -39,7 +43,7 @@ public abstract class AbstractElementContent<D, C extends ContentContext> implem
     }
 
     @Override
-    public ElementContentBase<D, C> extend(ElementContentBase<?, C> child) {
+    public ElementContentBase<C> extend(ElementContentBase<C> child) {
         if (extensions == null) {
             extensions = new ArrayList<>();
         }
@@ -48,7 +52,18 @@ public abstract class AbstractElementContent<D, C extends ContentContext> implem
     }
 
     @Override
-    public List<ElementContentBase<?, C>> extensions() {
+    public List<ElementContentBase<C>> extensions() {
         return extensions;
+    }
+
+    @Override
+    public ContentData getAllData() {
+        if (allData == null) {
+            var extensionData = extensions.stream()
+                    .map(DataHolder::getData)
+                    .toList();
+            allData = getData().combine(extensionData);
+        }
+        return allData;
     }
 }

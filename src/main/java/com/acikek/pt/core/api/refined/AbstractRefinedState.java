@@ -8,7 +8,7 @@ import net.minecraft.util.Identifier;
  * A base implementation of {@link ElementRefinedState} that future implementors may inherit from.
  * @see AbstractElementContent
  */
-public abstract class AbstractRefinedState<D> extends AbstractElementContent<D, ContentContext.State> implements ElementRefinedState<D> {
+public abstract class AbstractRefinedState extends AbstractElementContent<ContentContext.State> implements ElementRefinedState {
 
     private boolean primary = false;
 
@@ -22,7 +22,7 @@ public abstract class AbstractRefinedState<D> extends AbstractElementContent<D, 
     }
 
     @Override
-    public ElementRefinedState<D> primary() {
+    public ElementRefinedState primary() {
         primary = true;
         return this;
     }

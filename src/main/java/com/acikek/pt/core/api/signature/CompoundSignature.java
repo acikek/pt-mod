@@ -18,12 +18,6 @@ public interface CompoundSignature {
                 .toList();
     }
 
-    default List<ItemStack> getResultStacks(World world) {
-        return getResults(world).stream()
-                .map(entry -> entry.getResultStack(world))
-                .toList();
-    }
-
     List<SignatureEntry> primaries();
 
     List<SignatureEntry> units();

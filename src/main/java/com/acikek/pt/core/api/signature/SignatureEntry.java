@@ -2,6 +2,7 @@ package com.acikek.pt.core.api.signature;
 
 import com.acikek.pt.core.api.element.Element;
 import com.acikek.pt.core.impl.signature.ElementSignatureImpls;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.text.Text;
 import net.minecraft.world.World;
@@ -35,8 +36,8 @@ public class SignatureEntry {
         return withAmount(op.apply(amount));
     }
 
-    public ItemStack getResultStack(World world) {
-        return element.getMineralResultItem(world).getDefaultStack().copyWithCount(amount);
+    public ItemStack getStack(Item item) {
+        return item.getDefaultStack().copyWithCount(amount);
     }
 
     public SignatureEntry primary() {

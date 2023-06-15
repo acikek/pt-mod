@@ -7,10 +7,11 @@ import com.acikek.pt.api.request.FeatureRequests;
 import com.acikek.pt.api.request.RequestTypes;
 import com.acikek.pt.core.api.content.element.ContentIdentifier;
 import com.acikek.pt.core.api.content.phase.PhasedContent;
-import com.acikek.pt.core.api.refined.RefinedStateData;
+import com.acikek.pt.core.api.data.ContentData;
+import com.acikek.pt.core.api.mineral.Mineral;
+import com.acikek.pt.core.api.refined.RefinedStates;
 import com.acikek.pt.core.api.registry.PTRegistry;
 import com.acikek.pt.core.api.source.ElementSources;
-import com.acikek.pt.core.api.source.SourceData;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricBlockLootTableProvider;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
 import net.fabricmc.fabric.api.mininglevel.v1.MiningLevelManager;
@@ -33,7 +34,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Collections;
 import java.util.List;
 
-public class OreSource extends UndergroundSource<SourceData.Ore> {
+public class OreSource extends UndergroundSource {
 
     private final PhasedContent<Block> ore;
     private final PhasedContent<Block> deepslateOre;
@@ -53,11 +54,6 @@ public class OreSource extends UndergroundSource<SourceData.Ore> {
     @Override
     public @NotNull ContentIdentifier typeId() {
         return ElementSources.ORE;
-    }
-
-    @Override
-    public Item mineralResultItem() {
-        return rawItem.get();
     }
 
     @Override
@@ -90,9 +86,7 @@ public class OreSource extends UndergroundSource<SourceData.Ore> {
         for (var oreBlock : List.of(ore, deepslateOre)) {
             var drop = rawItem.isCreated()
                     ? rawItem.require()
-                    : context().state().getData() instanceof RefinedStateData.Base base
-                            ? base.item()
-                            : null;
+                    : context().state().getData().get(RefinedStates.BASE_ITEM);
             if (drop != null) {
                 oreBlock.require(block -> {
                     var generator = provider.withConditions(DefaultResourceConditions.itemsRegistered(block, drop));
@@ -126,11 +120,11 @@ public class OreSource extends UndergroundSource<SourceData.Ore> {
                 )
         );
 
-        if (context().state().getData() instanceof RefinedStateData.Base base && base.item() != null) {
-            ore.require(block -> offerSmelting(provider, block, base.item(), "_ore"));
-            deepslateOre.require(block -> offerSmelting(provider, block, base.item(), "_deepslate_ore"));
-            rawItem.require(item -> offerSmelting(provider, item, base.item(), "_raw_ore"));
-        }
+        context().state().getData().getOptional(RefinedStates.BASE_ITEM).ifPresent(stateItem -> {
+            ore.require(block -> offerSmelting(provider, block, stateItem, "_ore"));
+            deepslateOre.require(block -> offerSmelting(provider, block, stateItem, "_deepslate_ore"));
+            rawItem.require(item -> offerSmelting(provider, item, stateItem, "_raw_ore"));
+        });
     }
 
     @Override
@@ -185,7 +179,13 @@ public class OreSource extends UndergroundSource<SourceData.Ore> {
     }
 
     @Override
-    public SourceData.Ore getData() {
-        return new SourceData.Ore(ore.get(), deepslateOre.get(), rawItem.get(), rawBlock.get());
+    public ContentData getData() {
+        return ContentData.builder()
+                .add(ElementSources.ORE_BLOCK, ore.get())
+                .add(ElementSources.ORE_BLOCK_DEEPSLATE, deepslateOre.get())
+                .add(ElementSources.ORE_RAW_ITEM, rawItem.get())
+                .add(ElementSources.ORE_RAW_BLOCK, rawBlock.get())
+                .add(Mineral.RESULT, rawItem.get())
+                .build();
     }
 }

@@ -8,12 +8,12 @@ import java.util.function.Consumer;
 
 public interface CompoundHolder {
 
-    List<Mineral<?>> minerals();
+    List<Mineral> minerals();
 
     List<Element> elements();
 
     default void forEachMineral(Consumer<Mineral> fn) {
-        for (Mineral<?> mineral : minerals()) {
+        for (Mineral mineral : minerals()) {
             fn.accept(mineral);
         }
     }

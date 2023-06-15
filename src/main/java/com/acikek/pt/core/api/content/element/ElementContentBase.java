@@ -4,9 +4,9 @@ import com.acikek.pt.PT;
 import com.acikek.pt.api.datagen.DatagenDelegator;
 import com.acikek.pt.core.api.content.ContentBase;
 import com.acikek.pt.core.api.content.MaterialHolder;
+import com.acikek.pt.core.api.data.ContentData;
 import com.acikek.pt.core.api.data.DataHolder;
 import com.acikek.pt.core.api.element.Element;
-import com.acikek.pt.core.api.mineral.MineralResultHolder;
 import com.acikek.pt.core.api.refined.RefinedStates;
 import com.acikek.pt.core.api.registry.ElementIds;
 import com.acikek.pt.core.api.source.ElementSources;
@@ -22,9 +22,8 @@ import java.util.function.Function;
 
 /**
  * @param <C> the context type passed to this content in registry requests and callbacks
- * @param <D> the public data type exposed from implementation details
  */
-public interface ElementContentBase<D, C extends ContentContext> extends ContentBase, DataHolder<D>, DatagenDelegator, MineralResultHolder, MaterialHolder {
+public interface ElementContentBase<C extends ContentContext> extends ContentBase, DataHolder, DatagenDelegator, MaterialHolder {
 
     /**
      * The instance ID of the <b>main</b> content instance for the specified type.
@@ -132,9 +131,9 @@ public interface ElementContentBase<D, C extends ContentContext> extends Content
         }
     }
 
-    ElementContentBase<D, C> extend(ElementContentBase<?, C> extension);
+    ElementContentBase<C> extend(ElementContentBase<C> extension);
 
-    List<ElementContentBase<?, C>> extensions();
+    List<ElementContentBase<C>> extensions();
 
     private <M> List<M> getMaterials(List<M> others, Function<List<? extends MaterialHolder>, List<M>> mapper) {
         var list = new ArrayList<>(mapper.apply(extensions()));
@@ -149,4 +148,6 @@ public interface ElementContentBase<D, C extends ContentContext> extends Content
     default List<Item> getAllItems() {
         return getMaterials(getItems(), MaterialHolder::getAllItems);
     }
+
+    ContentData getAllData();
 }

@@ -58,7 +58,7 @@ public class OreSourceBuilder {
         return this;
     }
 
-    public ElementSource<?> build() {
+    public ElementSource build() {
         return new OreSource(
                 id,
                 hasOre && !ore.canExist() ? PhasedContent.of(ElementalObjects::createOreBlock) : ore,

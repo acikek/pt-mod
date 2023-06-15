@@ -11,7 +11,6 @@ import com.acikek.pt.core.api.content.element.ElementContentBase;
 import com.acikek.pt.core.api.content.element.SourceStateMapper;
 import com.acikek.pt.core.api.display.DisplayHolder;
 import com.acikek.pt.core.api.display.ElementDisplay;
-import com.acikek.pt.core.api.mineral.MineralResultHolder;
 import com.acikek.pt.core.api.refined.ElementRefinedState;
 import com.acikek.pt.core.api.registry.ElementIds;
 import com.acikek.pt.core.api.registry.PTRegistry;
@@ -30,7 +29,6 @@ import net.minecraft.item.Item;
 import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
-import net.minecraft.world.World;
 
 import java.util.List;
 
@@ -80,28 +78,21 @@ public interface Element extends DisplayHolder<ElementDisplay>, SourceStateMappe
         return getQuantifiedText(amount, false);
     }
 
-    default Item getMineralResultItem(World world) {
-        var source = MineralResultHolder.filterAndGet(getSources(), world);
-        return source != null
-                ? source.mineralResultItem()
-                : MineralResultHolder.filterAndGet(getRefinedStates(), world).mineralResultItem(); // empty case covered by exception
-    }
-
-    default ElementIds<String> getElementIdsForState(ElementRefinedState<?> state) {
+    default ElementIds<String> getElementIdsForState(ElementRefinedState state) {
         return elementIds().append(state.getContentSuffix());
     }
 
-    default ElementIds<String> getElementIdsForSource(ElementRefinedState<?> parentState, ElementSource<?> source) {
+    default ElementIds<String> getElementIdsForSource(ElementRefinedState parentState, ElementSource source) {
         return getElementIdsForState(parentState)
                 .append("_source")
                 .append(source.getContentSuffix());
     }
 
-    default ContentContext.State getStateContext(ElementRefinedState<?> state) {
+    default ContentContext.State getStateContext(ElementRefinedState state) {
         return new ContentContext.State(this, getElementIdsForState(state));
     }
 
-    default ContentContext.Source getSourceContext(ElementSource<?> source, ElementRefinedState<?> parentState) {
+    default ContentContext.Source getSourceContext(ElementSource source, ElementRefinedState parentState) {
         return new ContentContext.Source(this, getElementIdsForSource(parentState, source), parentState);
     }
 

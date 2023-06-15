@@ -21,13 +21,13 @@ public interface SourceStateMapper {
      * @return refined states with at least one element source pointing to them.
      * Holders should always have at least one refined state in this map even if they do not map to any sources.
      */
-    @NotNull Map<ElementRefinedState<?>, List<ElementSource<?>>> sourceStateMap();
+    @NotNull Map<ElementRefinedState, List<ElementSource>> sourceStateMap();
 
     /**
      * @return a list of the holder's refined states
      * @throws IllegalStateException if there are no refined states
      */
-    default List<ElementRefinedState<?>> getRefinedStates() {
+    default List<ElementRefinedState> getRefinedStates() {
         if (sourceStateMap().isEmpty()) {
             throw new IllegalStateException("holder has no refined states");
         }
@@ -37,20 +37,20 @@ public interface SourceStateMapper {
     /**
      * @return a list of each element source pointing to the refined states
      */
-    default List<ElementSource<?>> getSources() {
+    default List<ElementSource> getSources() {
         return sourceStateMap().values()
                 .stream()
                 .flatMap(List::stream)
                 .toList();
     }
 
-    private <T extends ElementContentBase<?, ?>> List<T> getByType(List<T> list, ContentIdentifier type) {
+    private <T extends ElementContentBase<?>> List<T> getByType(List<T> list, ContentIdentifier type) {
         return list.stream()
                 .filter(content -> content.isType(type))
                 .toList();
     }
 
-    private <T extends ElementContentBase<?, ?>> List<T> getById(List<T> list, Identifier id) {
+    private <T extends ElementContentBase<?>> List<T> getById(List<T> list, Identifier id) {
         return list.stream()
                 .filter(content -> content.isInstance(id))
                 .toList();
@@ -61,7 +61,7 @@ public interface SourceStateMapper {
      * @return a list of refined states that match the specified type
      * @see RefinedStates
      */
-    default List<ElementRefinedState<?>> getRefinedStatesByType(ContentIdentifier stateType) {
+    default List<ElementRefinedState> getRefinedStatesByType(ContentIdentifier stateType) {
         return getByType(getRefinedStates(), stateType);
     }
 
@@ -69,7 +69,7 @@ public interface SourceStateMapper {
      * @param id the state instance ID to check against
      * @return the specific refined state, if found
      */
-    default @Nullable ElementRefinedState<?> getRefinedStateById(Identifier id) {
+    default @Nullable ElementRefinedState getRefinedStateById(Identifier id) {
         return getById(getRefinedStates(), id).get(0);
     }
 
@@ -78,7 +78,7 @@ public interface SourceStateMapper {
      * @return a list of element sources that match the specified type
      * @see ElementSources
      */
-    default List<ElementSource<?>> getSourcesByType(ContentIdentifier sourceType) {
+    default List<ElementSource> getSourcesByType(ContentIdentifier sourceType) {
         return getByType(getSources(), sourceType);
     }
 
@@ -86,14 +86,14 @@ public interface SourceStateMapper {
      * @param id the source instance ID to check against
      * @return the specific source, if found
      */
-    default @Nullable ElementSource<?> getSourceById(Identifier id) {
+    default @Nullable ElementSource getSourceById(Identifier id) {
         return getById(getSources(), id).get(0);
     }
 
     /**
      * @return a list of sources mapping to the specified refined state, if any
      */
-    default List<ElementSource<?>> getSourcesForState(ElementRefinedState<?> state) {
+    default List<ElementSource> getSourcesForState(ElementRefinedState state) {
         return sourceStateMap().get(state);
     }
 
@@ -101,8 +101,8 @@ public interface SourceStateMapper {
      * @return a list of all the refined states and element sources, in order of sources before states,
      * unified in a single interface
      */
-    default List<ElementContentBase<?, ?>> getAllContent() {
-        List<ElementContentBase<?, ?>> result = new ArrayList<>();
+    default List<ElementContentBase<?>> getAllContent() {
+        List<ElementContentBase<?>> result = new ArrayList<>();
         result.addAll(getRefinedStates());
         result.addAll(getSources());
         return result;
@@ -112,7 +112,7 @@ public interface SourceStateMapper {
      * Maps over all refined states using the specified callback.
      * @see SourceStateMapper#getRefinedStates() 
      */
-    default void forEachRefinedState(Consumer<ElementRefinedState<?>> fn) {
+    default void forEachRefinedState(Consumer<ElementRefinedState> fn) {
         for (var state : getRefinedStates()) {
             fn.accept(state);
         }
@@ -122,7 +122,7 @@ public interface SourceStateMapper {
      * Maps over all element sources using the specified callback.
      * @see SourceStateMapper#getSources() 
      */
-    default void forEachSource(Consumer<ElementSource<?>> fn) {
+    default void forEachSource(Consumer<ElementSource> fn) {
         for (var source : getSources()) {
             fn.accept(source);
         }
@@ -132,7 +132,7 @@ public interface SourceStateMapper {
      * Maps over all content bases, including all refined states and element sources, using the specified callback.
      * @see SourceStateMapper#getAllContent() 
      */
-    default void forEachContent(Consumer<ElementContentBase<?, ?>> fn) {
+    default void forEachContent(Consumer<ElementContentBase<?>> fn) {
         for (var content : getAllContent()) {
             fn.accept(content);
         }
@@ -141,7 +141,7 @@ public interface SourceStateMapper {
     /**
      * Maps over all element sources with the added context of its connected refined state.
      */
-    default void forEachSource(BiConsumer<ElementSource<?>, ElementRefinedState<?>> fn) {
+    default void forEachSource(BiConsumer<ElementSource, ElementRefinedState> fn) {
         for (var entry : sourceStateMap().entrySet()) {
             for (var source : entry.getValue()) {
                 fn.accept(source, entry.getKey());
@@ -167,7 +167,7 @@ public interface SourceStateMapper {
      * @return the primary refined state used by this holder
      * @throws IllegalStateException if a single primary state is not found
      */
-    default ElementRefinedState<?> getPrimaryState() {
+    default ElementRefinedState getPrimaryState() {
         if (hasSingleState()) {
             return getRefinedStates().get(0);
         }
@@ -183,13 +183,13 @@ public interface SourceStateMapper {
     /**
      * Adds a source to a specific refined state in this holder.
      */
-    void addSource(ElementSource<?> source, ElementRefinedState<?> toState);
+    void addSource(ElementSource source, ElementRefinedState toState);
 
     /**
      * Adds a source to the primary refined state, if any.
      * @see SourceStateMapper#getPrimaryState()
      */
-    default void addSource(ElementSource<?> source) {
+    default void addSource(ElementSource source) {
         addSource(source, getPrimaryState());
     }
 
@@ -198,7 +198,7 @@ public interface SourceStateMapper {
      * @throws IllegalStateException if no refined state is found
      * @see SourceStateMapper#getRefinedStateById(Identifier) 
      */
-    default void addSource(ElementSource<?> source, Identifier stateId) {
+    default void addSource(ElementSource source, Identifier stateId) {
         var state = getRefinedStateById(stateId);
         if (state == null) {
             throw new IllegalStateException("refined state '" + stateId + "' was not found");

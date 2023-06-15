@@ -5,8 +5,8 @@ import com.acikek.pt.api.datagen.provider.tag.PTTagProviders;
 import com.acikek.pt.api.request.FeatureRequests;
 import com.acikek.pt.api.request.RequestTypes;
 import com.acikek.pt.core.api.content.phase.PhasedContent;
+import com.acikek.pt.core.api.data.ContentData;
 import com.acikek.pt.core.api.display.MineralDisplay;
-import com.acikek.pt.core.api.mineral.DefaultMineralData;
 import com.acikek.pt.core.api.mineral.Mineral;
 import com.acikek.pt.core.api.registry.PTRegistry;
 import com.acikek.pt.core.api.signature.CompoundSignature;
@@ -35,8 +35,6 @@ import net.minecraft.loot.provider.number.UniformLootNumberProvider;
 import net.minecraft.predicate.item.ItemPredicate;
 import net.minecraft.registry.tag.BlockTags;
 import net.minecraft.registry.tag.ItemTags;
-import net.minecraft.text.Text;
-import net.minecraft.util.Formatting;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Collections;
@@ -45,7 +43,7 @@ import java.util.Objects;
 import java.util.function.Supplier;
 import java.util.stream.Stream;
 
-public class MineralImpl implements Mineral<DefaultMineralData> {
+public class MineralImpl implements Mineral {
 
     private final MineralDisplay naming;
     private final PhasedContent<Block> block;
@@ -54,7 +52,6 @@ public class MineralImpl implements Mineral<DefaultMineralData> {
     private Supplier<CompoundSignature> signatureSupplier;
 
     private CompoundSignature signature;
-    private Text tooltip;
 
     public MineralImpl(PhasedContent<Block> block, PhasedContent<Block> cluster, PhasedContent<Item> rawMineral, MineralDisplay naming, Supplier<CompoundSignature> signatureSupplier) {
         Stream.of(naming, signatureSupplier).forEach(Objects::requireNonNull);
@@ -77,18 +74,6 @@ public class MineralImpl implements Mineral<DefaultMineralData> {
     }
 
     @Override
-    public Item mineralResultItem() {
-        return rawMineral.get();
-    }
-
-    @Override
-    public void init() {
-        signature = signatureSupplier.get();
-        signatureSupplier = null;
-        tooltip = getSignatureText().copy().formatted(Formatting.GRAY);
-    }
-
-    @Override
     public void addSignatures(SignatureHolder holder) {
         for (var block : PhasedContent.getByCreation(block, cluster)) {
             PTApi.setSignature(block, holder.signature());
@@ -98,6 +83,8 @@ public class MineralImpl implements Mineral<DefaultMineralData> {
 
     @Override
     public void register(PTRegistry registry, FeatureRequests.Single features) {
+        signature = signatureSupplier.get();
+        signatureSupplier = null;
         if (!features.contains(RequestTypes.CONTENT)) {
             return;
         }
@@ -225,8 +212,13 @@ public class MineralImpl implements Mineral<DefaultMineralData> {
     }
 
     @Override
-    public DefaultMineralData getData() {
-        return new DefaultMineralData(block.get(), cluster.get(), rawMineral.get());
+    public ContentData getData() {
+        return ContentData.builder()
+                .add(BLOCK, block.get())
+                .add(CLUSTER, cluster.get())
+                .add(RAW_FORM, rawMineral.get())
+                .add(RESULT, rawMineral.get())
+                .build();
     }
 
     @Override

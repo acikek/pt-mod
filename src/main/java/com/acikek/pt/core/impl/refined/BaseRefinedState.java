@@ -5,10 +5,13 @@ import com.acikek.pt.api.datagen.provider.PTRecipeProvider;
 import com.acikek.pt.api.datagen.provider.tag.PTTagProviders;
 import com.acikek.pt.api.request.FeatureRequests;
 import com.acikek.pt.api.request.RequestTypes;
-import com.acikek.pt.core.api.content.element.ContentContext;
 import com.acikek.pt.core.api.content.element.ContentIdentifier;
 import com.acikek.pt.core.api.content.phase.PhasedContent;
-import com.acikek.pt.core.api.refined.*;
+import com.acikek.pt.core.api.data.ContentData;
+import com.acikek.pt.core.api.mineral.Mineral;
+import com.acikek.pt.core.api.refined.AbstractRefinedState;
+import com.acikek.pt.core.api.refined.RefinedStateType;
+import com.acikek.pt.core.api.refined.RefinedStates;
 import com.acikek.pt.core.api.registry.PTRegistry;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricBlockLootTableProvider;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
@@ -21,26 +24,13 @@ import net.minecraft.item.Item;
 import net.minecraft.recipe.book.RecipeCategory;
 import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Stream;
 
-public abstract class BaseRefinedState<D> extends AbstractRefinedState<D> {
-
-    public static class Type extends BaseRefinedState<RefinedStateData.Base> {
-
-        public Type(Identifier id, PhasedContent<Item> item, PhasedContent<Item> miniItem, PhasedContent<Block> block, RefinedStateType type) {
-            super(id, item, miniItem, block, type);
-        }
-
-        @Override
-        public RefinedStateData.Base getData() {
-            return new RefinedStateData.Base(block.get(), item.get(), miniItem.get());
-        }
-    }
+public class BaseRefinedState extends AbstractRefinedState {
 
     protected final PhasedContent<Item> item;
     protected final PhasedContent<Item> miniItem;
@@ -156,11 +146,6 @@ public abstract class BaseRefinedState<D> extends AbstractRefinedState<D> {
     }
 
     @Override
-    public @Nullable Item mineralResultItem() {
-        return item.get();
-    }
-
-    @Override
     public List<Block> getBlocks() {
         return block.isCreated()
                 ? Collections.singletonList(block.require())
@@ -170,5 +155,15 @@ public abstract class BaseRefinedState<D> extends AbstractRefinedState<D> {
     @Override
     public List<Item> getItems() {
         return PhasedContent.getByCreation(item, miniItem);
+    }
+
+    @Override
+    public ContentData getData() {
+        return ContentData.builder()
+                .add(RefinedStates.BASE_BLOCK, block.get())
+                .add(RefinedStates.BASE_ITEM, item.get())
+                .add(RefinedStates.BASE_MINI_ITEM, miniItem.get())
+                .add(Mineral.RESULT, item.get())
+                .build();
     }
 }

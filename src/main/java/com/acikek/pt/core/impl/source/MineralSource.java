@@ -3,6 +3,7 @@ package com.acikek.pt.core.impl.source;
 import com.acikek.pt.api.request.FeatureRequests;
 import com.acikek.pt.core.api.content.element.ContentContext;
 import com.acikek.pt.core.api.content.element.ContentIdentifier;
+import com.acikek.pt.core.api.data.ContentData;
 import com.acikek.pt.core.api.mineral.Mineral;
 import com.acikek.pt.core.api.registry.PTRegistry;
 import com.acikek.pt.core.api.signature.SignatureHolder;
@@ -17,14 +18,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class MineralSource<D> extends UndergroundSource<D> {
+public class MineralSource extends UndergroundSource {
 
-    private static final List<Mineral<?>> ADDED = new ArrayList<>();
+    private static final List<Mineral> ADDED = new ArrayList<>();
 
-    private final Mineral<D> mineral;
+    private final Mineral mineral;
     private ContentContext.Source context;
 
-    public MineralSource(Identifier id, Mineral<D> mineral) {
+    public MineralSource(Identifier id, Mineral mineral) {
         super(id);
         Objects.requireNonNull(mineral);
         this.mineral = mineral;
@@ -44,11 +45,6 @@ public class MineralSource<D> extends UndergroundSource<D> {
     public void setContext(ContentContext.Source context) {
         super.setContext(context);
         this.context = context;
-    }
-
-    @Override
-    public Item mineralResultItem() {
-        return mineral.mineralResultItem();
     }
 
     @Override
@@ -97,7 +93,7 @@ public class MineralSource<D> extends UndergroundSource<D> {
     }
 
     @Override
-    public D getData() {
+    public ContentData getData() {
         return mineral.getData();
     }
 }

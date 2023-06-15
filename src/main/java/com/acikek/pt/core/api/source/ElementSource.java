@@ -7,7 +7,7 @@ import com.acikek.pt.core.api.content.element.ContentContext;
 import com.acikek.pt.core.api.refined.ElementRefinedState;
 import net.minecraft.util.Identifier;
 
-public interface ElementSource<D> extends ElementContentBase<D, ContentContext.Source> {
+public interface ElementSource extends ElementContentBase<ContentContext.Source> {
 
     /**
      * The content type for {@link ContentIdentifier}s.
@@ -31,7 +31,7 @@ public interface ElementSource<D> extends ElementContentBase<D, ContentContext.S
     /**
      * @see ContentContext.Source#state()
      */
-    default ElementRefinedState<?> state() {
+    default ElementRefinedState state() {
         return context().state();
     }
 }

@@ -8,7 +8,7 @@ import net.minecraft.util.Identifier;
  * A base implementation of {@link ElementSource} that future implementors may inherit from.
  * @see AbstractElementContent
  */
-public abstract class AbstractElementSource<D> extends AbstractElementContent<D, ContentContext.Source> implements ElementSource<D> {
+public abstract class AbstractElementSource extends AbstractElementContent<ContentContext.Source> implements ElementSource {
 
     protected AbstractElementSource(Identifier id) {
         super(id);
