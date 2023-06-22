@@ -41,15 +41,15 @@ public class FluidRefinedState extends BaseRefinedState {
     @Override
     public void buildTranslations(FabricLanguageProvider.TranslationBuilder builder) {
         super.buildTranslations(builder);
-        fluid.require(fluid -> builder.add(fluid.getDefaultState().getBlockState().getBlock(), parent().display().englishName()));
+        fluid.require(fluid -> builder.add(fluid.getDefaultState().getBlockState().getBlock(), element().display().englishName()));
         if (isMain()) {
-            builder.add(parent().getConventionalFluidKey("%s"), parent().display().englishName());
+            builder.add(element().getConventionalFluidKey("%s"), element().display().englishName());
         }
     }
 
     @Override
     public void buildFluidTags(PTTagProviders.FluidTagProvider provider) {
-        fluid.require(fluid -> provider.add(parent().getConventionalFluidTag("%s"), fluid));
+        fluid.require(fluid -> provider.add(element().getConventionalFluidTag("%s"), fluid));
     }
 
     @Override

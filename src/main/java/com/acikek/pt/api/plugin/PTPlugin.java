@@ -19,11 +19,15 @@ public interface PTPlugin {
         // Empty
     }
 
+    default void addContentTypes() {
+        // Empty
+    }
+
     default void addContent() {
         // Empty
     }
 
-    default void extendContent() {
+    default void addContentExtensions() {
         // Empty
     }
 

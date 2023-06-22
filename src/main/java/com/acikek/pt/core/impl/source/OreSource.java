@@ -69,15 +69,15 @@ public class OreSource extends UndergroundSource {
 
     @Override
     public void buildTranslations(FabricLanguageProvider.TranslationBuilder builder) {
-        String name = parent().display().englishName();
+        String name = element().display().englishName();
         ore.require(ore -> builder.add(ore, name + " Ore"));
         deepslateOre.require(ore -> builder.add(ore, "Deepslate " + name + " Ore"));
         rawItem.require(raw -> builder.add(raw, "Raw " + name));
         rawBlock.require(raw -> builder.add(raw, "Block of Raw " + name));
         if (isMain()) {
-            builder.add(parent().getConventionalBlockKey("%s_ores"), name + " Ores");
-            builder.add(parent().getConventionalBlockKey("raw_%s_blocks"), "Raw " + name + " Blocks");
-            builder.add(parent().getConventionalItemKey("raw_%s_ores"), "Raw " + name + " Ores");
+            builder.add(element().getConventionalBlockKey("%s_ores"), name + " Ores");
+            builder.add(element().getConventionalBlockKey("raw_%s_blocks"), "Raw " + name + " Blocks");
+            builder.add(element().getConventionalItemKey("raw_%s_ores"), "Raw " + name + " Ores");
         }
     }
 
@@ -132,7 +132,7 @@ public class OreSource extends UndergroundSource {
         var miningLevel = MiningLevelManager.getBlockTag(this.miningLevel);
         for (var ore : List.of(ore, deepslateOre)) {
             ore.ifCreated((block, content) -> {
-                provider.add(parent().getConventionalBlockTag("%s_ores"), block);
+                provider.add(element().getConventionalBlockTag("%s_ores"), block);
                 if (content.isInternal()) {
                     provider.add(miningLevel, block);
                     provider.add(BlockTags.PICKAXE_MINEABLE, block);
@@ -140,7 +140,7 @@ public class OreSource extends UndergroundSource {
             });
         }
         rawBlock.ifCreated((raw, content) -> {
-            provider.add(parent().getConventionalBlockTag("raw_%s_blocks"), raw);
+            provider.add(element().getConventionalBlockTag("raw_%s_blocks"), raw);
             if (content.isInternal()) {
                 provider.add(miningLevel, raw);
                 provider.add(BlockTags.PICKAXE_MINEABLE, raw);
@@ -151,7 +151,7 @@ public class OreSource extends UndergroundSource {
 
     @Override
     public void buildItemTags(PTTagProviders.ItemTagProvider provider) {
-        rawItem.ifCreated(raw -> provider.add(parent().getConventionalItemTag("raw_%s_ores"), raw));
+        rawItem.ifCreated(raw -> provider.add(element().getConventionalItemTag("raw_%s_ores"), raw));
     }
 
     @Override

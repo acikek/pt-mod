@@ -5,6 +5,10 @@ import com.acikek.pt.core.api.content.element.ContentIdentifier;
 import com.acikek.pt.core.api.content.element.ElementContentBase;
 import com.acikek.pt.core.api.content.element.ContentContext;
 import net.minecraft.util.Identifier;
+import org.jetbrains.annotations.Nullable;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public interface ElementRefinedState extends ElementContentBase<ContentContext.State> {
 
@@ -36,4 +40,24 @@ public interface ElementRefinedState extends ElementContentBase<ContentContext.S
     static ContentIdentifier id(String of) {
         return id(PT.id(of));
     }
+
+    @Override
+    default ElementRefinedState extend(ElementContentBase<ContentContext.State> extension) {
+        ElementContentBase.super.extend(extension);
+        return this;
+    }
+
+    @Override
+    List<ElementRefinedState> extensions();
+
+    @Override
+    default List<ElementRefinedState> allContent() {
+        List<ElementRefinedState> list = new ArrayList<>();
+        list.add(this);
+        list.addAll(extensions());
+        return list;
+    }
+
+    @Override
+    @Nullable ElementRefinedState root();
 }

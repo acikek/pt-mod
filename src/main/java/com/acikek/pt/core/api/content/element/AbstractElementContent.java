@@ -4,6 +4,7 @@ import com.acikek.pt.core.api.data.ContentData;
 import com.acikek.pt.core.api.data.DataHolder;
 import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,8 +19,6 @@ public abstract class AbstractElementContent<C extends ContentContext> implement
     private final Identifier id;
 
     private C context;
-    private List<ElementContentBase<C>> extensions;
-
     private ContentData allData;
 
     protected AbstractElementContent(Identifier id) {
@@ -43,27 +42,18 @@ public abstract class AbstractElementContent<C extends ContentContext> implement
     }
 
     @Override
-    public ElementContentBase<C> extend(ElementContentBase<C> child) {
-        if (extensions == null) {
-            extensions = new ArrayList<>();
-        }
-        extensions.add(child);
-        return this;
-    }
-
-    @Override
-    public List<ElementContentBase<C>> extensions() {
-        return extensions;
-    }
-
-    @Override
     public ContentData getAllData() {
         if (allData == null) {
-            var extensionData = extensions.stream()
+            var extensionData = extensions().stream()
                     .map(DataHolder::getData)
                     .toList();
             allData = getData().combine(extensionData);
         }
         return allData;
+    }
+
+    @Override
+    public String toString() {
+        return typeId() + ":" + id();
     }
 }

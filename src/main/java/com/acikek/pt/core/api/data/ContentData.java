@@ -10,10 +10,6 @@ import java.util.Optional;
 
 public class ContentData {
 
-    // could use contentId but i feel like that's for a different purpose.
-    // at least between different namespaces there's no collision
-    // however in the same mod you could potentially combine two of the same key for a single content + extensions?
-    // i'll make that error
     private final Map<Identifier, Object> data;
 
     public ContentData(Map<Identifier, Object> data) {

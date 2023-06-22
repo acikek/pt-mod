@@ -15,10 +15,9 @@ import net.minecraft.item.Item;
 import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Function;
 
 /**
  * @param <C> the context type passed to this content in registry requests and callbacks
@@ -80,10 +79,10 @@ public interface ElementContentBase<C extends ContentContext> extends ContentBas
     C context();
 
     /**
-     * @see ContentContext#parent();
+     * @see ContentContext#element();
      */
-    default Element parent() {
-        return context().parent();
+    default Element element() {
+        return context().element();
     }
 
     /**
@@ -127,27 +126,68 @@ public interface ElementContentBase<C extends ContentContext> extends ContentBas
     default void onAdd(C context) {
         setContext(context);
         if (isExclusive() && isAdded()) {
-            throw new IllegalStateException("exclusive source '" + this + "' is already attached; cannot be added to element '" + context.parent() + "'");
+            throw new IllegalStateException("exclusive source '" + this + "' is already attached; cannot be added to element '" + context.element() + "'");
         }
     }
 
-    ElementContentBase<C> extend(ElementContentBase<C> extension);
-
-    List<ElementContentBase<C>> extensions();
-
-    private <M> List<M> getMaterials(List<M> others, Function<List<? extends MaterialHolder>, List<M>> mapper) {
-        var list = new ArrayList<>(mapper.apply(extensions()));
-        list.addAll(others);
-        return list;
+    /**
+     * @param extension the addon content instance to append
+     * @throws IllegalStateException if this content is already an extension itself
+     */
+    default ElementContentBase<C> extend(ElementContentBase<C> extension) {
+        if (isExtension()) {
+            throw new IllegalStateException("cannot extend a content extension; consider extending " + root());
+        }
+        extension.setRoot(this);
+        return this;
     }
 
+    /**
+     * @return single-depth addon content instances that combine their {@link MaterialHolder} and {@link DataHolder}
+     * methods with this instance
+     */
+    List<? extends ElementContentBase<C>> extensions();
+
+    /**
+     * @return this instance and the {@link ElementContentBase#extensions()}, if any
+     */
+    List<? extends ElementContentBase<C>> allContent();
+
+    /**
+     * @return the content that this instance is an extension of, if any
+     */
+    @Nullable ElementContentBase<C> root();
+
+    /**
+     * Sets an instance-specific root content value.
+     */
+    @ApiStatus.OverrideOnly
+    void setRoot(ElementContentBase<C> root);
+
+    /**
+     * @return whether this content is an addon to another content instance
+     * @see ElementContentBase#root()
+     */
+    default boolean isExtension() {
+        return root() != null;
+    }
+
+    /**
+     * @return combined results of {@link MaterialHolder#getBlocks()} from {@link ElementContentBase#allContent()}
+     */
     default List<Block> getAllBlocks() {
-        return getMaterials(getBlocks(), MaterialHolder::getAllBlocks);
+        return MaterialHolder.getAllBlocks(allContent());
     }
 
+    /**
+     * @return combined results of {@link MaterialHolder#getItems()} from {@link ElementContentBase#allContent()}
+     */
     default List<Item> getAllItems() {
-        return getMaterials(getItems(), MaterialHolder::getAllItems);
+        return MaterialHolder.getAllItems(allContent());
     }
 
+    /**
+     * @return combined results of {@link DataHolder#getData()} from {@link ElementContentBase#allContent()}
+     */
     ContentData getAllData();
 }

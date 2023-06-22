@@ -6,6 +6,10 @@ import com.acikek.pt.core.api.content.element.ElementContentBase;
 import com.acikek.pt.core.api.content.element.ContentContext;
 import com.acikek.pt.core.api.refined.ElementRefinedState;
 import net.minecraft.util.Identifier;
+import org.jetbrains.annotations.Nullable;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public interface ElementSource extends ElementContentBase<ContentContext.Source> {
 
@@ -34,4 +38,24 @@ public interface ElementSource extends ElementContentBase<ContentContext.Source>
     default ElementRefinedState state() {
         return context().state();
     }
+
+    @Override
+    default ElementSource extend(ElementContentBase<ContentContext.Source> extension) {
+        ElementContentBase.super.extend(extension);
+        return this;
+    }
+
+    @Override
+    List<ElementSource> extensions();
+
+    @Override
+    default List<ElementSource> allContent() {
+        List<ElementSource> list = new ArrayList<>();
+        list.add(this);
+        list.addAll(extensions());
+        return list;
+    }
+
+    @Override
+    @Nullable ElementSource root();
 }

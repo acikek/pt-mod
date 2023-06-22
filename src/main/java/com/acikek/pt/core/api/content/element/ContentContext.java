@@ -6,19 +6,19 @@ import com.acikek.pt.core.api.registry.ElementIds;
 
 public abstract class ContentContext {
 
-    private final Element parent;
+    private final Element element;
     private final ElementIds<String> contentIds;
 
-    private ContentContext(Element parent, ElementIds<String> contentIds) {
-        this.parent = parent;
+    private ContentContext(Element element, ElementIds<String> contentIds) {
+        this.element = element;
         this.contentIds = contentIds;
     }
 
     /**
      * @return the parent element that this content is attached to
      */
-    public Element parent() {
-        return parent;
+    public Element element() {
+        return element;
     }
 
     /**
@@ -31,8 +31,8 @@ public abstract class ContentContext {
 
     public static class State extends ContentContext {
 
-        public State(Element parent, ElementIds<String> contentIds) {
-            super(parent, contentIds);
+        public State(Element element, ElementIds<String> contentIds) {
+            super(element, contentIds);
         }
     }
 
@@ -40,8 +40,8 @@ public abstract class ContentContext {
 
         private final ElementRefinedState state;
 
-        public Source(Element parent, ElementIds<String> contentIds, ElementRefinedState state) {
-            super(parent, contentIds);
+        public Source(Element element, ElementIds<String> contentIds, ElementRefinedState state) {
+            super(element, contentIds);
             this.state = state;
         }
 

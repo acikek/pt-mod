@@ -63,19 +63,19 @@ public class BaseRefinedState extends AbstractRefinedState {
 
     @Override
     public void buildTranslations(FabricLanguageProvider.TranslationBuilder builder) {
-        String name = parent().display().englishName();
+        String name = element().display().englishName();
         block.require(block -> builder.add(block, type.getBlockName(name)));
         item.require(item -> builder.add(item, type.getItemName(name)));
         miniItem.require(item -> builder.add(item, type.getMiniItemName(name)));
         boolean powder = type == RefinedStateType.POWDER;
         if (isMain()) {
-            builder.add(parent().getConventionalBlockKey("%s_blocks"), name + " Blocks");
+            builder.add(element().getConventionalBlockKey("%s_blocks"), name + " Blocks");
             for (String format : (powder ? List.of("%s_dusts", "%ss") : List.of("%s_ingots", "%s"))) {
-                builder.add(parent().getConventionalItemKey(format), name + (powder ? " Dusts" : ""));
+                builder.add(element().getConventionalItemKey(format), name + (powder ? " Dusts" : ""));
             }
             for (String format : (powder ? List.of("%s_small_dusts", "%s_tiny_dusts") : List.of("%s_nuggets", "%s_mini"))) {
                 String itemName = powder ? "Small " + name + " Dusts" : "Miniature " + name;
-                builder.add(parent().getConventionalItemKey(format), itemName);
+                builder.add(element().getConventionalItemKey(format), itemName);
             }
         }
     }
@@ -119,7 +119,7 @@ public class BaseRefinedState extends AbstractRefinedState {
             if (content.isInternal()) {
                 type.buildRefinedBlockTags(provider, block);
             }
-            provider.add(parent().getConventionalBlockTag("%s_blocks"), block);
+            provider.add(element().getConventionalBlockTag("%s_blocks"), block);
         });
     }
 
@@ -135,12 +135,12 @@ public class BaseRefinedState extends AbstractRefinedState {
         boolean powder = type == RefinedStateType.POWDER;
         item.ifCreated(item -> {
             for (String format : (powder ? List.of("%s_dusts", "%ss") : List.of("%s_ingots", "%s"))) {
-                provider.add(parent().getConventionalItemTag(format), item);
+                provider.add(element().getConventionalItemTag(format), item);
             }
         });
         miniItem.ifCreated(item -> {
             for (String format : (powder ? List.of("%s_small_dusts", "%s_tiny_dusts") : List.of("%s_nuggets", "%s_mini"))) {
-                provider.add(parent().getConventionalItemTag(format), item);
+                provider.add(element().getConventionalItemTag(format), item);
             }
         });
     }

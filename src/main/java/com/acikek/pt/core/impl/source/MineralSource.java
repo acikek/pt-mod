@@ -23,7 +23,6 @@ public class MineralSource extends UndergroundSource {
     private static final List<Mineral> ADDED = new ArrayList<>();
 
     private final Mineral mineral;
-    private ContentContext.Source context;
 
     public MineralSource(Identifier id, Mineral mineral) {
         super(id);
@@ -34,17 +33,6 @@ public class MineralSource extends UndergroundSource {
     @Override
     public @NotNull ContentIdentifier typeId() {
         return ElementSources.MINERAL;
-    }
-
-    @Override
-    public ContentContext.Source context() {
-        return context;
-    }
-
-    @Override
-    public void setContext(ContentContext.Source context) {
-        super.setContext(context);
-        this.context = context;
     }
 
     @Override
@@ -59,11 +47,11 @@ public class MineralSource extends UndergroundSource {
 
     @Override
     public void onAdd(ContentContext.Source context) {
-        if (Signatures.isElementIn(mineral.signature().all(), context.parent(), true)) {
+        if (Signatures.isElementIn(mineral.signature().all(), context.element(), true)) {
             ADDED.add(mineral);
         }
         else {
-            throw new IllegalStateException("element '" + context.parent() + "' is not a primary component of source '" + this + "'");
+            throw new IllegalStateException("element '" + context.element() + "' is not a primary component of source '" + this + "'");
         }
     }
 
