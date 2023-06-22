@@ -31,4 +31,11 @@ public class PTBuiltin implements PTPlugin {
         /*event.minerals().submit(PeriodicTable.STIBNITE, RequestTypes.CONTENT);
         event.states().submit(PeriodicTable.ANTIMONY, RefinedStates.BASE, RequestTypes.CONTENT);*/
     }
+
+    @Override
+    public void addContentExtensions() {
+        for (var state : PeriodicTable.ANTIMONY.getRefinedStatesByType(RefinedStates.BASE)) {
+            //state.extend(RefinedStates.fluid(new Identifier("joe")));
+        }
+    }
 }

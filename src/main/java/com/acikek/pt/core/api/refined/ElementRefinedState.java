@@ -5,6 +5,7 @@ import com.acikek.pt.core.api.content.element.ContentIdentifier;
 import com.acikek.pt.core.api.content.element.ElementContentBase;
 import com.acikek.pt.core.api.content.element.ContentContext;
 import net.minecraft.util.Identifier;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
@@ -42,12 +43,19 @@ public interface ElementRefinedState extends ElementContentBase<ContentContext.S
     }
 
     @Override
+    default ContentContext.State createContext(ElementContentBase<ContentContext.State> alike) {
+        var state = (ElementRefinedState) alike;
+        return element().getStateContext(state);
+    }
+
+    @Override
     default ElementRefinedState extend(ElementContentBase<ContentContext.State> extension) {
         ElementContentBase.super.extend(extension);
         return this;
     }
 
     @Override
+    @NotNull
     List<ElementRefinedState> extensions();
 
     @Override

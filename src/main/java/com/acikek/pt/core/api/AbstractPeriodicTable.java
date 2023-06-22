@@ -16,7 +16,6 @@ import net.minecraft.util.Identifier;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-import java.util.function.Function;
 
 public abstract class AbstractPeriodicTable implements CompoundHolder {
 
@@ -32,6 +31,7 @@ public abstract class AbstractPeriodicTable implements CompoundHolder {
         elements = elementBuilder.build();
         ImmutableMap.Builder<String, Mineral> mineralBuilder = ImmutableMap.builder();
         for (Mineral mineral : createMinerals()) {
+            mineral.init();
             mineralBuilder.put(mineral.id(), mineral);
         }
         minerals = mineralBuilder.build();
@@ -94,7 +94,7 @@ public abstract class AbstractPeriodicTable implements CompoundHolder {
     public void register(RequestEvent event) {
         try {
             registerMinerals(event);
-            forEachElement(element -> element.register(registry, event.states().getRequests(element), event.sources().getRequests(element)));
+            forEachElement(element -> element.register(event.states().getRequests(element), event.sources().getRequests(element)));
         }
         catch (Exception e) {
             throw new IllegalStateException("Error while registering table '" + id() + "'", e);

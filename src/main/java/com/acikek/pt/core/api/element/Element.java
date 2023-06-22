@@ -29,6 +29,7 @@ import net.minecraft.item.Item;
 import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
+import net.minecraft.util.Identifier;
 
 import java.util.List;
 
@@ -109,11 +110,12 @@ public interface Element extends DisplayHolder<ElementDisplay>, SourceStateMappe
         forEachContent(content -> content.addSignatures(this));
     }
 
-    default void register(PTRegistry registry, FeatureRequests.Content stateRequests, FeatureRequests.Content sourceRequests) {
+    default void register(FeatureRequests.Content stateRequests, FeatureRequests.Content sourceRequests) {
         onRegister();
         try {
-            forEachRefinedState(state -> state.register(registry, stateRequests.getContent(state.typeId())));
-            forEachSource(source -> source.register(registry, sourceRequests.getContent(source.typeId())));
+            // TODO: the new registries here = TEMP FIX!!! Figure out better solution after decoupling minerals from table!
+            forEachRefinedState(state -> state.register(new PTRegistry(state.id().getNamespace()), stateRequests.getContent(state.typeId())));
+            forEachSource(source -> source.register(new PTRegistry(source.id().getNamespace()), sourceRequests.getContent(source.typeId())));
             afterRegister();
         }
         catch (Exception e) {

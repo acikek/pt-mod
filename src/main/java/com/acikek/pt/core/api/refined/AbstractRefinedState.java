@@ -4,9 +4,11 @@ import com.acikek.pt.core.api.content.element.AbstractElementContent;
 import com.acikek.pt.core.api.content.element.ContentContext;
 import com.acikek.pt.core.api.content.element.ElementContentBase;
 import net.minecraft.util.Identifier;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -56,7 +58,9 @@ public abstract class AbstractRefinedState extends AbstractElementContent<Conten
     }
 
     @Override
-    public List<ElementRefinedState> extensions() {
-        return extensions;
+    public @NotNull List<ElementRefinedState> extensions() {
+        return extensions != null
+                ? extensions
+                : Collections.emptyList();
     }
 }

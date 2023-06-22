@@ -25,6 +25,8 @@ public class ElementImpl implements Element {
         this.sourceStateMap = new HashMap<>(mutableMap);
         this.names = names;
         this.ids = ElementIds.create(id());
+        /*forEachRefinedState(state -> state.onAdd(getStateContext(state)));
+        forEachSource((source, state) -> source.onAdd(getSourceContext(source, state)));*/
     }
 
     public ElementIds<String> elementIds() {
@@ -48,11 +50,22 @@ public class ElementImpl implements Element {
         return sourceStateMap;
     }
 
-    @Override
-    public void addSource(ElementSource source, ElementRefinedState toState) {
+    private void checkRegistered() {
         if (registered) {
             throw new IllegalStateException("element already registered");
         }
+    }
+
+    @Override
+    public void addRefinedState(ElementRefinedState state) {
+        checkRegistered();
+        sourceStateMap.put(state, new ArrayList<>());
+        state.onAdd(getStateContext(state));
+    }
+
+    @Override
+    public void addSource(ElementSource source, ElementRefinedState toState) {
+        checkRegistered();
         var list = sourceStateMap.computeIfAbsent(toState, k -> new ArrayList<>());
         source.onAdd(getSourceContext(source, toState));
         list.add(source);

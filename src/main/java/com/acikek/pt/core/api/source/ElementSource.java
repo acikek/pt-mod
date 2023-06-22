@@ -6,6 +6,7 @@ import com.acikek.pt.core.api.content.element.ElementContentBase;
 import com.acikek.pt.core.api.content.element.ContentContext;
 import com.acikek.pt.core.api.refined.ElementRefinedState;
 import net.minecraft.util.Identifier;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
@@ -40,12 +41,19 @@ public interface ElementSource extends ElementContentBase<ContentContext.Source>
     }
 
     @Override
+    default ContentContext.Source createContext(ElementContentBase<ContentContext.Source> alike) {
+        var source = (ElementSource) alike;
+        return element().getSourceContext(source, state());
+    }
+
+    @Override
     default ElementSource extend(ElementContentBase<ContentContext.Source> extension) {
         ElementContentBase.super.extend(extension);
         return this;
     }
 
     @Override
+    @NotNull
     List<ElementSource> extensions();
 
     @Override

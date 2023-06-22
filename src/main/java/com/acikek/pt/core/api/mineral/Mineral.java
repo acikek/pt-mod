@@ -24,6 +24,8 @@ public interface Mineral extends ContentBase, DataHolder, DisplayHolder<MineralD
 
     DataKey<Item> RESULT = DataKey.of("mineral_result_item", Item.class);
 
+    void init();
+
     static <T extends DataHolder> Item getResultItem(List<T> holders, World world) {
         var list = holders.stream()
                 .filter(holder -> holder.getData().contains(RESULT))

@@ -11,6 +11,7 @@ import net.fabricmc.loader.api.FabricLoader;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Consumer;
 import java.util.function.Supplier;
 
 public class PTLoading {
@@ -18,6 +19,7 @@ public class PTLoading {
     private static final String ENTRYPOINT = "pt";
 
     public static List<AbstractPeriodicTable> tables = new ArrayList<>();
+    private static List<PTPlugin> plugins;
 
     private static final Supplier<ImmutableList<PTPlugin>> PLUGINS = Suppliers.memoize(
             () -> ImmutableList.copyOf(
@@ -26,12 +28,15 @@ public class PTLoading {
     );
 
     public static void load() {
-        List<PTPlugin> plugins = PLUGINS.get();
+        plugins = PLUGINS.get();
         for (PTPlugin loader : plugins) {
             tables.addAll(loader.createTables());
         }
         for (PTPlugin loader : plugins) {
             loader.onRegister();
+        }
+        for (PTPlugin loader : plugins) {
+            loader.addContentExtensions();
         }
         RequestEvent event = new RequestEventImpl();
         for (PTPlugin loader : plugins) {

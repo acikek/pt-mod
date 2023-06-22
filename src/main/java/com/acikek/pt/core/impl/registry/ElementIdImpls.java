@@ -1,6 +1,5 @@
 package com.acikek.pt.core.impl.registry;
 
-import com.acikek.pt.PT;
 import com.acikek.pt.core.api.registry.ElementIds;
 import net.minecraft.util.Identifier;
 
@@ -56,6 +55,9 @@ public class ElementIdImpls {
 
         @Override
         public ElementIds<Identifier> useIdentifier(String key) {
+            if (value.getNamespace().equals(key)) {
+                return this;
+            }
             return new IdentifierBacked(new Identifier(key, value.getPath()));
         }
     }

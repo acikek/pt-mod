@@ -4,16 +4,15 @@ import com.acikek.pt.core.api.refined.ElementRefinedState;
 import com.acikek.pt.core.api.refined.RefinedStates;
 import com.acikek.pt.core.api.source.ElementSource;
 import com.acikek.pt.core.api.source.ElementSources;
+import com.google.common.collect.Iterables;
 import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
+import java.util.function.Predicate;
 
 public interface SourceStateMapper {
 
@@ -48,16 +47,18 @@ public interface SourceStateMapper {
                 .toList();
     }
 
-    private <T extends ElementContentBase<?>> List<T> getByType(List<T> list, ContentIdentifier type) {
-        return list.stream()
-                .filter(content -> content.isType(type))
-                .toList();
-    }
-
-    private <T extends ElementContentBase<?>> List<T> getById(List<T> list, Identifier id) {
-        return list.stream()
+    private @Nullable <T extends ElementContentBase<?>> T getById(List<T> list, Identifier id) {
+        var found = list.stream()
                 .filter(content -> content.isInstance(id))
                 .toList();
+        return Iterables.get(found, 0);
+    }
+
+    /**
+     * @return a list of refined states that qualify for the specified filter
+     */
+    default List<ElementRefinedState> getRefinedStates(Predicate<ElementRefinedState> filter) {
+        return getRefinedStates().stream().filter(filter).toList();
     }
 
     /**
@@ -66,7 +67,7 @@ public interface SourceStateMapper {
      * @see RefinedStates
      */
     default List<ElementRefinedState> getRefinedStatesByType(ContentIdentifier stateType) {
-        return getByType(getRefinedStates(), stateType);
+        return getRefinedStates(state -> state.isType(stateType));
     }
 
     /**
@@ -74,7 +75,14 @@ public interface SourceStateMapper {
      * @return the specific refined state, if found
      */
     default @Nullable ElementRefinedState getRefinedStateById(Identifier id) {
-        return getById(getRefinedStates(), id).get(0);
+        return getById(getRefinedStates(), id);
+    }
+
+    /**
+     * @return a list of element sources that qualify for the specified filter
+     */
+    default List<ElementSource> getSources(Predicate<ElementSource> filter) {
+        return getSources().stream().filter(filter).toList();
     }
 
     /**
@@ -83,7 +91,7 @@ public interface SourceStateMapper {
      * @see ElementSources
      */
     default List<ElementSource> getSourcesByType(ContentIdentifier sourceType) {
-        return getByType(getSources(), sourceType);
+        return getSources(source -> source.isType(sourceType));
     }
 
     /**
@@ -91,14 +99,14 @@ public interface SourceStateMapper {
      * @return the specific source, if found
      */
     default @Nullable ElementSource getSourceById(Identifier id) {
-        return getById(getSources(), id).get(0);
+        return getById(getSources(), id);
     }
 
     /**
      * @return a list of sources mapping to the specified refined state, if any
      */
     default List<ElementSource> getSourcesForState(ElementRefinedState state) {
-        return sourceStateMap().get(state);
+        return sourceStateMap().getOrDefault(state, Collections.emptyList());
     }
 
     /**
@@ -185,6 +193,11 @@ public interface SourceStateMapper {
     }
 
     /**
+     * Adds a refined state and accompanying empty source list to this holder.
+     */
+    void addRefinedState(ElementRefinedState state);
+
+    /**
      * Adds a source to a specific refined state in this holder.
      */
     void addSource(ElementSource source, ElementRefinedState toState);
@@ -208,6 +221,30 @@ public interface SourceStateMapper {
             throw new IllegalStateException("refined state '" + stateId + "' was not found");
         }
         addSource(source, state);
+    }
+
+    /**
+     * Adds a refined state and accompanying mapping sources to this holder.
+     */
+    default void addContent(ElementRefinedState state, List<ElementSource> sources) {
+        addRefinedState(state);
+        for (var source : sources) {
+            addSource(source, state);
+        }
+    }
+
+    /**
+     * @see SourceStateMapper#addContent(ElementRefinedState, List)
+     */
+    default void addContent(ElementRefinedState state, ElementSource... sources) {
+        addContent(state, Arrays.stream(sources).toList());
+    }
+
+    /**
+     * @see SourceStateMapper#addContent(ElementRefinedState, List)
+     */
+    default void addContent(ElementRefinedState state, ElementSource source) {
+        addContent(state, Collections.singletonList(source));
     }
 
     /**

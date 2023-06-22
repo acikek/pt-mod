@@ -3,11 +3,12 @@ package com.acikek.pt.core.api.source;
 import com.acikek.pt.core.api.content.element.AbstractElementContent;
 import com.acikek.pt.core.api.content.element.ContentContext;
 import com.acikek.pt.core.api.content.element.ElementContentBase;
-import com.acikek.pt.core.api.refined.ElementRefinedState;
 import net.minecraft.util.Identifier;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -44,7 +45,9 @@ public abstract class AbstractElementSource extends AbstractElementContent<Conte
     }
 
     @Override
-    public List<ElementSource> extensions() {
-        return extensions;
+    public @NotNull List<ElementSource> extensions() {
+        return extensions != null
+                ? extensions
+                : Collections.emptyList();
     }
 }

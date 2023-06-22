@@ -83,14 +83,18 @@ public class MineralImpl implements Mineral {
 
     @Override
     public void register(PTRegistry registry, FeatureRequests.Single features) {
-        signature = signatureSupplier.get();
-        signatureSupplier = null;
         if (!features.contains(RequestTypes.CONTENT)) {
             return;
         }
         block.create(block -> registry.registerBlock(naming.id(), block));
         cluster.create(block -> registry.registerBlock(naming.id() + "_cluster", block));
         rawMineral.create(item -> registry.registerItem(naming.getRawFormId(), item));
+    }
+
+    @Override
+    public void init() {
+        signature = signatureSupplier.get();
+        signatureSupplier = null;
     }
 
     @Override

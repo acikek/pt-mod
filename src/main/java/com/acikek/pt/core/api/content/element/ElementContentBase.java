@@ -70,13 +70,20 @@ public interface ElementContentBase<C extends ContentContext> extends ContentBas
      * whether this content {@link ElementContentBase#isMain()}.
      */
     default String getContentSuffix() {
-        return isMain() ? "" : ("_" + id());
+        return isMain() ? "" : ("_" + id().getPath());
     }
 
     /**
      * @return instance-specific content context to be used in most implementation methods
      */
     C context();
+
+    /**
+     * @return a new content context instance for the specified content that
+     * derives from this content's position.<br>
+     * <b>Note</b>: the {@link ElementContentBase#context()} value must be set.
+     */
+    C createContext(ElementContentBase<C> alike);
 
     /**
      * @see ContentContext#element();
@@ -139,6 +146,9 @@ public interface ElementContentBase<C extends ContentContext> extends ContentBas
             throw new IllegalStateException("cannot extend a content extension; consider extending " + root());
         }
         extension.setRoot(this);
+        if (context() != null) {
+            extension.onAdd(createContext(extension));
+        }
         return this;
     }
 
@@ -146,7 +156,7 @@ public interface ElementContentBase<C extends ContentContext> extends ContentBas
      * @return single-depth addon content instances that combine their {@link MaterialHolder} and {@link DataHolder}
      * methods with this instance
      */
-    List<? extends ElementContentBase<C>> extensions();
+    @NotNull List<? extends ElementContentBase<C>> extensions();
 
     /**
      * @return this instance and the {@link ElementContentBase#extensions()}, if any
